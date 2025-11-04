@@ -1,0 +1,138 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Industry Harvest Configuration Schema",
+  "description": "JSON schema for validating industry-specific harvest configurations",
+  "type": "object",
+  "required": ["industry", "output_config", "keywords", "companies", "data_sources"],
+  "properties": {
+    "industry": {
+      "type": "string",
+      "description": "Industry identifier (used for folder naming)",
+      "minLength": 1
+    },
+    "industry_name": {
+      "type": "string",
+      "description": "Full industry name for display"
+    },
+    "description": {
+      "type": "string",
+      "description": "Brief description of the industry"
+    },
+    "date_range": {
+      "type": "object",
+      "description": "Date range for data collection",
+      "properties": {
+        "days_back": {
+          "type": ["integer", "null"],
+          "minimum": 1,
+          "description": "Number of days back from today"
+        },
+        "start_date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Specific start date (ISO format)"
+        },
+        "end_date": {
+          "type": ["string", "null"],
+          "format": "date",
+          "description": "Specific end date (ISO format)"
+        }
+      },
+      "oneOf": [
+        {"required": ["days_back"]},
+        {"required": ["start_date", "end_date"]}
+      ]
+    },
+    "output_config": {
+      "type": "object",
+      "required": ["base_dir", "industry_folder", "folder_structure"],
+      "properties": {
+        "base_dir": {
+          "type": "string",
+          "description": "Base directory for all data"
+        },
+        "industry_folder": {
+          "type": "string",
+          "description": "Industry-specific subfolder name"
+        },
+        "create_timestamp_subfolder": {
+          "type": "boolean",
+          "description": "Whether to create timestamp-based subfolders"
+        },
+        "folder_structure": {
+          "type": "object",
+          "description": "Mapping of data sources to folder names",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "keywords": {
+      "type": "object",
+      "description": "Keyword groups for searching",
+      "additionalProperties": {
+        "type": "array",
+        "items": {
+          "type": "string"
+        },
+        "minItems": 1
+      }
+    },
+    "companies": {
+      "type": "object",
+      "description": "Companies to track",
+      "properties": {
+        "public": {
+          "type": "object",
+          "description": "Public companies with ticker symbols",
+          "additionalProperties": {
+            "type": "string"
+          }
+        },
+        "private": {
+          "type": "object",
+          "description": "Private companies",
+          "additionalProperties": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "data_sources": {
+      "type": "object",
+      "description": "Configuration for each data source",
+      "additionalProperties": {
+        "type": "object",
+        "properties": {
+          "enabled": {
+            "type": "boolean",
+            "description": "Whether this source is enabled"
+          },
+          "priority": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Execution priority (lower = earlier)"
+          },
+          "limit": {
+            "type": "integer",
+            "minimum": 1,
+            "description": "Maximum items to download"
+          }
+        },
+        "required": ["enabled"]
+      }
+    },
+    "free_tier_limits": {
+      "type": "object",
+      "description": "API rate limits for free tiers",
+      "properties": {
+        "patents_per_hour": {"type": "integer", "minimum": 1},
+        "github_per_hour": {"type": "integer", "minimum": 1},
+        "news_per_day": {"type": "integer", "minimum": 1},
+        "citations_per_day": {"type": "integer", "minimum": 1},
+        "respect_rate_limits": {"type": "boolean"}
+      }
+    }
+  }
+}

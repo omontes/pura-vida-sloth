@@ -1,0 +1,66 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "pura-vida-sloth"
+version = "1.0.0"
+description = "Multi-source data harvesting system for market intelligence and competitive analysis"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "Pura Vida Sloth Team"}
+]
+keywords = ["data-harvesting", "market-intelligence", "competitive-analysis", "data-aggregation", "web-scraping"]
+
+dependencies = [
+    "requests>=2.31.0",
+    "beautifulsoup4>=4.12.0",
+    "tqdm>=4.66.0",
+    "python-dateutil>=2.8.2",
+    "python-dotenv>=1.0.0",
+    "feedparser>=6.0.0",
+    "jsonschema>=4.19.0",
+    "aiohttp>=3.9.0",
+    "lxml>=4.9.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.5.0",
+]
+github = [
+    "PyGithub>=2.1.0",
+]
+
+[project.scripts]
+pura-vida = "src.cli.main:main"
+pura-vida-harvest = "src.core.orchestrator:main"
+
+[project.urls]
+Homepage = "https://github.com/yourusername/pura-vida-sloth"
+Documentation = "https://github.com/yourusername/pura-vida-sloth/blob/main/README.md"
+Repository = "https://github.com/yourusername/pura-vida-sloth"
+
+[tool.black]
+line-length = 100
+target-version = ['py38', 'py39', 'py310', 'py311']
+include = '\.pyi?$'
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = "test_*.py"
+python_classes = "Test*"
+python_functions = "test_*"
+addopts = "-v --cov=src --cov-report=html --cov-report=term-missing"
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false

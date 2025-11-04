@@ -1,0 +1,24 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python:*)",
+      "Bash(tee:*)",
+      "Bash(tasklist:*)",
+      "Bash(findstr:*)",
+      "Bash(powershell -Command \"Get-Content test_results.txt | Select-Object -Last 50\")",
+      "Bash(for:*)",
+      "Bash(do if [ \"$file\" != \"__init__.py\" ])",
+      "Bash(then sed -i 's/from utils\\./from src.utils./g' \"$file\")",
+      "Bash(fi)",
+      "Bash(done)",
+      "Bash(if [ -f basic_usage.py ])",
+      "Bash(then sed -i 's/from utils\\./from src.utils./g' basic_usage.py)",
+      "Bash(else echo \"No examples file found\")",
+      "Bash(awk:*)",
+      "Bash(test:*)",
+      "Bash(git add:*)"
+    ],
+    "deny": [],
+    "ask": []
+  }
+}

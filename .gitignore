@@ -51,6 +51,24 @@ coverage.xml
 .pytest_cache/
 cover/
 
+#env
+.env
+
+#data - Keep structure, ignore downloaded content
+data/*
+!data/.gitkeep
+!data/README.md
+
+# Logs
+logs/
+*.log
+harvest_*.log
+test_results*.txt
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
 # Translations
 *.mo
 *.pot
@@ -205,3 +223,7 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+
+##docs
+docs/

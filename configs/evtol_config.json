@@ -1,0 +1,170 @@
+{
+  "industry": "eVTOL",
+  "industry_name": "Electric Vertical Takeoff and Landing",
+  "description": "Urban air mobility and electric VTOL aircraft - minimal viable harvest (~10 min runtime)",
+
+  "date_range": {
+    "days_back": 180
+  },
+
+  "output_config": {
+    "base_dir": "./data",
+    "industry_folder": "eVTOL",
+    "create_timestamp_subfolder": false,
+    "folder_structure": {
+      "company_fundamentals": "company_fundamentals",
+      "patents": "patents",
+      "github": "github_activity",
+      "sec": "sec_filings",
+      "earnings": "earnings_calls",
+      "research": "research_papers",
+      "regulatory": "regulatory_docs",
+      "press": "press_releases",
+      "news": "news_sentiment",
+      "citations": "academic_citations",
+      "jobs": "job_postings"
+    }
+  },
+
+  "keywords": {
+    "core": [
+      "eVTOL",
+      "electric VTOL",
+      "urban air mobility",
+      "flying taxi",
+      "air taxi",
+      "advanced air mobility"
+    ],
+    "technology": [
+      "distributed electric propulsion",
+      "tilt-rotor electric",
+      "multirotor aircraft",
+      "lift-cruise configuration",
+      "DEP aircraft",
+      "electric aircraft",
+      "VTOL aircraft"
+    ],
+    "infrastructure": [
+      "vertiport",
+      "UAM infrastructure",
+      "vertical landing pad",
+      "skyport",
+      "AAM infrastructure"
+    ],
+    "safety": [
+      "detect and avoid eVTOL",
+      "autonomous flight control VTOL",
+      "eVTOL certification",
+      "FAA Part 135",
+      "EASA SC-VTOL"
+    ]
+  },
+
+  "companies": {
+    "public": {
+      "JOBY": "Joby Aviation",
+      "ACHR": "Archer Aviation",
+      "LILM": "Lilium N.V.",
+      "EVEX": "Eve Air Mobility",
+      "EVTL": "Vertical Aerospace",
+      "BLDE": "Blade Air Mobility",
+      "BA": "Boeing Company",
+      "LMT": "Lockheed Martin",
+      "TXT": "Textron Inc.",
+      "HO": "Honeywell International"
+    },
+    "private": {
+      "VOLOCOPTER": "Volocopter GmbH",
+      "WISK": "Wisk Aero",
+      "BETA": "Beta Technologies",
+      "EHANG": "EHang Holdings",
+      "OVERAIR": "Overair",
+      "KITTY_HAWK": "Kitty Hawk Corporation"
+    }
+  },
+
+  "data_sources": {
+    "company_fundamentals": {
+      "enabled": true,
+      "priority": 1,
+      "comment": "FMP API free tier - company profiles, financials, metrics, news (250 calls/day)"
+    },
+    "patents": {
+      "enabled": false,
+      "limit": 100,
+      "cpc_codes": [
+        "B64C39/02",
+        "B64D27/24",
+        "B64C29/00",
+        "B60L50/60"
+      ],
+      "priority": 2,
+      "comment": "DISABLED - waiting for PatentsView API key approval"
+    },
+    "github": {
+      "enabled": true,
+      "limit": 50,
+      "min_stars": 3,
+      "priority": 2,
+      "comment": "Track eVTOL open-source projects (flight controllers, simulations)"
+    },
+    "sec_filings": {
+      "enabled": true,
+      "types": ["8-K", "10-Q", "10-K", "D"],
+      "priority": 3,
+      "comment": "SEC filings for eVTOL public companies"
+    },
+    "earnings": {
+      "enabled": false,
+      "limit": 50,
+      "priority": 4,
+      "comment": "DISABLED - FMP API free tier blocks earnings transcripts (403 errors). Upgrade to paid tier required."
+    },
+    "research": {
+      "enabled": true,
+      "limit": 20,
+      "priority": 5,
+      "comment": "Academic research on eVTOL technology (reduced limit due to download failures)"
+    },
+    "regulatory": {
+      "enabled": true,
+      "limit": 50,
+      "priority": 6,
+      "comment": "FAA/EASA regulatory documents (Note: may return 0 results - financial regs oriented)"
+    },
+    "press": {
+      "enabled": true,
+      "limit": 50,
+      "priority": 7,
+      "comment": "Company press releases"
+    },
+    "news_sentiment": {
+      "enabled": true,
+      "limit": 150,
+      "max_records_per_query": 50,
+      "priority": 8,
+      "comment": "GDELT news articles - free, fast, good coverage"
+    },
+    "citations": {
+      "enabled": true,
+      "limit": 60,
+      "priority": 9,
+      "comment": "OpenAlex citation tracking for research velocity"
+    },
+    "jobs": {
+      "enabled": true,
+      "limit": 60,
+      "locations": ["United States", "California", "Santa Cruz, CA", "Marina, CA"],
+      "priority": 10,
+      "comment": "Job postings indicate hiring trends and industry growth"
+    }
+  },
+
+  "free_tier_limits": {
+    "patents_per_hour": 1000,
+    "github_per_hour": 4500,
+    "news_per_day": 10000,
+    "citations_per_day": 50000,
+    "respect_rate_limits": true
+  }
+}
