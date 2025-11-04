@@ -16,7 +16,8 @@
       "Bash(else echo \"No examples file found\")",
       "Bash(awk:*)",
       "Bash(test:*)",
-      "Bash(git add:*)"
+      "Bash(git add:*)",
+      "Bash(git commit:*)"
     ],
     "deny": [],
     "ask": []

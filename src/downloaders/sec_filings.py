@@ -87,12 +87,26 @@ class SECDownloader:
     # Filing types to download
     FILING_TYPES = ['8-K', '10-Q', '10-K', 'S-1', 'DEF 14A', 'D']  # Added Form D for funding data
     
-    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime):
+    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
+                 tickers: Optional[Dict[str, str]] = None):
+        """
+        Initialize SEC downloader
+
+        Args:
+            output_dir: Directory to save filings
+            start_date: Start date for filings
+            end_date: End date for filings
+            tickers: Dict of ticker symbols to company names (e.g. {'JOBY': 'Joby Aviation'})
+                    If None, uses Config.TARGET_COMPANIES for backward compatibility
+        """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
         self.start_date = start_date
         self.end_date = end_date
+
+        # Use provided tickers or fall back to hardcoded list (backward compatibility)
+        self.companies = tickers if tickers is not None else self.TARGET_COMPANIES
 
         self.logger = setup_logger("SECDownloader", self.output_dir / "sec.log")
         self.rate_limiter = RateLimiter(requests_per_second=Config.RATE_LIMITS['sec'])
@@ -122,14 +136,14 @@ class SECDownloader:
         """Main download method"""
         self.logger.info(f"Starting SEC EDGAR download")
         self.logger.info(f"Date range: {self.start_date.date()} to {self.end_date.date()}")
-        self.logger.info(f"Target companies: {len(self.TARGET_COMPANIES)}")
+        self.logger.info(f"Target companies: {len(self.companies)}")
         self.logger.info(f"Filing types: {self.FILING_TYPES}")
-        
+
         # Get all filings metadata
         all_filings = []
-        
+
         self.logger.info("Fetching filings metadata...")
-        for ticker, company_name in tqdm(self.TARGET_COMPANIES.items(), 
+        for ticker, company_name in tqdm(self.companies.items(),
                                          desc="Companies"):
             try:
                 filings = self._get_company_filings(ticker, company_name)
