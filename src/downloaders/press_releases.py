@@ -37,7 +37,18 @@ from src.utils.rss_parser import FeedAggregator
 class PressReleaseDownloader:
     """Download company press releases with RSS feeds and fallbacks"""
 
-    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime):
+    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
+                 companies: Optional[Dict[str, str]] = None):
+        """
+        Initialize Press Release downloader
+
+        Args:
+            output_dir: Directory to save press releases
+            start_date: Start date for press releases
+            end_date: End date for press releases
+            companies: Dict of ticker symbols to company names (e.g. {'JOBY': 'Joby Aviation'})
+                      If None, uses Config.TARGET_COMPANIES for backward compatibility
+        """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -51,8 +62,8 @@ class PressReleaseDownloader:
         self.checkpoint = CheckpointManager(self.output_dir, 'press')
         self.rss_aggregator = FeedAggregator(start_date, end_date)
 
-        # Get companies from config
-        self.companies = Config.TARGET_COMPANIES
+        # Use provided companies or fall back to config (backward compatibility)
+        self.companies = companies if companies is not None else Config.TARGET_COMPANIES
 
         self.stats = {
             'success': 0,

@@ -52,7 +52,9 @@ class InitialHarvest:
 
         # Validate against schema
         try:
-            schema_path = Path(__file__).parent / 'configs' / 'config_schema.json'
+            # Schema is in project root/configs, not src/core/configs
+            project_root = Path(__file__).parent.parent.parent
+            schema_path = project_root / 'configs' / 'config_schema.json'
             if schema_path.exists():
                 with open(schema_path, 'r', encoding='utf-8') as f:
                     schema = json.load(f)
@@ -176,7 +178,8 @@ class InitialHarvest:
             downloaders['sec'] = SECDownloader(
                 output_dir=self.industry_root / folder_map['sec'],
                 start_date=start_date,
-                end_date=end_date
+                end_date=end_date,
+                tickers=all_tickers  # Pass eVTOL companies from config
             )
             self.logger.info("Initialized: SECDownloader")
 
@@ -186,7 +189,8 @@ class InitialHarvest:
             downloaders['earnings'] = EarningsDownloader(
                 output_dir=self.industry_root / folder_map['earnings'],
                 start_date=start_date,
-                end_date=end_date
+                end_date=end_date,
+                tickers=all_tickers  # Pass eVTOL companies from config
             )
             self.logger.info("Initialized: EarningsDownloader")
 
@@ -196,17 +200,23 @@ class InitialHarvest:
             downloaders['research'] = ResearchDownloader(
                 output_dir=self.industry_root / folder_map['research'],
                 start_date=start_date,
-                end_date=end_date
+                end_date=end_date,
+                keywords=all_keywords  # Pass eVTOL keywords from config
             )
             self.logger.info("Initialized: ResearchDownloader")
 
         # 6. Regulatory
         if self.config['data_sources'].get('regulatory', {}).get('enabled'):
             from src.downloaders.regulatory import RegulatoryDownloader
+            # Get regulatory-specific config
+            agencies = self.config['data_sources']['regulatory'].get('agencies', None)
+            rss_feeds = self.config['data_sources']['regulatory'].get('rss_feeds', None)
             downloaders['regulatory'] = RegulatoryDownloader(
                 output_dir=self.industry_root / folder_map['regulatory'],
                 start_date=start_date,
-                end_date=end_date
+                end_date=end_date,
+                agencies=agencies,  # Pass FAA agencies from config
+                rss_feeds=rss_feeds  # Pass regulatory RSS feeds from config
             )
             self.logger.info("Initialized: RegulatoryDownloader")
 
@@ -216,7 +226,8 @@ class InitialHarvest:
             downloaders['press'] = PressReleaseDownloader(
                 output_dir=self.industry_root / folder_map['press'],
                 start_date=start_date,
-                end_date=end_date
+                end_date=end_date,
+                companies=all_tickers  # Pass eVTOL companies from config
             )
             self.logger.info("Initialized: PressReleaseDownloader")
 
@@ -255,6 +266,41 @@ class InitialHarvest:
                 locations=self.config['data_sources']['jobs'].get('locations', ["United States"])
             )
             self.logger.info("Initialized: JobMarketTracker")
+
+        # 11. Stock Market Data (NEW - Yahoo Finance)
+        if self.config['data_sources'].get('stock_market', {}).get('enabled'):
+            from src.downloaders.stock_market import StockMarketDownloader
+            downloaders['stock_market'] = StockMarketDownloader(
+                output_dir=self.industry_root / folder_map['stock_market'],
+                tickers=all_tickers,  # Public companies only
+                history_period=self.config['data_sources']['stock_market'].get('history_period', '6mo'),
+                download_options=self.config['data_sources']['stock_market'].get('download_options', True)
+            )
+            self.logger.info("Initialized: StockMarketDownloader")
+
+        # 12. Government Contracts (NEW - USASpending.gov)
+        if self.config['data_sources'].get('government_contracts', {}).get('enabled'):
+            from src.downloaders.government_contracts import GovernmentContractsDownloader
+            downloaders['gov_contracts'] = GovernmentContractsDownloader(
+                output_dir=self.industry_root / folder_map['gov_contracts'],
+                companies=all_tickers,
+                keywords=self.config['keywords']['core'],
+                agencies=self.config['data_sources']['government_contracts'].get('agencies', []),
+                years_back=self.config['data_sources']['government_contracts'].get('years_back', 5),
+                min_contract_value=self.config['data_sources']['government_contracts'].get('min_contract_value', 0)
+            )
+            self.logger.info("Initialized: GovernmentContractsDownloader")
+
+        # 13. Institutional Holdings (NEW - 13F Filings)
+        if self.config['data_sources'].get('institutional_holdings', {}).get('enabled'):
+            from src.downloaders.institutional_holdings import InstitutionalHoldingsDownloader
+            public_tickers = list(self.config['companies'].get('public', {}).keys())
+            downloaders['institutional_holdings'] = InstitutionalHoldingsDownloader(
+                output_dir=self.industry_root / folder_map['institutional_holdings'],
+                target_tickers=public_tickers,
+                quarters_back=self.config['data_sources']['institutional_holdings'].get('quarters_back', 4)
+            )
+            self.logger.info("Initialized: InstitutionalHoldingsDownloader")
 
         return downloaders
 

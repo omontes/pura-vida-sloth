@@ -85,7 +85,7 @@ class SECDownloader:
     }
     
     # Filing types to download
-    FILING_TYPES = ['8-K', '10-Q', '10-K', 'S-1', 'DEF 14A', 'D']  # Added Form D for funding data
+    FILING_TYPES = ['8-K', '10-Q', '10-K', 'S-1', 'DEF 14A', 'D', '4']  # Added Form D for funding, Form 4 for insider transactions
     
     def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
                  tickers: Optional[Dict[str, str]] = None):
@@ -304,9 +304,10 @@ class SECDownloader:
     def _download_filing(self, filing: Dict):
         """Download a single filing"""
         try:
-            # Create filename
+            # Create filename (replace colons for Windows compatibility)
+            safe_date = filing['filing_date'].replace(':', '-')
             filename = (f"{filing['ticker']}_{filing['filing_type']}_"
-                       f"{filing['filing_date']}_{filing['accession']}.html")
+                       f"{safe_date}_{filing['accession']}.html")
             filepath = self.output_dir / filename
 
             # Skip if already exists

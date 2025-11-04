@@ -38,7 +38,21 @@ from src.utils.rss_parser import FeedAggregator
 class RegulatoryDownloader:
     """Download regulatory announcements with API and RSS feeds"""
 
-    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime):
+    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
+                 agencies: Optional[List[str]] = None,
+                 rss_feeds: Optional[Dict[str, str]] = None):
+        """
+        Initialize Regulatory downloader
+
+        Args:
+            output_dir: Directory to save regulatory documents
+            start_date: Start date for documents
+            end_date: End date for documents
+            agencies: List of Federal Register agency slugs (e.g. ['federal-aviation-administration'])
+                     If None, uses Config.FEDERAL_AGENCIES for backward compatibility
+            rss_feeds: Dict of RSS feed names to URLs (e.g. {'FAA_NEWS': 'https://...'})
+                      If None, uses Config.REGULATORY_RSS_FEEDS for backward compatibility
+        """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -49,8 +63,18 @@ class RegulatoryDownloader:
 
         # Initialize clients
         self.client = requests.Session()  # Use simple session instead of APIClient
+        # Add proper headers to avoid CAPTCHA
+        self.client.headers.update({
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            'Accept': 'application/json',
+            'Accept-Language': 'en-US,en;q=0.9'
+        })
         self.checkpoint = CheckpointManager(self.output_dir, 'regulatory')
         self.rss_aggregator = FeedAggregator(start_date, end_date)
+
+        # Use provided parameters or fall back to config (backward compatibility)
+        self.agencies = agencies if agencies is not None else Config.FEDERAL_AGENCIES
+        self.rss_feeds = rss_feeds if rss_feeds is not None else Config.REGULATORY_RSS_FEEDS
 
         self.stats = {
             'success': 0,
@@ -130,7 +154,7 @@ class RegulatoryDownloader:
         start_str = self.start_date.strftime('%Y-%m-%d')
         end_str = self.end_date.strftime('%Y-%m-%d')
 
-        for agency in Config.FEDERAL_AGENCIES:
+        for agency in self.agencies:
             item_id = f"fr_api_{agency}"
 
             # Skip if already completed
@@ -183,7 +207,7 @@ class RegulatoryDownloader:
         documents = []
 
         # Add all RSS feeds
-        feed_counts = self.rss_aggregator.add_feeds(Config.REGULATORY_RSS_FEEDS)
+        feed_counts = self.rss_aggregator.add_feeds(self.rss_feeds)
 
         for source, count in feed_counts.items():
             self.logger.debug(f"RSS: {source} - {count} entries")

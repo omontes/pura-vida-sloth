@@ -28,9 +28,32 @@ jsonschema>=4.20.0
 # Optional: For better HTML parsing
 html5lib>=1.1
 
-# Optional: For SEC EDGAR (alternative approach)
+# ============================================================================
+# V2 Downloader Libraries (Simplified & Open-Source)
+# ============================================================================
+
+# SEC Filings - Official SEC EDGAR downloader
 sec-edgar-downloader>=5.0.0
 
+# Academic Papers - Free access to 200M+ papers
+semanticscholar>=0.7.0
+arxiv>=2.0.0
+
+# Patents - Direct USPTO access with PDF downloads
+patent-client>=4.0.0
+
+# News Articles - Universal article extraction from any news site
+news-please>=1.5.0
+
+# ============================================================================
+# Financial Market Data (NEW - Phase 1 Critical Sources)
+# ============================================================================
+
+# Stock market data - prices, options, fundamentals, analysts
+yfinance>=0.2.37
+
+# ============================================================================
 # Optional: For async downloads (if needed later)
+# ============================================================================
 aiohttp>=3.9.0
 aiofiles>=23.0.0

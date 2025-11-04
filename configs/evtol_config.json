@@ -22,7 +22,10 @@
       "press": "press_releases",
       "news": "news_sentiment",
       "citations": "academic_citations",
-      "jobs": "job_postings"
+      "jobs": "job_postings",
+      "stock_market": "stock_market",
+      "gov_contracts": "government_contracts",
+      "institutional_holdings": "institutional_holdings"
     }
   },
 
@@ -85,9 +88,9 @@
 
   "data_sources": {
     "company_fundamentals": {
-      "enabled": true,
+      "enabled": false,
       "priority": 1,
-      "comment": "FMP API free tier - company profiles, financials, metrics, news (250 calls/day)"
+      "comment": "DISABLED - FMP API free tier blocked (403 Forbidden). Requires paid tier."
     },
     "patents": {
       "enabled": false,
@@ -103,16 +106,16 @@
     },
     "github": {
       "enabled": true,
-      "limit": 50,
+      "limit": 100,
       "min_stars": 3,
       "priority": 2,
-      "comment": "Track eVTOL open-source projects (flight controllers, simulations)"
+      "comment": "Track eVTOL open-source projects (flight controllers, simulations) - INCREASED for comprehensive test"
     },
     "sec_filings": {
       "enabled": true,
-      "types": ["8-K", "10-Q", "10-K", "D"],
+      "types": ["8-K", "10-Q", "10-K", "D", "4"],
       "priority": 3,
-      "comment": "SEC filings for eVTOL public companies"
+      "comment": "SEC filings for eVTOL public companies (added Form 4 for insider transactions)"
     },
     "earnings": {
       "enabled": false,
@@ -122,41 +125,70 @@
     },
     "research": {
       "enabled": true,
-      "limit": 20,
+      "limit": 100,
       "priority": 5,
-      "comment": "Academic research on eVTOL technology (reduced limit due to download failures)"
+      "comment": "Academic research on eVTOL technology - INCREASED to 100 for comprehensive test"
     },
     "regulatory": {
       "enabled": true,
-      "limit": 50,
+      "limit": 100,
       "priority": 6,
-      "comment": "FAA/EASA regulatory documents (Note: may return 0 results - financial regs oriented)"
+      "agencies": [
+        "federal-aviation-administration",
+        "national-highway-traffic-safety-administration"
+      ],
+      "rss_feeds": {
+        "FAA_NEWS": "https://www.faa.gov/news/rss",
+        "FAA_REGULATIONS": "https://www.faa.gov/regulations_policies/rss"
+      },
+      "comment": "FAA/NTSB regulatory documents for eVTOL certification and airspace integration"
     },
     "press": {
       "enabled": true,
-      "limit": 50,
+      "limit": 100,
       "priority": 7,
-      "comment": "Company press releases"
+      "comment": "Company press releases - INCREASED for comprehensive test"
     },
     "news_sentiment": {
       "enabled": true,
-      "limit": 150,
+      "limit": 300,
       "max_records_per_query": 50,
       "priority": 8,
-      "comment": "GDELT news articles - free, fast, good coverage"
+      "comment": "GDELT news articles - INCREASED to 300 for comprehensive test"
     },
     "citations": {
       "enabled": true,
-      "limit": 60,
+      "limit": 100,
       "priority": 9,
-      "comment": "OpenAlex citation tracking for research velocity"
+      "comment": "OpenAlex citation tracking - INCREASED to 100 for comprehensive test"
     },
     "jobs": {
       "enabled": true,
-      "limit": 60,
+      "limit": 100,
       "locations": ["United States", "California", "Santa Cruz, CA", "Marina, CA"],
       "priority": 10,
-      "comment": "Job postings indicate hiring trends and industry growth"
+      "comment": "Job postings indicate hiring trends - INCREASED to 100 for comprehensive test"
+    },
+    "stock_market": {
+      "enabled": true,
+      "history_period": "1y",
+      "download_options": true,
+      "priority": 1,
+      "comment": "Yahoo Finance - INCREASED to 1 year history for comprehensive test (FREE, unlimited)"
+    },
+    "government_contracts": {
+      "enabled": true,
+      "agencies": ["DOD", "NASA", "FAA", "DOT"],
+      "years_back": 10,
+      "min_contract_value": 25000,
+      "priority": 1,
+      "comment": "USASpending.gov - INCREASED to 10 years, lowered min to $25k for comprehensive test (FREE, unlimited)"
+    },
+    "institutional_holdings": {
+      "enabled": false,
+      "quarters_back": 4,
+      "priority": 11,
+      "comment": "DISABLED - 13F filings (complex XML parsing required, use WhaleWisdom API or extend parser)"
     }
   },
 

@@ -390,7 +390,18 @@ class ResearchDownloader:
 
             # Save based on type
             if ext == 'pdf':
-                filepath.write_bytes(response.content)
+                # Validate PDF before saving (check for PDF header)
+                if response.content[:4] == b'%PDF':
+                    filepath.write_bytes(response.content)
+                    # Add delay after arXiv PDF download to avoid rate limiting
+                    if source == 'arxiv':
+                        time.sleep(3)  # arXiv rate limit: 1 request per 3 seconds
+                else:
+                    # Not a valid PDF - likely CAPTCHA or error page
+                    self.logger.warning(f"Invalid PDF response for {title} - likely CAPTCHA or rate limit")
+                    self.logger.warning(f"Response starts with: {response.content[:100]}")
+                    self.stats['failed'] += 1
+                    return
             else:
                 # Create formatted HTML/text
                 output = [

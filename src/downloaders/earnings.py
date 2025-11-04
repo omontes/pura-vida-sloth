@@ -38,7 +38,18 @@ from src.utils.retry_handler import retry_on_error
 class EarningsDownloader:
     """Download earnings call transcripts with FMP API and fallbacks"""
 
-    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime):
+    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
+                 tickers: Optional[Dict[str, str]] = None):
+        """
+        Initialize Earnings downloader
+
+        Args:
+            output_dir: Directory to save transcripts
+            start_date: Start date for earnings calls
+            end_date: End date for earnings calls
+            tickers: Dict of ticker symbols to company names (e.g. {'JOBY': 'Joby Aviation'})
+                    If None, uses Config.TARGET_COMPANIES for backward compatibility
+        """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
@@ -52,8 +63,8 @@ class EarningsDownloader:
         self.scraper_client = requests.Session()  # Use simple session instead of APIClient
         self.checkpoint = CheckpointManager(self.output_dir, 'earnings')
 
-        # Get target companies from config
-        self.companies = Config.TARGET_COMPANIES
+        # Use provided tickers or fall back to config (backward compatibility)
+        self.companies = tickers if tickers is not None else Config.TARGET_COMPANIES
 
         self.stats = {
             'success': 0,

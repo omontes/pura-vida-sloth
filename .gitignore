@@ -50,15 +50,17 @@ coverage.xml
 .hypothesis/
 .pytest_cache/
 cover/
-
+sources_summary_backup_original.md
 #env
 .env
-
+.claude/
 #data - Keep structure, ignore downloaded content
 data/*
 !data/.gitkeep
 !data/README.md
-
+tests/test_gov_contracts_output
+tests/test_stock_market_output
+archive/
 # Logs
 logs/
 *.log
