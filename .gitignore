@@ -53,7 +53,8 @@ cover/
 sources_summary_backup_original.md
 #env
 .env
-.claude/
+.claude/*
+!.claude/Claude.md
 #data - Keep structure, ignore downloaded content
 data/*
 !data/.gitkeep
