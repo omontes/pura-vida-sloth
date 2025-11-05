@@ -26,7 +26,8 @@
       "jobs": "job_postings",
       "stock_market": "stock_market",
       "gov_contracts": "government_contracts",
-      "institutional_holdings": "institutional_holdings"
+      "institutional_holdings": "institutional_holdings",
+      "form13f": "form13f_institutional_holdings"
     }
   },
 
@@ -228,6 +229,11 @@
       "quarters_back": 4,
       "priority": 11,
       "comment": "DISABLED - 13F filings (complex XML parsing required, use WhaleWisdom API or extend parser)"
+    },
+    "form13f_holdings": {
+      "enabled": false,
+      "priority": 12,
+      "comment": "SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Enable in test config first."
     }
   },
 

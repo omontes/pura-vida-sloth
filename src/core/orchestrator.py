@@ -321,6 +321,24 @@ class InitialHarvest:
             )
             self.logger.info("Initialized: InstitutionalHoldingsDownloader")
 
+        # 14. Form 13F Holdings (NEW - Institutional Holdings from Local Dataset)
+        if self.config['data_sources'].get('form13f_holdings', {}).get('enabled'):
+            from src.downloaders.form13f_holdings import Form13FHoldingsDownloader
+
+            # Get public companies only (private companies don't have institutional holdings)
+            public_companies = self.config.get('companies', {}).get('public', {})
+
+            if public_companies:
+                downloaders['form13f_holdings'] = Form13FHoldingsDownloader(
+                    output_dir=self.industry_root / folder_map.get('form13f', 'form13f_institutional_holdings'),
+                    companies=public_companies,
+                    start_date=start_date.isoformat(),
+                    end_date=end_date.isoformat()
+                )
+                self.logger.info(f"Initialized: Form13FHoldingsDownloader ({len(public_companies)} companies)")
+            else:
+                self.logger.warning("No public companies in config - skipping Form 13F")
+
         return downloaders
 
     def execute_harvest(self, downloaders: Dict) -> Dict:

@@ -1,0 +1,34 @@
+{
+  "industry": "eVTOL",
+  "industry_name": "eVTOL - Form 13F Holdings Test",
+  "description": "Test Form 13F institutional holdings with 3 companies via orchestrator",
+
+  "date_range": {
+    "days_back": 365
+  },
+
+  "output_config": {
+    "base_dir": "./data",
+    "industry_folder": "eVTOL_FORM13F_TEST",
+    "create_timestamp_subfolder": false,
+    "folder_structure": {
+      "form13f": "form13f_institutional_holdings"
+    }
+  },
+
+  "companies": {
+    "public": {
+      "ACHR": "Archer Aviation Inc",
+      "JOBY": "Joby Aero, Inc.",
+      "BLDE": "Blade Air Mobility"
+    }
+  },
+
+  "data_sources": {
+    "form13f_holdings": {
+      "enabled": true,
+      "priority": 1,
+      "comment": "TEST - Form 13F institutional holdings with 3 eVTOL companies"
+    }
+  }
+}
