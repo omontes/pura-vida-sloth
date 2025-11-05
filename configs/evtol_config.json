@@ -14,6 +14,7 @@
     "folder_structure": {
       "company_fundamentals": "company_fundamentals",
       "patents": "patents",
+      "lens_patents": "lens_patents",
       "github": "github_activity",
       "sec": "sec_filings",
       "earnings": "earnings_calls",
@@ -65,24 +66,56 @@
 
   "companies": {
     "public": {
-      "JOBY": "Joby Aviation",
-      "ACHR": "Archer Aviation",
-      "LILM": "Lilium N.V.",
-      "EVEX": "Eve Air Mobility",
-      "EVTL": "Vertical Aerospace",
+      "JOBY": "Joby Aero, Inc.",
+      "ACHR": "Archer Aviation Inc.",
+      "EVEX": "Eve UAM, LLC",
+      "EVTL": "Vertical Aerospace Ltd",
       "BLDE": "Blade Air Mobility",
-      "BA": "Boeing Company",
+      "BA": "The Boeing Company",
       "LMT": "Lockheed Martin",
       "TXT": "Textron Inc.",
-      "HO": "Honeywell International"
+      "HO": "Honeywell International",
+      "BETA": "Beta Technologies Inc",
+      "EH": "EHang Holdings Limited",
+      "EADSY": "Airbus SAS",
+      "FER": "Ferrovial SA",
+      "STLA": "Stellantis N.V.",
+      "TM": "Toyota Motor Corporation",
+      "ERJ": "Embraer S.A.",
+      "GE": "General Electric Company"
+    },
+    "public_inactive": {
+      "LILM": "Lilium GmbH",
+      "VOLOCOPTER": "Volocopter GmbH"
     },
     "private": {
-      "VOLOCOPTER": "Volocopter GmbH",
-      "WISK": "Wisk Aero",
-      "BETA": "Beta Technologies",
-      "EHANG": "EHang Holdings",
+      "WISK": "Wisk Aero LLC",
       "OVERAIR": "Overair",
-      "KITTY_HAWK": "Kitty Hawk Corporation"
+      "AUTOFLIGHT": "AutoFlight",
+      "XPENG_AEROHT": "XPeng AeroHT",
+      "TCAB": "TCab Technology",
+      "VOLANT": "Volant Aerotech",
+      "SKYDRIVE": "SkyDrive Inc",
+      "MARUBENI": "Marubeni Corporation",
+      "SUPERNAL": "Supernal LLC",
+      "HANWHA": "Hanwha Systems",
+      "KAL": "Korean Air Lines",
+      "KAI": "Korea Aerospace Industries Ltd",
+      "PIVOTAL": "Pivotal",
+      "XTI": "XTI Aircraft Company",
+      "LIFT": "Lift Aircraft Inc",
+      "JETOPTERA": "Jetoptera Inc",
+      "VOLTAERO": "VoltAero",
+      "SAFRAN": "Safran SA",
+      "ROLLS_ROYCE": "Rolls-Royce plc",
+      "BAE": "BAE Systems plc",
+      "MAGNIX": "magniX USA Inc",
+      "AMPRIUS": "Amprius Technologies Inc",
+      "THALES": "Thales SA",
+      "SKYPORTS": "Skyports Ltd",
+      "URBAN_AIR": "Urban-Air Port Ltd",
+      "HONDA": "Honda Motor Co., Ltd.",
+      "NIDEC": "Nidec Corporation"
     }
   },
 
@@ -93,7 +126,7 @@
       "comment": "DISABLED - FMP API free tier blocked (403 Forbidden). Requires paid tier."
     },
     "patents": {
-      "enabled": true,
+      "enabled": false,
       "limit": 20,
       "cpc_codes": [
         "B64C39/02",
@@ -102,17 +135,23 @@
         "B60L50/60"
       ],
       "priority": 2,
-      "comment": "Using SerpApi (Google Patents) - 100 searches/month free tier. Limit=20 per company (10 companies = 10 searches, ~100-200 patents total)"
+      "comment": "Using SerpApi (Google Patents) - 100 searches/month free tier. Limit=20 per company (10 companies = 10 searches, ~100-200 patents total). DISABLED in favor of lens_patents for comprehensive coverage."
+    },
+    "lens_patents": {
+      "enabled": true,
+      "limit": 300,
+      "priority": 2,
+      "comment": "Lens.org Patent API - comprehensive global patent database (100M+ patents). 300 patents per company, ~12,000+ total expected from 47 companies. Better coverage than SerpApi."
     },
     "github": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "min_stars": 3,
       "priority": 2,
       "comment": "Track eVTOL open-source projects (flight controllers, simulations) - INCREASED for comprehensive test"
     },
     "sec_filings": {
-      "enabled": true,
+      "enabled": false,
       "types": ["8-K", "10-Q", "10-K", "D", "4"],
       "priority": 3,
       "comment": "SEC filings for eVTOL public companies (added Form 4 for insider transactions)"
@@ -124,13 +163,13 @@
       "comment": "DISABLED - FMP API free tier blocks earnings transcripts (403 errors). Upgrade to paid tier required."
     },
     "research": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "priority": 5,
       "comment": "Academic research on eVTOL technology - INCREASED to 100 for comprehensive test"
     },
     "regulatory": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "priority": 6,
       "agencies": [
@@ -144,40 +183,40 @@
       "comment": "FAA/NTSB regulatory documents for eVTOL certification and airspace integration"
     },
     "press": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "priority": 7,
       "comment": "Company press releases - INCREASED for comprehensive test"
     },
     "news_sentiment": {
-      "enabled": true,
+      "enabled": false,
       "limit": 300,
       "max_records_per_query": 50,
       "priority": 8,
       "comment": "GDELT news articles - INCREASED to 300 for comprehensive test"
     },
     "citations": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "priority": 9,
       "comment": "OpenAlex citation tracking - INCREASED to 100 for comprehensive test"
     },
     "jobs": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "locations": ["United States", "California", "Santa Cruz, CA", "Marina, CA"],
       "priority": 10,
       "comment": "Job postings indicate hiring trends - INCREASED to 100 for comprehensive test"
     },
     "stock_market": {
-      "enabled": true,
+      "enabled": false,
       "history_period": "1y",
       "download_options": true,
       "priority": 1,
       "comment": "Yahoo Finance - INCREASED to 1 year history for comprehensive test (FREE, unlimited)"
     },
     "government_contracts": {
-      "enabled": true,
+      "enabled": false,
       "agencies": ["DOD", "NASA", "FAA", "DOT"],
       "years_back": 10,
       "min_contract_value": 25000,

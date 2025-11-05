@@ -1,0 +1,37 @@
+{
+  "industry": "eVTOL",
+  "industry_name": "Electric Vertical Takeoff and Landing - TEST",
+  "description": "Single company test for Lens Patents API",
+
+  "date_range": {
+    "days_back": 180
+  },
+
+  "output_config": {
+    "base_dir": "./data",
+    "industry_folder": "eVTOL_TEST",
+    "create_timestamp_subfolder": false,
+    "folder_structure": {
+      "lens_patents": "lens_patents"
+    }
+  },
+
+  "keywords": {
+    "core": ["eVTOL"]
+  },
+
+  "companies": {
+    "public": {
+      "JOBY": "Joby Aero, Inc."
+    }
+  },
+
+  "data_sources": {
+    "lens_patents": {
+      "enabled": true,
+      "limit": 10,
+      "priority": 1,
+      "comment": "TEST - Single company with 10 patents limit"
+    }
+  }
+}

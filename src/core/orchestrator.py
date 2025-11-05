@@ -148,7 +148,7 @@ class InitialHarvest:
             )
             self.logger.info("Initialized: CompanyFundamentalsDownloader")
 
-        # 1. Patents
+        # 1. Patents (SerpApi - Google Patents)
         if self.config['data_sources'].get('patents', {}).get('enabled'):
             from src.downloaders.patents import PatentDownloader
             downloaders['patents'] = PatentDownloader(
@@ -159,6 +159,26 @@ class InitialHarvest:
                 limit=self.config['data_sources']['patents'].get('limit', 20)
             )
             self.logger.info("Initialized: PatentDownloader")
+
+        # 1b. Lens Patents (Lens.org Patent API - comprehensive coverage)
+        if self.config['data_sources'].get('lens_patents', {}).get('enabled'):
+            from src.downloaders.lens_patents import LensPatentDownloader
+
+            # Combine all companies (public + private + inactive) for comprehensive patent search
+            all_assignees = {}
+            if 'companies' in self.config:
+                for company_type in ['public', 'private', 'public_inactive']:
+                    if company_type in self.config['companies']:
+                        all_assignees.update(self.config['companies'][company_type])
+
+            downloaders['lens_patents'] = LensPatentDownloader(
+                output_dir=self.industry_root / folder_map['lens_patents'],
+                start_date=start_date.isoformat(),  # Convert datetime to ISO string
+                end_date=end_date.isoformat(),      # Convert datetime to ISO string
+                assignees=all_assignees,  # All companies including inactive (for historical patents)
+                limit=self.config['data_sources']['lens_patents'].get('limit', 300)
+            )
+            self.logger.info("Initialized: LensPatentDownloader")
 
         # 2. GitHub
         if self.config['data_sources'].get('github', {}).get('enabled'):
