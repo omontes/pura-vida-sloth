@@ -51,6 +51,7 @@ coverage.xml
 .pytest_cache/
 cover/
 sources_summary_backup_original.md
+sources_summary.md
 #env
 .env
 .claude/*

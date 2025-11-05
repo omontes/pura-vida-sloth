@@ -1,380 +1,387 @@
 """
-Patent Downloader
-==================
-Downloads patent data from USPTO PatentsView API for hype cycle analysis
+Patent Downloader - Using SerpApi Google Patents
+=================================================
+Industry-agnostic patent downloader using the SerpApi Google Patents API.
 
-Target: 500-1,000 patents per harvest (configurable)
-Primary Source: PatentsView REST API (unlimited, free)
-Data: Filing dates, grant dates, assignees, claims, citations, abstracts
+Advantages:
+- INSTANT access with API key (no approval needed)
+- 100 free searches/month (enough for limited patent data)
+- Google Patents data (comprehensive, up-to-date)
+- Company-based search (assignee) - perfect for industry tracking
+- Well-documented REST API
 
-Hype Cycle Value:
-- Innovation velocity (patents filed per quarter)
-- Technology maturity (grant rate, citation counts)
-- Market competition (assignee diversity)
-- Commercial intent (patent family size)
+Target: 50-100 patents per harvest (limited by free tier)
+Primary Source: SerpApi (https://serpapi.com)
+API Docs: https://serpapi.com/google-patents-api
+
+Free Tier Limits:
+- 100 searches/month
+- Each search returns up to 100 results
+- Strategic use: ~20 patents per company for 5 companies
 """
 
-import requests
-import json
-import time
 from pathlib import Path
 from datetime import datetime
-from typing import Dict, List, Optional
-from concurrent.futures import ThreadPoolExecutor, as_completed
+from typing import Dict, List, Optional, Any
+import json
 from tqdm import tqdm
+import time
+import requests
+import os
 
 from src.utils.logger import setup_logger
-from src.utils.config import Config
 from src.utils.checkpoint_manager import CheckpointManager
-from src.utils.retry_handler import retry_on_error
 
 
 class PatentDownloader:
-    """Download patent data from PatentsView API"""
+    """
+    Download patent data using SerpApi Google Patents.
+    CRITICAL: Industry-agnostic design - accepts assignee list from config.
+    """
 
-    # New PatentSearch API (May 2025 - Legacy API discontinued)
-    PATENTS_VIEW_API = "https://search.patentsview.org/api/v1/patent/"
+    # SerpApi endpoint
+    BASE_URL = "https://serpapi.com/search"
 
-    def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
-                 keywords: List[str] = None, cpc_codes: List[str] = None, limit: int = 1000):
+    def __init__(
+        self,
+        output_dir: Path,
+        start_date: str,
+        end_date: str,
+        assignees: Dict[str, str],  # From config.companies
+        limit: int = 20,  # Reduced for free tier (100 searches/month)
+        download_pdfs: bool = False,
+        **optional_params
+    ):
+        """
+        Initialize SerpApi Patent downloader
+
+        Args:
+            output_dir: Directory to save patents
+            start_date: Start date (ISO format)
+            end_date: End date (ISO format)
+            assignees: Dict of company names {ticker/id: name} from config
+            limit: Maximum patents to download per assignee (default 20 for free tier)
+            download_pdfs: Whether to download full patent PDFs (not implemented yet)
+        """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
 
-        self.start_date = start_date
-        self.end_date = end_date
-        self.keywords = keywords or []
-        self.cpc_codes = cpc_codes or []
-        self.limit = limit
+        # Get API token from environment
+        self.api_token = os.getenv('SERP_API_KEY')
+        if not self.api_token:
+            raise ValueError(
+                "SERP_API_KEY not found in environment. "
+                "Please add it to your .env file. "
+                "Get your free API key at: https://serpapi.com/users/sign_up"
+            )
 
-        self.logger = setup_logger("PatentDownloader", self.output_dir / "patents.log")
-        self.session = requests.Session()  # Use simple session
+        self.start_date = datetime.fromisoformat(start_date.replace('Z', '+00:00'))
+        self.end_date = datetime.fromisoformat(end_date.replace('Z', '+00:00'))
+        self.assignees = list(assignees.values())  # Extract company names
+        self.limit = limit
+        self.download_pdfs = download_pdfs
+
+        self.logger = setup_logger("Patents", self.output_dir / "patents.log")
         self.checkpoint = CheckpointManager(self.output_dir, 'patents')
 
-        # Load API key from config
-        self.api_key = Config.PATENTSVIEW_API_KEY
-        if not self.api_key:
-            self.logger.warning("PatentsView API key not set. Please set PATENTSVIEW_API_KEY in .env file")
-            self.logger.warning("Get your API key at: https://search.patentsview.org/")
+        # Setup session for SerpApi
+        self.session = requests.Session()
+        self.session.headers.update({
+            'Accept': 'application/json',
+            'User-Agent': 'Mozilla/5.0 (Strategic Intelligence Harvester)'
+        })
+
+        # Create PDF directory if needed
+        if download_pdfs:
+            self.pdf_dir = self.output_dir / "pdfs"
+            self.pdf_dir.mkdir(exist_ok=True)
 
         self.stats = {
             'success': 0,
             'failed': 0,
             'skipped': 0,
             'total_size': 0,
-            'by_type': {
-                'granted': 0,
-                'pending': 0
-            }
+            'by_assignee': {}
         }
 
-        resume_info = self.checkpoint.get_resume_info()
-        if resume_info:
-            self.logger.info(resume_info)
+    def download(self) -> Dict[str, Any]:
+        """
+        Main download method. Returns stats dict with REQUIRED keys.
 
-    def download(self) -> Dict:
-        """Main download method"""
-        self.logger.info(f"Starting patent download")
+        Returns:
+            {
+                'success': int,
+                'failed': int,
+                'skipped': int,
+                'total_size': float,
+                'by_assignee': dict
+            }
+        """
+        self.logger.info(f"Starting SerpApi patent download")
         self.logger.info(f"Date range: {self.start_date.date()} to {self.end_date.date()}")
-        self.logger.info(f"Keywords: {len(self.keywords)}")
-        self.logger.info(f"CPC codes: {len(self.cpc_codes)}")
-        self.logger.info(f"Limit: {self.limit} patents")
+        self.logger.info(f"Assignees: {self.assignees}")
+        self.logger.info(f"Limit per assignee: {self.limit} (FREE TIER: conserving searches)")
+        self.logger.info(f"Download PDFs: {self.download_pdfs}")
 
-        # Search patents
-        patents = self._search_patents()
-        self.logger.info(f"Found {len(patents)} patents to process")
+        all_patents = []
 
-        # Save patent records
-        self._save_patents(patents)
+        # Search by assignee (company name)
+        for assignee in self.assignees:
+            self.logger.info(f"Searching patents for: {assignee}")
 
-        # Save metadata
-        self._save_metadata(patents)
+            try:
+                patents = self._search_by_assignee(assignee)
+                all_patents.extend(patents)
+
+                self.stats['by_assignee'][assignee] = len(patents)
+                self.logger.info(f"  Found {len(patents)} patents for {assignee}")
+
+            except Exception as e:
+                self.logger.error(f"Error searching patents for {assignee}: {e}")
+                self.stats['by_assignee'][assignee] = 0
+
+        # Deduplicate by patent number
+        unique_patents = self._deduplicate_patents(all_patents)
+        self.logger.info(f"Total unique patents: {len(unique_patents)}")
+
+        # Save patents
+        if unique_patents:
+            self._save_patents(unique_patents)
+            self._save_metadata(unique_patents)
 
         # Finalize checkpoint
         self.checkpoint.finalize()
 
-        # Print summary
         self._print_summary()
 
         return self.stats
 
-    @retry_on_error(max_retries=3)
-    def _search_patents(self) -> List[Dict]:
-        """Search patents using PatentSearch API"""
-        all_patents = []
+    def _search_by_assignee(self, assignee: str) -> List[Dict]:
+        """
+        Search patents by assignee (company) using SerpApi Google Patents.
+        Limited to one search per assignee to conserve free tier quota.
+        """
+        patents = []
 
-        # Build query
-        query_dict = self._build_query()
+        try:
+            # Build search query for Google Patents
+            # Use assignee: syntax in query (SerpApi supports both parameter and query syntax)
+            query = f'assignee:"{assignee}"'
 
-        # PatentSearch API uses offset/size pagination (not page/per_page)
-        page_size = 100  # Max per request
-        offset = 0
+            # SerpApi parameters (official format from docs)
+            # Date range uses separate 'before' and 'after' parameters with format: type:YYYYMMDD
+            # type can be: priority, filing, or publication
+            params = {
+                'engine': 'google_patents',  # Use Google Patents engine
+                'q': query,
+                'api_key': self.api_token,
+                'num': max(10, min(self.limit, 100)),  # SerpApi requires Min: 10, Max: 100
+                'after': f'publication:{self.start_date.strftime("%Y%m%d")}',  # Format: publication:YYYYMMDD
+                'before': f'publication:{self.end_date.strftime("%Y%m%d")}'    # Format: publication:YYYYMMDD
+            }
 
-        self.logger.info(f"Searching up to {self.limit} patents...")
+            self.logger.debug(f"  Query: {query}")
+            self.logger.debug(f"  Requesting up to {params['num']} results")
 
-        while len(all_patents) < self.limit:
-            try:
-                # Update pagination
-                query_dict["o"]["size"] = min(page_size, self.limit - len(all_patents))
-                query_dict["o"]["from"] = offset
+            response = self.session.get(
+                self.BASE_URL,
+                params=params,
+                timeout=30
+            )
 
-                # Convert query to JSON string for URL parameter
-                import urllib.parse
-                query_json = json.dumps(query_dict["q"])
-                fields_json = json.dumps(query_dict["f"])
-                options_json = json.dumps(query_dict["o"])
-                sort_json = json.dumps(query_dict["s"])
-
-                # Build GET request with query parameters
-                params = {
-                    "q": query_json,
-                    "f": fields_json,
-                    "o": options_json,
-                    "s": sort_json
-                }
-
-                # Add API key header
-                headers = {}
-                if self.api_key:
-                    headers["X-Api-Key"] = self.api_key
-
-                # Make GET request
+            # Handle rate limiting
+            if response.status_code == 429:
+                retry_after = int(response.headers.get('Retry-After', 60))
+                self.logger.warning(f"  Rate limit hit, waiting {retry_after}s...")
+                time.sleep(retry_after)
+                # Retry once
                 response = self.session.get(
-                    self.PATENTS_VIEW_API,
+                    self.BASE_URL,
                     params=params,
-                    headers=headers,
                     timeout=30
                 )
-                response.raise_for_status()
 
-                data = response.json()
+            response.raise_for_status()
+            data = response.json()
 
-                # New API returns patents in different structure
-                if 'patents' in data and data['patents']:
-                    patents = data['patents']
-                    all_patents.extend(patents)
-                    self.logger.debug(f"Retrieved {len(patents)} patents (total: {len(all_patents)})")
+            # Check for SerpApi errors
+            if 'error' in data:
+                self.logger.error(f"  SerpApi error: {data['error']}")
+                return patents
 
-                    # Check if we got fewer results than requested (end of results)
-                    if len(patents) < page_size:
-                        self.logger.info(f"Retrieved all available patents ({len(all_patents)} total)")
+            # Extract organic_results from response
+            results = data.get('organic_results', [])
+
+            if not results:
+                self.logger.warning(f"  No results found for {assignee}")
+                return patents
+
+            self.logger.info(f"  Found {len(results)} results")
+
+            # Process each patent
+            for result in tqdm(results, desc=f"  Processing {assignee}", leave=False):
+                try:
+                    # Get patent ID from result
+                    patent_id = result.get('patent_id')
+
+                    if not patent_id:
+                        self.logger.debug("  Skipping result with no patent_id")
+                        continue
+
+                    # Check checkpoint (skip if already processed)
+                    if self.checkpoint.is_completed(patent_id):
+                        self.stats['skipped'] += 1
+                        continue
+
+                    # Extract patent data
+                    patent_data = self._extract_patent_data(result, assignee)
+
+                    patents.append(patent_data)
+                    self.stats['success'] += 1
+
+                    # Mark as completed in checkpoint
+                    self.checkpoint.mark_completed(patent_id, metadata={
+                        'title': patent_data.get('title'),
+                        'assignee': patent_data.get('assignee')
+                    })
+
+                    # Stop if we've reached the limit
+                    if len(patents) >= self.limit:
                         break
 
-                    offset += len(patents)
-                else:
-                    self.logger.info(f"No more patents found")
-                    break
+                except Exception as e:
+                    self.logger.error(f"  Error processing patent {patent_id}: {e}")
+                    self.stats['failed'] += 1
+                    if patent_id:
+                        self.checkpoint.mark_failed(patent_id, str(e))
 
-                time.sleep(1.5)  # Rate limit: 45 req/min = 1.33s between requests
+            # Rate limiting: be conservative with free tier
+            time.sleep(2)  # 2 second delay between searches
 
-            except Exception as e:
-                self.logger.error(f"Error fetching patents at offset {offset}: {e}")
-                break
+        except Exception as e:
+            self.logger.error(f"Error in search for '{assignee}': {e}")
+            import traceback
+            self.logger.error(traceback.format_exc())
 
-        return all_patents[:self.limit]
+        return patents
 
-    def _build_query(self) -> Dict:
-        """Build PatentSearch API query (new format)"""
-        # Build date filter using new API format
-        date_conditions = []
-        date_conditions.append({"_gte": {"patent_date": self.start_date.strftime("%Y-%m-%d")}})
-        date_conditions.append({"_lte": {"patent_date": self.end_date.strftime("%Y-%m-%d")}})
+    def _extract_patent_data(self, result: Dict, assignee: str) -> Dict:
+        """
+        Extract patent data from SerpApi Google Patents result.
+        Handles various field names and missing data gracefully.
 
-        # Build keyword/CPC filter
-        or_conditions = []
+        SerpApi response format:
+        {
+            "patent_id": "US1234567890B2",
+            "title": "Patent Title",
+            "snippet": "Abstract snippet...",
+            "publication_date": "2024-01-15",
+            "filing_date": "2022-06-10",
+            "grant_date": "2024-01-15",
+            "inventor": "John Doe, Jane Smith",
+            "assignee": "Company Name",
+            "patent_link": "https://patents.google.com/patent/US1234567890B2",
+            "pdf": "https://patentimages.storage.googleapis.com/.../US1234567890B2.pdf"
+        }
+        """
+        patent_id = result.get('patent_id', '')
 
-        # Add keyword searches
-        for keyword in self.keywords:
-            or_conditions.append({"_text_any": {"patent_title": keyword}})
-            or_conditions.append({"_text_any": {"patent_abstract": keyword}})
+        # Extract title
+        title = result.get('title', '')
 
-        # Add CPC code searches
-        for cpc_code in self.cpc_codes:
-            or_conditions.append({"cpc_subgroup_id": cpc_code})
+        # Extract abstract/snippet
+        abstract = result.get('snippet', '')
 
-        # Combine filters
-        all_conditions = date_conditions.copy()
-        if or_conditions:
-            all_conditions.append({"_or": or_conditions})
+        # Extract dates
+        filing_date = result.get('filing_date', '')
+        grant_date = result.get('grant_date') or result.get('publication_date', '')
 
-        query_filter = {"_and": all_conditions} if len(all_conditions) > 1 else all_conditions[0]
+        # Extract assignee (use provided or from result)
+        assignee_name = result.get('assignee', assignee)
 
-        # Build full query (new API format)
-        query = {
-            "q": query_filter,
-            "f": [
-                "patent_id",
-                "patent_number",
-                "patent_title",
-                "patent_date",
-                "patent_abstract",
-                "assignees_at_grant",  # New API field name
-                "inventors_at_grant",   # New API field name
-                "cpc_current",          # New API field name
-                "cited_by_patent_count", # New API field name
-                "claims",                # New API field name
-                "app_date"
-            ],
-            "o": {
-                "size": 100,  # New API uses "size" not "per_page"
-                "from": 0      # New API uses "from" not "page"
-            },
-            "s": [{"patent_date": "desc"}]  # Most recent first
+        # Extract inventors (SerpApi returns as comma-separated string)
+        inventor_str = result.get('inventor', '')
+        if inventor_str:
+            inventor_names = [name.strip() for name in inventor_str.split(',')]
+        else:
+            inventor_names = []
+
+        # Extract patent URL
+        patent_url = result.get('patent_link', f"https://patents.google.com/patent/{patent_id}")
+
+        # Extract PDF URL if available
+        pdf_url = result.get('pdf', '')
+
+        return {
+            'patent_number': patent_id,
+            'title': title,
+            'abstract': abstract,
+            'assignee': assignee_name,
+            'inventors': inventor_names,
+            'filing_date': filing_date,
+            'grant_date': grant_date,
+            'claims_count': 0,  # SerpApi doesn't provide claims count in search results
+            'type': 'granted',
+            'url': patent_url,
+            'pdf_url': pdf_url if pdf_url else None,
+            'source': 'SerpApi (Google Patents)'
         }
 
-        return query
+    def _deduplicate_patents(self, patents: List[Dict]) -> List[Dict]:
+        """Remove duplicate patents based on patent number"""
+        seen = set()
+        unique = []
+
+        for patent in patents:
+            patent_num = patent.get('patent_number')
+            if patent_num and patent_num not in seen:
+                seen.add(patent_num)
+                unique.append(patent)
+
+        return unique
 
     def _save_patents(self, patents: List[Dict]):
-        """Save patent records to JSON files"""
-        self.logger.info("Saving patent records...")
-
-        # Save all patents in a single JSON file
+        """Save patents to JSON file"""
         patents_file = self.output_dir / "patents.json"
-
         with open(patents_file, 'w', encoding='utf-8') as f:
             json.dump(patents, f, indent=2, ensure_ascii=False)
 
-        self.stats['success'] = len(patents)
-        self.stats['total_size'] = patents_file.stat().st_size
+        file_size = patents_file.stat().st_size / (1024 * 1024)  # MB
+        self.stats['total_size'] = file_size
 
-        # Count granted vs pending
-        for patent in patents:
-            if patent.get('patent_date'):
-                self.stats['by_type']['granted'] += 1
-            else:
-                self.stats['by_type']['pending'] += 1
-
-        self.logger.info(f"Saved {len(patents)} patents to {patents_file}")
+        self.logger.info(f"Saved {len(patents)} patents to {patents_file} ({file_size:.2f} MB)")
 
     def _save_metadata(self, patents: List[Dict]):
-        """Generate and save metadata"""
-        # Calculate metrics for hype cycle
-        metrics = self._calculate_metrics(patents)
+        """Save metadata JSON (REQUIRED format)"""
+        metadata = []
 
-        metadata = {
-            'download_date': datetime.now().isoformat(),
-            'date_range': {
-                'start': self.start_date.isoformat(),
-                'end': self.end_date.isoformat()
-            },
-            'search_params': {
-                'keywords': self.keywords,
-                'cpc_codes': self.cpc_codes,
-                'limit': self.limit
-            },
-            'total_patents': len(patents),
-            'stats': self.stats,
-            'metrics': metrics
-        }
+        for patent in patents:
+            metadata.append({
+                'title': patent.get('title'),
+                'date': patent.get('grant_date'),
+                'source': 'SerpApi (Google Patents)',
+                'url': patent.get('url'),
+                'patent_number': patent.get('patent_number'),
+                'assignee': patent.get('assignee'),
+                'file_path': patent.get('pdf_file') if self.download_pdfs else None
+            })
 
-        metadata_path = self.output_dir / "metadata.json"
+        metadata_path = self.output_dir / "patents_metadata.json"
         with open(metadata_path, 'w', encoding='utf-8') as f:
             json.dump(metadata, f, indent=2, ensure_ascii=False)
 
         self.logger.info(f"Metadata saved to {metadata_path}")
-
-    def _calculate_metrics(self, patents: List[Dict]) -> Dict:
-        """Calculate patent metrics for hype cycle analysis"""
-        from collections import Counter
-
-        if not patents:
-            return {}
-
-        # Extract dates
-        filing_dates = [p.get('app_date') for p in patents if p.get('app_date')]
-        grant_dates = [p.get('patent_date') for p in patents if p.get('patent_date')]
-
-        # Extract assignees
-        assignees = []
-        for p in patents:
-            orgs = p.get('assignees', [])
-            if isinstance(orgs, list):
-                assignees.extend([org.get('assignee_organization') for org in orgs
-                                if org.get('assignee_organization')])
-            elif isinstance(orgs, str):
-                assignees.append(orgs)
-
-        assignee_counts = Counter(assignees)
-
-        # Extract citations
-        citations = [p.get('citedby_patent_count', 0) for p in patents]
-        avg_citations = sum(citations) / len(citations) if citations else 0
-
-        # Extract claims
-        claims = [p.get('claims_count', 0) for p in patents if p.get('claims_count')]
-        avg_claims = sum(claims) / len(claims) if claims else 0
-
-        metrics = {
-            'filing_velocity': {
-                'total_filings': len(filing_dates),
-                'date_range_days': (self.end_date - self.start_date).days,
-                'filings_per_month': len(filing_dates) / ((self.end_date - self.start_date).days / 30) if filing_dates else 0
-            },
-            'grant_rate': {
-                'total_granted': len(grant_dates),
-                'grant_percentage': (len(grant_dates) / len(patents) * 100) if patents else 0
-            },
-            'assignee_diversity': {
-                'unique_assignees': len(assignee_counts),
-                'top_10_assignees': dict(assignee_counts.most_common(10))
-            },
-            'citation_metrics': {
-                'avg_citations': round(avg_citations, 2),
-                'max_citations': max(citations) if citations else 0,
-                'highly_cited_count': len([c for c in citations if c > 10])
-            },
-            'claim_metrics': {
-                'avg_claims': round(avg_claims, 2),
-                'broad_patents': len([c for c in claims if c > 20])  # >20 claims = broad patent
-            }
-        }
-
-        return metrics
 
     def _print_summary(self):
         """Print download summary"""
         self.logger.info("\n" + "=" * 60)
         self.logger.info("PATENT DOWNLOAD SUMMARY")
         self.logger.info("=" * 60)
-        self.logger.info(f"Total Patents: {self.stats['success']}")
-        self.logger.info(f"Granted: {self.stats['by_type']['granted']}")
-        self.logger.info(f"Pending: {self.stats['by_type']['pending']}")
+        self.logger.info(f"Success: {self.stats['success']}")
         self.logger.info(f"Failed: {self.stats['failed']}")
-        self.logger.info(f"Total Size: {self.stats['total_size'] / 1024 / 1024:.2f} MB")
+        self.logger.info(f"Skipped: {self.stats['skipped']}")
+        self.logger.info(f"Total Size: {self.stats['total_size']:.2f} MB")
+        self.logger.info("\nBy Assignee:")
+        for assignee, count in self.stats['by_assignee'].items():
+            self.logger.info(f"  {assignee}: {count} patents")
         self.logger.info("=" * 60)
-
-    def __del__(self):
-        """Cleanup"""
-        if hasattr(self, 'session'):
-            self.session.close()
-
-
-# Example usage
-if __name__ == "__main__":
-    from datetime import timedelta
-
-    # eVTOL patent search
-    output_dir = Path("./data/test_patents")
-    end_date = datetime.now()
-    start_date = end_date - timedelta(days=365*2)  # Last 2 years
-
-    keywords = [
-        "eVTOL", "electric VTOL", "vertical takeoff landing electric",
-        "urban air mobility", "electric vertical takeoff"
-    ]
-
-    cpc_codes = [
-        "B64C39/02",  # VTOL aircraft
-        "B64D27/24",  # Electric aircraft propulsion
-    ]
-
-    downloader = PatentDownloader(
-        output_dir=output_dir,
-        start_date=start_date,
-        end_date=end_date,
-        keywords=keywords,
-        cpc_codes=cpc_codes,
-        limit=100  # Test with 100 patents
-    )
-
-    results = downloader.download()
-    print(f"\nDownloaded {results['success']} patents")

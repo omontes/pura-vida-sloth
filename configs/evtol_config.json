@@ -93,8 +93,8 @@
       "comment": "DISABLED - FMP API free tier blocked (403 Forbidden). Requires paid tier."
     },
     "patents": {
-      "enabled": false,
-      "limit": 100,
+      "enabled": true,
+      "limit": 20,
       "cpc_codes": [
         "B64C39/02",
         "B64D27/24",
@@ -102,7 +102,7 @@
         "B60L50/60"
       ],
       "priority": 2,
-      "comment": "DISABLED - waiting for PatentsView API key approval"
+      "comment": "Using SerpApi (Google Patents) - 100 searches/month free tier. Limit=20 per company (10 companies = 10 searches, ~100-200 patents total)"
     },
     "github": {
       "enabled": true,

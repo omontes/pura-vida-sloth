@@ -153,11 +153,10 @@ class InitialHarvest:
             from src.downloaders.patents import PatentDownloader
             downloaders['patents'] = PatentDownloader(
                 output_dir=self.industry_root / folder_map['patents'],
-                start_date=start_date,
-                end_date=end_date,
-                keywords=self.config['keywords']['core'] + self.config['keywords'].get('technology', []),
-                cpc_codes=self.config['data_sources']['patents'].get('cpc_codes', []),
-                limit=self.config['data_sources']['patents'].get('limit', 1000)
+                start_date=start_date.isoformat(),  # Convert datetime to ISO string
+                end_date=end_date.isoformat(),      # Convert datetime to ISO string
+                assignees=self.config['companies'].get('public', {}),  # Pass public companies as assignees
+                limit=self.config['data_sources']['patents'].get('limit', 20)
             )
             self.logger.info("Initialized: PatentDownloader")
 
