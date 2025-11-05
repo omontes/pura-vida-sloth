@@ -2,9 +2,9 @@
 
 ## Project Vision
 
-Multi-source intelligence harvesting for **strategic investment timing** in emerging technology markets. This system collects data from 14 independent sources to determine **where an industry sits on the Gartner Hype Cycle** and answer the C-level question: **"Should we invest NOW, or wait?"**
+Multi-source intelligence harvesting for **strategic investment timing** in emerging technology markets. This system collects data from 14 independent sources to determine **where an industry sits on the technology adoption lifecycle** and answer the C-level question: **"Should we engage NOW, or wait for better timing?"**
 
-**End Goal**: Gartner-style executive reports with Hype Cycle positioning and BUY/HOLD/SELL recommendations based on multi-layer intelligence triangulation.
+**End Goal**: Executive-grade strategic intelligence reports with lifecycle positioning and investment phase indicators based on multi-layer intelligence triangulation.
 
 ---
 
@@ -21,7 +21,7 @@ Between 2010-2023, corporations and VCs invested $1+ trillion in emerging tech a
 
 ### Our Solution: Multi-Source Triangulation
 
-14 independent data sources across 4 time horizons reveal the truth. When layers contradict, that's an actionable investment signal.
+14 independent data sources across 4 time horizons reveal the truth. When layers contradict, that's an actionable strategic signal.
 
 ---
 
@@ -55,32 +55,32 @@ The system operates like a strategic radar with four independent layers, each lo
 
 **Purpose**: Detect hype peaks and contrarian signals
 
-**Key Insight**: News volume peaks when market peaks. High media attention + negative fundamentals = sell signal.
+**Key Insight**: News volume peaks when market peaks. High media attention + negative fundamentals = risk signal.
 
 ---
 
-## How Contradictions Reveal Investment Opportunities
+## How Contradictions Reveal Strategic Opportunities
 
-**The Magic**: When layers disagree, that pinpoints where we are on the Hype Cycle:
+**The Magic**: When layers disagree, that pinpoints where we are on the adoption lifecycle:
 
-### Peak Signal (SELL)
+### Peak Phase Indicators
 - **Layer 1-2**: Innovation slowing (GitHub inactive, patent decline)
 - **Layer 3**: Insiders selling, valuations stretched
 - **Layer 4**: News bullish, high media coverage
-- **Action**: Exit positions, wait for 70-80% decline
+- **Analysis**: Risk mitigation signals suggest potential valuation pressure ahead
 
-### Trough Signal (BUY)
+### Trough Phase Indicators
 - **Layer 1-2**: Innovation recovering (patents increasing, gov contracts awarded)
 - **Layer 3**: Insiders buying, valuations compressed
 - **Layer 4**: News bearish, media quiet
-- **Action**: Enter positions, ride recovery to "Slope of Enlightenment"
+- **Analysis**: Strategic opportunity signals indicate potential value accumulation phase
 
 ### Real Example: eVTOL (November 2024)
 - **L1**: GitHub repos 0% active (innovation dead)
 - **L2**: $274M DoD/NASA contracts (government validation)
 - **L3**: Insiders selling at $16-18 (executives exiting)
 - **L4**: 269 news articles (1.5/day - high hype)
-- **Verdict**: PEAK → entering trough. Sell/trim, re-enter 2026-2027 after 70% decline.
+- **Assessment**: Peak phase indicators → entering trough. Risk indicators suggest strategic re-evaluation window: 2026-2027
 
 ---
 
@@ -100,12 +100,12 @@ Switch from eVTOL to quantum computing, biotech, or AI by changing a JSON config
 No single API failure breaks the system. Primary sources fail gracefully to backups (APIs → RSS → web scraping).
 
 ### 3. Evidence-Based Decision Making
-Every recommendation backed by 400-1,600 source documents. Data provenance tracked for audit trails.
+Every analysis backed by 400-1,600 source documents. Data provenance tracked for audit trails.
 
 ### 4. Executive-Grade Output
-Output format mirrors Gartner/McKinsey reports:
-- Hype Cycle positioning with confidence intervals
-- Investment timing recommendations (BUY/HOLD/SELL)
+Output format mirrors institutional research-grade analysis:
+- Technology lifecycle positioning with confidence intervals
+- Investment phase-based timing signals
 - Comparable historical examples (e.g., "eVTOL 2024 = Tesla 2018")
 - Risk-adjusted return projections
 
@@ -119,14 +119,14 @@ INPUT LAYER (Harvest)
    └─ Output: 400-1,600 documents per 90-day window
 
 PROCESSING LAYER (Analysis) [NOT YET IMPLEMENTED]
-└─ Hype cycle scoring algorithm
+└─ Technology lifecycle scoring algorithm
 └─ Cross-layer contradiction detection
 └─ Temporal pattern analysis
 
 OUTPUT LAYER (Reporting) [NOT YET IMPLEMENTED]
-└─ Gartner-style executive reports
-└─ Hype Cycle visualizations
-└─ Magic Quadrant positioning
+└─ Executive-grade strategic intelligence reports
+└─ Technology lifecycle visualizations
+└─ Competitive positioning matrix
 ```
 
 **Current Status**: Input layer complete. Analysis and reporting layers are future work.
@@ -166,9 +166,9 @@ OUTPUT LAYER (Reporting) [NOT YET IMPLEMENTED]
 ## When to Use This System
 
 **Ideal for**:
-- Investment timing in emerging tech markets
-- Detecting hype cycle peaks before crashes
-- Finding trough entry points (buy low opportunities)
+- Strategic timing analysis in emerging tech markets
+- Detecting lifecycle peaks before market corrections
+- Finding value accumulation opportunities during troughs
 - Validating VC/PE thesis before deployment
 - Strategic planning for corporate R&D investment
 
@@ -179,6 +179,8 @@ OUTPUT LAYER (Reporting) [NOT YET IMPLEMENTED]
 
 ---
 
-**Remember**: This system helps executives avoid $100M+ mistakes by predicting hype cycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.
+**Remember**: This system helps executives avoid $100M+ mistakes by identifying technology lifecycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.
+
+**Disclaimer**: *This system provides multi-source intelligence for strategic analysis only. Not investment advice. Consult licensed financial advisors for investment decisions.*
 
 **For implementation details, see `.claude/CLAUDE.local.md`**
