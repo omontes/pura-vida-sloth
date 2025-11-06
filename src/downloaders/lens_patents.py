@@ -192,6 +192,7 @@ class LensPatentDownloader:
                     }
                 },
                 "include": [
+                    # === EXISTING CORE FIELDS (14) ===
                     "lens_id",
                     "doc_number",
                     "jurisdiction",
@@ -206,7 +207,31 @@ class LensPatentDownloader:
                     "legal_status.granted",
                     "legal_status.patent_status",
                     "biblio.classifications_cpc",
-                    "biblio.references_cited"
+                    "biblio.references_cited",
+
+                    # === NEW CRITICAL FIELDS (PDF Access + 3 fields) ===
+                    "doc_key",                              # For PDF URL construction
+                    "publication_type",                     # GRANTED_PATENT vs PATENT_APPLICATION
+                    "lang",                                 # Filter English patents
+
+                    # === NEW CRITICAL FIELDS (Strategic Intelligence + 5 fields) ===
+                    "families.simple_family.size",          # Patent family breadth
+                    "families.extended_family.size",        # Global coverage
+                    "biblio.cited_by",                      # Forward citations (impact)
+                    "biblio.parties.owners_all",            # Current ownership (M&A tracking)
+                    "biblio.priority_claims",               # Priority claims with earliest date
+
+                    # === NEW CRITICAL FIELDS (Legal Status + 3 fields) ===
+                    "legal_status.anticipated_term_date",   # Patent expiry date
+                    "legal_status.discontinuation_date",    # Abandonment/lapse date
+                    "legal_status.has_disclaimer",          # Terminal disclaimer (US)
+
+                    # === NEW HIGH-VALUE FIELDS (Classifications + 1 field) ===
+                    "biblio.classifications_ipcr",          # International classification
+
+                    # === NEW MUST-HAVE FIELDS (Full Text + 2 fields) ===
+                    "description",                          # Full technical specification (CRITICAL)
+                    "claims"                                # Full claims text (legal scope)
                 ],
                 "size": 100,  # Max 100 per page
                 "scroll": "1m"  # Keep scroll context alive for 1 minute
@@ -472,14 +497,134 @@ class LensPatentDownloader:
         refs_cited = biblio.get('references_cited', {})
         patent_citations = 0
         npl_citations = 0
+        npl_resolved_count = 0
+        detailed_citations = []
         if isinstance(refs_cited, dict):
             patent_citations = refs_cited.get('patent_count', 0)
             npl_citations = refs_cited.get('npl_count', 0)
+            npl_resolved_count = refs_cited.get('npl_resolved_count', 0)
+            # Extract detailed citation list
+            detailed_citations = refs_cited.get('citations', [])
+
+        # === NEW: PDF ACCESS FIELDS ===
+        doc_key = result.get('doc_key', '')
+        publication_type = result.get('publication_type', 'UNKNOWN')
+        lang = result.get('lang', '')
+
+        # === NEW: FAMILY DATA ===
+        families = result.get('families', {})
+        simple_family_size = 0
+        extended_family_size = 0
+        if isinstance(families, dict):
+            simple_family = families.get('simple_family', {})
+            if isinstance(simple_family, dict):
+                simple_family_size = simple_family.get('size', 0)
+            extended_family = families.get('extended_family', {})
+            if isinstance(extended_family, dict):
+                extended_family_size = extended_family.get('size', 0)
+
+        # === NEW: FORWARD CITATIONS (IMPACT) ===
+        cited_by = biblio.get('cited_by', {})
+        forward_citation_count = 0
+        forward_citation_lens_ids = []
+        if isinstance(cited_by, dict):
+            citing_patents = cited_by.get('patents', [])
+            if isinstance(citing_patents, list):
+                forward_citation_count = len(citing_patents)
+                forward_citation_lens_ids = [p.get('lens_id', '') for p in citing_patents if isinstance(p, dict)]
+
+        # === NEW: OWNERSHIP DATA (M&A TRACKING) ===
+        owners_all = parties.get('owners_all', [])
+        current_owners = []
+        if isinstance(owners_all, list):
+            for owner in owners_all:
+                if isinstance(owner, dict):
+                    extracted_name = owner.get('extracted_name', {})
+                    owner_name = ''
+                    if isinstance(extracted_name, dict):
+                        owner_name = extracted_name.get('value', '')
+                    current_owners.append({
+                        'name': owner_name,
+                        'recorded_date': owner.get('recorded_date', ''),
+                        'execution_date': owner.get('execution_date', ''),
+                        'country': owner.get('extracted_country', '')
+                    })
+
+        # === NEW: PRIORITY DATA ===
+        priority_claims = biblio.get('priority_claims', {})
+        earliest_priority_date = ''
+        if isinstance(priority_claims, dict):
+            earliest_claim = priority_claims.get('earliest_claim', {})
+            if isinstance(earliest_claim, dict):
+                earliest_priority_date = earliest_claim.get('date', '')
+
+        # === NEW: LEGAL STATUS DETAILS ===
+        anticipated_term_date = ''
+        discontinuation_date = ''
+        has_disclaimer = False
+        if isinstance(legal_status, dict):
+            anticipated_term_date = legal_status.get('anticipated_term_date', '')
+            discontinuation_date = legal_status.get('discontinuation_date', '')
+            has_disclaimer = legal_status.get('has_disclaimer', False)
+
+        # === NEW: IPCR CLASSIFICATIONS ===
+        ipcr_classifications = biblio.get('classifications_ipcr', [])
+        ipcr_codes = []
+        if isinstance(ipcr_classifications, list):
+            for cls in ipcr_classifications:
+                if isinstance(cls, dict):
+                    symbol = cls.get('symbol', '')
+                    if symbol:
+                        ipcr_codes.append(symbol)
+
+        # === NEW: FULL TEXT CONTENT (MUST-HAVE) ===
+        # Description - may be list of dicts with lang/text or string
+        description = ''
+        description_raw = result.get('description', '')
+        if isinstance(description_raw, list):
+            # Prefer English description
+            for desc_obj in description_raw:
+                if isinstance(desc_obj, dict) and desc_obj.get('lang') == 'en':
+                    description = desc_obj.get('text', '')
+                    break
+            # If no English, use first available
+            if not description and description_raw:
+                first_desc = description_raw[0]
+                if isinstance(first_desc, dict):
+                    description = first_desc.get('text', '')
+        elif isinstance(description_raw, str):
+            description = description_raw
+
+        # Claims - may be list of dicts with lang/text or string
+        claims = ''
+        claims_raw = result.get('claims', '')
+        if isinstance(claims_raw, list):
+            # Prefer English claims
+            for claim_obj in claims_raw:
+                if isinstance(claim_obj, dict) and claim_obj.get('lang') == 'en':
+                    claims = claim_obj.get('text', '')
+                    break
+            # If no English, use first available
+            if not claims and claims_raw:
+                first_claim = claims_raw[0]
+                if isinstance(first_claim, dict):
+                    claims = first_claim.get('text', '')
+        elif isinstance(claims_raw, str):
+            claims = claims_raw
+
+        # Calculate claims count from extracted claims text
+        claims_count = 0
+        if claims:
+            # Rough estimate: count numbered claims (e.g., "1.", "2.", etc.)
+            import re
+            claim_matches = re.findall(r'\n\s*\d+\.', claims)
+            claims_count = len(claim_matches)
 
         # Construct patent URL
         patent_url = f"https://link.lens.org/{lens_id}"
 
         return {
+            # === EXISTING FIELDS (19) ===
             'patent_number': doc_number,
             'lens_id': lens_id,
             'jurisdiction': jurisdiction,
@@ -491,13 +636,49 @@ class LensPatentDownloader:
             'filing_date': filing_date,
             'grant_date': grant_date,
             'publication_date': date_published,
-            'claims_count': 0,  # Lens API doesn't provide claims count in search results
+            'claims_count': claims_count,  # Now calculated from actual claims text
             'cpc_codes': cpc_codes,
-            'citation_count': patent_citations,
+            'citation_count': patent_citations,  # Backward citations
             'npl_citation_count': npl_citations,
             'type': 'granted' if is_granted else 'application',
             'url': patent_url,
-            'source': 'Lens.org Patent API'
+            'source': 'Lens.org Patent API',
+
+            # === NEW FIELDS (18) ===
+            # PDF Access
+            'doc_key': doc_key,
+            'publication_type': publication_type,
+            'lang': lang,
+
+            # Strategic Intelligence - Family Data
+            'simple_family_size': simple_family_size,
+            'extended_family_size': extended_family_size,
+
+            # Strategic Intelligence - Forward Citations (Impact)
+            'forward_citation_count': forward_citation_count,
+            'forward_citation_lens_ids': forward_citation_lens_ids,
+
+            # Strategic Intelligence - Ownership (M&A Tracking)
+            'current_owners': current_owners,
+
+            # Strategic Intelligence - Priority Data
+            'earliest_priority_date': earliest_priority_date,
+
+            # Legal Status Details
+            'anticipated_term_date': anticipated_term_date,
+            'discontinuation_date': discontinuation_date,
+            'has_terminal_disclaimer': has_disclaimer,
+
+            # Classifications
+            'ipcr_codes': ipcr_codes,
+
+            # Citation Details
+            'npl_resolved_count': npl_resolved_count,
+            'detailed_citations': detailed_citations,
+
+            # Full Text Content (CRITICAL)
+            'description': description,
+            'claims': claims
         }
 
     def _deduplicate_patents(self, patents: List[Dict]) -> List[Dict]:
