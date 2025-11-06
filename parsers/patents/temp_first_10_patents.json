@@ -1,0 +1,1957 @@
+[
+  {
+    "patent_number": "2025038139",
+    "lens_id": "000-858-995-240-464",
+    "jurisdiction": "WO",
+    "kind": "A3",
+    "title": "SYSTEMS AND METHODS FOR VERTICAL TAKEOFF AND LANDING VEHICLE WITH OPERATION MODE-BASED ROTOR BLADE CONTROL",
+    "abstract": "Systems and methods relate to a vehicle, such as a vertical takeoff and landing (VTOL) platform, which can include a stator and a rotor magnetically levitated by the stator. The rotor and stator can be annular, such that the rotor rotates about a rotational axis. The stator can include magnets that provide guidance, levitation, and drive forces to drive the rotor, as well as to control operation of rotor blades of the rotor that can be independently rotated to specific pitch angles to control at least one of lift, pitch, roll, or yaw of the VTOL platform. Various controllers can be used to enable independent and redundant control of components of the VTOL platform. One or more processors can determine an adjusted target pitch angle for a rotor blade and cause the rotor blade to rotate to the adjusted target pitch angle.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2024-03-29",
+    "grant_date": "",
+    "publication_date": "2025-05-30",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 5,
+    "npl_citation_count": 0,
+    "type": "application",
+    "url": "https://link.lens.org/000-858-995-240-464",
+    "source": "Lens.org Patent API",
+    "doc_key": "WO_2025038139_A3_20250530",
+    "publication_type": "SEARCH_REPORT",
+    "lang": "en",
+    "simple_family_size": 2,
+    "extended_family_size": 2,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "2023-03-31",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020283135",
+            "kind": "A1",
+            "date": "2020-09-10"
+          },
+          "lens_id": "034-451-619-866-972"
+        },
+        "category": [
+          "Y"
+        ],
+        "cited_phase": "ISR"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018339770",
+            "kind": "A1",
+            "date": "2018-11-29"
+          },
+          "lens_id": "180-747-454-159-546"
+        },
+        "category": [
+          "Y"
+        ],
+        "cited_phase": "ISR"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2019071172",
+            "kind": "A1",
+            "date": "2019-03-07"
+          },
+          "lens_id": "068-403-065-214-960"
+        },
+        "category": [
+          "A"
+        ],
+        "cited_phase": "ISR"
+      },
+      {
+        "sequence": 4,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2017274991",
+            "kind": "A1",
+            "date": "2017-09-28"
+          },
+          "lens_id": "142-728-745-339-609"
+        },
+        "category": [
+          "A"
+        ],
+        "cited_phase": "ISR"
+      },
+      {
+        "sequence": 5,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2008279685",
+            "kind": "A1",
+            "date": "2008-11-13"
+          },
+          "lens_id": "101-752-656-926-388"
+        },
+        "category": [
+          "A"
+        ],
+        "cited_phase": "ISR"
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "3039443",
+    "lens_id": "002-215-081-127-282",
+    "jurisdiction": "ES",
+    "kind": "T3",
+    "title": "FLYING VEHICLE SYSTEMS AND METHODS",
+    "abstract": "",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2021-04-06",
+    "grant_date": "2025-10-21",
+    "publication_date": "2025-10-21",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 0,
+    "npl_citation_count": 0,
+    "type": "granted",
+    "url": "https://link.lens.org/002-215-081-127-282",
+    "source": "Lens.org Patent API",
+    "doc_key": "ES_3039443_T3_20251021",
+    "publication_type": "GRANTED_PATENT",
+    "lang": "es",
+    "simple_family_size": 12,
+    "extended_family_size": 64,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "2020-04-06",
+    "anticipated_term_date": "2041-04-06",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "2025122212",
+    "lens_id": "003-072-418-444-672",
+    "jurisdiction": "WO",
+    "kind": "A9",
+    "title": "EXHAUST AREA AND FLOW TURNING CONTROL",
+    "abstract": "An aircraft may comprise ducted fans. The ducted fans may be an array of ducted fans. An array of ducted fans may be integrated in a wing of the aircraft. A ducted fan may be integrated in a horizontal tail of the aircraft. The wing may include a movable edge, such as a flap, to provide both exhaust area and flow turning control. The movable edge may be articulated by pivoting the movable edge. The movable edge may be extended and retracted.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2024-08-23",
+    "grant_date": "",
+    "publication_date": "2025-07-17",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 0,
+    "npl_citation_count": 0,
+    "type": "application",
+    "url": "https://link.lens.org/003-072-418-444-672",
+    "source": "Lens.org Patent API",
+    "doc_key": "WO_2025122212_A9_20250717",
+    "publication_type": "SEARCH_REPORT",
+    "lang": "en",
+    "simple_family_size": 4,
+    "extended_family_size": 4,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "2023-08-24",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "12454155",
+    "lens_id": "006-686-585-745-822",
+    "jurisdiction": "US",
+    "kind": "B2",
+    "title": "Torsion tube mounted aerodynamic system",
+    "abstract": "An aerodynamic system comprising a torsion tube, a first rotatory coupling coupled to the torsion tube and adapted to mount to a first wheel hub, a second rotary coupling coupled to the torsion tube distal from the first rotary coupling and adapted to mount to a second wheel hub, and a non-rotating fairing panel mounted to the torsion tube.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2023-12-22",
+    "grant_date": "",
+    "publication_date": "2025-10-28",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 19,
+    "npl_citation_count": 4,
+    "type": "application",
+    "url": "https://link.lens.org/006-686-585-745-822",
+    "source": "Lens.org Patent API",
+    "doc_key": "US_12454155_B2_20251028",
+    "publication_type": "GRANTED_PATENT",
+    "lang": "en",
+    "simple_family_size": 1,
+    "extended_family_size": 1,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "4981162",
+            "kind": "A",
+            "date": "1991-01-01"
+          },
+          "lens_id": "178-753-829-363-80X"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5100206",
+            "kind": "A",
+            "date": "1992-03-01"
+          },
+          "lens_id": "035-215-750-646-635"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5922152",
+            "kind": "A",
+            "date": "1999-07-01"
+          },
+          "lens_id": "034-208-426-383-114"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "6011463",
+            "kind": "A",
+            "date": "2000-01-01"
+          },
+          "lens_id": "198-175-112-584-297"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "7218210",
+            "kind": "B2",
+            "date": "2007-05-01"
+          },
+          "lens_id": "081-340-751-745-257"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9365074",
+            "kind": "B2",
+            "date": "2016-06-01"
+          },
+          "lens_id": "049-628-758-956-041"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11951771",
+            "kind": "B2",
+            "date": "2024-04-01"
+          },
+          "lens_id": "197-121-834-952-004"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "12252185",
+            "kind": "B2",
+            "date": "2025-03-01"
+          },
+          "lens_id": "051-471-327-697-93X"
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2003/0051545",
+            "kind": "A1",
+            "date": "2003-03-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2006/0175892",
+            "kind": "A1",
+            "date": "2006-08-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2012/0056444",
+            "kind": "A1",
+            "date": "2012-03-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2013/0015698",
+            "kind": "A1",
+            "date": "2013-01-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2014/0117712",
+            "kind": "A1",
+            "date": "2014-05-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2015/0059946",
+            "kind": "A1",
+            "date": "2015-03-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2015/0174972",
+            "kind": "A1",
+            "date": "2015-06-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2016/0250901",
+            "kind": "A1",
+            "date": "2016-09-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2024/0253392",
+            "kind": "A1",
+            "date": "2024-08-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2025/0249968",
+            "kind": "A1",
+            "date": "2025-08-01"
+          }
+        }
+      },
+      {
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "DE",
+            "doc_number": "202008003758",
+            "kind": "U1",
+            "date": "2009-09-01"
+          },
+          "lens_id": "024-144-406-915-969"
+        }
+      },
+      {
+        "nplcit": {
+          "text": "Machine Translation of DE 202008003758 U1, 15 pages (Year: 2009)."
+        }
+      },
+      {
+        "nplcit": {
+          "text": "Office Action for Canadian Patent Application No. 3,046,189, issued Apr. 5, 2024, 5 pgs."
+        }
+      },
+      {
+        "nplcit": {
+          "text": "Office Action for European Patent Application No. 21171821.8, issued May 16, 2024, 4 pgs."
+        }
+      },
+      {
+        "nplcit": {
+          "text": "Examination Report issued in Canadian Patent Application No. 3,046,189, by the Canadian Intellectual Property Office on Mar. 6, 2025, 4 pgs."
+        }
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "12372978",
+    "lens_id": "007-439-058-585-01X",
+    "jurisdiction": "US",
+    "kind": "B2",
+    "title": "Vehicle autonomy architecture",
+    "abstract": "Systems and methods for controlling aerial vehicles are provided. An aerial vehicle includes a single circuit board with a number of processor devices and a memory including instructions to perform autonomy operations. The autonomy operations include obtaining GNSS data from GNSS assemblies electrically connected to the processor devices, APNT data from APNT assemblies electrically connected to the processor devices, and radar data from the radar assemblies electrically connected to the processor devices. Each of the assemblies are disposed on the same circuit board that includes the number of processor devices. The processor devices determine a vehicle location based on the GNSS data, the APNT data, and the radar data, identify airborne objects based on the radar data, generate a motion plan based on the vehicle location and the identified objects, and initiate a motion of the aerial vehicle based on the vehicle location.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2022-07-05",
+    "grant_date": "2025-07-29",
+    "publication_date": "2025-07-29",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 73,
+    "npl_citation_count": 5,
+    "type": "granted",
+    "url": "https://link.lens.org/007-439-058-585-01X",
+    "source": "Lens.org Patent API",
+    "doc_key": "US_12372978_B2_20250729",
+    "publication_type": "GRANTED_PATENT",
+    "lang": "en",
+    "simple_family_size": 3,
+    "extended_family_size": 3,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [
+      {
+        "name": "JOBY AERO INC",
+        "recorded_date": "2023-01-19",
+        "execution_date": "2022-08-15",
+        "country": ""
+      }
+    ],
+    "earliest_priority_date": "2021-07-02",
+    "anticipated_term_date": "2043-09-18",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 2,
+    "detailed_citations": [
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2015378936",
+            "kind": "A1",
+            "date": "2015-12-31"
+          },
+          "lens_id": "158-798-222-746-656"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2019227826",
+            "kind": "A1",
+            "date": "2019-07-25"
+          },
+          "lens_id": "070-429-282-842-880"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020218288",
+            "kind": "A1",
+            "date": "2020-07-09"
+          },
+          "lens_id": "172-195-021-141-348"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "3035789",
+            "kind": "A",
+            "date": "1962-05-22"
+          },
+          "lens_id": "076-682-637-339-73X"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "4022405",
+            "kind": "A",
+            "date": "1977-05-10"
+          },
+          "lens_id": "072-548-104-065-059"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5823468",
+            "kind": "A",
+            "date": "1998-10-20"
+          },
+          "lens_id": "198-784-484-592-152"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 4,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5839691",
+            "kind": "A",
+            "date": "1998-11-24"
+          },
+          "lens_id": "110-392-665-356-073"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 5,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5842667",
+            "kind": "A",
+            "date": "1998-12-01"
+          },
+          "lens_id": "018-991-811-155-510"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 6,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "6343127",
+            "kind": "B1",
+            "date": "2002-01-29"
+          },
+          "lens_id": "112-808-884-799-842"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 7,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "6892980",
+            "kind": "B2",
+            "date": "2005-05-17"
+          },
+          "lens_id": "070-538-145-991-604"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 8,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8016226",
+            "kind": "B1",
+            "date": "2011-09-13"
+          },
+          "lens_id": "118-656-022-995-039"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 9,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8020804",
+            "kind": "B2",
+            "date": "2011-09-20"
+          },
+          "lens_id": "046-931-847-391-428"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 10,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8311686",
+            "kind": "B2",
+            "date": "2012-11-13"
+          },
+          "lens_id": "148-063-645-359-279"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 11,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8733690",
+            "kind": "B2",
+            "date": "2014-05-27"
+          },
+          "lens_id": "004-882-227-233-443"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 12,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8737634",
+            "kind": "B2",
+            "date": "2014-05-27"
+          },
+          "lens_id": "187-679-511-000-623"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 13,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "8849479",
+            "kind": "B2",
+            "date": "2014-09-30"
+          },
+          "lens_id": "029-943-472-399-280"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 14,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9205930",
+            "kind": "B2",
+            "date": "2015-12-08"
+          },
+          "lens_id": "062-386-059-322-922"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 15,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9387928",
+            "kind": "B1",
+            "date": "2016-07-12"
+          },
+          "lens_id": "009-172-298-570-135"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 16,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9415870",
+            "kind": "B1",
+            "date": "2016-08-16"
+          },
+          "lens_id": "123-029-051-038-797"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 17,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9422055",
+            "kind": "B1",
+            "date": "2016-08-23"
+          },
+          "lens_id": "107-325-513-895-977"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 18,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9435661",
+            "kind": "B2",
+            "date": "2016-09-06"
+          },
+          "lens_id": "078-581-831-174-238"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 19,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9442496",
+            "kind": "B1",
+            "date": "2016-09-13"
+          },
+          "lens_id": "003-503-929-227-663"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 20,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9550561",
+            "kind": "B1",
+            "date": "2017-01-24"
+          },
+          "lens_id": "033-269-640-301-354"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 21,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9663237",
+            "kind": "B2",
+            "date": "2017-05-30"
+          },
+          "lens_id": "161-209-512-426-175"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 22,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9694911",
+            "kind": "B2",
+            "date": "2017-07-04"
+          },
+          "lens_id": "154-854-766-476-904"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 23,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9771157",
+            "kind": "B2",
+            "date": "2017-09-26"
+          },
+          "lens_id": "124-777-376-286-473"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 24,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9786961",
+            "kind": "B2",
+            "date": "2017-10-10"
+          },
+          "lens_id": "160-838-060-842-80X"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 25,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9802702",
+            "kind": "B1",
+            "date": "2017-10-31"
+          },
+          "lens_id": "023-464-529-864-109"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 26,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9816529",
+            "kind": "B2",
+            "date": "2017-11-14"
+          },
+          "lens_id": "129-371-900-125-310"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 27,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "9838436",
+            "kind": "B2",
+            "date": "2017-12-05"
+          },
+          "lens_id": "150-567-867-507-813"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 28,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10140873",
+            "kind": "B2",
+            "date": "2018-11-27"
+          },
+          "lens_id": "033-930-986-624-774"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 29,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10152894",
+            "kind": "B2",
+            "date": "2018-12-11"
+          },
+          "lens_id": "154-682-842-940-273"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 30,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10216190",
+            "kind": "B2",
+            "date": "2019-02-26"
+          },
+          "lens_id": "068-365-206-237-425"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 31,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10249200",
+            "kind": "B1",
+            "date": "2019-04-02"
+          },
+          "lens_id": "091-941-833-980-193"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 32,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10304344",
+            "kind": "B2",
+            "date": "2019-05-28"
+          },
+          "lens_id": "161-028-799-901-902"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 33,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10330482",
+            "kind": "B2",
+            "date": "2019-06-25"
+          },
+          "lens_id": "102-829-281-419-193"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 34,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10593215",
+            "kind": "B2",
+            "date": "2020-03-17"
+          },
+          "lens_id": "121-263-959-046-095"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 35,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10593217",
+            "kind": "B2",
+            "date": "2020-03-17"
+          },
+          "lens_id": "028-747-881-499-886"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 36,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10752365",
+            "kind": "B2",
+            "date": "2020-08-25"
+          },
+          "lens_id": "128-362-299-069-192"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 37,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10759537",
+            "kind": "B2",
+            "date": "2020-09-01"
+          },
+          "lens_id": "196-312-646-017-938"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 38,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10768201",
+            "kind": "B2",
+            "date": "2020-09-08"
+          },
+          "lens_id": "144-593-864-282-171"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 39,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10832581",
+            "kind": "B2",
+            "date": "2020-11-10"
+          },
+          "lens_id": "078-509-056-018-595"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 40,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10836470",
+            "kind": "B2",
+            "date": "2020-11-17"
+          },
+          "lens_id": "166-895-860-591-526"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 41,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10913528",
+            "kind": "B1",
+            "date": "2021-02-09"
+          },
+          "lens_id": "011-041-356-320-970"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 42,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10948910",
+            "kind": "B2",
+            "date": "2021-03-16"
+          },
+          "lens_id": "084-620-748-036-965"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 43,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10960785",
+            "kind": "B2",
+            "date": "2021-03-30"
+          },
+          "lens_id": "099-593-019-249-665"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 44,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11130566",
+            "kind": "B2",
+            "date": "2021-09-28"
+          },
+          "lens_id": "031-758-953-482-672"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 45,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11145211",
+            "kind": "B2",
+            "date": "2021-10-12"
+          },
+          "lens_id": "079-922-886-498-714"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 46,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11238745",
+            "kind": "B2",
+            "date": "2022-02-01"
+          },
+          "lens_id": "010-060-033-169-580"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 47,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11295622",
+            "kind": "B2",
+            "date": "2022-04-05"
+          },
+          "lens_id": "024-142-703-712-923"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 48,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2010079342",
+            "kind": "A1",
+            "date": "2010-04-01"
+          },
+          "lens_id": "098-954-253-793-567"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 49,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2014179535",
+            "kind": "A1",
+            "date": "2014-06-26"
+          },
+          "lens_id": "115-672-194-506-909"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 50,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2016311529",
+            "kind": "A1",
+            "date": "2016-10-27"
+          },
+          "lens_id": "074-699-467-083-732"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 51,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2017197710",
+            "kind": "A1",
+            "date": "2017-07-13"
+          },
+          "lens_id": "004-159-067-560-994"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 52,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2017357914",
+            "kind": "A1",
+            "date": "2017-12-14"
+          },
+          "lens_id": "109-173-662-590-301"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 53,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018018887",
+            "kind": "A1",
+            "date": "2018-01-18"
+          },
+          "lens_id": "196-848-550-988-700"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 54,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018053425",
+            "kind": "A1",
+            "date": "2018-02-22"
+          },
+          "lens_id": "127-369-451-472-898"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 55,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018216988",
+            "kind": "A1",
+            "date": "2018-08-02"
+          },
+          "lens_id": "129-387-601-147-022"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 56,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018308366",
+            "kind": "A1",
+            "date": "2018-10-25"
+          },
+          "lens_id": "032-873-369-109-940"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 57,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2018354636",
+            "kind": "A1",
+            "date": "2018-12-13"
+          },
+          "lens_id": "027-084-124-396-360"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 58,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2019146508",
+            "kind": "A1",
+            "date": "2019-05-16"
+          },
+          "lens_id": "068-481-771-990-688"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 59,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2019221127",
+            "kind": "A1",
+            "date": "2019-07-18"
+          },
+          "lens_id": "173-822-287-194-961"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 60,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2019316849",
+            "kind": "A1",
+            "date": "2019-10-17"
+          },
+          "lens_id": "087-109-947-689-820"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 61,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020103922",
+            "kind": "A1",
+            "date": "2020-04-02"
+          },
+          "lens_id": "108-149-705-575-667"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 62,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020388166",
+            "kind": "A1",
+            "date": "2020-12-10"
+          },
+          "lens_id": "197-516-590-657-020"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 63,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "EP",
+            "doc_number": "0945841",
+            "kind": "A1",
+            "date": "1999-09-29"
+          },
+          "lens_id": "010-384-125-429-651"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 64,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "EP",
+            "doc_number": "2698749",
+            "kind": "A1",
+            "date": "2014-02-19"
+          },
+          "lens_id": "177-907-895-207-875"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 65,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "EP",
+            "doc_number": "3499634",
+            "kind": "A1",
+            "date": "2019-06-19"
+          },
+          "lens_id": "165-415-441-509-864"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 66,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "JP",
+            "doc_number": "2010095246",
+            "kind": "A",
+            "date": "2010-04-30"
+          },
+          "lens_id": "138-754-980-638-662"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 67,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "JP",
+            "doc_number": "2013086795",
+            "kind": "A",
+            "date": "2013-05-13"
+          },
+          "lens_id": "199-192-818-761-460"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 68,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "WO",
+            "doc_number": "2018023556",
+            "kind": "A1",
+            "date": "2018-02-08"
+          },
+          "lens_id": "196-797-674-393-63X"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 69,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "WO",
+            "doc_number": "2019089677",
+            "kind": "A1",
+            "date": "2019-05-09"
+          },
+          "lens_id": "011-057-771-167-439"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 70,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "WO",
+            "doc_number": "2020252024",
+            "kind": "A1",
+            "date": "2020-12-17"
+          },
+          "lens_id": "022-583-832-302-171"
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 71,
+        "nplcit": {
+          "text": "Bennaceur et al., “Passenger-centric urban air mobility: Fairness trade-offs and operational efficiency”, Transportation Research Part C: Emerging Technologies, 2022, 29 pages.",
+          "lens_id": "183-703-999-590-402",
+          "external_ids": [
+            "10.1016/j.trc.2021.103519"
+          ]
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 72,
+        "nplcit": {
+          "text": "Jong, “Optimizing cost effectiveness and flexibility of air taxis: A case study for optimization of air taxi operations”, University of Twente, Master's thesis, 2007, 62 pages."
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 73,
+        "nplcit": {
+          "text": "Miao et al., “Data-driven robust taxi dispatch under demand uncertainties”, IEEE Transactions on Control Systems Technology 27, No. 1, 2017, 16 pages."
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 74,
+        "nplcit": {
+          "text": "Miao et al., “Taxi dispatch with real-time sensing data in metropolitan areas: A receding horizon control approach”, In Proceedings of the ACM/IEEE Sixth International Conference on Cyber-Physical Systems, 2015, 15 pages.",
+          "lens_id": "072-085-114-208-035",
+          "external_ids": [
+            "10.1145/2735960.2735961"
+          ]
+        },
+        "cited_phase": "APP"
+      },
+      {
+        "sequence": 75,
+        "nplcit": {
+          "text": "Uber, “Fast-forwarding to a future of on-demand urban air transportation”, 2016, 99 pages."
+        },
+        "cited_phase": "APP"
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "2025226829",
+    "lens_id": "007-631-447-655-747",
+    "jurisdiction": "AU",
+    "kind": "A1",
+    "title": "Aircraft control system and method",
+    "abstract": "The unified command system and/or method includes an input mechanism, a flight processor that receives input from the input mechanism and translates the input into control output, and effectors that are actuated according to the control output. The system can optionally include: one or more sensors, a vehicle navigation system which determines a vehicle state and/or flight regime based on data from the one or more sensors, and a vehicle guidance system which determines a flightpath for the aircraft. The unified command system and/or method includes an input mechanism, a flight processor that receives input from the input mechanism and translates the input into control output, and effectors that are actuated according to the control output. The system can optionally include: one or more sensors, a vehicle navigation system which determines a vehicle state and/or flight regime based on data from the one or more sensors, and a vehicle guidance system which determines a flightpath for the aircraft. ep e p h e u n i f i e d c o m m a n d s y s t e m a n d o r m e t h o d i n c l u d e s a n i n p u t m e c h a n i s m , a f l i g h t p r o c e s s o r t h a t r e c e i v e s i n p u t f r o m t h e i n p u t m e c h a n i s m a n d t r a n s l a t e s t h e i n p u t i n t o c o n t r o l o u t p u t , a n d e f f e c t o r s t h a t a r e a c t u a t e d a c c o r d i n g t o t h e c o n t r o l o u t p u t h e s y s t e m c a n o p t i o n a l l y i n c l u d e : o n e o r m o r e s e n s o r s , a v e h i c l e n a v i g a t i o n s y s t e m w h i c h d e t e r m i n e s a v e h i c l e s t a t e a n d o r f l i g h t r e g i m e b a s e d o n d a t a f r o m t h e o n e o r m o r e s e n s o r s , a n d a v e h i c l e g u i d a n c e s y s t e m w h i c h d e t e r m i n e s a f l i g h t p a t h f o r t h e a i r c r a f t",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2025-09-05",
+    "grant_date": "",
+    "publication_date": "2025-09-25",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 0,
+    "npl_citation_count": 0,
+    "type": "application",
+    "url": "https://link.lens.org/007-631-447-655-747",
+    "source": "Lens.org Patent API",
+    "doc_key": "AU_2025226829_A1_20250925",
+    "publication_type": "PATENT_APPLICATION",
+    "lang": "en",
+    "simple_family_size": 16,
+    "extended_family_size": 16,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "2018-12-07",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "12351333",
+    "lens_id": "007-877-412-417-706",
+    "jurisdiction": "US",
+    "kind": "B2",
+    "title": "System and method for airspeed determination",
+    "abstract": "A method for determining airspeed of an aircraft that includes determining a rotor model relating a power coefficient of a propeller of the aircraft to an axial inflow velocity through the propeller as a function of a set of rotor operating parameters; determining the set of rotor operating parameters by sampling an electronic control signal associated with an electric motor actuating the propeller; computing the axial inflow velocity through the propeller based on the set of rotor operating parameters using the rotor model; and determining the airspeed based on the axial inflow velocity.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2023-02-26",
+    "grant_date": "2025-07-08",
+    "publication_date": "2025-07-08",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 3,
+    "npl_citation_count": 0,
+    "type": "granted",
+    "url": "https://link.lens.org/007-877-412-417-706",
+    "source": "Lens.org Patent API",
+    "doc_key": "US_12351333_B2_20250708",
+    "publication_type": "GRANTED_PATENT",
+    "lang": "en",
+    "simple_family_size": 9,
+    "extended_family_size": 9,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [
+      {
+        "name": "JOBY AERO INC",
+        "recorded_date": "2024-06-17",
+        "execution_date": "2023-01-24",
+        "country": ""
+      }
+    ],
+    "earliest_priority_date": "2018-07-02",
+    "anticipated_term_date": "2039-06-26",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": true,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10710741",
+            "kind": "B2",
+            "date": "2020-07-14"
+          },
+          "lens_id": "147-037-774-736-223"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10919641",
+            "kind": "B2",
+            "date": "2021-02-16"
+          },
+          "lens_id": "009-636-570-734-059"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11597532",
+            "kind": "B2",
+            "date": "2023-03-07"
+          },
+          "lens_id": "004-694-745-488-229"
+        },
+        "cited_phase": "SEA"
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "12330863",
+    "lens_id": "007-928-548-437-033",
+    "jurisdiction": "US",
+    "kind": "B2",
+    "title": "Modular bi-level storage and transport assembly with collapsible frame (MTA)",
+    "abstract": "In one embodiment, a modular bi-level storage and transport assembly (MTA) includes an upper rigid layer and a lower rigid layer and an adjustable support mechanism, coupled to the upper and lower rigid layers. Furthermore, the support mechanism is operable to expand to increase the distance between the layers, expanding the MTA and forming a space for a containment vessel, and to contract to reduce the distance between the layers, collapsing the MTA.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2023-01-18",
+    "grant_date": "2025-06-17",
+    "publication_date": "2025-06-17",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 10,
+    "npl_citation_count": 0,
+    "type": "granted",
+    "url": "https://link.lens.org/007-928-548-437-033",
+    "source": "Lens.org Patent API",
+    "doc_key": "US_12330863_B2_20250617",
+    "publication_type": "GRANTED_PATENT",
+    "lang": "en",
+    "simple_family_size": 3,
+    "extended_family_size": 3,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [
+      {
+        "name": "AERO MARINE SYSTEMS INC",
+        "recorded_date": "2023-01-19",
+        "execution_date": "2023-01-19",
+        "country": ""
+      }
+    ],
+    "earliest_priority_date": "2023-01-18",
+    "anticipated_term_date": "2043-09-06",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "3684122",
+            "kind": "A",
+            "date": "1972-08-15"
+          },
+          "lens_id": "096-065-589-598-228"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "4214669",
+            "kind": "A",
+            "date": "1980-07-29"
+          },
+          "lens_id": "011-725-699-568-801"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "4388995",
+            "kind": "A",
+            "date": "1983-06-21"
+          },
+          "lens_id": "140-487-392-622-611"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 4,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "4577772",
+            "kind": "A",
+            "date": "1986-03-25"
+          },
+          "lens_id": "160-417-355-725-779"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 5,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "5190179",
+            "kind": "A",
+            "date": "1993-03-02"
+          },
+          "lens_id": "093-939-052-366-369"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 6,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "11618488",
+            "kind": "B2",
+            "date": "2023-04-04"
+          },
+          "lens_id": "029-706-926-278-194"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 7,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2012248105",
+            "kind": "A1",
+            "date": "2012-10-04"
+          },
+          "lens_id": "133-277-650-389-631"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 8,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2014183186",
+            "kind": "A1",
+            "date": "2014-07-03"
+          },
+          "lens_id": "111-607-130-702-023"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 9,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2014263306",
+            "kind": "A1",
+            "date": "2014-09-18"
+          },
+          "lens_id": "157-249-025-554-323"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 10,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2016090234",
+            "kind": "A1",
+            "date": "2016-03-31"
+          },
+          "lens_id": "077-440-176-710-798"
+        },
+        "cited_phase": "SEA"
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "2025105633",
+    "lens_id": "018-494-287-237-87X",
+    "jurisdiction": "JP",
+    "kind": "A",
+    "title": "AIRCRAFT PROPULSION UNIT",
+    "abstract": "To provide an aircraft propulsion unit including a preferable cooling system.SOLUTION: An aircraft propulsion unit includes: an electric motor; at least one accessory unit used for operating the electric motor; an inverter module including a plurality of inverters for powering the electric motor and the at least one accessory unit; and a cooling system coupled to the electric motor and the inverter module, the cooling system comprising a coolant path for circulating a coolant through or adjacent to the electric motor and the at least one accessory unit.SELECTED DRAWING: Figure 3",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2025-04-16",
+    "grant_date": "2025-08-25",
+    "publication_date": "2025-07-10",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 7,
+    "npl_citation_count": 0,
+    "type": "granted",
+    "url": "https://link.lens.org/018-494-287-237-87X",
+    "source": "Lens.org Patent API",
+    "doc_key": "JP_2025105633_A_20250710",
+    "publication_type": "PATENT_APPLICATION",
+    "lang": "ja",
+    "simple_family_size": 17,
+    "extended_family_size": 17,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [],
+    "earliest_priority_date": "2021-02-09",
+    "anticipated_term_date": "2042-02-09",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [
+      {
+        "sequence": 1,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "JP",
+            "doc_number": "2005329818",
+            "kind": "A",
+            "date": "2005-12-02"
+          },
+          "lens_id": "082-092-655-873-319"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 2,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020381985",
+            "kind": "A1",
+            "date": "2020-12-03"
+          },
+          "lens_id": "028-106-005-224-647"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 3,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "2020385139",
+            "kind": "A1",
+            "date": "2020-12-10"
+          },
+          "lens_id": "040-410-381-939-663"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 4,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "WO",
+            "doc_number": "2020025884",
+            "kind": "A1",
+            "date": "2020-02-06"
+          },
+          "lens_id": "057-701-794-802-478"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 5,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "EP",
+            "doc_number": "2774853",
+            "kind": "A1",
+            "date": "2014-09-10"
+          },
+          "lens_id": "174-161-622-910-277"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 6,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "DE",
+            "doc_number": "19543284",
+            "kind": "A1",
+            "date": "1997-05-22"
+          },
+          "lens_id": "081-455-806-986-884"
+        },
+        "cited_phase": "SEA"
+      },
+      {
+        "sequence": 7,
+        "patcit": {
+          "document_id": {
+            "jurisdiction": "US",
+            "doc_number": "10608505",
+            "kind": "B1",
+            "date": "2020-03-31"
+          },
+          "lens_id": "086-574-065-286-074"
+        },
+        "cited_phase": "SEA"
+      }
+    ],
+    "description": "",
+    "claims": ""
+  },
+  {
+    "patent_number": "20250166517",
+    "lens_id": "022-751-097-434-505",
+    "jurisdiction": "US",
+    "kind": "A1",
+    "title": "Determining VTOL Departure Time in an Aviation Transport Network for Efficient Resource Management",
+    "abstract": "A request for transport services that identifies a rider, an origin, and a destination is received from a client device. Eligibility of the request to be serviced by a vertical take-off and landing (VTOL) aircraft is determined based on the origin and the destination. The client device is sent an itinerary for servicing the transport request including a leg serviced by the VTOL aircraft. Confirmation is received that the rider has boarded the VTOL aircraft and determination made as to whether the VTOL aircraft should wait for additional riders. Instruction are sent to the VTOL aircraft to take-off if one or more conditions are met.",
+    "assignee": "Joby Aero, Inc.",
+    "inventors": [],
+    "filing_date": "2025-01-17",
+    "grant_date": "",
+    "publication_date": "2025-05-22",
+    "claims_count": 0,
+    "cpc_codes": [],
+    "citation_count": 0,
+    "npl_citation_count": 0,
+    "type": "application",
+    "url": "https://link.lens.org/022-751-097-434-505",
+    "source": "Lens.org Patent API",
+    "doc_key": "US_20250166517_A1_20250522",
+    "publication_type": "PATENT_APPLICATION",
+    "lang": "en",
+    "simple_family_size": 10,
+    "extended_family_size": 10,
+    "forward_citation_count": 0,
+    "forward_citation_lens_ids": [],
+    "current_owners": [
+      {
+        "name": "UBER TECHNOLOGIES INC",
+        "recorded_date": "2025-10-07",
+        "execution_date": "2018-06-04",
+        "country": ""
+      }
+    ],
+    "earliest_priority_date": "2018-04-24",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": [],
+    "npl_resolved_count": 0,
+    "detailed_citations": [],
+    "description": "",
+    "claims": ""
+  }
+]

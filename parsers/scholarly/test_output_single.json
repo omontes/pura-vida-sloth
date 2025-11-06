@@ -1,0 +1,80 @@
+{
+  "paper_metadata": {
+    "title": "Performance and Noise predictions of the Joby eVTOL Propeller NFAC Wind Tunnel Test Using GPU-accelerated Large-Eddy Simulations",
+    "year_published": 2025,
+    "publication_type": "conference proceedings article",
+    "journal": "Proceedings of the Vertical Flight Society 81st Annual Forum and Technology Display",
+    "lens_id": "000-890-909-276-867",
+    "url": "https://link.lens.org/000-890-909-276-867",
+    "doi": "10.4050/f-0081-2025-85"
+  },
+  "relevance_assessment": {
+    "relevance_score": 9.0,
+    "is_relevant": true,
+    "relevance_category": "direct_application",
+    "justification": "The paper focuses on the performance and noise predictions of the Joby eVTOL propeller, which is directly relevant to eVTOL aircraft design and optimization. The use of large-eddy simulations for noise prediction is critical for understanding and mitigating noise in urban air mobility applications.",
+    "confidence": 0.95
+  },
+  "technology_nodes": [
+    {
+      "node_id": "tech_large_eddy_simulation",
+      "node_type": "technology",
+      "name": "GPU-Accelerated Large-Eddy Simulations",
+      "description": "Advanced computational method for simulating turbulent flows around eVTOL propellers",
+      "maturity": "advanced",
+      "domain": "simulation"
+    },
+    {
+      "node_id": "tech_noise_prediction",
+      "node_type": "technology",
+      "name": "Noise Prediction Using FW-H Formulation",
+      "description": "Method for predicting far-field noise from propeller operations using frequency-domain analysis",
+      "maturity": "advanced",
+      "domain": "acoustics"
+    },
+    {
+      "node_id": "tech_joby_propeller",
+      "node_type": "technology",
+      "name": "Joby Aviation S4 Propeller",
+      "description": "Propeller design used in Joby eVTOL aircraft, analyzed for performance and noise characteristics",
+      "maturity": "proven",
+      "domain": "propulsion"
+    }
+  ],
+  "relationships": [
+    {
+      "subject": "tech_large_eddy_simulation",
+      "predicate": "supports",
+      "object": "tech_noise_prediction",
+      "confidence": 0.9,
+      "evidence": "Large-eddy simulations provide critical flow data necessary for accurate noise predictions"
+    },
+    {
+      "subject": "tech_joby_propeller",
+      "predicate": "is_analyzed_by",
+      "object": "tech_large_eddy_simulation",
+      "confidence": 0.95,
+      "evidence": "The Joby S4 propeller's performance and noise characteristics are evaluated using large-eddy simulations"
+    },
+    {
+      "subject": "tech_noise_prediction",
+      "predicate": "improves_performance_of",
+      "object": "evtol_noise_reduction",
+      "confidence": 0.85,
+      "evidence": "Accurate noise predictions help in designing quieter eVTOL operations, essential for urban environments"
+    }
+  ],
+  "innovation_signals": {
+    "research_stage": "advanced_development",
+    "innovation_type": "incremental_breakthrough",
+    "impact_potential": "high",
+    "technical_risk": "medium",
+    "adoption_indicators": [
+      "Focus on Joby Aviation, a leading eVTOL manufacturer",
+      "Use of advanced GPU-accelerated simulations indicates cutting-edge research",
+      "Potential for significant impact on noise reduction strategies in urban air mobility",
+      "No prior citations suggest novel contributions to the field",
+      "Presented at a prominent vertical flight society forum indicates relevance and interest"
+    ]
+  }
+}

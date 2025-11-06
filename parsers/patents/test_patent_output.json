@@ -1,0 +1,91 @@
+{
+  "patent_metadata": {
+    "title": "SYSTEMS AND METHODS FOR VERTICAL TAKEOFF AND LANDING VEHICLE WITH OPERATION MODE-BASED ROTOR BLADE CONTROL",
+    "assignee": "Joby Aero, Inc.",
+    "filing_date": "2024-03-29",
+    "lens_id": "000-858-995-240-464",
+    "patent_number": "2025038139",
+    "url": "https://link.lens.org/000-858-995-240-464"
+  },
+  "technology_nodes": [
+    {
+      "node_id": "tech_magnetic_levitation_rotor",
+      "node_type": "technology",
+      "name": "Magnetic Levitation Rotor System",
+      "description": "Annular rotor magnetically levitated by stator for VTOL propulsion",
+      "maturity": "emerging",
+      "domain": "propulsion"
+    },
+    {
+      "node_id": "tech_independent_blade_control",
+      "node_type": "technology",
+      "name": "Independent Rotor Blade Pitch Control",
+      "description": "Individual blade pitch angle control for lift, pitch, roll, and yaw",
+      "maturity": "advanced",
+      "domain": "flight_control"
+    },
+    {
+      "node_id": "tech_redundant_control_systems",
+      "node_type": "technology",
+      "name": "Redundant Control Architecture",
+      "description": "Multiple independent controllers for platform component control",
+      "maturity": "mature",
+      "domain": "safety_systems"
+    },
+    {
+      "node_id": "company_joby",
+      "node_type": "organization",
+      "name": "Joby Aero, Inc.",
+      "description": "eVTOL aircraft manufacturer",
+      "role": "innovator"
+    }
+  ],
+  "relationships": [
+    {
+      "subject": "tech_magnetic_levitation_rotor",
+      "predicate": "enables",
+      "object": "tech_independent_blade_control",
+      "confidence": 0.95,
+      "evidence": "Magnetically levitated rotor allows independent blade pitch control without mechanical linkages"
+    },
+    {
+      "subject": "tech_independent_blade_control",
+      "predicate": "supports",
+      "object": "tech_redundant_control_systems",
+      "confidence": 0.9,
+      "evidence": "Independent blade control enables redundant flight control architecture"
+    },
+    {
+      "subject": "company_joby",
+      "predicate": "develops",
+      "object": "tech_magnetic_levitation_rotor",
+      "confidence": 1.0,
+      "evidence": "Joby Aero filed patent for magnetic levitation rotor system"
+    },
+    {
+      "subject": "tech_magnetic_levitation_rotor",
+      "predicate": "advances_beyond",
+      "object": "conventional_rotor_systems",
+      "confidence": 0.85,
+      "evidence": "Eliminates mechanical complexity of traditional rotor systems"
+    },
+    {
+      "subject": "tech_redundant_control_systems",
+      "predicate": "requires",
+      "object": "tech_independent_blade_control",
+      "confidence": 0.8,
+      "evidence": "Redundant control systems depend on independent control of rotor blades for effective operation"
+    }
+  ],
+  "innovation_signals": {
+    "maturity_level": "early_commercial",
+    "innovation_type": "breakthrough",
+    "competitive_positioning": "differentiated",
+    "technical_risk": "medium",
+    "adoption_indicators": [
+      "5 citations indicate interest and relevance in the field",
+      "Recent filing date suggests active development",
+      "Innovative control methods for VTOL platforms"
+    ]
+  }
+}
