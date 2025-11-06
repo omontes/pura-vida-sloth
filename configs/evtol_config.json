@@ -1,10 +1,10 @@
 {
   "industry": "eVTOL",
   "industry_name": "Electric Vertical Takeoff and Landing",
-  "description": "Urban air mobility and electric VTOL aircraft - minimal viable harvest (~10 min runtime)",
+  "description": "Urban air mobility and electric VTOL aircraft - REGULATORY ONLY (RELAXED FILTERS)",
 
   "date_range": {
-    "days_back": 180
+    "days_back": 730
   },
 
   "output_config": {
@@ -28,7 +28,8 @@
       "gov_contracts": "government_contracts",
       "institutional_holdings": "institutional_holdings",
       "form13f": "form13f_institutional_holdings",
-      "lens_scholarly": "lens_scholarly"
+      "lens_scholarly": "lens_scholarly",
+      "insider_transactions": "insider_transactions"
     }
   },
 
@@ -71,6 +72,34 @@
       "eVTOL certification",
       "FAA Part 135",
       "EASA SC-VTOL"
+    ],
+    "regulatory_relaxed": [
+      "eVTOL",
+      "VTOL",
+      "urban air mobility",
+      "UAM",
+      "advanced air mobility",
+      "AAM",
+      "air taxi",
+      "flying taxi",
+      "vertiport",
+      "skyport",
+      "electric aircraft",
+      "electric aviation",
+      "vertical flight",
+      "vertical takeoff",
+      "rotorcraft electric",
+      "unmanned aircraft system",
+      "UAS",
+      "drone delivery",
+      "autonomous aircraft",
+      "remotely piloted",
+      "aerial mobility",
+      "aerial vehicle electric",
+      "multirotor",
+      "powered-lift",
+      "Part 135",
+      "airworthiness certification AAM"
     ]
   },
 
@@ -79,26 +108,25 @@
       "JOBY": "Joby Aero, Inc.",
       "ACHR": "Archer Aviation Inc.",
       "EVEX": "Eve UAM, LLC",
-      "EVTL": "Vertical Aerospace Ltd",
       "BLDE": "Blade Air Mobility",
       "BA": "The Boeing Company",
       "LMT": "Lockheed Martin",
       "TXT": "Textron Inc.",
-      "HO": "Honeywell International",
-      "BETA": "Beta Technologies Inc",
+      "HON": "Honeywell International",
       "EH": "EHang Holdings Limited",
-      "EADSY": "Airbus SAS",
-      "FER": "Ferrovial SA",
-      "STLA": "Stellantis N.V.",
-      "TM": "Toyota Motor Corporation",
       "ERJ": "Embraer S.A.",
-      "GE": "General Electric Company"
+      "GE": "General Electric Company",
+      "XTI": "XTI Aircraft Company",
+      "AMPRIUS": "Amprius Technologies Inc",
+      "PIVOTAL": "Pivotal"
     },
     "public_inactive": {
       "LILM": "Lilium GmbH",
-      "VOLOCOPTER": "Volocopter GmbH"
+      "VOLOCOPTER": "Volocopter GmbH",
+      "EVTL": "Vertical Aerospace Ltd"
     },
     "private": {
+      "BETA": "Beta Technologies Inc",
       "WISK": "Wisk Aero LLC",
       "OVERAIR": "Overair",
       "AUTOFLIGHT": "AutoFlight",
@@ -111,8 +139,6 @@
       "HANWHA": "Hanwha Systems",
       "KAL": "Korean Air Lines",
       "KAI": "Korea Aerospace Industries Ltd",
-      "PIVOTAL": "Pivotal",
-      "XTI": "XTI Aircraft Company",
       "LIFT": "Lift Aircraft Inc",
       "JETOPTERA": "Jetoptera Inc",
       "VOLTAERO": "VoltAero",
@@ -120,7 +146,6 @@
       "ROLLS_ROYCE": "Rolls-Royce plc",
       "BAE": "BAE Systems plc",
       "MAGNIX": "magniX USA Inc",
-      "AMPRIUS": "Amprius Technologies Inc",
       "THALES": "Thales SA",
       "SKYPORTS": "Skyports Ltd",
       "URBAN_AIR": "Urban-Air Port Ltd",
@@ -137,7 +162,7 @@
     },
     "patents": {
       "enabled": false,
-      "limit": 20,
+      "limit": 50,
       "cpc_codes": [
         "B64C39/02",
         "B64D27/24",
@@ -145,26 +170,26 @@
         "B60L50/60"
       ],
       "priority": 2,
-      "comment": "Using SerpApi (Google Patents) - 100 searches/month free tier. Limit=20 per company (10 companies = 10 searches, ~100-200 patents total). DISABLED in favor of lens_patents for comprehensive coverage."
+      "comment": "AMBITIOUS: 50 per company (19 companies = 19 searches, ~400-950 patents). SerpApi Google Patents free tier (100 searches/month)."
     },
     "lens_patents": {
       "enabled": false,
-      "limit": 300,
+      "limit": 500,
       "priority": 2,
-      "comment": "Lens.org Patent API - comprehensive global patent database (100M+ patents). PRODUCTION MODE: 300 patents per company, 35 strategic intelligence fields (description/claims available via PDF download)."
+      "comment": "AMBITIOUS: Lens.org Patent API - 500 patents per company for comprehensive global coverage. Expected: ~9,500 patents total with 35 intelligence fields each."
     },
     "github": {
       "enabled": false,
-      "limit": 100,
+      "limit": 200,
       "min_stars": 3,
       "priority": 2,
-      "comment": "Track eVTOL open-source projects (flight controllers, simulations) - INCREASED for comprehensive test"
+      "comment": "AMBITIOUS: 200 repos - Track eVTOL open-source projects (flight controllers, simulations, tools)"
     },
     "sec_filings": {
-      "enabled": false,
-      "types": ["8-K", "10-Q", "10-K", "D", "4"],
+      "enabled": true,
+      "types": ["8-K", "10-K", "10-Q", "DEF 14A", "S-1", "D", "4"],
       "priority": 3,
-      "comment": "SEC filings for eVTOL public companies (added Form 4 for insider transactions)"
+      "comment": "ENABLED: SEC filings for eVTOL public companies. Priority forms: 8-K (material events), 10-K (risk factors), DEF 14A (leadership changes), S-1 (IPOs), Form D (VC funding), 10-Q (quarterly), Form 4 (insider trading)"
     },
     "earnings": {
       "enabled": false,
@@ -174,64 +199,70 @@
     },
     "research": {
       "enabled": false,
-      "limit": 100,
+      "limit": 300,
       "priority": 5,
-      "comment": "Academic research on eVTOL technology - INCREASED to 100 for comprehensive test"
+      "comment": "AMBITIOUS: 300 academic research papers on eVTOL technology (arXiv, PubMed, Google Scholar)"
     },
     "regulatory": {
-      "enabled": false,
+      "enabled": true,
       "limit": 100,
       "priority": 6,
       "agencies": [
         "federal-aviation-administration",
-        "national-highway-traffic-safety-administration"
+        "national-aeronautics-and-space-administration",
+        "defense-department",
+        "air-force-department",
+        "environmental-protection-agency",
+        "national-transportation-safety-board",
+        "federal-communications-commission"
       ],
       "rss_feeds": {
-        "FAA_NEWS": "https://www.faa.gov/news/rss",
-        "FAA_REGULATIONS": "https://www.faa.gov/regulations_policies/rss"
+        "FAA_NEWS": "https://www.faa.gov/newsroom/news/feed",
+        "NASA_AERONAUTICS": "https://www.nasa.gov/aeronautics/feed/",
+        "NTSB_PRESS": "https://www.ntsb.gov/news/press-releases/Pages/PressReleasesRSS.aspx"
       },
-      "comment": "FAA/NTSB regulatory documents for eVTOL certification and airspace integration"
+      "comment": "ENABLED with KEYWORD FILTERING: FAA, NASA, DOD, Air Force, EPA, NTSB, FCC. 7 agencies + 3 RSS feeds. 365-day window with 29 keywords for eVTOL-specific filtering."
     },
     "press": {
       "enabled": false,
-      "limit": 100,
+      "limit": 200,
       "priority": 7,
-      "comment": "Company press releases - INCREASED for comprehensive test"
+      "comment": "AMBITIOUS: 200 press releases from eVTOL companies (official announcements, partnerships, milestones)"
     },
     "news_sentiment": {
       "enabled": false,
-      "limit": 300,
-      "max_records_per_query": 50,
+      "limit": 1000,
+      "max_records_per_query": 100,
       "priority": 8,
-      "comment": "GDELT news articles - INCREASED to 300 for comprehensive test"
+      "comment": "AMBITIOUS: 1,000 GDELT news articles for sentiment analysis. Max 100 per query for faster collection."
     },
     "citations": {
       "enabled": false,
-      "limit": 100,
+      "limit": 500,
       "priority": 9,
-      "comment": "OpenAlex citation tracking - INCREASED to 100 for comprehensive test"
+      "comment": "AMBITIOUS: 500 academic citations via OpenAlex (tracks research influence and trends)"
     },
     "jobs": {
       "enabled": false,
-      "limit": 100,
+      "limit": 300,
       "locations": ["United States", "California", "Santa Cruz, CA", "Marina, CA"],
       "priority": 10,
-      "comment": "Job postings indicate hiring trends - INCREASED to 100 for comprehensive test"
+      "comment": "AMBITIOUS: 300 job postings (hiring trends indicate industry momentum)"
     },
     "stock_market": {
       "enabled": false,
-      "history_period": "1y",
+      "history_period": "2y",
       "download_options": true,
       "priority": 1,
-      "comment": "Yahoo Finance - INCREASED to 1 year history for comprehensive test (FREE, unlimited)"
+      "comment": "AMBITIOUS: Yahoo Finance - 2 years history for 17 public companies. FREE, unlimited. Includes options data."
     },
     "government_contracts": {
       "enabled": false,
       "agencies": ["DOD", "NASA", "FAA", "DOT"],
-      "years_back": 10,
+      "years_back": 15,
       "min_contract_value": 25000,
       "priority": 1,
-      "comment": "USASpending.gov - INCREASED to 10 years, lowered min to $25k for comprehensive test (FREE, unlimited)"
+      "comment": "AMBITIOUS: USASpending.gov - 15 years history, $25k minimum. FREE, unlimited. Expected: 100-300 contracts."
     },
     "institutional_holdings": {
       "enabled": false,
@@ -242,18 +273,18 @@
     "form13f_holdings": {
       "enabled": false,
       "priority": 12,
-      "comment": "SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Enable in test config first."
+      "comment": "AMBITIOUS: SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Expected: 1,000-5,000 holdings for 17 public companies."
     },
     "lens_scholarly": {
       "enabled": false,
-      "limit": 1000,
+      "limit": 2000,
       "priority": 3,
-      "comment": "Lens.org Scholarly Works API - research papers with funding data. Fills Layer 2 (Market Formation) funding gap. 10 RPM limit, 500 records/request. Expected: ~4,000-6,000 papers from 6 keywords. DISABLED for lens_patents testing."
+      "comment": "AMBITIOUS: Lens.org Scholarly Works API - 2,000 research papers with funding data. Fills Layer 2 (Market Formation) funding gap. 10 RPM limit, 500 records/request. Expected: ~12,000 papers from 6 scholarly keywords."
     },
     "insider_transactions": {
-      "enabled": true,
+      "enabled": false,
       "priority": 13,
-      "comment": "SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Tracks CEO/executive buying/selling patterns (Layer 3: Financial Reality executive confidence signals). Q2 2025 data, 66K+ transactions, 50K+ submissions."
+      "comment": "AMBITIOUS: SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Tracks CEO/executive buying/selling patterns (Layer 3: Financial Reality). Q2 2025 data, 66K+ transactions, 50K+ submissions. Expected: 500-2,000 transactions for 17 public companies."
     }
   },
 

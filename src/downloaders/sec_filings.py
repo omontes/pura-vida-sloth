@@ -216,7 +216,10 @@ class SECDownloader:
         
         # Get company submissions
         submissions_url = f"{self.BASE_URL}/cgi-bin/browse-edgar"
-        
+
+        self.logger.debug(f"  Fetching filings for {ticker} (CIK: {cik})")
+        self.logger.debug(f"  Date range: {self.start_date.date()} to {self.end_date.date()}")
+
         for filing_type in self.FILING_TYPES:
             try:
                 params = {
@@ -229,27 +232,30 @@ class SECDownloader:
                     'output': 'atom',
                     'count': 100
                 }
-                
+
                 self.rate_limiter.wait()
                 response = self.session.get(submissions_url, params=params)
                 response.raise_for_status()
-                
+
                 # Parse ATOM feed
                 from xml.etree import ElementTree as ET
                 root = ET.fromstring(response.content)
-                
+
                 # Extract entries
                 ns = {'atom': 'http://www.w3.org/2005/Atom'}
                 entries = root.findall('.//atom:entry', ns)
-                
+
+                self.logger.debug(f"    Form {filing_type}: Found {len(entries)} entries in ATOM feed")
+
+                entries_in_range = 0
                 for entry in entries:
                     filing_date_str = entry.find('.//atom:filing-date', ns).text
                     filing_date = datetime.strptime(filing_date_str, '%Y-%m-%d')
-                    
+
                     if self.start_date <= filing_date <= self.end_date:
                         accession = entry.find('.//atom:accession-number', ns).text
                         filing_url = entry.find('.//atom:filing-href', ns).text
-                        
+
                         filings.append({
                             'ticker': ticker,
                             'company_name': company_name,
@@ -259,11 +265,15 @@ class SECDownloader:
                             'accession': accession.replace('-', ''),
                             'url': filing_url
                         })
-                
+                        entries_in_range += 1
+
+                if entries_in_range > 0:
+                    self.logger.debug(f"    Form {filing_type}: {entries_in_range} filings in date range")
+
                 time.sleep(0.15)  # Rate limiting
-            
+
             except Exception as e:
-                self.logger.error(f"Error fetching {filing_type} for {ticker}: {e}")
+                self.logger.error(f"  ERROR - Form {filing_type} for {ticker}: {e}", exc_info=True)
 
         # Mark company as completed
         self.checkpoint.mark_completed(item_id, {'count': len(filings)})
@@ -271,33 +281,56 @@ class SECDownloader:
         return filings
     
     def _get_cik_from_ticker(self, ticker: str) -> Optional[str]:
-        """Get CIK number from ticker symbol"""
+        """Get CIK number from ticker symbol using SEC's official ticker mapping"""
         try:
-            # Use SEC's ticker to CIK mapping
-            url = f"{self.BASE_URL}/cgi-bin/browse-edgar"
+            # Use SEC's official company_tickers.json mapping (more reliable than search)
+            # This file is updated nightly by the SEC
+            url = f"{self.BASE_URL}/files/company_tickers.json"
+
+            self.rate_limiter.wait()
+            response = self.session.get(url)
+            response.raise_for_status()
+
+            ticker_data = response.json()
+
+            # Search for matching ticker (case-insensitive)
+            ticker_upper = ticker.upper().strip()
+
+            for item in ticker_data.values():
+                if item.get('ticker', '').upper() == ticker_upper:
+                    cik = str(item['cik_str']).zfill(10)  # Pad with zeros to 10 digits
+                    self.logger.debug(f"  Found CIK {cik} for ticker {ticker}")
+                    return cik
+
+            # Fallback: Try company name search (less reliable)
+            self.logger.warning(f"  Ticker {ticker} not found in company_tickers.json, trying name search...")
+
+            search_url = f"{self.BASE_URL}/cgi-bin/browse-edgar"
             params = {
                 'action': 'getcompany',
                 'company': ticker,
                 'output': 'atom',
                 'count': 1
             }
-            
+
             self.rate_limiter.wait()
-            response = self.session.get(url, params=params)
+            response = self.session.get(search_url, params=params)
             response.raise_for_status()
-            
+
             from xml.etree import ElementTree as ET
             root = ET.fromstring(response.content)
-            
+
             ns = {'atom': 'http://www.w3.org/2005/Atom'}
             cik_element = root.find('.//atom:cik', ns)
-            
+
             if cik_element is not None:
-                return cik_element.text.zfill(10)  # Pad with zeros
-            
+                cik = cik_element.text.zfill(10)  # Pad with zeros
+                self.logger.debug(f"  Found CIK {cik} for {ticker} via name search")
+                return cik
+
         except Exception as e:
             self.logger.error(f"Error getting CIK for {ticker}: {e}")
-        
+
         return None
     
     @retry_on_error(max_retries=3)
