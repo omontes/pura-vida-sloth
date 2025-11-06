@@ -1,12 +1,15 @@
 """
-Lens PDF Downloader - Download PDFs for Top Scholarly Works
+Lens PDF Downloader - DuckDB-Enhanced Intelligent Selection
 ============================================================
-Downloads PDFs for top N papers selected by composite score (recency + impact).
+Downloads PDFs for top N scholarly papers using DuckDB composite scoring.
 
-Selection Strategy:
-- Composite Score = 0.5 * recency_score + 0.5 * impact_score
-- Recency: Linear scale (newer papers = higher score)
-- Impact: Log scale (papers with more references = quality indicator)
+Selection Strategy (DuckDB-Based):
+- Composite Score = weighted combination of:
+  * 40% LLM relevance score (8.0-9.0)
+  * 20% Impact potential (innovation_signals)
+  * 20% References count (citation quality)
+  * 10% Innovation type (breakthrough > incremental)
+  * 10% Recency (publication year)
 
 Download Strategy (4-Phase Waterfall):
 1. Lens Direct: open_access.locations.pdf_urls
@@ -15,8 +18,11 @@ Download Strategy (4-Phase Waterfall):
 4. PubMed Central: PMC ID → free PDF access
 
 Usage:
-    python -m src.downloaders.lens_pdf_downloader --limit 50
-    python -m src.downloaders.lens_pdf_downloader --test  # 10 papers
+    python -m src.downloaders.lens_pdf_downloader \
+        --papers data/eVTOL/lens_scholarly/papers.json \
+        --scored-dir data/eVTOL/lens_scholarly/batch_processing \
+        --output data/eVTOL/lens_scholarly/pdfs \
+        --limit 200
 """
 
 from pathlib import Path
@@ -25,26 +31,26 @@ from typing import Dict, List, Optional, Any
 import json
 import time
 import requests
-import pandas as pd
-import numpy as np
 from tqdm import tqdm
 
 from src.utils.logger import setup_logger
 from src.utils.checkpoint_manager import CheckpointManager
+from src.utils.duckdb_scholarly_analysis import ScholarlyPapersDatabase
 
 
 class LensPDFDownloader:
     """
-    Download PDFs for top N scholarly works using hybrid multi-source strategy.
+    Download PDFs for top N scholarly works using DuckDB composite scoring.
 
     Mandatory Design Patterns:
-    1. Pandas Selection - Efficient filtering and composite scoring
-    2. Waterfall Strategy - Try multiple sources in priority order
-    3. Checkpoint/Resume - Track completed downloads
-    4. Rate Limiting - Respect API limits (Unpaywall)
-    5. PDF Validation - Check file size and content type
-    6. Progress Tracking - tqdm progress bars
-    7. Download Report - JSON summary with sources
+    1. DuckDB Analysis - Fast SQL-based composite scoring
+    2. Pandas Integration - Efficient data handling
+    3. Waterfall Strategy - Try multiple sources in priority order
+    4. Checkpoint/Resume - Track completed downloads
+    5. Rate Limiting - Respect API limits (Unpaywall)
+    6. PDF Validation - Check file size and content type
+    7. Progress Tracking - tqdm progress bars
+    8. Download Report - JSON summary with sources
     """
 
     # Unpaywall API configuration
@@ -58,21 +64,27 @@ class LensPDFDownloader:
     def __init__(
         self,
         papers_json_path: str,
+        scored_papers_dir: str,
         output_dir: str,
-        limit: int = 50
+        limit: int = 200,
+        composite_weighting: Optional[Dict[str, float]] = None
     ):
         """
-        Initialize PDF downloader.
+        Initialize PDF downloader with DuckDB integration.
 
         Args:
             papers_json_path: Path to papers.json from lens_scholarly harvest
+            scored_papers_dir: Path to batch_processing directory with checkpoints
             output_dir: Where to save PDFs
-            limit: Number of papers to download (default 50)
+            limit: Number of papers to download (default 200)
+            composite_weighting: Custom weights for composite scoring
         """
         self.papers_json_path = Path(papers_json_path)
+        self.scored_papers_dir = Path(scored_papers_dir)
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
         self.limit = limit
+        self.composite_weighting = composite_weighting
 
         # Setup logger
         self.logger = setup_logger("LensPDFDownloader", self.output_dir / "pdf_download.log")
@@ -85,38 +97,51 @@ class LensPDFDownloader:
             'total_attempted': 0,
             'successful': 0,
             'failed': 0,
+            'skipped': 0,
             'by_source': {
                 'lens_direct': 0,
                 'unpaywall': 0,
                 'arxiv': 0,
                 'pmc': 0,
+                'existing': 0,
                 'failed': 0
             },
-            'failed_papers': []
+            'failed_papers': [],
+            'composite_score_stats': {}
         }
 
-        # Load papers
-        self.logger.info(f"Loading papers from: {self.papers_json_path}")
+        # Initialize DuckDB
+        self.logger.info("Initializing DuckDB Scholarly Papers database...")
+        self.db = ScholarlyPapersDatabase(
+            scored_papers_dir=str(self.scored_papers_dir),
+            original_papers_path=str(self.papers_json_path)
+        )
+        self.db.initialize()
+
+        # Load original papers for PDF URL lookup
+        self.logger.info(f"Loading original papers from: {self.papers_json_path}")
         with open(self.papers_json_path, encoding='utf-8') as f:
             self.all_papers = json.load(f)
-        self.logger.info(f"Loaded {len(self.all_papers)} papers")
+
+        # Create lens_id → paper mapping for fast lookup
+        self.papers_by_id = {p['lens_id']: p for p in self.all_papers}
+        self.logger.info(f"Loaded {len(self.all_papers)} papers for metadata lookup")
 
     def download(self) -> Dict[str, Any]:
         """
-        Main download orchestration.
+        Main download orchestration with DuckDB composite scoring.
 
         Returns:
             Stats dict with download results
         """
         self.logger.info("=" * 60)
-        self.logger.info("LENS PDF DOWNLOADER - Starting")
+        self.logger.info("LENS PDF DOWNLOADER - DuckDB Enhanced")
         self.logger.info("=" * 60)
-        self.logger.info(f"Total papers available: {len(self.all_papers)}")
-        self.logger.info(f"Target: Top {self.limit} papers")
+        self.logger.info(f"Target: Top {self.limit} papers by composite score")
 
-        # Step 1: Select top papers
-        self.logger.info("\n[1/3] Selecting top papers by composite score...")
-        selected_papers = self._select_top_papers()
+        # Step 1: Select top papers using DuckDB
+        self.logger.info("\n[1/3] Selecting top papers by DuckDB composite score...")
+        selected_papers = self._select_top_papers_duckdb()
         self.logger.info(f"✓ Selected {len(selected_papers)} papers")
 
         # Step 2: Download PDFs
@@ -131,6 +156,9 @@ class LensPDFDownloader:
         self.logger.info("DOWNLOAD COMPLETE")
         self.logger.info("=" * 60)
         self.logger.info(f"Success: {self.stats['successful']}/{self.stats['total_attempted']}")
+        if self.stats['skipped'] > 0:
+            self.logger.info(f"Skipped: {self.stats['skipped']} (PDFs already existed)")
+            self.logger.info(f"New Downloads: {self.stats['successful'] - self.stats['skipped']}")
         self.logger.info(f"Success Rate: {self.stats['successful']/self.stats['total_attempted']*100:.1f}%")
         self.logger.info(f"By Source:")
         for source, count in self.stats['by_source'].items():
@@ -144,54 +172,62 @@ class LensPDFDownloader:
             'by_source': self.stats['by_source']
         }
 
-    def _select_top_papers(self) -> List[Dict]:
+    def _select_top_papers_duckdb(self) -> List[Dict]:
         """
-        Select top N papers using composite score.
+        Select top N papers using DuckDB composite scoring.
 
-        Composite Score = 0.5 * recency + 0.5 * impact
-        - Recency: Linear scale based on publication date
-        - Impact: Log scale based on references_count
+        Uses SQL-based ranking combining:
+        - LLM relevance score (40%)
+        - Impact potential (20%)
+        - References count (20%)
+        - Innovation type (10%)
+        - Recency (10%)
         """
-        # Convert to DataFrame
-        df = pd.DataFrame(self.all_papers)
+        # Query top papers from DuckDB
+        top_papers = self.db.get_top_papers_by_composite_score(
+            limit=self.limit,
+            min_relevance_score=8.0,  # Only LLM-validated papers
+            weighting=self.composite_weighting
+        )
 
-        # Parse dates
-        df['date_published'] = pd.to_datetime(df['date_published'], errors='coerce')
+        # Calculate composite score statistics
+        if top_papers:
+            scores = [p['composite_score'] for p in top_papers]
+            self.stats['composite_score_stats'] = {
+                'min': min(scores),
+                'max': max(scores),
+                'mean': sum(scores) / len(scores),
+                'median': sorted(scores)[len(scores) // 2]
+            }
 
-        # Filter out papers without dates or references
-        df = df.dropna(subset=['date_published', 'references_count'])
+            self.logger.info(f"Composite Score Statistics:")
+            self.logger.info(f"  Range: {self.stats['composite_score_stats']['min']:.3f} - {self.stats['composite_score_stats']['max']:.3f}")
+            self.logger.info(f"  Mean: {self.stats['composite_score_stats']['mean']:.3f}")
+            self.logger.info(f"  Median: {self.stats['composite_score_stats']['median']:.3f}")
 
-        self.logger.info(f"Papers after filtering: {len(df)}")
+            # Show breakdown of top paper
+            if top_papers:
+                top = top_papers[0]
+                self.logger.info(f"\nTop Paper:")
+                self.logger.info(f"  Title: {top['title'][:60]}...")
+                self.logger.info(f"  Composite Score: {top['composite_score']:.3f}")
+                self.logger.info(f"  Relevance: {top['relevance_score']:.1f} | Impact: {top['impact_potential']}")
+                self.logger.info(f"  Innovation: {top['innovation_type']} | Year: {top['year_published']}")
 
-        # Calculate recency score (0 to 1, newer = higher)
-        max_date = df['date_published'].max()
-        min_date = df['date_published'].min()
-        date_range = (max_date - min_date).days
+        # Enrich with original paper data (for PDF URLs)
+        enriched_papers = []
+        for paper in top_papers:
+            lens_id = paper['lens_id']
+            original = self.papers_by_id.get(lens_id, {})
 
-        if date_range > 0:
-            df['recency_score'] = (df['date_published'] - min_date).dt.days / date_range
-        else:
-            df['recency_score'] = 1.0
+            enriched = {
+                **paper,
+                'open_access': original.get('open_access', {}),
+                'external_ids': original.get('external_ids', [])
+            }
+            enriched_papers.append(enriched)
 
-        # Calculate impact score (0 to 1, more refs = higher quality)
-        max_refs = df['references_count'].max()
-        if max_refs > 0:
-            df['impact_score'] = np.log1p(df['references_count']) / np.log1p(max_refs)
-        else:
-            df['impact_score'] = 0.0
-
-        # Composite score (50/50 weighting)
-        df['composite_score'] = 0.5 * df['recency_score'] + 0.5 * df['impact_score']
-
-        # Sort and select top N
-        top_papers = df.nlargest(self.limit, 'composite_score')
-
-        self.logger.info(f"Selection criteria:")
-        self.logger.info(f"  Date range: {min_date.date()} to {max_date.date()}")
-        self.logger.info(f"  References range: {top_papers['references_count'].min():.0f} - {top_papers['references_count'].max():.0f}")
-        self.logger.info(f"  Composite score range: {top_papers['composite_score'].min():.3f} - {top_papers['composite_score'].max():.3f}")
-
-        return top_papers.to_dict('records')
+        return enriched_papers
 
     def _download_pdfs(self, papers: List[Dict]):
         """Download PDFs for selected papers with progress bar."""
@@ -202,14 +238,29 @@ class LensPDFDownloader:
             for paper in papers:
                 lens_id = paper['lens_id']
 
-                # Check if already downloaded
+                # Check if already downloaded (skip if PDF exists in folder)
                 pdf_path = self.output_dir / f"{lens_id}.pdf"
-                if pdf_path.exists() and self.checkpoint.is_completed(lens_id):
-                    self.logger.debug(f"Skipping {lens_id} (already downloaded)")
-                    self.stats['successful'] += 1
-                    self.stats['by_source']['lens_direct'] += 1  # Assume it was successful before
-                    pbar.update(1)
-                    continue
+                if pdf_path.exists():
+                    # Validate file size (must be > 100KB)
+                    file_size = pdf_path.stat().st_size
+                    if file_size >= self.MIN_PDF_SIZE:
+                        self.logger.info(f"⊘ Skipping {lens_id} (PDF already exists, {file_size/1024/1024:.2f} MB)")
+                        self.stats['successful'] += 1
+                        self.stats['skipped'] += 1
+                        self.stats['by_source']['existing'] += 1
+                        # Mark as completed if not already
+                        if not self.checkpoint.is_completed(lens_id):
+                            self.checkpoint.mark_completed(lens_id, metadata={
+                                'title': paper.get('title', ''),
+                                'source': 'existing',
+                                'composite_score': paper.get('composite_score', 0)
+                            })
+                        pbar.update(1)
+                        continue
+                    else:
+                        # File too small, delete and re-download
+                        self.logger.warning(f"Deleting invalid PDF: {lens_id} ({file_size} bytes)")
+                        pdf_path.unlink()
 
                 # Try download
                 result = self._download_pdf(paper)
@@ -219,7 +270,8 @@ class LensPDFDownloader:
                     self.stats['by_source'][result['source']] += 1
                     self.checkpoint.mark_completed(lens_id, metadata={
                         'title': paper.get('title', ''),
-                        'source': result['source']
+                        'source': result['source'],
+                        'composite_score': paper.get('composite_score', 0)
                     })
                     pbar.set_postfix({'success_rate': f"{self.stats['successful']/self.stats['total_attempted']*100:.1f}%"})
                 else:
@@ -227,6 +279,7 @@ class LensPDFDownloader:
                     self.stats['failed_papers'].append({
                         'lens_id': lens_id,
                         'title': paper.get('title', ''),
+                        'composite_score': paper.get('composite_score', 0),
                         'reason': result.get('reason', 'unknown')
                     })
                     self.checkpoint.mark_failed(lens_id, result.get('reason', 'unknown'))
@@ -371,18 +424,30 @@ class LensPDFDownloader:
         return None
 
     def _generate_report(self):
-        """Generate download report JSON."""
+        """Generate enhanced download report JSON with composite score breakdown."""
         report = {
             'timestamp': datetime.now().isoformat(),
             'papers_json': str(self.papers_json_path),
+            'scored_papers_dir': str(self.scored_papers_dir),
             'output_dir': str(self.output_dir),
             'limit': self.limit,
+            'selection_method': 'DuckDB Composite Scoring',
+            'composite_weighting': self.composite_weighting or {
+                'relevance': 0.4,
+                'impact': 0.2,
+                'references': 0.2,
+                'innovation': 0.1,
+                'recency': 0.1
+            },
+            'composite_score_stats': self.stats['composite_score_stats'],
             'total_attempted': self.stats['total_attempted'],
             'successful': self.stats['successful'],
+            'skipped': self.stats['skipped'],
+            'new_downloads': self.stats['successful'] - self.stats['skipped'],
             'failed': len(self.stats['failed_papers']),
             'success_rate': self.stats['successful'] / self.stats['total_attempted'] * 100 if self.stats['total_attempted'] > 0 else 0,
             'by_source': self.stats['by_source'],
-            'failed_papers': self.stats['failed_papers'][:10]  # Limit to first 10
+            'failed_papers': self.stats['failed_papers'][:20]  # Limit to first 20
         }
 
         report_path = self.output_dir / "pdf_download_report.json"
@@ -397,38 +462,93 @@ if __name__ == "__main__":
     import argparse
 
     parser = argparse.ArgumentParser(
-        description='Download PDFs for top scholarly works',
+        description='Download PDFs for top scholarly works (DuckDB-enhanced)',
         formatter_class=argparse.RawDescriptionHelpFormatter,
         epilog="""
 Examples:
-  # Download top 50 papers
-  python -m src.downloaders.lens_pdf_downloader --limit 50
+  # Download top 200 papers (default)
+  python -m src.downloaders.lens_pdf_downloader \
+      --papers data/eVTOL/lens_scholarly/papers.json \
+      --scored-dir data/eVTOL/lens_scholarly/batch_processing \
+      --output data/eVTOL/lens_scholarly/pdfs
 
   # Test mode (10 papers)
-  python -m src.downloaders.lens_pdf_downloader --test
+  python -m src.downloaders.lens_pdf_downloader \
+      --papers data/eVTOL/lens_scholarly/papers.json \
+      --scored-dir data/eVTOL/lens_scholarly/batch_processing \
+      --output data/eVTOL/lens_scholarly/pdfs \
+      --limit 10
 
-  # Custom paths
-  python -m src.downloaders.lens_pdf_downloader --papers data/custom/papers.json --output pdfs/
+  # Custom composite weighting
+  python -m src.downloaders.lens_pdf_downloader \
+      --papers data/eVTOL/lens_scholarly/papers.json \
+      --scored-dir data/eVTOL/lens_scholarly/batch_processing \
+      --output data/eVTOL/lens_scholarly/pdfs \
+      --limit 50 \
+      --weight-relevance 0.5 \
+      --weight-impact 0.3
         """
     )
 
     parser.add_argument(
         '--papers',
-        default='data/eVTOL/lens_scholarly/papers.json',
-        help='Path to papers.json file'
+        required=True,
+        help='Path to papers.json file (original harvest)'
+    )
+
+    parser.add_argument(
+        '--scored-dir',
+        required=True,
+        help='Path to batch_processing directory with checkpoints'
     )
 
     parser.add_argument(
         '--output',
-        default='data/eVTOL/lens_scholarly/pdfs',
+        required=True,
         help='Output directory for PDFs'
     )
 
     parser.add_argument(
         '--limit',
         type=int,
-        default=50,
-        help='Number of papers to download (default: 50)'
+        default=200,
+        help='Number of papers to download (default: 200)'
+    )
+
+    # Custom composite weighting
+    parser.add_argument(
+        '--weight-relevance',
+        type=float,
+        default=0.4,
+        help='Weight for relevance score (default: 0.4)'
+    )
+
+    parser.add_argument(
+        '--weight-impact',
+        type=float,
+        default=0.2,
+        help='Weight for impact potential (default: 0.2)'
+    )
+
+    parser.add_argument(
+        '--weight-references',
+        type=float,
+        default=0.2,
+        help='Weight for references count (default: 0.2)'
+    )
+
+    parser.add_argument(
+        '--weight-innovation',
+        type=float,
+        default=0.1,
+        help='Weight for innovation type (default: 0.1)'
+    )
+
+    parser.add_argument(
+        '--weight-recency',
+        type=float,
+        default=0.1,
+        help='Weight for recency (default: 0.1)'
     )
 
     parser.add_argument(
@@ -442,19 +562,40 @@ Examples:
     # Override limit for test mode
     limit = 10 if args.test else args.limit
 
+    # Build composite weighting
+    composite_weighting = {
+        'relevance': args.weight_relevance,
+        'impact': args.weight_impact,
+        'references': args.weight_references,
+        'innovation': args.weight_innovation,
+        'recency': args.weight_recency
+    }
+
+    # Validate weights sum to 1.0
+    weight_sum = sum(composite_weighting.values())
+    if abs(weight_sum - 1.0) > 0.01:
+        print(f"ERROR: Composite weights must sum to 1.0 (current: {weight_sum:.2f})")
+        exit(1)
+
     print("\n" + "=" * 60)
     print(f" LENS PDF DOWNLOADER - {'TEST' if args.test else 'PRODUCTION'} MODE")
     print("=" * 60)
     print(f"Papers JSON: {args.papers}")
+    print(f"Scored Dir: {args.scored_dir}")
     print(f"Output Dir: {args.output}")
     print(f"Limit: {limit}")
+    print(f"\nComposite Weighting:")
+    for key, value in composite_weighting.items():
+        print(f"  {key}: {value:.1%}")
     print("=" * 60 + "\n")
 
     # Initialize and run downloader
     downloader = LensPDFDownloader(
         papers_json_path=args.papers,
+        scored_papers_dir=args.scored_dir,
         output_dir=args.output,
-        limit=limit
+        limit=limit,
+        composite_weighting=composite_weighting
     )
 
     results = downloader.download()

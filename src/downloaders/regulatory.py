@@ -40,7 +40,8 @@ class RegulatoryDownloader:
 
     def __init__(self, output_dir: Path, start_date: datetime, end_date: datetime,
                  agencies: Optional[List[str]] = None,
-                 rss_feeds: Optional[Dict[str, str]] = None):
+                 rss_feeds: Optional[Dict[str, str]] = None,
+                 keywords: Optional[List[str]] = None):
         """
         Initialize Regulatory downloader
 
@@ -52,6 +53,8 @@ class RegulatoryDownloader:
                      If None, uses Config.FEDERAL_AGENCIES for backward compatibility
             rss_feeds: Dict of RSS feed names to URLs (e.g. {'FAA_NEWS': 'https://...'})
                       If None, uses Config.REGULATORY_RSS_FEEDS for backward compatibility
+            keywords: List of keywords for filtering documents (e.g. ['eVTOL', 'urban air mobility'])
+                     If None or empty, downloads all documents without filtering (backward compatibility)
         """
         self.output_dir = Path(output_dir)
         self.output_dir.mkdir(parents=True, exist_ok=True)
@@ -75,6 +78,7 @@ class RegulatoryDownloader:
         # Use provided parameters or fall back to config (backward compatibility)
         self.agencies = agencies if agencies is not None else Config.FEDERAL_AGENCIES
         self.rss_feeds = rss_feeds if rss_feeds is not None else Config.REGULATORY_RSS_FEEDS
+        self.keywords = keywords if keywords else []  # Empty list if None for easy checking
 
         self.stats = {
             'success': 0,
@@ -87,6 +91,13 @@ class RegulatoryDownloader:
                 'web_scraping': 0
             }
         }
+
+        # Log keyword filtering status
+        if self.keywords:
+            self.logger.info(f"Keyword filtering enabled: {len(self.keywords)} keywords")
+            self.logger.debug(f"Keywords: {', '.join(self.keywords[:10])}{'...' if len(self.keywords) > 10 else ''}")
+        else:
+            self.logger.info("Keyword filtering disabled - downloading all documents")
 
         # Check resume info
         resume_info = self.checkpoint.get_resume_info()
@@ -145,6 +156,37 @@ class RegulatoryDownloader:
 
         return self.stats
 
+    def _matches_keywords(self, document: Dict) -> bool:
+        """
+        Check if document matches any of the configured keywords
+
+        Args:
+            document: Document dict with 'title', 'abstract', 'summary' fields
+
+        Returns:
+            True if document matches any keyword, or if no keywords configured
+            False otherwise
+        """
+        # If no keywords configured, match all documents (backward compatibility)
+        if not self.keywords:
+            return True
+
+        # Collect searchable text from document (handle None values)
+        searchable_text = []
+        searchable_text.append(document.get('title') or '')
+        searchable_text.append(document.get('abstract') or '')
+        searchable_text.append(document.get('summary') or '')
+
+        # Combine and normalize to lowercase
+        full_text = ' '.join(searchable_text).lower()
+
+        # Check if any keyword is present
+        for keyword in self.keywords:
+            if keyword.lower() in full_text:
+                return True
+
+        return False
+
     @retry_on_error(max_retries=3)
     def _get_federal_register_documents(self) -> List[Dict]:
         """Get documents from Federal Register API"""
@@ -162,39 +204,63 @@ class RegulatoryDownloader:
                 continue
 
             try:
-                # Query Federal Register API
+                # Query Federal Register API with pagination
                 url = Config.FEDERAL_REGISTER_API
-                params = {
-                    'conditions[agencies][]': agency,
-                    'conditions[publication_date][gte]': start_str,
-                    'conditions[publication_date][lte]': end_str,
-                    'per_page': 100,
-                    'page': 1
-                }
+                page = 1
+                total_fetched = 0
+                total_matched = 0
 
-                response = self.client.get(url, params=params)
-                response.raise_for_status()
+                while True:
+                    params = {
+                        'conditions[agencies][]': agency,
+                        'conditions[publication_date][gte]': start_str,
+                        'conditions[publication_date][lte]': end_str,
+                        'per_page': 100,
+                        'page': page
+                    }
 
-                data = response.json()
-                results = data.get('results', [])
+                    response = self.client.get(url, params=params)
+                    response.raise_for_status()
 
-                for result in results:
-                    documents.append({
-                        'source': 'federal_register',
-                        'agency': agency,
-                        'title': result.get('title', 'Untitled'),
-                        'document_number': result.get('document_number', ''),
-                        'publication_date': result.get('publication_date', ''),
-                        'document_type': result.get('type', ''),
-                        'url': result.get('html_url', ''),
-                        'pdf_url': result.get('pdf_url', ''),
-                        'abstract': result.get('abstract', '')
-                    })
+                    data = response.json()
+                    results = data.get('results', [])
 
-                self.checkpoint.mark_completed(item_id, {'count': len(results)})
-                self.logger.debug(f"Federal Register: {agency} - {len(results)} documents")
+                    if not results:
+                        break  # No more results
 
-                time.sleep(0.5)  # Be nice to the API
+                    total_fetched += len(results)
+                    page_matched = 0
+
+                    for result in results:
+                        doc = {
+                            'source': 'federal_register',
+                            'agency': agency,
+                            'title': result.get('title', 'Untitled'),
+                            'document_number': result.get('document_number', ''),
+                            'publication_date': result.get('publication_date', ''),
+                            'document_type': result.get('type', ''),
+                            'url': result.get('html_url', ''),
+                            'pdf_url': result.get('pdf_url', ''),
+                            'abstract': result.get('abstract', '')
+                        }
+
+                        # Filter by keywords
+                        if self._matches_keywords(doc):
+                            documents.append(doc)
+                            page_matched += 1
+
+                    total_matched += page_matched
+
+                    # Check if there are more pages
+                    total_pages = data.get('total_pages', 1)
+                    if page >= total_pages:
+                        break
+
+                    page += 1
+                    time.sleep(0.5)  # Be nice to the API between pages
+
+                self.checkpoint.mark_completed(item_id, {'count': total_fetched, 'matched': total_matched})
+                self.logger.info(f"Federal Register: {agency} - {total_fetched} documents fetched, {total_matched} matched keywords")
 
             except Exception as e:
                 self.logger.error(f"Federal Register API error for {agency}: {e}")
@@ -217,7 +283,7 @@ class RegulatoryDownloader:
 
         # Convert to document format
         for entry in entries:
-            documents.append({
+            doc = {
                 'source': 'rss_feeds',
                 'agency': entry['source'],
                 'title': entry['title'],
@@ -225,7 +291,11 @@ class RegulatoryDownloader:
                 'publication_date': entry['pub_date'].isoformat() if entry.get('pub_date') else None,
                 'summary': entry.get('summary', ''),
                 'author': entry.get('author', '')
-            })
+            }
+
+            # Filter by keywords
+            if self._matches_keywords(doc):
+                documents.append(doc)
 
         return documents
 
@@ -259,13 +329,17 @@ class RegulatoryDownloader:
                 title = link.text.strip()
 
                 if title and len(title) > 10:
-                    documents.append({
+                    doc = {
                         'source': 'web_scraping',
                         'agency': 'FinCEN',
                         'title': title,
                         'url': href,
                         'publication_date': None  # Not easily extractable
-                    })
+                    }
+
+                    # Filter by keywords
+                    if self._matches_keywords(doc):
+                        documents.append(doc)
 
             self.checkpoint.mark_completed(item_id, {'count': len(documents)})
             self.logger.debug(f"FinCEN scraping: {len(documents)} documents")
