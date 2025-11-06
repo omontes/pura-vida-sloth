@@ -1,0 +1,247 @@
+{
+  "industry": "quantum_computing",
+  "industry_name": "Quantum Computing",
+  "description": "Quantum information science and quantum computing - comprehensive harvest testing industry-agnostic design",
+
+  "date_range": {
+    "days_back": 180
+  },
+
+  "output_config": {
+    "base_dir": "./data",
+    "industry_folder": "quantum_computing",
+    "create_timestamp_subfolder": false,
+    "folder_structure": {
+      "company_fundamentals": "company_fundamentals",
+      "patents": "patents",
+      "lens_patents": "lens_patents",
+      "github": "github_activity",
+      "sec": "sec_filings",
+      "earnings": "earnings_calls",
+      "research": "research_papers",
+      "regulatory": "regulatory_docs",
+      "press": "press_releases",
+      "news": "news_sentiment",
+      "citations": "academic_citations",
+      "jobs": "job_postings",
+      "stock_market": "stock_market",
+      "gov_contracts": "government_contracts",
+      "institutional_holdings": "institutional_holdings",
+      "form13f": "form13f_institutional_holdings",
+      "lens_scholarly": "lens_scholarly",
+      "insider_transactions": "insider_transactions"
+    }
+  },
+
+  "keywords": {
+    "core": [
+      "quantum computing",
+      "quantum computer",
+      "qubit",
+      "quantum processor",
+      "quantum technology",
+      "quantum information science",
+      "quantum advantage"
+    ],
+    "scholarly_core": [
+      "quantum computing",
+      "quantum algorithm",
+      "quantum information",
+      "quantum entanglement",
+      "quantum error correction",
+      "quantum simulation"
+    ],
+    "technology": [
+      "quantum algorithm",
+      "quantum gate",
+      "quantum circuit",
+      "quantum entanglement",
+      "quantum superposition",
+      "superconducting qubit",
+      "trapped ion",
+      "ion trap",
+      "topological qubit",
+      "photonic qubit",
+      "neutral atom",
+      "quantum error correction",
+      "quantum coherence",
+      "quantum annealing"
+    ],
+    "applications": [
+      "quantum cryptography",
+      "quantum sensing",
+      "quantum simulation",
+      "quantum optimization",
+      "quantum machine learning",
+      "drug discovery quantum",
+      "quantum chemistry",
+      "quantum networking"
+    ],
+    "regulatory": [
+      "post-quantum cryptography",
+      "quantum-safe cryptography",
+      "NIST quantum standards",
+      "FIPS 203",
+      "quantum cybersecurity"
+    ]
+  },
+
+  "companies": {
+    "public": {
+      "IONQ": "IonQ Inc.",
+      "RGTI": "Rigetti Computing Inc.",
+      "QBTS": "D-Wave Quantum Inc.",
+      "QUBT": "Quantum Computing Inc.",
+      "IBM": "IBM Corporation",
+      "GOOGL": "Alphabet Inc.",
+      "MSFT": "Microsoft Corporation",
+      "NVDA": "NVIDIA Corporation",
+      "AMZN": "Amazon.com Inc.",
+      "INTC": "Intel Corporation"
+    },
+    "private": {
+      "PSIQUANTUM": "PsiQuantum Corp.",
+      "QUANTINUUM": "Quantinuum Ltd.",
+      "QUERA": "QuEra Computing Inc.",
+      "ATOM_COMPUTING": "Atom Computing Inc.",
+      "QUANTUM_MACHINES": "Quantum Machines Ltd.",
+      "MULTIVERSE": "Multiverse Computing S.L.",
+      "PASQAL": "Pasqal SAS",
+      "QUANTWARE": "QuantWare B.V."
+    }
+  },
+
+  "data_sources": {
+    "company_fundamentals": {
+      "enabled": false,
+      "priority": 1,
+      "comment": "DISABLED - FMP API free tier blocked (403 Forbidden). Requires paid tier."
+    },
+    "patents": {
+      "enabled": false,
+      "limit": 20,
+      "cpc_codes": [
+        "G06N10/00",
+        "G06N10/40",
+        "G06N10/70",
+        "H01L39/22"
+      ],
+      "priority": 2,
+      "comment": "DISABLED in favor of lens_patents for comprehensive coverage."
+    },
+    "lens_patents": {
+      "enabled": true,
+      "limit": 300,
+      "priority": 2,
+      "comment": "Lens.org Patent API - comprehensive global patent database. Expected: High quantum patent activity from IBM, Google, Microsoft, startups."
+    },
+    "github": {
+      "enabled": true,
+      "limit": 100,
+      "min_stars": 3,
+      "priority": 2,
+      "comment": "Track quantum computing open-source projects (Qiskit, Cirq, Q#, quantum algorithms)"
+    },
+    "sec_filings": {
+      "enabled": true,
+      "types": ["8-K", "10-Q", "10-K", "D", "4"],
+      "priority": 3,
+      "comment": "SEC filings for public quantum companies (IONQ, RGTI, QBTS, QUBT)"
+    },
+    "earnings": {
+      "enabled": false,
+      "limit": 50,
+      "priority": 4,
+      "comment": "DISABLED - FMP API free tier blocks earnings transcripts (403 errors). Upgrade to paid tier required."
+    },
+    "research": {
+      "enabled": true,
+      "limit": 100,
+      "priority": 5,
+      "comment": "Academic research on quantum computing - Expected: Very high volume (Nature, Science, PRL, arXiv)"
+    },
+    "regulatory": {
+      "enabled": false,
+      "limit": 100,
+      "priority": 6,
+      "agencies": [
+        "national-institute-of-standards-and-technology"
+      ],
+      "rss_feeds": {
+        "NIST_NEWS": "https://www.nist.gov/news-events/news/rss.xml"
+      },
+      "comment": "NIST post-quantum cryptography standards and quantum measurements"
+    },
+    "press": {
+      "enabled": true,
+      "limit": 100,
+      "priority": 7,
+      "comment": "Company press releases from quantum companies"
+    },
+    "news_sentiment": {
+      "enabled": true,
+      "limit": 300,
+      "max_records_per_query": 50,
+      "priority": 8,
+      "comment": "GDELT news articles - Expected: High media coverage given stock performance (+1000-3000% gains)"
+    },
+    "citations": {
+      "enabled": true,
+      "limit": 100,
+      "priority": 9,
+      "comment": "OpenAlex citation tracking - Expected: Very high citation activity in quantum field"
+    },
+    "jobs": {
+      "enabled": true,
+      "limit": 100,
+      "locations": ["United States", "California", "Massachusetts", "New York"],
+      "priority": 10,
+      "comment": "Job postings for quantum engineers, physicists, algorithm developers"
+    },
+    "stock_market": {
+      "enabled": true,
+      "history_period": "1y",
+      "download_options": true,
+      "priority": 1,
+      "comment": "Yahoo Finance - Track extreme stock gains (IONQ +712%, RGTI +5940%, QBTS +3060%)"
+    },
+    "government_contracts": {
+      "enabled": true,
+      "agencies": ["DOD", "DOE", "NSF", "NASA", "DARPA", "IARPA", "NIST", "NSA"],
+      "years_back": 10,
+      "min_contract_value": 25000,
+      "priority": 1,
+      "comment": "USASpending.gov - DOE $625M renewal, DARPA selections, NSF quantum programs"
+    },
+    "institutional_holdings": {
+      "enabled": false,
+      "quarters_back": 4,
+      "priority": 11,
+      "comment": "DISABLED - 13F filings (complex XML parsing required, use form13f_holdings instead)"
+    },
+    "form13f_holdings": {
+      "enabled": true,
+      "priority": 12,
+      "comment": "SEC Form 13F institutional holdings from local dataset (data/form13f). Expected: High institutional interest given stock performance."
+    },
+    "lens_scholarly": {
+      "enabled": true,
+      "limit": 1000,
+      "priority": 3,
+      "comment": "Lens.org Scholarly Works API - Expected: Very high volume (NSF, DOE, DARPA funding visible)"
+    },
+    "insider_transactions": {
+      "enabled": true,
+      "priority": 13,
+      "comment": "SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Key signal: Are quantum execs buying/selling after 1000%+ stock gains?"
+    }
+  },
+
+  "free_tier_limits": {
+    "patents_per_hour": 1000,
+    "github_per_hour": 4500,
+    "news_per_day": 10000,
+    "citations_per_day": 50000,
+    "respect_rate_limits": true
+  }
+}
