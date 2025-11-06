@@ -27,7 +27,8 @@
       "stock_market": "stock_market",
       "gov_contracts": "government_contracts",
       "institutional_holdings": "institutional_holdings",
-      "form13f": "form13f_institutional_holdings"
+      "form13f": "form13f_institutional_holdings",
+      "lens_scholarly": "lens_scholarly"
     }
   },
 
@@ -39,6 +40,14 @@
       "flying taxi",
       "air taxi",
       "advanced air mobility"
+    ],
+    "scholarly_core": [
+      "eVTOL",
+      "electric VTOL",
+      "urban air mobility",
+      "advanced air mobility",
+      "distributed electric propulsion",
+      "electric vertical takeoff"
     ],
     "technology": [
       "distributed electric propulsion",
@@ -139,10 +148,10 @@
       "comment": "Using SerpApi (Google Patents) - 100 searches/month free tier. Limit=20 per company (10 companies = 10 searches, ~100-200 patents total). DISABLED in favor of lens_patents for comprehensive coverage."
     },
     "lens_patents": {
-      "enabled": true,
+      "enabled": false,
       "limit": 300,
       "priority": 2,
-      "comment": "Lens.org Patent API - comprehensive global patent database (100M+ patents). 300 patents per company, ~12,000+ total expected from 47 companies. Better coverage than SerpApi."
+      "comment": "Lens.org Patent API - comprehensive global patent database (100M+ patents). PRODUCTION MODE: 300 patents per company, 35 strategic intelligence fields (description/claims available via PDF download)."
     },
     "github": {
       "enabled": false,
@@ -234,6 +243,17 @@
       "enabled": false,
       "priority": 12,
       "comment": "SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Enable in test config first."
+    },
+    "lens_scholarly": {
+      "enabled": false,
+      "limit": 1000,
+      "priority": 3,
+      "comment": "Lens.org Scholarly Works API - research papers with funding data. Fills Layer 2 (Market Formation) funding gap. 10 RPM limit, 500 records/request. Expected: ~4,000-6,000 papers from 6 keywords. DISABLED for lens_patents testing."
+    },
+    "insider_transactions": {
+      "enabled": true,
+      "priority": 13,
+      "comment": "SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Tracks CEO/executive buying/selling patterns (Layer 3: Financial Reality executive confidence signals). Q2 2025 data, 66K+ transactions, 50K+ submissions."
     }
   },
 

@@ -180,6 +180,30 @@ class InitialHarvest:
             )
             self.logger.info("Initialized: LensPatentDownloader")
 
+        # 1c. Lens Scholarly Works (research papers with funding data)
+        if self.config['data_sources'].get('lens_scholarly', {}).get('enabled'):
+            from src.downloaders.lens_scholarly import LensScholarlyDownloader
+
+            # Get scholarly-optimized keywords (try scholarly_core first, fallback to core)
+            keywords = []
+            if 'keywords' in self.config:
+                if 'scholarly_core' in self.config['keywords']:
+                    keywords = self.config['keywords']['scholarly_core']
+                elif 'core' in self.config['keywords']:
+                    keywords = self.config['keywords']['core']
+
+            if not keywords:
+                self.logger.warning("No keywords found in config for lens_scholarly")
+            else:
+                downloaders['lens_scholarly'] = LensScholarlyDownloader(
+                    output_dir=self.industry_root / folder_map.get('lens_scholarly', 'lens_scholarly'),
+                    start_date=start_date.isoformat(),
+                    end_date=end_date.isoformat(),
+                    keywords=keywords,
+                    limit=self.config['data_sources']['lens_scholarly'].get('limit', 1000)
+                )
+                self.logger.info(f"Initialized: LensScholarlyDownloader ({len(keywords)} keywords)")
+
         # 2. GitHub
         if self.config['data_sources'].get('github', {}).get('enabled'):
             from src.downloaders.github_tracker import GitHubTracker
@@ -338,6 +362,24 @@ class InitialHarvest:
                 self.logger.info(f"Initialized: Form13FHoldingsDownloader ({len(public_companies)} companies)")
             else:
                 self.logger.warning("No public companies in config - skipping Form 13F")
+
+        # 15. Insider Transactions (Forms 3/4/5) - Executive confidence signals
+        if self.config['data_sources'].get('insider_transactions', {}).get('enabled'):
+            from src.downloaders.insider_transactions import InsiderTransactionsDownloader
+
+            # Get public companies only (private companies don't file insider transactions)
+            public_companies = self.config.get('companies', {}).get('public', {})
+
+            if public_companies:
+                downloaders['insider_transactions'] = InsiderTransactionsDownloader(
+                    output_dir=self.industry_root / folder_map.get('insider_transactions', 'insider_transactions'),
+                    companies=public_companies,
+                    start_date=start_date.isoformat(),
+                    end_date=end_date.isoformat()
+                )
+                self.logger.info(f"Initialized: InsiderTransactionsDownloader ({len(public_companies)} companies)")
+            else:
+                self.logger.warning("No public companies in config - skipping insider transactions")
 
         return downloaders
 
