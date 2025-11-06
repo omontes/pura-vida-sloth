@@ -254,14 +254,25 @@ class InitialHarvest:
             # Get regulatory-specific config
             agencies = self.config['data_sources']['regulatory'].get('agencies', None)
             rss_feeds = self.config['data_sources']['regulatory'].get('rss_feeds', None)
+
+            # Use relaxed keyword group for regulatory filtering (more inclusive matching)
+            regulatory_keywords = self.config['keywords'].get('regulatory_relaxed', [])
+
+            # Fallback to all keywords if regulatory_relaxed group doesn't exist
+            if not regulatory_keywords:
+                regulatory_keywords = []
+                for keyword_group in self.config['keywords'].values():
+                    regulatory_keywords.extend(keyword_group)
+
             downloaders['regulatory'] = RegulatoryDownloader(
                 output_dir=self.industry_root / folder_map['regulatory'],
                 start_date=start_date,
                 end_date=end_date,
                 agencies=agencies,  # Pass FAA agencies from config
-                rss_feeds=rss_feeds  # Pass regulatory RSS feeds from config
+                rss_feeds=rss_feeds,  # Pass regulatory RSS feeds from config
+                keywords=regulatory_keywords  # Pass industry keywords for filtering
             )
-            self.logger.info("Initialized: RegulatoryDownloader")
+            self.logger.info(f"Initialized: RegulatoryDownloader ({len(regulatory_keywords)} keywords for filtering)")
 
         # 7. Press Releases
         if self.config['data_sources'].get('press', {}).get('enabled'):
