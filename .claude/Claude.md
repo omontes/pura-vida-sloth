@@ -179,6 +179,43 @@ OUTPUT LAYER (Reporting) [NOT YET IMPLEMENTED]
 
 ---
 
+## Development Guidelines
+
+### Iterative Test-Driven Approach
+
+**CRITICAL**: Before running any full harvest, ALWAYS test with a minimal example first.
+
+**Best Practice**:
+1. **Test with 1 keyword/company**: Validate API access and data structure
+2. **Test with 10 records**: Verify field extraction and file saving
+3. **Test with 100 records**: Check pagination and rate limiting
+4. **Only then**: Run full harvest with all data
+
+**Example**:
+```python
+# BAD: Run full harvest immediately
+python -m src.core.orchestrator --config configs/evtol_config.json  # 5,000+ papers
+
+# GOOD: Test incrementally first
+python -m src.downloaders.lens_scholarly  # Built-in test (2 keywords, 1,000 each)
+# Review output → Fix issues → Then run full harvest
+```
+
+**Why This Matters**:
+- Prevents wasted API quota on broken code
+- Catches missing field extraction early
+- Avoids corrupted data from schema mismatches
+- Saves 5-10 minutes vs full re-harvest
+
+**When Adding New Fields**:
+1. Update `INCLUDE_FIELDS` list
+2. Update `_extract_*_data()` method to extract new fields
+3. Test with 1 paper first
+4. Verify field appears in output
+5. Then run full harvest
+
+---
+
 **Remember**: This system helps executives avoid $100M+ mistakes by identifying technology lifecycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.
 
 **Disclaimer**: *This system provides multi-source intelligence for strategic analysis only. Not investment advice. Consult licensed financial advisors for investment decisions.*
