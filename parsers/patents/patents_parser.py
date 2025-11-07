@@ -28,7 +28,21 @@ from langchain_community.callbacks import get_openai_callback
 class PatentTechnologyParser:
     """LLM-driven parser to extract technology relationships from patent data."""
 
-    def __init__(self, openai_api_key: str, model_name: str = "gpt-4o-mini", temperature: float = 0.0):
+    def __init__(self,
+                 openai_api_key: str,
+                 config_path: str = "configs/eVTOL_graph_relations.json",
+                 model_name: str = "gpt-4o-mini",
+                 temperature: float = 0.0):
+
+        # Load allowed relations from config
+        with open(config_path, 'r', encoding='utf-8') as f:
+            self.graph_config = json.load(f)
+
+        self.allowed_company_tech_relations = self.graph_config["allowed_company_tech_relations"]
+        self.allowed_tech_tech_relations = self.graph_config["allowed_tech_tech_relations"]
+        self.allowed_company_company_relations = self.graph_config["allowed_company_company_relations"]
+
+        # Initialize LLM
         self.llm = ChatOpenAI(
             temperature=temperature,
             model=model_name,
@@ -40,52 +54,78 @@ class PatentTechnologyParser:
 
     def parse_patent(self, patent_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Parse a single patent into technology nodes and relationships.
+        Parse a single patent into entity mentions and relationships.
 
         Args:
             patent_data: Patent record from Lens.org API
 
         Returns:
             Dictionary containing:
-            - patent_metadata: Basic patent information
-            - technology_nodes: List of technologies/innovations identified
-            - relationships: List of triplets (subject, predicate, object)
-            - innovation_signals: Classification for lifecycle analysis
+            - document: All original patent metadata
+            - tech_mentions: Technologies with roles, strength, confidence
+            - company_mentions: Companies with roles, strength, confidence
+            - company_tech_relations: Relations with doc_ref added
+            - tech_tech_relations: Relations with doc_ref added
+            - company_company_relations: Relations with doc_ref added
         """
         input_text = self._format_patent_for_llm(patent_data)
 
         try:
             with get_openai_callback() as cb:
-                result = self.chain.invoke({"input": input_text})
+                # LLM generates mentions + relations only
+                llm_result = self.chain.invoke({"input": input_text})
 
                 # Log token usage and cost
-                print(f"\nToken Usage:")
-                print(f"  Prompt tokens: {cb.prompt_tokens}")
-                print(f"  Completion tokens: {cb.completion_tokens}")
-                print(f"  Total tokens: {cb.total_tokens}")
-
-                # Calculate cost (gpt-4o-mini pricing)
-                cost_per_1m_input = 0.150
-                cost_per_1m_output = 0.600
-
-                cost_per_input_token = cost_per_1m_input / 1_000_000
-                cost_per_output_token = cost_per_1m_output / 1_000_000
-
-                input_cost = cb.prompt_tokens * cost_per_input_token
-                output_cost = cb.completion_tokens * cost_per_output_token
-                total_cost = input_cost + output_cost
-                print(f"  Cost (USD): ${total_cost:.6f}")
+                print(f"\nToken Usage: {cb.total_tokens} tokens (${cb.total_cost:.6f})")
 
         except Exception as e:
             print(f"Parsing error: {e}")
-            result = self._empty_result()
+            llm_result = {
+                "tech_mentions": [],
+                "company_mentions": [],
+                "company_tech_relations": [],
+                "tech_tech_relations": [],
+                "company_company_relations": []
+            }
 
-        # Enrich with original patent data
-        result["patent_metadata"]["lens_id"] = patent_data.get("lens_id", "")
-        result["patent_metadata"]["patent_number"] = patent_data.get("patent_number", "")
-        result["patent_metadata"]["url"] = patent_data.get("url", "")
+        # Python adds document metadata
+        doc_id = patent_data.get("lens_id", "")
 
-        return result
+        final_result = {
+            "document": {
+                "doc_id": doc_id,
+                "doc_type": "patent",
+                "title": patent_data.get("title", ""),
+                "assignee": patent_data.get("assignee", ""),
+                "filing_date": patent_data.get("filing_date", ""),
+                "publication_date": patent_data.get("publication_date", ""),
+                "patent_number": patent_data.get("patent_number", ""),
+                "url": patent_data.get("url", ""),
+                "citation_count": patent_data.get("citation_count", 0),
+                "cpc_codes": patent_data.get("cpc_codes", []),
+                "abstract": patent_data.get("abstract", "")
+            },
+            "tech_mentions": llm_result.get("tech_mentions", []),
+            "company_mentions": llm_result.get("company_mentions", []),
+            "company_tech_relations": llm_result.get("company_tech_relations", []),
+            "tech_tech_relations": llm_result.get("tech_tech_relations", []),
+            "company_company_relations": llm_result.get("company_company_relations", [])
+        }
+
+        # Add doc_ref to all relations
+        for rel in final_result["company_tech_relations"]:
+            rel["doc_ref"] = doc_id
+        for rel in final_result["tech_tech_relations"]:
+            rel["doc_ref"] = doc_id
+        for rel in final_result["company_company_relations"]:
+            rel["doc_ref"] = doc_id
+
+        # Validate relations match config
+        warnings = self._validate_relations(final_result)
+        if warnings:
+            print(f"⚠️  Validation warnings: {warnings}")
+
+        return final_result
 
     def parse_and_save(self, patent_data: Dict[str, Any], out_path: str = "patent_parse_result.json") -> Dict[str, Any]:
         """Parse a patent and save results to JSON file."""
@@ -137,25 +177,23 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 
         return formatted
 
-    def _empty_result(self) -> Dict[str, Any]:
-        """Return empty result structure on parsing failure."""
-        return {
-            "patent_metadata": {
-                "lens_id": "",
-                "patent_number": "",
-                "title": "",
-                "assignee": "",
-                "filing_date": "",
-                "url": ""
-            },
-            "technology_nodes": [],
-            "relationships": [],
-            "innovation_signals": {
-                "maturity_level": "unknown",
-                "innovation_type": "unknown",
-                "competitive_positioning": "unknown"
-            }
-        }
+    def _validate_relations(self, result: Dict[str, Any]) -> List[str]:
+        """Validate that all relations use allowed types from config."""
+        warnings = []
+
+        for rel in result.get("company_tech_relations", []):
+            if rel.get("relation_type") not in self.allowed_company_tech_relations:
+                warnings.append(f"Invalid company_tech relation: {rel.get('relation_type')}")
+
+        for rel in result.get("tech_tech_relations", []):
+            if rel.get("relation_type") not in self.allowed_tech_tech_relations:
+                warnings.append(f"Invalid tech_tech relation: {rel.get('relation_type')}")
+
+        for rel in result.get("company_company_relations", []):
+            if rel.get("relation_type") not in self.allowed_company_company_relations:
+                warnings.append(f"Invalid company_company relation: {rel.get('relation_type')}")
+
+        return warnings
 
     def _create_chain(self):
         """Build the few-shot chain for patent technology extraction."""
@@ -180,85 +218,85 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 """
 
         ex_output_1 = json.dumps({
-            "patent_metadata": {
-                "title": "SYSTEMS AND METHODS FOR VERTICAL TAKEOFF AND LANDING VEHICLE WITH OPERATION MODE-BASED ROTOR BLADE CONTROL",
-                "assignee": "Joby Aero, Inc.",
-                "filing_date": "2024-03-29"
-            },
-            "technology_nodes": [
+            "tech_mentions": [
                 {
-                    "node_id": "tech_magnetic_levitation_rotor",
-                    "node_type": "technology",
                     "name": "Magnetic Levitation Rotor System",
-                    "description": "Annular rotor magnetically levitated by stator for VTOL propulsion",
-                    "maturity": "emerging",
-                    "domain": "propulsion"
+                    "role": "subject",
+                    "strength": 0.95,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Primary invention: Annular rotor magnetically levitated by stator for VTOL"
                 },
                 {
-                    "node_id": "tech_independent_blade_control",
-                    "node_type": "technology",
+                    "name": "Magnetic Levitation Rotor System",
+                    "role": "invented",
+                    "strength": 0.90,
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Novel magnetic levitation system created by Joby for rotor propulsion"
+                },
+                {
                     "name": "Independent Rotor Blade Pitch Control",
-                    "description": "Individual blade pitch angle control for lift, pitch, roll, and yaw",
-                    "maturity": "advanced",
-                    "domain": "flight_control"
+                    "role": "invented",
+                    "strength": 0.85,
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "New control method for individual blade pitch angles"
                 },
                 {
-                    "node_id": "tech_redundant_control_systems",
-                    "node_type": "technology",
+                    "name": "Independent Rotor Blade Pitch Control",
+                    "role": "implemented",
+                    "strength": 0.80,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Deployed pitch control for lift, pitch, roll, and yaw"
+                },
+                {
                     "name": "Redundant Control Architecture",
-                    "description": "Multiple independent controllers for platform component control",
-                    "maturity": "mature",
-                    "domain": "safety_systems"
-                },
-                {
-                    "node_id": "company_joby",
-                    "node_type": "organization",
-                    "name": "Joby Aero, Inc.",
-                    "description": "eVTOL aircraft manufacturer",
-                    "role": "innovator"
+                    "role": "implemented",
+                    "strength": 0.70,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Multiple independent controllers for platform component control"
                 }
             ],
-            "relationships": [
+            "company_mentions": [
                 {
-                    "subject": "tech_magnetic_levitation_rotor",
-                    "predicate": "enables",
-                    "object": "tech_independent_blade_control",
-                    "confidence": 0.95,
-                    "evidence": "Magnetically levitated rotor allows independent blade pitch control without mechanical linkages"
+                    "name": "Joby Aero Inc",
+                    "role": "owner",
+                    "strength": 1.0,
+                    "evidence_confidence": 1.0,
+                    "evidence_text": "Assignee: Joby Aero, Inc."
                 },
                 {
-                    "subject": "tech_independent_blade_control",
-                    "predicate": "supports",
-                    "object": "tech_redundant_control_systems",
-                    "confidence": 0.90,
-                    "evidence": "Independent blade control enables redundant flight control architecture"
-                },
-                {
-                    "subject": "company_joby",
-                    "predicate": "develops",
-                    "object": "tech_magnetic_levitation_rotor",
-                    "confidence": 1.0,
-                    "evidence": "Joby Aero filed patent for magnetic levitation rotor system"
-                },
-                {
-                    "subject": "tech_magnetic_levitation_rotor",
-                    "predicate": "advances_beyond",
-                    "object": "conventional_mechanical_rotor",
-                    "confidence": 0.85,
-                    "evidence": "Eliminates mechanical complexity of traditional rotor systems"
+                    "name": "Joby Aero Inc",
+                    "role": "developer",
+                    "strength": 0.98,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Joby developed the magnetic levitation rotor system"
                 }
             ],
-            "innovation_signals": {
-                "maturity_level": "early_commercial",
-                "innovation_type": "breakthrough",
-                "competitive_positioning": "differentiated",
-                "technical_risk": "medium",
-                "adoption_indicators": [
-                    "Joby has multiple patents in magnetic levitation",
-                    "Recent filing date suggests active development",
-                    "5 citations indicate building on existing work"
-                ]
-            }
+            "company_tech_relations": [
+                {
+                    "company_name": "Joby Aero Inc",
+                    "technology_name": "Magnetic Levitation Rotor System",
+                    "relation_type": "owns_ip",
+                    "evidence_confidence": 1.0,
+                    "evidence_text": "Joby Aero filed patent for magnetic levitation rotor system"
+                }
+            ],
+            "tech_tech_relations": [
+                {
+                    "from_tech_name": "Magnetic Levitation Rotor System",
+                    "to_tech_name": "Independent Rotor Blade Pitch Control",
+                    "relation_type": "enables",
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Magnetically levitated rotor allows independent blade pitch control without mechanical linkages"
+                },
+                {
+                    "from_tech_name": "Independent Rotor Blade Pitch Control",
+                    "to_tech_name": "Redundant Control Architecture",
+                    "relation_type": "supports",
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Independent blade control enables redundant flight control architecture"
+                }
+            ],
+            "company_company_relations": []
         }, indent=2)
 
         # Few-shot example 2: Battery technology
@@ -283,101 +321,92 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 """
 
         ex_output_2 = json.dumps({
-            "patent_metadata": {
-                "title": "HIGH-ENERGY DENSITY LITHIUM-SULFUR BATTERY SYSTEM FOR ELECTRIC AIRCRAFT",
-                "assignee": "Beta Technologies",
-                "filing_date": "2023-08-15"
-            },
-            "technology_nodes": [
+            "tech_mentions": [
                 {
-                    "node_id": "tech_lithium_sulfur_400wh",
-                    "node_type": "technology",
                     "name": "400+ Wh/kg Lithium-Sulfur Battery",
-                    "description": "High energy density Li-S cells for aviation applications",
-                    "maturity": "emerging",
-                    "domain": "energy_storage"
+                    "role": "subject",
+                    "strength": 0.95,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Primary invention: High energy density Li-S cells for aviation"
                 },
                 {
-                    "node_id": "tech_thermal_mgmt_aviation",
-                    "node_type": "technology",
+                    "name": "400+ Wh/kg Lithium-Sulfur Battery",
+                    "role": "invented",
+                    "strength": 0.92,
+                    "evidence_confidence": 0.96,
+                    "evidence_text": "Novel Li-S chemistry exceeding 400 Wh/kg created by Beta"
+                },
+                {
                     "name": "Aviation Battery Thermal Management",
-                    "description": "Active cooling/heating system for high-discharge flight operations",
-                    "maturity": "advanced",
-                    "domain": "thermal_systems"
+                    "role": "invented",
+                    "strength": 0.80,
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "New thermal management system designed for high-discharge operations"
                 },
                 {
-                    "node_id": "tech_active_cell_balancing",
-                    "node_type": "technology",
+                    "name": "Aviation Battery Thermal Management",
+                    "role": "implemented",
+                    "strength": 0.75,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Active cooling/heating system deployed for flight operations"
+                },
+                {
                     "name": "Active Cell Balancing BMS",
-                    "description": "Battery management with individual cell monitoring and balancing",
-                    "maturity": "mature",
-                    "domain": "power_electronics"
+                    "role": "implemented",
+                    "strength": 0.70,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Battery management with individual cell monitoring and balancing"
                 },
                 {
-                    "node_id": "tech_modular_battery_swap",
-                    "node_type": "technology",
                     "name": "Modular Battery Pack Architecture",
-                    "description": "Quick-swap battery packs for rapid aircraft turnaround",
-                    "maturity": "proven",
-                    "domain": "operations"
-                },
+                    "role": "invented",
+                    "strength": 0.65,
+                    "evidence_confidence": 0.85,
+                    "evidence_text": "Quick-swap battery packs for rapid aircraft turnaround"
+                }
+            ],
+            "company_mentions": [
                 {
-                    "node_id": "company_beta",
-                    "node_type": "organization",
                     "name": "Beta Technologies",
-                    "description": "eVTOL developer focused on cargo and passenger transport",
-                    "role": "innovator"
+                    "role": "owner",
+                    "strength": 1.0,
+                    "evidence_confidence": 1.0,
+                    "evidence_text": "Assignee: Beta Technologies"
+                },
+                {
+                    "name": "Beta Technologies",
+                    "role": "developer",
+                    "strength": 0.98,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Beta developed the high-energy Li-S battery system"
                 }
             ],
-            "relationships": [
+            "company_tech_relations": [
                 {
-                    "subject": "tech_lithium_sulfur_400wh",
-                    "predicate": "requires",
-                    "object": "tech_thermal_mgmt_aviation",
-                    "confidence": 0.95,
-                    "evidence": "Li-S chemistry sensitive to temperature, requires active thermal management for aviation safety"
-                },
-                {
-                    "subject": "tech_active_cell_balancing",
-                    "predicate": "extends_life_of",
-                    "object": "tech_lithium_sulfur_400wh",
-                    "confidence": 0.90,
-                    "evidence": "Active balancing extends cycle life of Li-S cells per patent abstract"
-                },
-                {
-                    "subject": "tech_modular_battery_swap",
-                    "predicate": "enables",
-                    "object": "rapid_operations",
-                    "confidence": 0.85,
-                    "evidence": "Modular architecture supports quick turnaround for commercial operations"
-                },
-                {
-                    "subject": "company_beta",
-                    "predicate": "develops",
-                    "object": "tech_lithium_sulfur_400wh",
-                    "confidence": 1.0,
-                    "evidence": "Beta Technologies filed patent for Li-S battery system"
-                },
-                {
-                    "subject": "tech_lithium_sulfur_400wh",
-                    "predicate": "competes_with",
-                    "object": "lithium_ion_aviation_battery",
-                    "confidence": 0.80,
-                    "evidence": "Li-S offers higher energy density than conventional Li-ion (typically 250-300 Wh/kg)"
+                    "company_name": "Beta Technologies",
+                    "technology_name": "400+ Wh/kg Lithium-Sulfur Battery",
+                    "relation_type": "owns_ip",
+                    "evidence_confidence": 1.0,
+                    "evidence_text": "Beta Technologies filed patent for Li-S battery system"
                 }
             ],
-            "innovation_signals": {
-                "maturity_level": "development",
-                "innovation_type": "incremental_breakthrough",
-                "competitive_positioning": "critical_enabler",
-                "technical_risk": "high",
-                "adoption_indicators": [
-                    "12 citations suggest building on established research",
-                    "400+ Wh/kg exceeds current commercial aviation batteries",
-                    "Thermal management indicates addressing known Li-S challenges",
-                    "Modular design shows focus on commercial operations"
-                ]
-            }
+            "tech_tech_relations": [
+                {
+                    "from_tech_name": "400+ Wh/kg Lithium-Sulfur Battery",
+                    "to_tech_name": "Aviation Battery Thermal Management",
+                    "relation_type": "requires",
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Li-S chemistry sensitive to temperature, requires active thermal management for aviation safety"
+                },
+                {
+                    "from_tech_name": "Active Cell Balancing BMS",
+                    "to_tech_name": "400+ Wh/kg Lithium-Sulfur Battery",
+                    "relation_type": "extends_life_of",
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Active balancing extends cycle life of Li-S cells"
+                }
+            ],
+            "company_company_relations": []
         }, indent=2)
 
         # Create few-shot prompt wrapper
@@ -394,108 +423,119 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
             ],
         )
 
-        # System prompt with schema definition
-        system_prompt = """
-You are a patent technology analyst specializing in extracting innovation signals for strategic intelligence.
+        # System prompt with universal role taxonomy and config-driven relations
+        # Escape curly braces in JSON for LangChain template
+        relation_defs_json = json.dumps(self.graph_config['relation_definitions'], indent=2)
+        relation_defs_escaped = relation_defs_json.replace('{', '{{').replace('}', '}}')
 
-Your task is to analyze patent data and extract:
+        system_prompt = f"""
+You are a patent technology analyst extracting entities and relationships for strategic intelligence.
 
-1. TECHNOLOGY NODES: Core technologies, innovations, and organizations
-2. RELATIONSHIPS: How technologies relate to each other (triplets for knowledge graph)
-3. INNOVATION SIGNALS: Maturity assessment for lifecycle analysis
+ALLOWED RELATION TYPES (use ONLY these from config):
+
+Company → Technology ({len(self.allowed_company_tech_relations)} types):
+{', '.join(self.allowed_company_tech_relations)}
+
+Technology → Technology ({len(self.allowed_tech_tech_relations)} types):
+{', '.join(self.allowed_tech_tech_relations)}
+
+Company → Company ({len(self.allowed_company_company_relations)} types):
+{', '.join(self.allowed_company_company_relations)}
+
+RELATION DEFINITIONS:
+{relation_defs_escaped}
+
+TECHNOLOGY ROLES (ONE role per mention - create separate mentions for same entity with different roles):
+- "subject": Primary topic of document
+- "invented": Created/designed/originated
+- "regulated": Subject to government oversight
+- "commercialized": Sold/promoted/monetized
+- "studied": Researched/tested/validated
+- "implemented": Built/coded/deployed
+- "procured": Purchased/contracted
+
+COMPANY ROLES (ONE role per mention - create separate mentions for same entity with different roles):
+- "owner": Holds IP rights (assignee in patents)
+- "developer": Builds/invents technology
+- "operator": Uses technology commercially
+- "contractor": Receives government funding
+- "issuer": Reports to SEC
+- "competitor": Market player
+- "sponsor": Funds R&D
+- "investment_target": Held by investors
+- "employer": Recruits talent
+
+STRENGTH SCORING (0.0-1.0) - Importance of THIS ROLE to Document:
+- 1.0: Core focus (explicitly central to document for this role)
+- 0.7-0.9: Key supporting element (critical but not primary for this role)
+- 0.4-0.6: Supporting element (mentioned 2-3 times for this role)
+- 0.1-0.3: Background/peripheral (mentioned once for this role)
+
+CONFIDENCE SCORING (0.0-1.0) - Certainty of THIS ROLE Assignment:
+- 0.95-1.0: Explicit statement, exact terminology for this role
+- 0.8-0.94: Strong inference from technical description for this role
+- 0.6-0.79: Moderate inference from context for this role
+- 0.5-0.59: Weak inference for this role
 
 OUTPUT SCHEMA:
-
-{{
-  "patent_metadata": {{
-    "title": string,
-    "assignee": string,
-    "filing_date": "YYYY-MM-DD"
-  }},
-  "technology_nodes": [
-    {{
-      "node_id": string,              // Unique ID (use snake_case: tech_*, company_*, concept_*)
-      "node_type": "technology" | "organization" | "concept",
-      "name": string,                 // Human-readable name
-      "description": string,          // Brief technical description
-      "maturity": "emerging" | "advanced" | "mature" | "proven",
-      "domain": string                // Technical domain (propulsion, energy_storage, flight_control, etc.)
-    }}
+{{{{
+  "tech_mentions": [
+    {{{{
+      "name": string,
+      "role": string,  // SINGLE role (not array) - create multiple entries for same tech with different roles
+      "strength": float,  // Strength of THIS specific role
+      "evidence_confidence": float,  // Confidence in THIS specific role
+      "evidence_text": string (max 200 chars, evidence for THIS role)
+    }}}}
   ],
-  "relationships": [
-    {{
-      "subject": string,              // node_id of subject
-      "predicate": string,            // Relationship type (see below)
-      "object": string,               // node_id of object (can reference external concepts)
-      "confidence": float,            // 0.0-1.0
-      "evidence": string              // Why this relationship exists
-    }}
+  "company_mentions": [
+    {{{{
+      "name": string,
+      "role": string,  // SINGLE role (not array)
+      "strength": float,  // Strength of THIS specific role
+      "evidence_confidence": float,  // Confidence in THIS specific role
+      "evidence_text": string (max 200 chars, evidence for THIS role)
+    }}}}
   ],
-  "innovation_signals": {{
-    "maturity_level": "research" | "development" | "early_commercial" | "commercial" | "mature",
-    "innovation_type": "breakthrough" | "incremental_breakthrough" | "incremental" | "sustaining",
-    "competitive_positioning": "first_mover" | "differentiated" | "critical_enabler" | "me_too",
-    "technical_risk": "low" | "medium" | "high" | "very_high",
-    "adoption_indicators": [string]   // Evidence of technology readiness/adoption
-  }}
-}}
-
-RELATIONSHIP PREDICATES (use these):
-- "enables": Technology A makes technology B possible
-- "requires": Technology A needs technology B to function
-- "supports": Technology A helps technology B work better
-- "advances_beyond": Technology A improves over technology B
-- "competes_with": Technology A is alternative to technology B
-- "contradicts": Technology A challenges assumptions of technology B
-- "develops": Organization develops technology
-- "extends_life_of": Technology A improves durability/lifetime of B
-- "builds_on": Technology A is based on prior work in technology B
-
-EXTRACTION GUIDELINES:
-
-1. IDENTIFY CORE TECHNOLOGIES:
-   - Extract 3-6 key technologies from title + abstract
-   - Focus on novel contributions, not generic concepts
-   - Include the assignee organization as a node
-   - Use descriptive names that capture technical essence
-
-2. NODE_ID NAMING:
-   - Use snake_case prefixes: tech_*, company_*, concept_*
-   - Be specific: "tech_magnetic_levitation_rotor" not "tech_rotor"
-   - Keep concise but descriptive
-
-3. MATURITY ASSESSMENT:
-   - "emerging": Novel approach, early research stage
-   - "advanced": Proven concept, needs engineering refinement
-   - "mature": Well-understood, widely implemented in other domains
-   - "proven": Commercial deployment in target industry
-
-4. RELATIONSHIPS:
-   - Create 4-8 triplets per patent
-   - Include at least one "develops" relationship (company → technology)
-   - Look for enabling relationships (what makes what possible?)
-   - Identify competitive/contradictory relationships where clear
-   - confidence = 1.0 for explicit facts, 0.7-0.95 for inferences
-   - evidence must cite specific patent content
-
-5. INNOVATION SIGNALS:
-   - maturity_level: Where is this in commercialization pipeline?
-   - innovation_type: How novel? (breakthrough = new paradigm, incremental = refinement)
-   - competitive_positioning: Strategic value (first_mover, differentiated, critical_enabler, me_too)
-   - technical_risk: How hard to implement? (consider physics, safety, certification)
-   - adoption_indicators: List 3-5 concrete signals (citation count, filing dates, technical details)
-
-6. DOMAIN CATEGORIES (use these):
-   - propulsion, energy_storage, flight_control, avionics, materials, manufacturing,
-   - thermal_systems, power_electronics, safety_systems, operations, software, sensors
+  "company_tech_relations": [
+    {{{{
+      "company_name": string,
+      "technology_name": string,
+      "relation_type": string,  // Must be from allowed_company_tech_relations
+      "evidence_confidence": float,
+      "evidence_text": string (max 200 chars)
+    }}}}
+  ],
+  "tech_tech_relations": [
+    {{{{
+      "from_tech_name": string,
+      "to_tech_name": string,
+      "relation_type": string,  // Must be from allowed_tech_tech_relations
+      "evidence_confidence": float,
+      "evidence_text": string (max 200 chars)
+    }}}}
+  ],
+  "company_company_relations": [
+    {{{{
+      "from_company_name": string,
+      "to_company_name": string,
+      "relation_type": string,  // Must be from allowed_company_company_relations
+      "evidence_confidence": float,
+      "evidence_text": string (max 200 chars)
+    }}}}
+  ]
+}}}}
 
 CRITICAL RULES:
 - Output ONLY valid JSON (no markdown, no commentary)
-- All node_ids must be unique within the patent
-- All relationship subject/object must reference valid node_ids OR external concepts
-- Confidence scores must be realistic (0.7-1.0 range typical)
-- Evidence must be specific, not generic
-- Focus on INNOVATION, not generic engineering
+- Each mention has ONE role only (not an array)
+- If an entity has multiple roles, create SEPARATE mention entries with different strength/confidence for each role
+- Example: "eVTOL" as subject (strength=0.95) AND as invented (strength=0.90) = 2 separate entries
+- Use ONLY allowed relation types from config lists above
+- Evidence text must be < 200 chars and specific to THAT role
+- Extract 5-10 technology mentions total (including multiple roles for same tech)
+- Extract 2-5 company mentions total (including multiple roles for same company)
+- All relation_type values must match config enums exactly
 
 """
 
@@ -562,22 +602,31 @@ def parse_single_patent_test():
     print(f"\n{'='*80}")
     print("PARSING RESULTS SUMMARY")
     print(f"{'='*80}\n")
-    print(f"Technology Nodes Extracted: {len(result.get('technology_nodes', []))}")
-    print(f"Relationships Identified: {len(result.get('relationships', []))}")
-    print(f"Innovation Maturity: {result.get('innovation_signals', {}).get('maturity_level', 'unknown')}")
-    print(f"Innovation Type: {result.get('innovation_signals', {}).get('innovation_type', 'unknown')}")
+    print(f"Technology Mentions: {len(result.get('tech_mentions', []))}")
+    print(f"Company Mentions: {len(result.get('company_mentions', []))}")
+    print(f"Company-Tech Relations: {len(result.get('company_tech_relations', []))}")
+    print(f"Tech-Tech Relations: {len(result.get('tech_tech_relations', []))}")
+    print(f"Company-Company Relations: {len(result.get('company_company_relations', []))}")
 
-    # Show sample nodes
-    if result.get('technology_nodes'):
-        print("\nSample Technology Nodes:")
-        for node in result['technology_nodes'][:3]:
-            print(f"  - {node.get('name')} ({node.get('node_type')})")
+    # Show sample tech mentions
+    if result.get('tech_mentions'):
+        print("\nSample Technology Mentions:")
+        for mention in result['tech_mentions'][:3]:
+            roles = ', '.join(mention.get('roles', []))
+            print(f"  - {mention.get('name')} (roles: {roles}, strength: {mention.get('strength', 0):.2f})")
 
-    # Show sample relationships
-    if result.get('relationships'):
-        print("\nSample Relationships:")
-        for rel in result['relationships'][:3]:
-            print(f"  - {rel.get('subject')} --[{rel.get('predicate')}]--> {rel.get('object')}")
+    # Show sample company mentions
+    if result.get('company_mentions'):
+        print("\nSample Company Mentions:")
+        for mention in result['company_mentions'][:2]:
+            roles = ', '.join(mention.get('roles', []))
+            print(f"  - {mention.get('name')} (roles: {roles})")
+
+    # Show sample relations
+    if result.get('tech_tech_relations'):
+        print("\nSample Tech-Tech Relations:")
+        for rel in result['tech_tech_relations'][:3]:
+            print(f"  - {rel.get('from_tech_name')} --[{rel.get('relation_type')}]--> {rel.get('to_tech_name')}")
 
     print(f"\n{'='*80}\n")
 

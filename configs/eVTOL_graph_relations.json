@@ -1,0 +1,189 @@
+{
+  "schema_version": "1.1",
+  "industry": "eVTOL",
+  "description": "Closed relation sets for eVTOL knowledge graph construction. These enums ensure consistent LLM extraction across all document types.",
+
+  "allowed_company_tech_relations": [
+    "develops",
+    "uses",
+    "invests_in",
+    "researches",
+    "owns_ip"
+  ],
+
+  "allowed_tech_tech_relations": [
+    "competes_with",
+    "alternative_to",
+    "enables",
+    "supersedes",
+    "complements",
+    "requires",
+    "supports",
+    "advances_beyond",
+    "contradicts",
+    "extends_life_of",
+    "improves_performance_of",
+    "improves_efficiency_of",
+    "builds_on",
+    "validates"
+  ],
+
+  "allowed_company_company_relations": [
+    "partners_with",
+    "invests_in",
+    "acquires",
+    "competes_with",
+    "supplies",
+    "licenses_from"
+  ],
+
+  "allowed_document_document_relations": [
+    "cites",
+    "cited_by"
+  ],
+
+  "relation_definitions": {
+    "company_tech": {
+      "develops": "Company is building, engineering, or creating the technology",
+      "uses": "Company is operating or deploying the technology in production",
+      "invests_in": "Company provides financial investment for technology development",
+      "researches": "Company conducts academic or R&D research on the technology",
+      "owns_ip": "Company holds patents or intellectual property for the technology"
+    },
+
+    "tech_tech": {
+      "competes_with": "Technologies are direct competitors solving the same problem",
+      "alternative_to": "Technology offers a different approach to the same problem",
+      "enables": "Technology makes another technology possible or functional",
+      "supersedes": "Technology replaces or improves upon older technology",
+      "complements": "Technologies work together or enhance each other",
+      "requires": "Technology needs another technology to function (hard dependency)",
+      "supports": "Technology helps another technology work better (soft dependency)",
+      "advances_beyond": "Technology improves over or advances a previous technology",
+      "contradicts": "Technology challenges or disproves assumptions of another technology",
+      "extends_life_of": "Technology improves durability, lifetime, or longevity of another",
+      "improves_performance_of": "Technology enhances capability, throughput, or effectiveness of another",
+      "improves_efficiency_of": "Technology reduces losses, waste, or resource consumption in another",
+      "builds_on": "Technology is based on or extends prior foundational work",
+      "validates": "Research or testing validates claims, performance, or viability of technology"
+    },
+
+    "company_company": {
+      "partners_with": "Strategic partnership or collaboration agreement",
+      "invests_in": "Financial investment (VC, strategic investment, or funding)",
+      "acquires": "Merger, acquisition, or purchase of company",
+      "competes_with": "Direct business competition in the same market",
+      "supplies": "Supply chain relationship (components, materials, services)",
+      "licenses_from": "Intellectual property licensing agreement"
+    },
+
+    "document_document": {
+      "cites": "Document references another document (patent or paper citation)",
+      "cited_by": "Document is referenced by another (reverse citation, computed)"
+    }
+  },
+
+  "extraction_notes": {
+    "synonym_normalization": "LLM may output 'builds' or 'creates' → normalize to 'develops'",
+    "evidence_required": "Every relation must include evidence_text (max 200 chars)",
+    "confidence_scoring": "Agent 2 computes confidence based on evidence_count across documents",
+    "validation": "Use validate_llm_output() to ensure relations match allowed enums"
+  },
+
+  "layer_mapping": {
+    "layer_1_innovation": [
+      "Document-Document: cites (patent/paper citation networks)",
+      "Tech-Tech: enables, supersedes, advances_beyond, builds_on (innovation trajectories)",
+      "Tech-Tech: requires, supports (technology dependencies)",
+      "Tech-Tech: validates, contradicts (research validation)",
+      "Company-Tech: owns_ip, researches (R&D activity)"
+    ],
+    "layer_2_market_formation": [
+      "Company-Company: partners_with, supplies (ecosystem development)",
+      "Company-Tech: develops, uses (commercialization signals)",
+      "Tech-Tech: competes_with, alternative_to (market segmentation)",
+      "Tech-Tech: improves_performance_of, improves_efficiency_of (competitive benchmarking)"
+    ],
+    "layer_3_financial_reality": [
+      "Company-Company: invests_in, acquires (capital allocation)",
+      "Company-Tech: invests_in (R&D spending validation)",
+      "Tech-Tech: validates (performance validation of claims)"
+    ],
+    "layer_4_narrative": [
+      "All relations extracted from news articles",
+      "Company-Company: partners_with announcements (hype detection)",
+      "Tech-Tech: contradicts (hype vs reality detection)"
+    ]
+  },
+
+  "implementation_priority": {
+    "phase_1_core": {
+      "relations": [
+        "develops",
+        "enables",
+        "requires",
+        "partners_with",
+        "competes_with",
+        "cites"
+      ],
+      "rationale": "Most common relations, test LLM extraction pipeline. Citation networks critical for Layer 1."
+    },
+    "phase_2_extended": {
+      "relations": [
+        "supplies",
+        "licenses_from",
+        "supports",
+        "builds_on",
+        "validates",
+        "improves_performance_of"
+      ],
+      "rationale": "Supply chain, research validation, and performance benchmarking for multi-layer analysis"
+    },
+    "phase_3_complete": {
+      "relations": [
+        "advances_beyond",
+        "contradicts",
+        "extends_life_of",
+        "improves_efficiency_of",
+        "supersedes",
+        "alternative_to",
+        "complements",
+        "uses",
+        "invests_in",
+        "researches",
+        "owns_ip",
+        "acquires",
+        "cited_by"
+      ],
+      "rationale": "Full schema implementation with all competitive, evolution, and financial relations"
+    }
+  },
+
+  "data_sources_by_relation": {
+    "owns_ip": ["patents"],
+    "researches": ["scholarly_papers", "government_contracts"],
+    "develops": ["patents", "news", "contracts", "regulatory"],
+    "uses": ["news", "contracts"],
+    "invests_in": ["sec_filings", "news", "press_releases"],
+    "cites": ["patents", "scholarly_papers"],
+    "cited_by": ["patents", "scholarly_papers"],
+    "supplies": ["news", "contracts", "sec_filings"],
+    "partners_with": ["news", "press_releases", "sec_filings"],
+    "acquires": ["sec_filings", "news"],
+    "enables": ["patents", "scholarly_papers", "news"],
+    "requires": ["patents", "scholarly_papers"],
+    "supports": ["patents", "scholarly_papers"],
+    "competes_with": ["news", "financial_data"],
+    "alternative_to": ["scholarly_papers", "patents"],
+    "supersedes": ["patents", "news"],
+    "advances_beyond": ["patents", "scholarly_papers"],
+    "complements": ["patents", "scholarly_papers"],
+    "builds_on": ["patents", "scholarly_papers"],
+    "validates": ["scholarly_papers", "contracts"],
+    "contradicts": ["scholarly_papers", "news"],
+    "extends_life_of": ["patents"],
+    "improves_performance_of": ["scholarly_papers", "patents", "news"],
+    "improves_efficiency_of": ["scholarly_papers", "patents"],
+    "licenses_from": ["news", "sec_filings"]
+  }
+}
