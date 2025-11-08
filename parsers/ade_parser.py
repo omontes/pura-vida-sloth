@@ -19,6 +19,7 @@ from dotenv import load_dotenv
 import aiohttp
 import aiofiles
 from tqdm.asyncio import tqdm as async_tqdm
+from pypdf import PdfReader
 
 from src.utils.logger import setup_logger
 from src.utils.checkpoint_manager import CheckpointManager
@@ -42,13 +43,17 @@ class ADEParser:
     # Minimum PDF file size (1 KB) to validate files
     MIN_PDF_SIZE = 1024
 
+    # Maximum pages for standard ADE Parse API (Landing.ai limit)
+    DEFAULT_MAX_PAGES = 100
+
     def __init__(
         self,
         pdf_dir: str,
         api_key: Optional[str] = None,
         model: str = "dpt-2-latest",
         output_dir_name: str = "ade_parsed_results",
-        max_concurrent: int = 5
+        max_concurrent: int = 5,
+        max_pages: Optional[int] = None
     ):
         """
         Initialize the ADE Parser.
@@ -59,9 +64,11 @@ class ADEParser:
             model: ADE model version to use (default: dpt-2-latest)
             output_dir_name: Name of output directory (default: ade_parsed_results)
             max_concurrent: Maximum number of concurrent API requests (default: 5)
+            max_pages: Maximum pages per PDF (default: 100, Landing.ai API limit)
         """
         self.pdf_dir = Path(pdf_dir)
         self.model = model
+        self.max_pages = max_pages if max_pages is not None else self.DEFAULT_MAX_PAGES
 
         # Validate PDF directory exists
         if not self.pdf_dir.exists():
@@ -105,6 +112,7 @@ class ADEParser:
             'successful': 0,
             'failed': 0,
             'skipped': 0,
+            'too_large': 0,
             'failed_items': []
         }
 
@@ -117,6 +125,7 @@ class ADEParser:
         self.logger.info(f"Output directory: {self.output_dir}")
         self.logger.info(f"Model: {self.model}")
         self.logger.info(f"Max concurrent requests: {self.max_concurrent}")
+        self.logger.info(f"Max pages per PDF: {self.max_pages}")
 
     def _get_pdf_files(self) -> list[Path]:
         """
@@ -129,6 +138,24 @@ class ADEParser:
         self.logger.info(f"Found {len(pdf_files)} PDF files in {self.pdf_dir}")
         return sorted(pdf_files)
 
+    def _get_page_count(self, pdf_path: Path) -> Optional[int]:
+        """
+        Get the number of pages in a PDF file.
+
+        Args:
+            pdf_path: Path to PDF file
+
+        Returns:
+            Number of pages, or None if unable to read
+        """
+        try:
+            reader = PdfReader(pdf_path)
+            page_count = len(reader.pages)
+            return page_count
+        except Exception as e:
+            self.logger.warning(f"Unable to count pages for {pdf_path.name}: {e}")
+            return None
+
     def _validate_pdf(self, pdf_path: Path) -> bool:
         """
         Validate that the PDF file is readable and has valid PDF content.
@@ -138,6 +165,7 @@ class ADEParser:
         2. File exists and is readable
         3. File size is above minimum threshold
         4. File starts with PDF magic bytes (%PDF-)
+        5. Page count does not exceed maximum allowed pages
 
         Args:
             pdf_path: Path to PDF file
@@ -170,6 +198,15 @@ class ADEParser:
                         f"Not a valid PDF file (missing magic bytes): {pdf_path.name}"
                     )
                     return False
+
+            # Check page count (skip PDFs that exceed API limits)
+            page_count = self._get_page_count(pdf_path)
+            if page_count is not None and page_count > self.max_pages:
+                self.logger.warning(
+                    f"PDF too large ({page_count} pages, max {self.max_pages}): {pdf_path.name}"
+                )
+                self.stats['too_large'] += 1
+                return False
 
             return True
         except Exception as e:
@@ -446,7 +483,7 @@ class ADEParser:
                 pbar.update(1)
 
         self.logger.info("Batch processing completed")
-        self.logger.info(f"Total: {self.stats['total_pdfs']}, Successful: {self.stats['successful']}, Failed: {self.stats['failed']}, Skipped: {self.stats['skipped']}")
+        self.logger.info(f"Total: {self.stats['total_pdfs']}, Successful: {self.stats['successful']}, Failed: {self.stats['failed']}, Skipped: {self.stats['skipped']}, Too Large: {self.stats['too_large']}")
 
         return self.stats
 
@@ -554,7 +591,7 @@ class ADEParser:
             pbar.close()
 
         self.logger.info("Async batch processing completed")
-        self.logger.info(f"Total: {self.stats['total_pdfs']}, Successful: {self.stats['successful']}, Failed: {self.stats['failed']}, Skipped: {self.stats['skipped']}")
+        self.logger.info(f"Total: {self.stats['total_pdfs']}, Successful: {self.stats['successful']}, Failed: {self.stats['failed']}, Skipped: {self.stats['skipped']}, Too Large: {self.stats['too_large']}")
 
         return self.stats
 
@@ -573,12 +610,14 @@ class ADEParser:
                 'successful': self.stats['successful'],
                 'failed': self.stats['failed'],
                 'skipped': self.stats['skipped'],
+                'too_large': self.stats['too_large'],
                 'success_rate': f"{(self.stats['successful'] / self.stats['total_pdfs'] * 100):.2f}%" if self.stats['total_pdfs'] > 0 else "0%"
             },
             'configuration': {
                 'pdf_directory': str(self.pdf_dir),
                 'output_directory': str(self.output_dir),
-                'model': self.model
+                'model': self.model,
+                'max_pages': self.max_pages
             },
             'failed_items': self.stats['failed_items']
         }
@@ -610,6 +649,9 @@ Examples:
 
   # Process 10 PDFs concurrently for faster processing
   python -m src.parsers.ade_parser --pdf_dir data/eVTOL/regulatory_docs/pdfs --max_concurrent 10
+
+  # Skip large PDFs over 50 pages
+  python -m src.parsers.ade_parser --pdf_dir data/eVTOL/lens_patents/pdfs --max_pages 50
         """
     )
 
@@ -648,6 +690,13 @@ Examples:
         help='Maximum number of concurrent API requests (default: 5, recommended: 5-10)'
     )
 
+    parser.add_argument(
+        '--max_pages',
+        type=int,
+        default=100,
+        help='Maximum pages per PDF (default: 100, Landing.ai API limit for standard endpoint)'
+    )
+
     args = parser.parse_args()
 
     try:
@@ -657,7 +706,8 @@ Examples:
             api_key=args.api_key,
             model=args.model,
             output_dir_name=args.output_dir,
-            max_concurrent=args.max_concurrent
+            max_concurrent=args.max_concurrent,
+            max_pages=args.max_pages
         )
 
         # Process all PDFs using async concurrent processing
@@ -674,6 +724,7 @@ Examples:
         print(f"Successful: {stats['successful']}")
         print(f"Failed: {stats['failed']}")
         print(f"Skipped: {stats['skipped']}")
+        print(f"Too Large (>{ade_parser.max_pages} pages): {stats['too_large']}")
         if stats['total_pdfs'] > 0:
             success_rate = (stats['successful'] / stats['total_pdfs'] * 100)
             print(f"Success Rate: {success_rate:.2f}%")
