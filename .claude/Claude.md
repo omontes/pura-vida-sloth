@@ -1,223 +1,256 @@
-# Pura Vida Sloth - Strategic Intelligence Harvesting System
+# Pura Vida Sloth - Development Guide
+
+**Multi-Source Intelligence Platform for Strategic Technology Market Research**
+
+This guide defines development standards, workflows, and boundaries for the Pura Vida Sloth system.
+
+---
 
 ## Project Vision
 
-Multi-source intelligence harvesting for **strategic investment timing** in emerging technology markets. This system collects data from 14 independent sources to determine **where an industry sits on the technology adoption lifecycle** and answer the C-level question: **"Should we engage NOW, or wait for better timing?"**
+Build a strategic intelligence platform that determines **where emerging technologies sit on their adoption lifecycle** by triangulating 14 independent data sources across 4 temporal intelligence layers (Innovation, Market Formation, Financial Reality, Narrative).
 
-**End Goal**: Executive-grade strategic intelligence reports with lifecycle positioning and investment phase indicators based on multi-layer intelligence triangulation.
+**Goal**: Generate executive-grade market research reports showing technology maturity positioning 12-24 months ahead of market consensus.
 
----
-
-## The Problem We Solve
-
-### The $1 Trillion Mistake
-
-Between 2010-2023, corporations and VCs invested $1+ trillion in emerging tech at the WRONG time:
-- **3D Printing (2013)**: "Manufacturing revolution!" → Stocks crashed 80%
-- **Blockchain (2017)**: $20K Bitcoin → Crashed to $3K (85% loss)
-- **Metaverse (2021)**: "Virtual future!" → Meta down 70%
-
-**Why it happened**: Single-source bias (only reading press releases, or only watching stock prices).
-
-### Our Solution: Multi-Source Triangulation
-
-14 independent data sources across 4 time horizons reveal the truth. When layers contradict, that's an actionable strategic signal.
-
----
-
-## The 4-Layer Intelligence Framework
-
-The system operates like a strategic radar with four independent layers, each looking at different time horizons:
-
-### LAYER 1: Innovation Signals (Leading 18-24 months)
-**Data Sources**: Patents, Research Papers, GitHub Activity, Academic Citations
-
-**Purpose**: Predict which technologies will emerge before commercialization
-
-**Key Insight**: Patent surges happen 18 months before products ship. Research paper volume validates technical feasibility 2 years ahead of adoption.
-
-### LAYER 2: Market Formation (Leading 12-18 months)
-**Data Sources**: Government Contracts, Regulatory Filings, Job Postings
-
-**Purpose**: Predict when commercialization begins
-
-**Key Insight**: Government validation (NASA, DoD contracts) signals institutional confidence. Regulatory activity precedes market entry.
-
-### LAYER 3: Financial Reality (Coincident 0-6 months)
-**Data Sources**: SEC Filings, Earnings Reports, Stock Prices, Insider Trading, Institutional Holdings
-
-**Purpose**: Measure current valuation vs actual performance
-
-**Key Insight**: SEC filings reveal truth (fraud charges ensure honesty). Insider selling at highs = executives cashing out before decline.
-
-### LAYER 4: Narrative (Lagging indicator)
-**Data Sources**: News Sentiment, Press Releases
-
-**Purpose**: Detect hype peaks and contrarian signals
-
-**Key Insight**: News volume peaks when market peaks. High media attention + negative fundamentals = risk signal.
-
----
-
-## How Contradictions Reveal Strategic Opportunities
-
-**The Magic**: When layers disagree, that pinpoints where we are on the adoption lifecycle:
-
-### Peak Phase Indicators
-- **Layer 1-2**: Innovation slowing (GitHub inactive, patent decline)
-- **Layer 3**: Insiders selling, valuations stretched
-- **Layer 4**: News bullish, high media coverage
-- **Analysis**: Risk mitigation signals suggest potential valuation pressure ahead
-
-### Trough Phase Indicators
-- **Layer 1-2**: Innovation recovering (patents increasing, gov contracts awarded)
-- **Layer 3**: Insiders buying, valuations compressed
-- **Layer 4**: News bearish, media quiet
-- **Analysis**: Strategic opportunity signals indicate potential value accumulation phase
-
-### Real Example: eVTOL (November 2024)
-- **L1**: GitHub repos 0% active (innovation dead)
-- **L2**: $274M DoD/NASA contracts (government validation)
-- **L3**: Insiders selling at $16-18 (executives exiting)
-- **L4**: 269 news articles (1.5/day - high hype)
-- **Assessment**: Peak phase indicators → entering trough. Risk indicators suggest strategic re-evaluation window: 2026-2027
+**Architecture**: 6-phase pipeline with pure GraphRAG and reproducible multi-agent scoring:
+- Phase 1: Data Collection (14 sources → 400-1,600 documents)
+- Phase 2: Document Processing (LLM extraction → structured JSON)
+- Phase 3: Graph Ingestion (Write to Neo4j, PURE storage)
+- Phases 4+5: Multi-Agent System (LangGraph, 11 agents, reproducible)
+- Phase 6: UI Rendering (React + D3.js)
 
 ---
 
 ## Core Design Principles
 
-### 1. Industry-Agnostic Architecture
-**The entire value proposition is industry flexibility.**
+1. **Pure GraphRAG**: Neo4j contains ZERO derived scores, only raw data + relationships. Agents calculate scores on-demand using graph as RAG.
 
-Switch from eVTOL to quantum computing, biotech, or AI by changing a JSON config file. Zero code changes required.
+2. **Reproducibility First**: Same graph input → Same chart output. Critical for evaluations and iterative improvements.
 
-**Use Cases**:
-- Emerging technologies (eVTOL, quantum computing, fusion energy)
-- Regulated industries (biotech, fintech, cannabis)
-- Platform shifts (Web3, AI, metaverse)
+3. **Phase Separation**: Each phase has single responsibility with clean interfaces. No mixing of concerns.
 
-### 2. Multi-Source Reliability
-No single API failure breaks the system. Primary sources fail gracefully to backups (APIs → RSS → web scraping).
+4. **Industry-Agnostic**: Change industry via JSON config, zero code changes. Works for any emerging tech market.
 
-### 3. Evidence-Based Decision Making
-Every analysis backed by 400-1,600 source documents. Data provenance tracked for audit trails.
-
-### 4. Executive-Grade Output
-Output format mirrors institutional research-grade analysis:
-- Technology lifecycle positioning with confidence intervals
-- Investment phase-based timing signals
-- Comparable historical examples (e.g., "eVTOL 2024 = Tesla 2018")
-- Risk-adjusted return projections
+5. **Multi-Source Reliability**: No single API failure breaks the system. Graceful degradation with fallbacks.
 
 ---
 
-## System Architecture (High-Level)
+## Architectural Rules
 
-```
-INPUT LAYER (Harvest)
-└─ 14 data source collectors (configurable)
-   └─ Output: 400-1,600 documents per 90-day window
-
-PROCESSING LAYER (Analysis) [NOT YET IMPLEMENTED]
-└─ Technology lifecycle scoring algorithm
-└─ Cross-layer contradiction detection
-└─ Temporal pattern analysis
-
-OUTPUT LAYER (Reporting) [NOT YET IMPLEMENTED]
-└─ Executive-grade strategic intelligence reports
-└─ Technology lifecycle visualizations
-└─ Competitive positioning matrix
-```
-
-**Current Status**: Input layer complete. Analysis and reporting layers are future work.
+- **ONLY** `src/agents/` contains multi-agent logic (LangGraph state machine for Phases 4+5)
+- **Phases 2-3** are single-purpose processors (NO multi-agent complexity)
+- **Neo4j graph** is pure storage layer used as GraphRAG by agents
+- **All scores** calculated on-demand by agents (NOT stored in graph)
+- **Each phase** outputs to next phase via file system or graph (stateless)
 
 ---
 
-## What Makes This Different
+## Development Workflow
 
-### vs. Traditional Financial Analysis
-- **Traditional**: Looks backward (last quarter's earnings)
-- **This System**: Looks forward 12-24 months (patent trends, GitHub activity)
+### Incremental Testing Philosophy
 
-### vs. News/Media Analysis
-- **Media**: Lags reality, amplifies hype
-- **This System**: Uses news as contrarian indicator (high coverage = potential peak)
+**CRITICAL**: ALWAYS test with minimal examples before running full pipeline.
 
-### vs. Single-Source Platforms
-- **Bloomberg/Morningstar**: Financial data only (Layer 3)
-- **This System**: 4 independent layers catch contradictions
-
-### vs. Manual Research
-- **Analysts**: Sample 20-50 documents, weeks of work
-- **This System**: Processes 1,600 documents in hours, reproducible
-
----
-
-## Key Success Metrics
-
-- **Coverage**: 14 independent data sources
-- **Depth**: 400-1,600 documents per 90-day harvest
-- **Accuracy**: <10% data collection failure rate
-- **Flexibility**: Works with any industry via config change
-- **Reproducibility**: Auditable data provenance
-
----
-
-## When to Use This System
-
-**Ideal for**:
-- Strategic timing analysis in emerging tech markets
-- Detecting lifecycle peaks before market corrections
-- Finding value accumulation opportunities during troughs
-- Validating VC/PE thesis before deployment
-- Strategic planning for corporate R&D investment
-
-**Not suitable for**:
-- Day trading (this is long-term strategic intelligence)
-- Mature markets (designed for emerging tech)
-- Real-time decisions (harvest cycle is 90 days)
-
----
-
-## Development Guidelines
-
-### Iterative Test-Driven Approach
-
-**CRITICAL**: Before running any full harvest, ALWAYS test with a minimal example first.
-
-**Best Practice**:
-1. **Test with 1 keyword/company**: Validate API access and data structure
-2. **Test with 10 records**: Verify field extraction and file saving
-3. **Test with 100 records**: Check pagination and rate limiting
-4. **Only then**: Run full harvest with all data
-
-**Example**:
-```python
-# BAD: Run full harvest immediately
-python -m src.core.orchestrator --config configs/evtol_config.json  # 5,000+ papers
-
-# GOOD: Test incrementally first
-python -m src.downloaders.lens_scholarly  # Built-in test (2 keywords, 1,000 each)
-# Review output → Fix issues → Then run full harvest
-```
+**Test Progression**:
+1. **1 record** → Validate structure, API access, field extraction
+2. **10 records** → Verify logic, error handling, file saving
+3. **100 records** → Check performance, rate limiting, memory
+4. **Full dataset** → Only after all above tests pass
 
 **Why This Matters**:
-- Prevents wasted API quota on broken code
-- Catches missing field extraction early
+- Prevents wasted API quota (OpenAI costs $0.001/doc)
+- Catches missing field extraction before processing 1000+ docs
+- Saves 1-2 hours vs re-running full pipeline
 - Avoids corrupted data from schema mismatches
-- Saves 5-10 minutes vs full re-harvest
 
-**When Adding New Fields**:
-1. Update `INCLUDE_FIELDS` list
-2. Update `_extract_*_data()` method to extract new fields
-3. Test with 1 paper first
-4. Verify field appears in output
-5. Then run full harvest
+### Phase Development Process
+
+**For ANY Phase**:
+1. Understand phase's single responsibility
+2. Identify input/output interfaces
+3. Review ARCHITECTURE.md for implementation details
+4. Write minimal test case first
+5. Implement with incremental testing (1→10→100→Full)
+6. Validate quality gates (see Testing section)
+7. Update tests and documentation
+
 
 ---
 
-**Remember**: This system helps executives avoid $100M+ mistakes by identifying technology lifecycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.
+## Naming and File Standards
 
-**Disclaimer**: *This system provides multi-source intelligence for strategic analysis only. Not investment advice. Consult licensed financial advisors for investment decisions.*
+### Folder Structure
 
-**For implementation details, see `.claude/CLAUDE.local.md`**
+```
+src/
+├── downloaders/      # Phase 1: {source}_downloader.py
+├── processors/       # Phase 2: document_processor.py + doc_type_handlers/
+├── ingestion/        # Phase 3: graph_ingestor.py, batch_writer.py
+├── agents/           # Phases 4+5: langgraph_orchestrator.py + 11 agents
+├── graph/            # Neo4j: neo4j_client.py, entity_resolver.py
+├── schemas/          # Pydantic: documents.py, technologies.py, companies.py
+├── prompts/          # LLM prompts: document_extraction.py, agent_prompts.py
+├── utils/            # Shared utilities
+├── core/             # Pipeline coordinator
+└── cli/              # CLI: harvest.py, process.py, ingest.py, analyze.py
+```
+
+### File Naming Conventions
+
+- **Downloaders**: `{source}_downloader.py` (e.g., `lens_patents_downloader.py`)
+- **Agents**: `{role}.py` (e.g., `scorer_innovation.py`, `phase_detector.py`)
+- **Schemas**: `{entity_type}.py` (e.g., `documents.py`, `technologies.py`)
+- **Tests**: `test_{module}.py` (mirrors source structure)
+- **Configs**: `{industry}_config.json` (e.g., `evtol_config.json`)
+
+### Variable Naming
+
+- **Technologies**: Use canonical ID (e.g., `"evtol"` not `"eVTOL"`)
+- **Companies**: Use ticker when available (e.g., `"JOBY"` not `"Joby Aviation"`)
+- **Document IDs**: `{doc_type}_{source_id}` (e.g., `"patent_US1234567"`)
+- **Phase references**: Use numbers (Phase 1, Phase 2) not descriptive names
+
+### Code Style
+
+- **Python**: PEP 8, use `ruff` for linting, `mypy` for type checking
+- **Type hints**: Required for all functions
+- **Docstrings**: Google style for public functions/classes
+- **Max line length**: 100 characters
+- **Imports**: Absolute imports from `src.`, grouped by standard/third-party/local
+
+---
+
+
+## Boundaries and Expectations
+
+### What You MUST Do
+
+1. **Test incrementally**: 1 → 10 → 100 → Full (NEVER skip)
+2. **Keep graph pure**: NO scores in Neo4j (agents calculate on-demand)
+3. **Ensure reproducibility**: Same input → Same output (for evals)
+4. **Validate with Pydantic**: All structured data uses schemas
+5. **Track costs**: Log OpenAI API usage per phase
+6. **Use async I/O**: For Neo4j and OpenAI API calls
+
+### What You MUST NOT Do
+
+1. **❌ Store scores in Neo4j**: Breaks reproducibility, couples storage to logic
+2. **❌ Add multi-agent logic outside `src/agents/`**: LangGraph ONLY in Phases 4+5
+3. **❌ Hardcode entities**: Use entity catalogs + config files
+4. **❌ Skip incremental testing**: Wastes API quota, breaks iterative flow
+5. **❌ Mix phase responsibilities**: Processor ≠ Ingestor ≠ Agent
+6. **❌ Use blocking I/O**: Kills performance at scale
+
+### Compliance Requirements
+
+**Hackathon Requirements**:
+- ✅ Use LandingAI Agent Data Engine (ADE) for SEC filings
+- ✅ Demonstrate multi-source intelligence (14 sources)
+- ✅ Show reproducible analysis pipeline
+- ✅ Provide executive-grade visualization
+
+
+### When to Ask for Clarification
+
+**Ask the user when**:
+- Ambiguous phase boundaries
+- Missing requirements or thresholds
+- Architecture changes affecting multiple phases
+- Performance vs cost trade-offs
+
+**Do NOT ask when**:
+- Implementation details (decide using best practices)
+- Variable naming (follow conventions)
+- Testing approach (follow incremental philosophy)
+- Code structure (follow folder conventions)
+
+---
+
+## The 4-Layer Intelligence Framework
+
+This is the CORE analytical insight. When coding, always consider which intelligence layer(s) your work touches.
+
+### Layer 1: Innovation Signals (Leading 18-24 months)
+**Sources**: Patents, Research Papers, GitHub Activity
+**Purpose**: Predict tech emergence before commercialization
+**Insight**: Patent surges happen 18 months before products ship
+
+### Layer 2: Market Formation (Leading 12-18 months)
+**Sources**: Government Contracts, Regulatory Filings, Job Postings
+**Purpose**: Predict when commercialization begins
+**Insight**: Government validation precedes market entry by 12+ months
+
+### Layer 3: Financial Reality (Coincident 0-6 months)
+**Sources**: SEC Filings, Earnings, Stock Prices, Insider Trading
+**Purpose**: Measure current valuation vs actual performance
+**Insight**: Insider selling at price peaks signals executive exits
+
+### Layer 4: Narrative (Lagging indicator)
+**Sources**: News Sentiment, Press Releases
+**Purpose**: Detect media saturation peaks (contrarian indicator)
+**Insight**: News volume peaks typically coincide with valuation peaks
+
+### Cross-Layer Contradiction Analysis
+
+**The Magic**: When layers disagree, that reveals lifecycle position.
+
+**Peak Phase Indicators**:
+- L1-2: Innovation slowing (GitHub inactive, patent decline)
+- L3: Insiders selling, valuations stretched
+- L4: Media coverage maximum
+→ **Signal**: Market saturation risk
+
+**Trough Phase Indicators**:
+- L1-2: Innovation recovering (patents increasing, gov contracts)
+- L3: Insiders buying, valuations compressed
+- L4: Media coverage minimal
+→ **Signal**: Strategic opportunity phase
+
+---
+
+## Technology Stack
+
+### Core Technologies
+
+**Backend (Python 3.13)**:
+- Neo4j Aura (graph database, vector-enabled)
+- LangGraph (multi-agent state machine)
+- OpenAI GPT-4o-mini (LLM, cost-optimized)
+- LandingAI Agent Data Engine (SEC filings)
+- Pydantic v2 (schema validation)
+- FastAPI (REST + WebSocket)
+
+**Frontend (React + TypeScript)**:
+- React 18 (UI framework)
+- D3.js v7 (visualization)
+- React Query (state management)
+- Vite (build tool)
+
+**Development Tools**:
+- pytest (testing framework)
+- ruff (linting)
+- mypy (type checking)
+- Git + GitHub (version control)
+
+
+## Key Insights
+
+### Why This Architecture?
+
+1. **Pure GraphRAG = Reproducibility**: Same input → Same output (critical for evals)
+2. **Phase Separation = Testability**: Each phase independently testable
+3. **Multi-Agent = Transparency**: Agents expose reasoning, easy to debug
+4. **Industry-Agnostic = Scalability**: Works for any emerging tech market
+
+### Common Pitfalls to Avoid
+
+1. **Storing scores in graph**: Breaks reproducibility, couples storage to logic
+2. **Skipping incremental tests**: Wastes API quota, breaks iterative development
+3. **Mixing phase logic**: Makes debugging impossible, violates single responsibility
+4. **Hardcoding entities**: Breaks industry-agnostic design
+5. **Blocking I/O**: Kills performance at scale
+
+---
+
+
+**Remember**: This system helps organizations avoid capital deployment mistakes by identifying technology lifecycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.

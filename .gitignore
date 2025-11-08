@@ -56,6 +56,9 @@ sources_summary.md
 .env
 .claude/*
 !.claude/Claude.md
+.claude/commands/
+.claude/sessions/
+
 #data - Keep structure, ignore downloaded content
 data/*
 !data/.gitkeep

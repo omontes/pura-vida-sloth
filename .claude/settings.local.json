@@ -7,5 +7,9 @@
     ],
     "deny": [],
     "ask": []
-  }
+  },
+  "enabledMcpjsonServers": [
+    "tavily"
+  ],
+  "enableAllProjectMcpServers": true
 }
