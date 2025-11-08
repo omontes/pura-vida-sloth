@@ -3,14 +3,36 @@
     "doc_id": "003-712-519-476-908",
     "doc_type": "patent",
     "title": "ROTOR ASSEMBLY DEPLOYMENT MECHANISM AND AIRCRAFT USING SAME",
-    "assignee": "Joby Aero, Inc.",
-    "filing_date": "2024-06-21",
-    "publication_date": "2025-04-10",
+    "assignee_name": "Joby Aero, Inc.",
     "patent_number": "2025006314",
-    "url": "https://link.lens.org/003-712-519-476-908",
+    "jurisdiction": "WO",
+    "type": "application",
+    "legal_status": "pending",
+    "filing_date": "2024-06-21",
+    "grant_date": null,
+    "published_at": "2025-04-10",
     "citation_count": 5,
+    "simple_family_size": 4,
+    "url": "https://link.lens.org/003-712-519-476-908",
+    "source": "Lens.org Patent API",
+    "summary": "",
+    "content": "A rotor assembly deployment mechanism configured to deploy a rotor assembly of a vertical take-off and landing aircraft from a horizontal, forward thrust, position to a vertical, hover, position. The rotor assembly deployment mechanism is configured to deploy an electric motor and propeller together. The deployment mechanism provides significant stiffness and strength with the use of torsion box constructions. The deployment mechanism may utilize bar linkages wherein the primary linkage pivot is of a large diameter relative to the span of the pivot in order to provide significant stiffness. The deployment mechanism may utilize rotary actuators to drive the deployment and stowing of the rotor assembly.",
+    "quality_score": 0.95,
+    "relevance_score": 0.0,
+    "embedding": []
+  },
+  "document_metadata": {
+    "kind": "A3",
     "cpc_codes": [],
-    "abstract": "A rotor assembly deployment mechanism configured to deploy a rotor assembly of a vertical take-off and landing aircraft from a horizontal, forward thrust, position to a vertical, hover, position. The rotor assembly deployment mechanism is configured to deploy an electric motor and propeller together. The deployment mechanism provides significant stiffness and strength with the use of torsion box constructions. The deployment mechanism may utilize bar linkages wherein the primary linkage pivot is of a large diameter relative to the span of the pivot in order to provide significant stiffness. The deployment mechanism may utilize rotary actuators to drive the deployment and stowing of the rotor assembly."
+    "doc_key": "WO_2025006314_A3_20250410",
+    "publication_type": "SEARCH_REPORT",
+    "lang": "en",
+    "extended_family_size": 4,
+    "earliest_priority_date": "2023-06-28",
+    "anticipated_term_date": "",
+    "discontinuation_date": "",
+    "has_terminal_disclaimer": false,
+    "ipcr_codes": []
   },
   "tech_mentions": [
     {
@@ -31,22 +53,22 @@
       "name": "Torsion Box Construction",
       "role": "invented",
       "strength": 0.85,
-      "evidence_confidence": 0.9,
-      "evidence_text": "Utilizes torsion box design for enhanced stiffness and strength"
+      "evidence_confidence": 0.94,
+      "evidence_text": "New construction method providing stiffness and strength for deployment"
     },
     {
       "name": "Bar Linkage System",
       "role": "invented",
       "strength": 0.8,
       "evidence_confidence": 0.9,
-      "evidence_text": "Employs bar linkages with large diameter pivot for stiffness"
+      "evidence_text": "Utilizes bar linkages with large diameter pivots for stiffness"
     },
     {
       "name": "Rotary Actuators for Deployment",
       "role": "implemented",
       "strength": 0.75,
-      "evidence_confidence": 0.85,
-      "evidence_text": "Rotary actuators drive rotor assembly deployment and stowing"
+      "evidence_confidence": 0.88,
+      "evidence_text": "Rotary actuators drive the deployment and stowing of rotor assembly"
     }
   ],
   "company_mentions": [
@@ -79,25 +101,25 @@
     {
       "from_tech_name": "Rotor Assembly Deployment Mechanism",
       "to_tech_name": "Torsion Box Construction",
-      "relation_type": "complements",
+      "relation_type": "supports",
       "evidence_confidence": 0.95,
-      "evidence_text": "Torsion box construction enhances the deployment mechanism's strength",
+      "evidence_text": "Deployment mechanism utilizes torsion box construction for strength",
       "doc_ref": "003-712-519-476-908"
     },
     {
       "from_tech_name": "Rotor Assembly Deployment Mechanism",
       "to_tech_name": "Bar Linkage System",
-      "relation_type": "supports",
+      "relation_type": "complements",
       "evidence_confidence": 0.9,
-      "evidence_text": "Bar linkage system provides structural support for rotor deployment",
+      "evidence_text": "Bar linkages enhance the deployment mechanism's stiffness",
       "doc_ref": "003-712-519-476-908"
     },
     {
       "from_tech_name": "Rotor Assembly Deployment Mechanism",
       "to_tech_name": "Rotary Actuators for Deployment",
       "relation_type": "enables",
-      "evidence_confidence": 0.85,
-      "evidence_text": "Rotary actuators enable the deployment and stowing of the rotor assembly",
+      "evidence_confidence": 0.88,
+      "evidence_text": "Rotary actuators enable the deployment and stowing process",
       "doc_ref": "003-712-519-476-908"
     }
   ],

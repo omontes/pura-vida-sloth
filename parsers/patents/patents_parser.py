@@ -81,6 +81,7 @@ class PatentTechnologyParser:
         except Exception as e:
             print(f"Parsing error: {e}")
             llm_result = {
+                "quality_score": 0.0,
                 "tech_mentions": [],
                 "company_mentions": [],
                 "company_tech_relations": [],
@@ -91,19 +92,59 @@ class PatentTechnologyParser:
         # Python adds document metadata
         doc_id = patent_data.get("lens_id", "")
 
+        # Extract patent fields from API data
+        patent_type = patent_data.get("type", "")
+        grant_date = patent_data.get("grant_date", "")
+        discontinuation_date = patent_data.get("discontinuation_date", "")
+        anticipated_term_date = patent_data.get("anticipated_term_date", "")
+
+        # Compute legal status
+        legal_status = self._compute_legal_status(
+            patent_type=patent_type,
+            discontinuation_date=discontinuation_date,
+            anticipated_term_date=anticipated_term_date
+        )
+
         final_result = {
             "document": {
+                # Core identification fields
                 "doc_id": doc_id,
                 "doc_type": "patent",
                 "title": patent_data.get("title", ""),
-                "assignee": patent_data.get("assignee", ""),
-                "filing_date": patent_data.get("filing_date", ""),
-                "publication_date": patent_data.get("publication_date", ""),
+                "assignee_name": patent_data.get("assignee", ""),
+
+                # Patent-specific fields
                 "patent_number": patent_data.get("patent_number", ""),
-                "url": patent_data.get("url", ""),
+                "jurisdiction": patent_data.get("jurisdiction", ""),
+                "type": patent_type,
+                "legal_status": legal_status,
+                "filing_date": patent_data.get("filing_date", ""),
+                "grant_date": grant_date if grant_date else None,
+                "published_at": patent_data.get("publication_date", ""),
                 "citation_count": patent_data.get("citation_count", 0),
+                "simple_family_size": patent_data.get("simple_family_size", 0),
+
+                # Generalized document fields
+                "url": patent_data.get("url", ""),
+                "source": "Lens.org Patent API",
+                "summary": "",
+                "content": patent_data.get("abstract", ""),
+                "quality_score": llm_result.get("quality_score", 0.0),
+                "relevance_score": 0.0,
+                "embedding": []
+            },
+            "document_metadata": {
+                "kind": patent_data.get("kind", ""),
                 "cpc_codes": patent_data.get("cpc_codes", []),
-                "abstract": patent_data.get("abstract", "")
+                "doc_key": patent_data.get("doc_key", ""),
+                "publication_type": patent_data.get("publication_type", ""),
+                "lang": patent_data.get("lang", ""),
+                "extended_family_size": patent_data.get("extended_family_size", 0),
+                "earliest_priority_date": patent_data.get("earliest_priority_date", ""),
+                "anticipated_term_date": anticipated_term_date,
+                "discontinuation_date": discontinuation_date,
+                "has_terminal_disclaimer": patent_data.get("has_terminal_disclaimer", False),
+                "ipcr_codes": patent_data.get("ipcr_codes", [])
             },
             "tech_mentions": llm_result.get("tech_mentions", []),
             "company_mentions": llm_result.get("company_mentions", []),
@@ -195,6 +236,34 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 
         return warnings
 
+    def _compute_legal_status(self, patent_type: str,
+                              discontinuation_date: str = "",
+                              anticipated_term_date: str = "") -> str:
+        """
+        Compute legal status from patent metadata.
+
+        Args:
+            patent_type: "application" or "granted"
+            discontinuation_date: Discontinuation date if patent was abandoned
+            anticipated_term_date: Expected expiry date
+
+        Returns:
+            Legal status: "pending" | "granted" | "expired" | "abandoned"
+        """
+        if patent_type == "granted":
+            if discontinuation_date:
+                return "abandoned"
+            elif anticipated_term_date:
+                try:
+                    from datetime import datetime
+                    term_date = datetime.fromisoformat(anticipated_term_date.replace('Z', '+00:00'))
+                    if datetime.now() > term_date:
+                        return "expired"
+                except:
+                    pass
+            return "granted"
+        return "pending"
+
     def _create_chain(self):
         """Build the few-shot chain for patent technology extraction."""
 
@@ -218,6 +287,7 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 """
 
         ex_output_1 = json.dumps({
+            "quality_score": 0.98,
             "tech_mentions": [
                 {
                     "name": "Magnetic Levitation Rotor System",
@@ -321,6 +391,7 @@ TASK: Extract core technologies, innovations, and their relationships for knowle
 """
 
         ex_output_2 = json.dumps({
+            "quality_score": 0.92,
             "tech_mentions": [
                 {
                     "name": "400+ Wh/kg Lithium-Sulfur Battery",
@@ -477,8 +548,30 @@ CONFIDENCE SCORING (0.0-1.0) - Certainty of THIS ROLE Assignment:
 - 0.6-0.79: Moderate inference from context for this role
 - 0.5-0.59: Weak inference for this role
 
+QUALITY SCORE (0.0-1.0) - Industry Relevance Assessment:
+PURPOSE: Determine if this patent is actually relevant to the target industry.
+Some patents may mention keywords but not be truly related to the industry.
+Documents with quality_score < 0.85 will be FILTERED OUT in post-processing.
+
+Scoring Guidelines:
+- 0.95-1.0: Core industry technology (direct application to target industry)
+- 0.85-0.94: Supporting technology (enables or complements industry)
+- 0.70-0.84: Tangentially related (shares components or methods)
+- 0.50-0.69: Keyword match only (not actually related to industry)
+- 0.0-0.49: Not related to industry (false positive from search)
+
+Example for eVTOL industry:
+- 1.0: "Electric VTOL propulsion system" (core eVTOL technology)
+- 0.90: "Lithium-sulfur battery for aviation" (supporting technology)
+- 0.75: "Carbon fiber rotor blade manufacturing" (tangential)
+- 0.60: "General electric motor control" (keyword match only)
+- 0.30: "Automotive battery management" (not eVTOL related)
+
+CRITICAL: Be strict in scoring to maintain data quality for strategic intelligence.
+
 OUTPUT SCHEMA:
 {{{{
+  "quality_score": float,  // 0.0-1.0 industry relevance (0.85+ = relevant, <0.85 = discard)
   "tech_mentions": [
     {{{{
       "name": string,
@@ -602,6 +695,16 @@ def parse_single_patent_test():
     print(f"\n{'='*80}")
     print("PARSING RESULTS SUMMARY")
     print(f"{'='*80}\n")
+
+    # Document quality
+    doc = result.get('document', {})
+    print(f"Quality Score: {doc.get('quality_score', 0.0):.2f}")
+    print(f"Legal Status: {doc.get('legal_status', 'N/A')}")
+    print(f"Jurisdiction: {doc.get('jurisdiction', 'N/A')}")
+    print(f"Simple Family Size: {doc.get('simple_family_size', 0)}")
+    print()
+
+    # Entity and relation counts
     print(f"Technology Mentions: {len(result.get('tech_mentions', []))}")
     print(f"Company Mentions: {len(result.get('company_mentions', []))}")
     print(f"Company-Tech Relations: {len(result.get('company_tech_relations', []))}")
@@ -612,15 +715,15 @@ def parse_single_patent_test():
     if result.get('tech_mentions'):
         print("\nSample Technology Mentions:")
         for mention in result['tech_mentions'][:3]:
-            roles = ', '.join(mention.get('roles', []))
-            print(f"  - {mention.get('name')} (roles: {roles}, strength: {mention.get('strength', 0):.2f})")
+            role = mention.get('role', 'N/A')
+            print(f"  - {mention.get('name')} (role: {role}, strength: {mention.get('strength', 0):.2f})")
 
     # Show sample company mentions
     if result.get('company_mentions'):
         print("\nSample Company Mentions:")
         for mention in result['company_mentions'][:2]:
-            roles = ', '.join(mention.get('roles', []))
-            print(f"  - {mention.get('name')} (roles: {roles})")
+            role = mention.get('role', 'N/A')
+            print(f"  - {mention.get('name')} (role: {role})")
 
     # Show sample relations
     if result.get('tech_tech_relations'):
