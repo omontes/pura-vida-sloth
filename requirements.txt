@@ -58,6 +58,9 @@ yfinance>=0.2.37
 aiohttp>=3.9.0
 aiofiles>=23.0.0
 
+# PDF processing - for page count validation
+pypdf>=4.0.0
+
 # ============================================================================
 # LLM Integration for Parsers (Patent Analysis, Knowledge Graph Construction)
 # ============================================================================
