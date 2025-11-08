@@ -818,6 +818,13 @@ def parse_all_patents(industry: str = "eVTOL", limit: Optional[int] = None):
     return results
 
 
+def load_industry_config(config_path: str) -> Dict[str, Any]:
+    """Load industry configuration from JSON file."""
+    with open(config_path, "r", encoding="utf-8") as f:
+        config = json.load(f)
+    return config
+
+
 if __name__ == "__main__":
     # Only run single patent test when executed directly
     parse_single_patent_test()
