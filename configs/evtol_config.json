@@ -108,7 +108,7 @@
       "JOBY": "Joby Aero, Inc.",
       "ACHR": "Archer Aviation Inc.",
       "EVEX": "Eve UAM, LLC",
-      "BLDE": "Blade Air Mobility",
+      "EVTL": "Vertical Aerospace Ltd",
       "BA": "The Boeing Company",
       "LMT": "Lockheed Martin",
       "TXT": "Textron Inc.",
@@ -116,17 +116,18 @@
       "EH": "EHang Holdings Limited",
       "ERJ": "Embraer S.A.",
       "GE": "General Electric Company",
-      "XTI": "XTI Aircraft Company",
+      "XTIA": "XTI Aerospace, Inc.",
       "AMPRIUS": "Amprius Technologies Inc",
-      "PIVOTAL": "Pivotal"
+      "PIVOTAL": "Pivotal",
+      "KAI": "Korea Aerospace Industries Ltd",
+      "BETA": "Beta Technologies, Inc.",
+      "SRFM": "Surf Air Mobility Inc."
     },
     "public_inactive": {
       "LILM": "Lilium GmbH",
-      "VOLOCOPTER": "Volocopter GmbH",
-      "EVTL": "Vertical Aerospace Ltd"
+      "BLDE": "Blade Air Mobility"
     },
     "private": {
-      "BETA": "Beta Technologies Inc",
       "WISK": "Wisk Aero LLC",
       "OVERAIR": "Overair",
       "AUTOFLIGHT": "AutoFlight",
@@ -138,7 +139,6 @@
       "SUPERNAL": "Supernal LLC",
       "HANWHA": "Hanwha Systems",
       "KAL": "Korean Air Lines",
-      "KAI": "Korea Aerospace Industries Ltd",
       "LIFT": "Lift Aircraft Inc",
       "JETOPTERA": "Jetoptera Inc",
       "VOLTAERO": "VoltAero",
@@ -150,7 +150,8 @@
       "SKYPORTS": "Skyports Ltd",
       "URBAN_AIR": "Urban-Air Port Ltd",
       "HONDA": "Honda Motor Co., Ltd.",
-      "NIDEC": "Nidec Corporation"
+      "NIDEC": "Nidec Corporation",
+      "VOLOCOPTER": "Volocopter GmbH"
     }
   },
 
@@ -186,10 +187,10 @@
       "comment": "AMBITIOUS: 200 repos - Track eVTOL open-source projects (flight controllers, simulations, tools)"
     },
     "sec_filings": {
-      "enabled": true,
+      "enabled": false,
       "types": ["8-K", "10-K", "10-Q", "DEF 14A", "S-1", "D", "4"],
       "priority": 3,
-      "comment": "ENABLED: SEC filings for eVTOL public companies. Priority forms: 8-K (material events), 10-K (risk factors), DEF 14A (leadership changes), S-1 (IPOs), Form D (VC funding), 10-Q (quarterly), Form 4 (insider trading)"
+      "comment": "DISABLED: Already harvested 626 filings. SEC filings for eVTOL public companies."
     },
     "earnings": {
       "enabled": false,
@@ -204,7 +205,7 @@
       "comment": "AMBITIOUS: 300 academic research papers on eVTOL technology (arXiv, PubMed, Google Scholar)"
     },
     "regulatory": {
-      "enabled": true,
+      "enabled": false,
       "limit": 100,
       "priority": 6,
       "agencies": [
@@ -221,7 +222,7 @@
         "NASA_AERONAUTICS": "https://www.nasa.gov/aeronautics/feed/",
         "NTSB_PRESS": "https://www.ntsb.gov/news/press-releases/Pages/PressReleasesRSS.aspx"
       },
-      "comment": "ENABLED with KEYWORD FILTERING: FAA, NASA, DOD, Air Force, EPA, NTSB, FCC. 7 agencies + 3 RSS feeds. 365-day window with 29 keywords for eVTOL-specific filtering."
+      "comment": "DISABLED: FAA, NASA, DOD, Air Force, EPA, NTSB, FCC. 7 agencies + 3 RSS feeds."
     },
     "press": {
       "enabled": false,
@@ -271,9 +272,9 @@
       "comment": "DISABLED - 13F filings (complex XML parsing required, use WhaleWisdom API or extend parser)"
     },
     "form13f_holdings": {
-      "enabled": false,
+      "enabled": true,
       "priority": 12,
-      "comment": "AMBITIOUS: SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Expected: 1,000-5,000 holdings for 17 public companies."
+      "comment": "ENABLED: SEC Form 13F institutional holdings from local dataset (data/form13f). Tracks smart money behavior (Layer 3: Financial Reality). 3.36M records, 75 quarters (2007-2025). Expected: 1,000-5,000 holdings for 17 public companies."
     },
     "lens_scholarly": {
       "enabled": false,
@@ -284,7 +285,7 @@
     "insider_transactions": {
       "enabled": false,
       "priority": 13,
-      "comment": "AMBITIOUS: SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Tracks CEO/executive buying/selling patterns (Layer 3: Financial Reality). Q2 2025 data, 66K+ transactions, 50K+ submissions. Expected: 500-2,000 transactions for 17 public companies."
+      "comment": "DISABLED: SEC Forms 3/4/5 insider transactions from local dataset (data/insider_transactions). Tracks CEO/executive buying/selling patterns (Layer 3: Financial Reality). Q2 2025 data, 66K+ transactions, 50K+ submissions. Expected: 1,500-3,000 transactions for 18 public companies (730-day window)."
     }
   },
 
