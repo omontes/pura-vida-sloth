@@ -1,237 +1,147 @@
 """
-Test Script: Validate Scholarly Parser with Single Paper
-
-This script:
-1. Loads industry config (eVTOL)
-2. Initializes ScholarlyRelevanceParser
-3. Parses ONE paper from dataset
-4. Displays results (relevance, nodes, relationships, cost)
-5. Saves output for manual review
-
-Run BEFORE batch processing to validate parser and estimate costs.
+Test script for single paper parsing with new standardized structure.
 """
 
 import os
-import sys
 import json
-from pathlib import Path
+from dotenv import load_dotenv
+from scholarly_parser import ScholarlyRelevanceParser
 
-# Add parent directory to path for imports
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
-
-from parsers.scholarly.scholarly_parser import (
-    ScholarlyRelevanceParser,
-    load_papers_from_file,
-    load_industry_config
-)
+load_dotenv()
 
 
-def test_single_paper(
-    config_path: str = "configs/evtol_config.json",
-    papers_file: str = "data/eVTOL/lens_scholarly/papers.json",
-    output_file: str = "parsers/scholarly/test_output_single.json",
-    paper_index: int = 0
-):
-    """
-    Test parser with a single paper.
+def test_single_paper():
+    """Test parsing a single paper to validate refactored structure."""
 
-    Args:
-        config_path: Path to industry config JSON
-        papers_file: Path to papers dataset JSON
-        output_file: Where to save test results
-        paper_index: Which paper to test (default: 0 = first paper)
-    """
+    print("\n" + "=" * 80)
+    print("TESTING: Single Paper Parsing (Standardized Structure)")
+    print("=" * 80 + "\n")
 
-    print("=" * 80)
-    print("SCHOLARLY PARSER - SINGLE PAPER TEST")
-    print("=" * 80)
+    print("This will test the refactored parser with:")
+    print("  - Config-driven relation types")
+    print("  - Python metadata extraction (no LLM)")
+    print("  - Quality score (0-1 scale)")
+    print("  - Role-based entity mentions")
+    print("  - document_metadata populated with extra fields\n")
 
     # Load API key
     api_key = os.getenv("OPENAI_API_KEY")
     if not api_key:
         raise ValueError("OPENAI_API_KEY not found in environment variables")
 
-    # Load industry config
-    print(f"\n[1/5] Loading industry config: {config_path}")
-    config = load_industry_config(config_path)
-
-    industry = config.get("industry", "Unknown")
-    industry_name = config.get("industry_name", "Unknown")
-    industry_keywords = config.get("keywords", {}).get("core", [])
-
-    # Create industry description
-    industry_description = f"{industry_name} - Urban air mobility aircraft with electric vertical takeoff and landing capabilities"
-
-    print(f"  Industry: {industry}")
-    print(f"  Full Name: {industry_name}")
-    print(f"  Core Keywords: {len(industry_keywords)} keywords")
-
     # Initialize parser
-    print(f"\n[2/5] Initializing ScholarlyRelevanceParser")
+    print("[1/4] Initializing parser...")
     parser = ScholarlyRelevanceParser(
         openai_api_key=api_key,
-        industry_name=industry,
-        industry_keywords=industry_keywords,
-        industry_description=industry_description,
+        config_path="configs/eVTOL_graph_relations.json",
+        industry_name="eVTOL",
+        industry_keywords=["eVTOL", "electric VTOL", "urban air mobility"],
+        industry_description="Electric Vertical Takeoff and Landing aircraft for urban air mobility",
         model_name="gpt-4o-mini",
-        temperature=0.0,
-        relevance_threshold=8.0
+        temperature=0.0
     )
-    print(f"  Model: gpt-4o-mini")
-    print(f"  Temperature: 0.0 (deterministic)")
-    print(f"  Relevance Threshold: 8.0/10")
+    print("  Parser initialized successfully")
 
     # Load papers
-    print(f"\n[3/5] Loading papers: {papers_file}")
-    papers = load_papers_from_file(papers_file, limit=None)
-    print(f"  Total papers in dataset: {len(papers)}")
+    print("\n[2/4] Loading paper data...")
+    papers_file = "data/eVTOL/lens_scholarly/papers.json"
+    with open(papers_file, "r", encoding="utf-8") as f:
+        papers = json.load(f)
 
-    if paper_index >= len(papers):
-        raise ValueError(f"paper_index {paper_index} out of range (dataset has {len(papers)} papers)")
+    if not papers:
+        print("  ERROR: No papers found in file")
+        return
 
-    # Select test paper
-    paper = papers[paper_index]
-    print(f"\n[4/5] Testing paper #{paper_index + 1}")
-    print(f"  Lens ID: {paper.get('lens_id', 'Unknown')}")
-    print(f"  Title: {paper.get('title', 'No title')[:80]}...")
+    paper = papers[2]  # Test with paper 2 (has abstract) to verify LLM call
+    print(f"  Loaded paper: {paper.get('title', 'No title')[:80]}...")
     print(f"  Year: {paper.get('year_published', 'Unknown')}")
-    print(f"  Type: {paper.get('publication_type', 'Unknown')}")
-
-    abstract = paper.get('abstract', '')
-    if abstract and len(abstract) > 50:
-        print(f"  Abstract: {len(abstract)} characters")
-    else:
-        print(f"  Abstract: [Missing or empty]")
+    print(f"  Source: {paper.get('source', {}).get('title', 'Unknown')}")
+    print(f"  Abstract length: {len(paper.get('abstract', ''))} characters")
 
     # Parse paper
-    print(f"\n[5/5] Parsing paper with LLM...")
-    print("-" * 80)
+    print("\n[3/4] Parsing paper...")
+    result = parser.parse_paper(paper)
 
-    result = parser.parse_and_save(
-        paper_data=paper,
-        out_path=output_file
-    )
+    # Save result
+    print("\n[4/4] Saving results...")
+    output_path = "parsers/test_scholarly_output.json"
+    with open(output_path, "w", encoding="utf-8") as f:
+        json.dump(result, f, indent=2, ensure_ascii=False)
+    print(f"  Saved to: {output_path}")
 
-    # Display results
+    # Display summary
     print("\n" + "=" * 80)
-    print("RESULTS SUMMARY")
+    print("PARSING RESULTS SUMMARY")
+    print("=" * 80 + "\n")
+
+    # Document info
+    doc = result.get('document', {})
+    print(f"Document Type: {doc.get('doc_type', 'N/A')}")
+    print(f"Doc ID: {doc.get('doc_id', 'N/A')}")
+    print(f"Title: {doc.get('title', 'N/A')[:70]}...")
+    print(f"Source: {doc.get('source', 'N/A')}")
+    print(f"Published At: {doc.get('published_at', 'N/A')}")
+    print(f"Quality Score: {doc.get('quality_score', 0.0):.2f}")
+    print(f"Citation Count: {doc.get('citation_count', 0)}")
+    print(f"Patent Citations: {doc.get('patent_citations_count', 0)}")
+    print(f"DOI: {doc.get('doi', 'N/A')}")
+    print(f"Venue Type: {doc.get('venue_type', 'N/A')}")
+    print(f"Peer Reviewed: {doc.get('peer_reviewed', 'N/A')}")
+    print()
+
+    # Entity and relation counts
+    print(f"Technology Mentions: {len(result.get('tech_mentions', []))}")
+    print(f"Company Mentions: {len(result.get('company_mentions', []))}")
+    print(f"Company-Tech Relations: {len(result.get('company_tech_relations', []))}")
+    print(f"Tech-Tech Relations: {len(result.get('tech_tech_relations', []))}")
+    print(f"Company-Company Relations: {len(result.get('company_company_relations', []))}")
+    print()
+
+    # Document metadata check
+    doc_metadata = result.get('document_metadata', {})
+    print(f"Document Metadata Fields: {len(doc_metadata)} fields")
+    if doc_metadata:
+        print(f"  Sample fields: {', '.join(list(doc_metadata.keys())[:5])}...")
+    print()
+
+    # Show sample tech mentions
+    if result.get('tech_mentions'):
+        print("Sample Technology Mentions:")
+        for i, tech in enumerate(result['tech_mentions'][:3], 1):
+            print(f"  {i}. {tech.get('name', 'N/A')} (role={tech.get('role', 'N/A')}, strength={tech.get('strength', 0):.2f})")
+    print()
+
+    # Validation
     print("=" * 80)
+    print("VALIDATION CHECKS")
+    print("=" * 80 + "\n")
 
-    # Relevance assessment
-    relevance = result.get("relevance_assessment", {})
-    print(f"\n[RELEVANCE ASSESSMENT]")
-    print(f"  Score: {relevance.get('relevance_score', 0.0):.1f}/10")
-    print(f"  Is Relevant: {relevance.get('is_relevant', False)}")
-    print(f"  Category: {relevance.get('relevance_category', 'unknown')}")
-    print(f"  Confidence: {relevance.get('confidence', 0.0):.2f}")
-    print(f"\n  Justification:")
-    justification = relevance.get('justification', 'N/A')
-    # Wrap justification text
-    words = justification.split()
-    line = "    "
-    for word in words:
-        if len(line) + len(word) + 1 > 76:
-            print(line)
-            line = "    " + word
-        else:
-            line += " " + word if line != "    " else word
-    if line.strip():
-        print(line)
+    checks = [
+        ("doc_type == 'technical_paper'", doc.get('doc_type') == 'technical_paper'),
+        ("published_at uses date_published", doc.get('published_at') == paper.get('date_published')),
+        ("summary is empty string", doc.get('summary') == ""),
+        ("content is abstract", doc.get('content') == parser._clean_abstract(paper.get('abstract', ''))),
+        ("quality_score between 0-1", 0 <= doc.get('quality_score', 0) <= 1),
+        ("document_metadata not empty", len(doc_metadata) > 0),
+        ("doc_ref added to relations", all('doc_ref' in rel for rel in result.get('tech_tech_relations', []))),
+    ]
 
-    # Knowledge graph (if relevant)
-    is_relevant = relevance.get('is_relevant', False)
-    if is_relevant:
-        nodes = result.get("technology_nodes", [])
-        relationships = result.get("relationships", [])
-
-        print(f"\n[KNOWLEDGE GRAPH]")
-        print(f"  Technology Nodes: {len(nodes)}")
-        if nodes:
-            print(f"\n  Sample Nodes:")
-            for idx, node in enumerate(nodes[:5], 1):
-                print(f"    {idx}. {node.get('name', 'Unknown')} ({node.get('node_type', 'unknown')})")
-                print(f"       Domain: {node.get('domain', 'unknown')} | Maturity: {node.get('maturity', 'unknown')}")
-
-        print(f"\n  Relationships: {len(relationships)}")
-        if relationships:
-            print(f"\n  Sample Relationships:")
-            for idx, rel in enumerate(relationships[:5], 1):
-                print(f"    {idx}. {rel.get('subject', '?')} --[{rel.get('predicate', '?')}]--> {rel.get('object', '?')}")
-                print(f"       Confidence: {rel.get('confidence', 0.0):.2f}")
-
-        # Innovation signals
-        signals = result.get("innovation_signals", {})
-        print(f"\n[INNOVATION SIGNALS]")
-        print(f"  Research Stage: {signals.get('research_stage', 'unknown')}")
-        print(f"  Innovation Type: {signals.get('innovation_type', 'unknown')}")
-        print(f"  Impact Potential: {signals.get('impact_potential', 'unknown')}")
-        print(f"  Technical Risk: {signals.get('technical_risk', 'unknown')}")
-
-        adoption = signals.get('adoption_indicators', [])
-        if adoption:
-            print(f"\n  Adoption Indicators ({len(adoption)}):")
-            for idx, indicator in enumerate(adoption, 1):
-                print(f"    {idx}. {indicator}")
-    else:
-        print(f"\n[KNOWLEDGE GRAPH]")
-        print(f"  Not extracted (paper below relevance threshold)")
+    all_passed = True
+    for check_name, passed in checks:
+        status = "PASS" if passed else "FAIL"
+        print(f"  [{status}] {check_name}")
+        if not passed:
+            all_passed = False
 
     print("\n" + "=" * 80)
-    print(f"Test output saved to: {output_file}")
+    if all_passed:
+        print("SUCCESS: All validation checks passed!")
+    else:
+        print("WARNING: Some validation checks failed - review output")
     print("=" * 80 + "\n")
 
     return result
 
 
-def find_paper_with_abstract(
-    papers_file: str = "data/eVTOL/lens_scholarly/papers.json",
-    output_file: str = "parsers/scholarly/test_output_single.json"
-):
-    """
-    Alternative test: Find first paper WITH abstract and test it.
-    (Many papers have empty abstracts which limits relevance assessment quality)
-    """
-
-    print("=" * 80)
-    print("SCHOLARLY PARSER - FINDING PAPER WITH ABSTRACT")
-    print("=" * 80)
-
-    # Load papers
-    print(f"\n[1/2] Loading papers: {papers_file}")
-    papers = load_papers_from_file(papers_file, limit=None)
-    print(f"  Total papers: {len(papers)}")
-
-    # Find paper with abstract
-    print(f"\n[2/2] Searching for paper with substantial abstract...")
-    paper_index = None
-    for idx, paper in enumerate(papers):
-        abstract = paper.get('abstract', '')
-        if abstract and len(abstract) > 100:
-            paper_index = idx
-            print(f"  Found paper #{idx + 1} with {len(abstract)} character abstract")
-            print(f"  Title: {paper.get('title', 'No title')[:80]}...")
-            break
-
-    if paper_index is None:
-        print("  WARNING: No papers with substantial abstracts found in dataset")
-        print("  Using first paper anyway...")
-        paper_index = 0
-
-    print("\n" + "=" * 80)
-    print(f"Testing paper #{paper_index + 1}")
-    print("=" * 80 + "\n")
-
-    # Run test with found paper
-    return test_single_paper(
-        paper_index=paper_index,
-        output_file=output_file
-    )
-
-
 if __name__ == "__main__":
-    # Test with first paper that has abstract
-    # (Better test than papers with missing abstracts)
-    result = find_paper_with_abstract()
-
-    # Uncomment to test specific paper by index:
-    # result = test_single_paper(paper_index=5)
+    test_single_paper()

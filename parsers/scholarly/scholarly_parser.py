@@ -27,34 +27,42 @@ from langchain_community.callbacks import get_openai_callback
 
 
 class ScholarlyRelevanceParser:
-    """LLM-driven parser to assess paper relevance and extract knowledge graphs."""
+    """LLM-driven parser to extract technology relationships from scholarly papers."""
 
     def __init__(
         self,
         openai_api_key: str,
-        industry_name: str,
-        industry_keywords: List[str],
-        industry_description: str,
+        config_path: str = "configs/eVTOL_graph_relations.json",
+        industry_name: str = None,
+        industry_keywords: List[str] = None,
+        industry_description: str = None,
         model_name: str = "gpt-4o-mini",
-        temperature: float = 0.0,
-        relevance_threshold: float = 8.0
+        temperature: float = 0.0
     ):
         """
         Initialize parser with industry-specific context.
 
         Args:
             openai_api_key: OpenAI API key
-            industry_name: Target industry (e.g., "eVTOL", "Quantum Computing")
-            industry_keywords: Core industry keywords for context
-            industry_description: Brief description of the industry
+            config_path: Path to graph relations config file
+            industry_name: Target industry (optional, loaded from config if not provided)
+            industry_keywords: Core industry keywords (optional)
+            industry_description: Brief description of the industry (optional)
             model_name: OpenAI model to use (default: gpt-4o-mini)
             temperature: Model temperature (0.0 = deterministic)
-            relevance_threshold: Score threshold for relevance (default: 8.0/10)
         """
+        # Load allowed relations from config
+        with open(config_path, 'r', encoding='utf-8') as f:
+            self.graph_config = json.load(f)
+
+        self.allowed_company_tech_relations = self.graph_config["allowed_company_tech_relations"]
+        self.allowed_tech_tech_relations = self.graph_config["allowed_tech_tech_relations"]
+        self.allowed_company_company_relations = self.graph_config["allowed_company_company_relations"]
+
+        # Store industry context (can be passed or loaded from config)
         self.industry_name = industry_name
-        self.industry_keywords = industry_keywords
+        self.industry_keywords = industry_keywords if industry_keywords else []
         self.industry_description = industry_description
-        self.relevance_threshold = relevance_threshold
 
         self.llm = ChatOpenAI(
             temperature=temperature,
@@ -67,53 +75,111 @@ class ScholarlyRelevanceParser:
 
     def parse_paper(self, paper_data: Dict[str, Any]) -> Dict[str, Any]:
         """
-        Parse a single paper: assess relevance + extract knowledge graph.
+        Parse a single paper into entity mentions and relationships.
 
         Args:
             paper_data: Paper record from Lens.org API
 
         Returns:
             Dictionary containing:
-            - paper_metadata: Basic paper information
-            - relevance_assessment: Score, category, justification
-            - technology_nodes: List of technologies (if relevant)
-            - relationships: List of triplets (if relevant)
-            - innovation_signals: Research impact classification (if relevant)
+            - document: All paper metadata
+            - document_metadata: Extra paper fields not in document
+            - tech_mentions: Technologies with roles, strength, confidence
+            - company_mentions: Companies with roles, strength, confidence
+            - company_tech_relations: Relations with doc_ref added
+            - tech_tech_relations: Relations with doc_ref added
+            - company_company_relations: Relations with doc_ref added
         """
-        input_text = self._format_paper_for_llm(paper_data)
+        # Check if abstract is empty - skip LLM call if no content to analyze
+        abstract = self._clean_abstract(paper_data.get("abstract", ""))
 
-        try:
-            with get_openai_callback() as cb:
-                result = self.chain.invoke({"input": input_text})
+        if not abstract or len(abstract.strip()) == 0:
+            print("\n[SKIPPED] Paper has no abstract - skipping LLM call")
+            llm_result = {
+                "quality_score": 0.0,
+                "tech_mentions": [],
+                "company_mentions": [],
+                "company_tech_relations": [],
+                "tech_tech_relations": [],
+                "company_company_relations": []
+            }
+        else:
+            # Paper has abstract - proceed with LLM analysis
+            input_text = self._format_paper_for_llm(paper_data)
 
-                # Log token usage and cost
-                print(f"\nToken Usage:")
-                print(f"  Prompt tokens: {cb.prompt_tokens}")
-                print(f"  Completion tokens: {cb.completion_tokens}")
-                print(f"  Total tokens: {cb.total_tokens}")
+            try:
+                with get_openai_callback() as cb:
+                    # LLM generates quality_score, mentions + relations only
+                    llm_result = self.chain.invoke({"input": input_text})
 
-                # Calculate cost (gpt-4o-mini pricing)
-                cost_per_1m_input = 0.150
-                cost_per_1m_output = 0.600
+                    # Log token usage and cost
+                    print(f"\nToken Usage: {cb.total_tokens} tokens (${cb.total_cost:.6f})")
 
-                cost_per_input_token = cost_per_1m_input / 1_000_000
-                cost_per_output_token = cost_per_1m_output / 1_000_000
+            except Exception as e:
+                print(f"Parsing error: {e}")
+                llm_result = {
+                    "quality_score": 0.0,
+                    "tech_mentions": [],
+                    "company_mentions": [],
+                    "company_tech_relations": [],
+                    "tech_tech_relations": [],
+                    "company_company_relations": []
+                }
 
-                input_cost = cb.prompt_tokens * cost_per_input_token
-                output_cost = cb.completion_tokens * cost_per_output_token
-                total_cost = input_cost + output_cost
-                print(f"  Cost (USD): ${total_cost:.6f}")
+        # Python extracts all document metadata
+        doc_id = paper_data.get("lens_id", "")
 
-        except Exception as e:
-            print(f"Parsing error: {e}")
-            result = self._empty_result()
+        final_result = {
+            "document": {
+                # Core identification fields
+                "doc_id": doc_id,
+                "doc_type": "technical_paper",
+                "title": paper_data.get("title", ""),
+                "url": paper_data.get("url", ""),
+                "source": "Lens.org Scholarly API",
 
-        # Enrich with original paper data
-        result["paper_metadata"]["lens_id"] = paper_data.get("lens_id", "")
-        result["paper_metadata"]["url"] = paper_data.get("url", "")
-        result["paper_metadata"]["doi"] = self._extract_doi(paper_data)
+                # Publication metadata
+                "published_at": paper_data.get("date_published"),
+                "summary": "",  # Empty as specified
+                "content": abstract,  # Reuse already-cleaned abstract
 
-        return result
+                # Scoring
+                "quality_score": llm_result.get("quality_score", 0.0),
+                "relevance_score": 0.0,
+
+                # Paper-specific fields
+                "doi": self._extract_doi(paper_data),
+                "venue_type": self._extract_venue_type(paper_data),
+                "peer_reviewed": self._infer_peer_reviewed(paper_data),
+                "source_title": paper_data.get("source", {}).get("title"),
+                "year_published": paper_data.get("year_published"),
+                "date_published": paper_data.get("date_published"),
+                "citation_count": paper_data.get("scholarly_citations_count", 0),
+                "patent_citations_count": paper_data.get("patent_citations_count", 0),
+
+                # Embedding placeholder
+                "embedding": []
+            },
+            "document_metadata": self._populate_document_metadata(paper_data),
+            "tech_mentions": llm_result.get("tech_mentions", []),
+            "company_mentions": llm_result.get("company_mentions", []),
+            "company_tech_relations": llm_result.get("company_tech_relations", []),
+            "tech_tech_relations": llm_result.get("tech_tech_relations", []),
+            "company_company_relations": llm_result.get("company_company_relations", [])
+        }
+
+        # Add doc_ref to all relations
+        for rel in final_result["company_tech_relations"]:
+            rel["doc_ref"] = doc_id
+        for rel in final_result["tech_tech_relations"]:
+            rel["doc_ref"] = doc_id
+        for rel in final_result["company_company_relations"]:
+            rel["doc_ref"] = doc_id
+
+        # Validate relations match config
+        self._validate_relations(llm_result)
+
+        return final_result
 
     def parse_and_save(self, paper_data: Dict[str, Any], out_path: str = "paper_parse_result.json") -> Dict[str, Any]:
         """Parse a paper and save results to JSON file."""
@@ -162,9 +228,6 @@ class ScholarlyRelevanceParser:
         formatted = f"""
 RESEARCH PAPER ANALYSIS REQUEST
 
-Industry Context: {self.industry_name}
-Industry Description: {self.industry_description}
-
 Title: {title}
 
 Year: {year}
@@ -179,9 +242,7 @@ Citation Metrics:
 - Patent Citations: {patent_citations}
 - References: {references_count}{fields_info}{keywords_info}
 
-TASK:
-1. Assess relevance to {self.industry_name} industry (0-10 scale, threshold: {self.relevance_threshold})
-2. If relevant (>= {self.relevance_threshold}): Extract core technologies, innovations, and relationships for knowledge graph
+TASK: Extract core technologies, innovations, and their relationships for knowledge graph construction.
 """.strip()
 
         return formatted
@@ -212,328 +273,284 @@ TASK:
                 return ext_id.get("value", "")
         return ""
 
-    def _empty_result(self) -> Dict[str, Any]:
-        """Return empty result structure on parsing failure."""
+    def _extract_venue_type(self, paper: Dict[str, Any]) -> str:
+        """Extract first word from publication_type as venue_type."""
+        publication_type = paper.get("publication_type", "")
+        if publication_type:
+            # Extract first word (e.g., "journal article" -> "journal")
+            return publication_type.split()[0] if publication_type.split() else ""
+        return ""
+
+    def _infer_peer_reviewed(self, paper: Dict[str, Any]) -> Optional[bool]:
+        """Infer peer-reviewed status from publication_type."""
+        publication_type = paper.get("publication_type", "").lower()
+
+        # Likely peer-reviewed types
+        peer_reviewed_types = ["journal", "article", "conference", "proceedings"]
+        non_peer_reviewed_types = ["preprint", "book", "thesis", "dissertation", "report"]
+
+        for pr_type in peer_reviewed_types:
+            if pr_type in publication_type:
+                return True
+
+        for npr_type in non_peer_reviewed_types:
+            if npr_type in publication_type:
+                return False
+
+        # Unknown
+        return None
+
+    def _populate_document_metadata(self, paper: Dict[str, Any]) -> Dict[str, Any]:
+        """Extract all extra fields that are not in the document dict."""
         return {
-            "paper_metadata": {
-                "lens_id": "",
-                "title": "",
-                "year_published": "",
-                "publication_type": "",
-                "doi": "",
-                "url": ""
-            },
-            "relevance_assessment": {
-                "relevance_score": 0.0,
-                "is_relevant": False,
-                "relevance_category": "unknown",
-                "justification": "Parsing error",
-                "confidence": 0.0
-            },
-            "technology_nodes": [],
-            "relationships": [],
-            "innovation_signals": {
-                "research_stage": "unknown",
-                "innovation_type": "unknown",
-                "impact_potential": "unknown"
-            }
+            "publication_type": paper.get("publication_type", ""),
+            "publication_supplementary_type": paper.get("publication_supplementary_type", []),
+            "external_ids": paper.get("external_ids", []),
+            "open_access": paper.get("open_access", {}),
+            "source_urls": paper.get("source_urls", []),
+            "funding": paper.get("funding", []),
+            "authors": paper.get("authors", []),
+            "author_count": paper.get("author_count", 0),
+            "scholarly_citations": paper.get("scholarly_citations", []),
+            "patent_citations": paper.get("patent_citations", []),
+            "references_count": paper.get("references_count", 0),
+            "references": paper.get("references", []),
+            "fields_of_study": paper.get("fields_of_study", []),
+            "keywords": paper.get("keywords", []),
+            "mesh_terms": paper.get("mesh_terms", []),
+            "clinical_trials": paper.get("clinical_trials", []),
+            "chemicals": paper.get("chemicals", []),
+            "source": paper.get("source", {}),
+            "matched_keyword": paper.get("matched_keyword", ""),
+            "harvested_at": paper.get("harvested_at", "")
+        }
+
+    def _validate_relations(self, llm_result: Dict[str, Any]) -> None:
+        """Validate that relation types match allowed enums from config."""
+        # Validate company-tech relations
+        for rel in llm_result.get("company_tech_relations", []):
+            rel_type = rel.get("relation_type")
+            if rel_type and rel_type not in self.allowed_company_tech_relations:
+                print(f"  Warning: Invalid company-tech relation '{rel_type}' (allowed: {self.allowed_company_tech_relations})")
+
+        # Validate tech-tech relations
+        for rel in llm_result.get("tech_tech_relations", []):
+            rel_type = rel.get("relation_type")
+            if rel_type and rel_type not in self.allowed_tech_tech_relations:
+                print(f"  Warning: Invalid tech-tech relation '{rel_type}' (allowed: {self.allowed_tech_tech_relations})")
+
+        # Validate company-company relations
+        for rel in llm_result.get("company_company_relations", []):
+            rel_type = rel.get("relation_type")
+            if rel_type and rel_type not in self.allowed_company_company_relations:
+                print(f"  Warning: Invalid company-company relation '{rel_type}' (allowed: {self.allowed_company_company_relations})")
+
+    def _empty_result(self) -> Dict[str, Any]:
+        """Return empty result structure on parsing failure (LLM format)."""
+        return {
+            "quality_score": 0.0,
+            "tech_mentions": [],
+            "company_mentions": [],
+            "company_tech_relations": [],
+            "tech_tech_relations": [],
+            "company_company_relations": []
         }
 
     def _create_chain(self):
-        """Build the few-shot chain for paper relevance & technology extraction."""
+        """Build the few-shot chain for paper technology extraction."""
 
-        # Few-shot example 1: Highly relevant eVTOL paper (direct application)
-        ex_input_1 = f"""
-RESEARCH PAPER ANALYSIS REQUEST
+        # Few-shot example 1: Highly relevant eVTOL paper
+        ex_input_1 = """
+    RESEARCH PAPER ANALYSIS REQUEST
 
-Industry Context: eVTOL
-Industry Description: Electric Vertical Takeoff and Landing aircraft for urban air mobility
+    Title: Aerodynamic Optimization of eVTOL Tilt-Rotor Configuration for Hover and Cruise Efficiency
 
-Title: Aerodynamic Optimization of eVTOL Tilt-Rotor Configuration for Hover and Cruise Efficiency
+    Year: 2024
+    Publication Type: journal article
+    Journal/Conference: Journal of Aircraft
+    Publisher: American Institute of Aeronautics and Astronautics
 
-Year: 2024
-Publication Type: journal article
-Journal/Conference: Journal of Aircraft
-Publisher: American Institute of Aeronautics and Astronautics
+    Abstract:
+    This paper presents a comprehensive aerodynamic optimization framework for electric vertical takeoff and landing (eVTOL) aircraft with tilt-rotor configurations. We investigate the trade-offs between hover efficiency and cruise performance through computational fluid dynamics simulations validated against wind tunnel experiments. The study introduces a novel rotor blade design that achieves 12% improvement in hover efficiency while maintaining cruise lift-to-drag ratio. Flight control strategies for transition phase are analyzed using dynamic flight simulations. Results demonstrate that optimized tilt-rotor configurations can extend eVTOL range by 18% compared to conventional designs.
 
-Abstract:
-This paper presents a comprehensive aerodynamic optimization framework for electric vertical takeoff and landing (eVTOL) aircraft with tilt-rotor configurations. We investigate the trade-offs between hover efficiency and cruise performance through computational fluid dynamics simulations validated against wind tunnel experiments. The study introduces a novel rotor blade design that achieves 12% improvement in hover efficiency while maintaining cruise lift-to-drag ratio. Flight control strategies for transition phase are analyzed using dynamic flight simulations. Results demonstrate that optimized tilt-rotor configurations can extend eVTOL range by 18% compared to conventional designs.
+    Citation Metrics:
+    - Scholarly Citations: 15
+    - Patent Citations: 3
+    - References: 42
 
-Citation Metrics:
-- Scholarly Citations: 15
-- Patent Citations: 3
-- References: 42
+    Fields of Study: Aerodynamics, Aircraft design, Electric aircraft, Vertical flight, Computational fluid dynamics
 
-Fields of Study: Aerodynamics, Aircraft design, Electric aircraft, Vertical flight, Computational fluid dynamics
-
-Keywords: eVTOL, tilt-rotor, aerodynamic optimization, hover efficiency, urban air mobility
-
-TASK:
-1. Assess relevance to eVTOL industry (0-10 scale, threshold: 8.0)
-2. If relevant (>= 8.0): Extract core technologies, innovations, and relationships for knowledge graph
-"""
+    TASK: Extract core technologies, innovations, and their relationships for knowledge graph construction.
+    """
 
         ex_output_1 = json.dumps({
-            "paper_metadata": {
-                "title": "Aerodynamic Optimization of eVTOL Tilt-Rotor Configuration for Hover and Cruise Efficiency",
-                "year_published": 2024,
-                "publication_type": "journal article",
-                "journal": "Journal of Aircraft"
-            },
-            "relevance_assessment": {
-                "relevance_score": 9.5,
-                "is_relevant": True,
-                "relevance_category": "direct_application",
-                "justification": "Paper directly addresses core eVTOL design challenges (aerodynamic optimization, tilt-rotor configuration, hover-cruise efficiency trade-offs) with quantified performance improvements (12% hover efficiency, 18% range extension). Highly relevant for eVTOL aircraft development.",
-                "confidence": 0.98
-            },
-            "technology_nodes": [
+            "quality_score": 0.95,
+            "tech_mentions": [
                 {
-                    "node_id": "tech_tilt_rotor_optimization",
-                    "node_type": "technology",
                     "name": "eVTOL Tilt-Rotor Aerodynamic Optimization",
-                    "description": "Optimization framework balancing hover efficiency and cruise performance for tilt-rotor eVTOL",
-                    "maturity": "advanced",
-                    "domain": "aerodynamics"
+                    "role": "subject",
+                    "strength": 0.95,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Primary topic: Optimization framework for tilt-rotor eVTOL configurations"
                 },
                 {
-                    "node_id": "tech_novel_rotor_blade",
-                    "node_type": "technology",
-                    "name": "Hybrid Hover-Cruise Rotor Blade Design",
-                    "description": "Novel blade geometry achieving 12% hover efficiency improvement while maintaining cruise performance",
-                    "maturity": "emerging",
-                    "domain": "propulsion"
+                    "name": "eVTOL Tilt-Rotor Aerodynamic Optimization",
+                    "role": "studied",
+                    "strength": 0.90,
+                    "evidence_confidence": 0.96,
+                    "evidence_text": "Research investigated hover-cruise efficiency trade-offs through CFD simulations"
                 },
                 {
-                    "node_id": "tech_transition_flight_control",
-                    "node_type": "technology",
-                    "name": "Tilt-Rotor Transition Flight Control",
-                    "description": "Flight control strategies for hover-cruise transition phase optimization",
-                    "maturity": "advanced",
-                    "domain": "flight_control"
+                    "name": "Novel Rotor Blade Design",
+                    "role": "proposed",
+                    "strength": 0.85,
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Study introduces novel blade design achieving 12% hover efficiency improvement"
                 },
                 {
-                    "node_id": "tech_cfd_validation",
-                    "node_type": "technology",
-                    "name": "CFD-Wind Tunnel Validation Framework",
-                    "description": "Computational fluid dynamics simulations validated against experimental data",
-                    "maturity": "mature",
-                    "domain": "simulation"
+                    "name": "CFD Wind Tunnel Validation",
+                    "role": "applied",
+                    "strength": 0.75,
+                    "evidence_confidence": 0.92,
+                    "evidence_text": "CFD simulations validated against wind tunnel experiments for credibility"
+                },
+                {
+                    "name": "Transition Phase Flight Control",
+                    "role": "evaluated",
+                    "strength": 0.70,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Flight control strategies analyzed using dynamic flight simulations"
                 }
             ],
-            "relationships": [
+            "company_mentions": [],
+            "company_tech_relations": [],
+            "tech_tech_relations": [
                 {
-                    "subject": "tech_tilt_rotor_optimization",
-                    "predicate": "enables",
-                    "object": "tech_novel_rotor_blade",
-                    "confidence": 0.95,
-                    "evidence": "Optimization framework enabled development of novel blade design with quantified performance gains"
+                    "from_tech_name": "eVTOL Tilt-Rotor Aerodynamic Optimization",
+                    "to_tech_name": "Novel Rotor Blade Design",
+                    "relation_type": "enables",
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Optimization framework enabled development of novel blade design with quantified performance gains"
                 },
                 {
-                    "subject": "tech_novel_rotor_blade",
-                    "predicate": "improves_performance_of",
-                    "object": "evtol_aircraft",
-                    "confidence": 0.95,
-                    "evidence": "Blade design extends eVTOL range by 18% through improved aerodynamic efficiency"
-                },
-                {
-                    "subject": "tech_transition_flight_control",
-                    "predicate": "requires",
-                    "object": "tech_tilt_rotor_optimization",
-                    "confidence": 0.90,
-                    "evidence": "Flight control strategies depend on optimized tilt-rotor aerodynamic characteristics"
-                },
-                {
-                    "subject": "tech_cfd_validation",
-                    "predicate": "validates",
-                    "object": "tech_tilt_rotor_optimization",
-                    "confidence": 0.95,
-                    "evidence": "CFD simulations validated against wind tunnel experiments provide credibility to optimization results"
+                    "from_tech_name": "CFD Wind Tunnel Validation",
+                    "to_tech_name": "eVTOL Tilt-Rotor Aerodynamic Optimization",
+                    "relation_type": "validates",
+                    "evidence_confidence": 0.93,
+                    "evidence_text": "Experimental validation provides credibility to optimization results"
                 }
             ],
-            "innovation_signals": {
-                "research_stage": "advanced_development",
-                "innovation_type": "incremental_breakthrough",
-                "impact_potential": "high",
-                "technical_risk": "medium",
-                "adoption_indicators": [
-                    "15 citations indicate active research interest",
-                    "3 patent citations suggest commercial applicability",
-                    "Quantified performance improvements (12% hover, 18% range)",
-                    "Wind tunnel validation demonstrates technical feasibility",
-                    "Published in prestigious AIAA journal"
-                ]
-            }
+            "company_company_relations": []
         }, indent=2)
 
-        # Few-shot example 2: Marginally relevant paper (enabling technology)
-        ex_input_2 = f"""
-RESEARCH PAPER ANALYSIS REQUEST
+        # Few-shot example 2: Enabling technology paper
+        ex_input_2 = """
+    RESEARCH PAPER ANALYSIS REQUEST
 
-Industry Context: eVTOL
-Industry Description: Electric Vertical Takeoff and Landing aircraft for urban air mobility
+    Title: High-Power Density Silicon Carbide Inverters for Electric Propulsion Systems
 
-Title: High-Power Density Silicon Carbide Inverters for Electric Propulsion Systems
+    Year: 2023
+    Publication Type: conference proceedings article
+    Journal/Conference: IEEE Energy Conversion Congress
+    Publisher: IEEE
 
-Year: 2023
-Publication Type: conference proceedings article
-Journal/Conference: IEEE Energy Conversion Congress
-Publisher: IEEE
+    Abstract:
+    This paper presents design and experimental validation of high-power density silicon carbide (SiC) motor inverters for electric propulsion applications. The inverter achieves 99.2% peak efficiency at 150 kW output with power density of 25 kW/kg through advanced thermal management and optimized switching topology. While primarily targeting electric aircraft propulsion, the technology is applicable to various electric vehicle systems including ground transportation and marine propulsion. Reliability testing demonstrates 5000-hour operation under aviation-grade thermal cycling conditions.
 
-Abstract:
-This paper presents design and experimental validation of high-power density silicon carbide (SiC) motor inverters for electric propulsion applications. The inverter achieves 99.2% peak efficiency at 150 kW output with power density of 25 kW/kg through advanced thermal management and optimized switching topology. While primarily targeting electric aircraft propulsion, the technology is applicable to various electric vehicle systems including ground transportation and marine propulsion. Reliability testing demonstrates 5000-hour operation under aviation-grade thermal cycling conditions.
+    Citation Metrics:
+    - Scholarly Citations: 8
+    - Patent Citations: 1
+    - References: 28
 
-Citation Metrics:
-- Scholarly Citations: 8
-- Patent Citations: 1
-- References: 28
+    Fields of Study: Power electronics, Silicon carbide, Electric propulsion, Inverters, Thermal management
 
-Fields of Study: Power electronics, Silicon carbide, Electric propulsion, Inverters, Thermal management
-
-Keywords: SiC inverter, electric propulsion, power density, motor drive, aviation
-
-TASK:
-1. Assess relevance to eVTOL industry (0-10 scale, threshold: 8.0)
-2. If relevant (>= 8.0): Extract core technologies, innovations, and relationships for knowledge graph
-"""
+    TASK: Extract core technologies, innovations, and their relationships for knowledge graph construction.
+    """
 
         ex_output_2 = json.dumps({
-            "paper_metadata": {
-                "title": "High-Power Density Silicon Carbide Inverters for Electric Propulsion Systems",
-                "year_published": 2023,
-                "publication_type": "conference proceedings article",
-                "journal": "IEEE Energy Conversion Congress"
-            },
-            "relevance_assessment": {
-                "relevance_score": 8.5,
-                "is_relevant": True,
-                "relevance_category": "enabling_technology",
-                "justification": "Paper addresses critical enabling technology for eVTOL (high-power density electric propulsion inverters). SiC inverters are essential for eVTOL power systems. Mentions aviation applications and aviation-grade reliability testing. High power density (25 kW/kg) and efficiency (99.2%) are critical metrics for eVTOL range and payload.",
-                "confidence": 0.92
-            },
-            "technology_nodes": [
+            "quality_score": 0.88,
+            "tech_mentions": [
                 {
-                    "node_id": "tech_sic_inverter_evtol",
-                    "node_type": "technology",
-                    "name": "Aviation-Grade SiC Motor Inverter",
-                    "description": "150 kW silicon carbide inverter with 25 kW/kg power density for electric propulsion",
-                    "maturity": "advanced",
-                    "domain": "power_electronics"
+                    "name": "High-Power Density SiC Motor Inverter",
+                    "role": "subject",
+                    "strength": 0.95,
+                    "evidence_confidence": 0.98,
+                    "evidence_text": "Primary topic: SiC inverters for electric propulsion with 25 kW/kg density"
                 },
                 {
-                    "node_id": "tech_advanced_thermal_mgmt",
-                    "node_type": "technology",
-                    "name": "High-Power Inverter Thermal Management",
-                    "description": "Thermal management system enabling 25 kW/kg power density in aviation environment",
-                    "maturity": "advanced",
-                    "domain": "thermal_systems"
+                    "name": "High-Power Density SiC Motor Inverter",
+                    "role": "validated",
+                    "strength": 0.88,
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Experimental validation demonstrates 99.2% efficiency and 5000-hour reliability"
                 },
                 {
-                    "node_id": "tech_optimized_switching",
-                    "node_type": "technology",
+                    "name": "Advanced Thermal Management for Inverters",
+                    "role": "studied",
+                    "strength": 0.80,
+                    "evidence_confidence": 0.92,
+                    "evidence_text": "Research investigates thermal management enabling high power density"
+                },
+                {
                     "name": "Optimized SiC Switching Topology",
-                    "description": "Switching topology achieving 99.2% efficiency at 150 kW output",
-                    "maturity": "mature",
-                    "domain": "power_electronics"
+                    "role": "proposed",
+                    "strength": 0.75,
+                    "evidence_confidence": 0.90,
+                    "evidence_text": "Paper presents optimized topology achieving 99.2% peak efficiency"
                 }
             ],
-            "relationships": [
+            "company_mentions": [],
+            "company_tech_relations": [],
+            "tech_tech_relations": [
                 {
-                    "subject": "tech_sic_inverter_evtol",
-                    "predicate": "enables",
-                    "object": "evtol_electric_propulsion",
-                    "confidence": 0.95,
-                    "evidence": "High power density and efficiency critical for eVTOL range and payload capacity"
+                    "from_tech_name": "Advanced Thermal Management for Inverters",
+                    "to_tech_name": "High-Power Density SiC Motor Inverter",
+                    "relation_type": "enables",
+                    "evidence_confidence": 0.95,
+                    "evidence_text": "Thermal management is key enabler for achieving 25 kW/kg power density"
                 },
                 {
-                    "subject": "tech_advanced_thermal_mgmt",
-                    "predicate": "enables",
-                    "object": "tech_sic_inverter_evtol",
-                    "confidence": 0.95,
-                    "evidence": "Thermal management is key enabler for achieving 25 kW/kg power density"
-                },
-                {
-                    "subject": "tech_optimized_switching",
-                    "predicate": "improves_efficiency_of",
-                    "object": "tech_sic_inverter_evtol",
-                    "confidence": 0.90,
-                    "evidence": "Optimized topology delivers 99.2% efficiency, reducing thermal losses"
-                },
-                {
-                    "subject": "tech_sic_inverter_evtol",
-                    "predicate": "supports",
-                    "object": "evtol_range_extension",
-                    "confidence": 0.85,
-                    "evidence": "High efficiency reduces battery energy consumption, extending flight range"
+                    "from_tech_name": "Optimized SiC Switching Topology",
+                    "to_tech_name": "High-Power Density SiC Motor Inverter",
+                    "relation_type": "improves_efficiency_of",
+                    "evidence_confidence": 0.92,
+                    "evidence_text": "Optimized topology delivers 99.2% efficiency, reducing thermal losses"
                 }
             ],
-            "innovation_signals": {
-                "research_stage": "advanced_development",
-                "innovation_type": "incremental",
-                "impact_potential": "high",
-                "technical_risk": "medium",
-                "adoption_indicators": [
-                    "Aviation-grade reliability testing (5000 hours)",
-                    "Exceeds typical eVTOL power density requirements (15-20 kW/kg)",
-                    "8 citations show growing interest in SiC for aviation",
-                    "Conference proceeding suggests active commercialization efforts",
-                    "1 patent citation indicates IP development"
-                ]
-            }
+            "company_company_relations": []
         }, indent=2)
 
-        # Few-shot example 3: Irrelevant paper (below threshold)
-        ex_input_3 = f"""
-RESEARCH PAPER ANALYSIS REQUEST
+        # Few-shot example 3: Low quality (not relevant)
+        ex_input_3 = """
+    RESEARCH PAPER ANALYSIS REQUEST
 
-Industry Context: eVTOL
-Industry Description: Electric Vertical Takeoff and Landing aircraft for urban air mobility
+    Title: Machine Learning Approaches for Sentiment Analysis of Social Media Marketing Campaigns
 
-Title: Machine Learning Approaches for Sentiment Analysis of Social Media Marketing Campaigns
+    Year: 2024
+    Publication Type: journal article
+    Journal/Conference: Journal of Digital Marketing Research
+    Publisher: Elsevier
 
-Year: 2024
-Publication Type: journal article
-Journal/Conference: Journal of Digital Marketing Research
-Publisher: Elsevier
+    Abstract:
+    This study investigates the effectiveness of machine learning algorithms for analyzing sentiment in social media marketing campaigns. We compare performance of BERT, GPT-based transformers, and traditional NLP methods across Twitter, Facebook, and Instagram datasets. Results show that fine-tuned transformer models achieve 92% accuracy in sentiment classification, outperforming traditional methods by 15%. The framework is applied to case studies in consumer electronics, fashion retail, and automotive industries.
 
-Abstract:
-This study investigates the effectiveness of machine learning algorithms for analyzing sentiment in social media marketing campaigns. We compare performance of BERT, GPT-based transformers, and traditional NLP methods across Twitter, Facebook, and Instagram datasets. Results show that fine-tuned transformer models achieve 92% accuracy in sentiment classification, outperforming traditional methods by 15%. The framework is applied to case studies in consumer electronics, fashion retail, and automotive industries. Implications for marketing strategy optimization and customer engagement are discussed.
+    Citation Metrics:
+    - Scholarly Citations: 12
+    - Patent Citations: 0
+    - References: 35
 
-Citation Metrics:
-- Scholarly Citations: 12
-- Patent Citations: 0
-- References: 35
+    Fields of Study: Machine learning, Sentiment analysis, Social media, Digital marketing
 
-Fields of Study: Machine learning, Sentiment analysis, Social media, Digital marketing, Natural language processing
-
-Keywords: sentiment analysis, social media marketing, BERT, transformer models, customer engagement
-
-TASK:
-1. Assess relevance to eVTOL industry (0-10 scale, threshold: 8.0)
-2. If relevant (>= 8.0): Extract core technologies, innovations, and relationships for knowledge graph
-"""
+    TASK: Extract core technologies, innovations, and their relationships for knowledge graph construction.
+    """
 
         ex_output_3 = json.dumps({
-            "paper_metadata": {
-                "title": "Machine Learning Approaches for Sentiment Analysis of Social Media Marketing Campaigns",
-                "year_published": 2024,
-                "publication_type": "journal article",
-                "journal": "Journal of Digital Marketing Research"
-            },
-            "relevance_assessment": {
-                "relevance_score": 2.0,
-                "is_relevant": False,
-                "relevance_category": "not_relevant",
-                "justification": "Paper focuses on social media sentiment analysis and digital marketing strategies with no connection to eVTOL technology, aircraft design, electric propulsion, urban air mobility, or related technical domains. Case studies cover consumer electronics, fashion, and automotive but not aviation or eVTOL. Not relevant to eVTOL industry.",
-                "confidence": 0.99
-            },
-            "technology_nodes": [],
-            "relationships": [],
-            "innovation_signals": {
-                "research_stage": "not_applicable",
-                "innovation_type": "not_applicable",
-                "impact_potential": "not_applicable"
-            }
+            "quality_score": 0.20,
+            "tech_mentions": [],
+            "company_mentions": [],
+            "company_tech_relations": [],
+            "tech_tech_relations": [],
+            "company_company_relations": []
         }, indent=2)
 
         # Create few-shot prompt wrapper
@@ -551,164 +568,139 @@ TASK:
             ],
         )
 
-        # System prompt with schema definition
-        # Escape braces for LangChain's ChatPromptTemplate
-        output_schema = """
-{{
-  "paper_metadata": {{
-    "title": string,
-    "year_published": integer,
-    "publication_type": string,
-    "journal": string
-  }},
-  "relevance_assessment": {{
-    "relevance_score": float,              // 0.0-10.0 scale
-    "is_relevant": boolean,                // true if >= THRESHOLD
-    "relevance_category": "direct_application" | "enabling_technology" | "adjacent_research" | "not_relevant",
-    "justification": string,               // Explain why relevant/not relevant (2-3 sentences)
-    "confidence": float                    // 0.0-1.0
-  }},
-  "technology_nodes": [                    // ONLY if is_relevant = true
-    {{
-      "node_id": string,                   // Unique ID (snake_case: tech_*, concept_*)
-      "node_type": "technology" | "concept",
-      "name": string,                      // Human-readable name
-      "description": string,               // Brief technical description
-      "maturity": "emerging" | "advanced" | "mature" | "proven",
-      "domain": string                     // Technical domain
-    }}
-  ],
-  "relationships": [                       // ONLY if is_relevant = true
-    {{
-      "subject": string,                   // node_id of subject
-      "predicate": string,                 // Relationship type (see below)
-      "object": string,                    // node_id of object (can reference external concepts)
-      "confidence": float,                 // 0.0-1.0
-      "evidence": string                   // Why this relationship exists
-    }}
-  ],
-  "innovation_signals": {{                 // ONLY if is_relevant = true
-    "research_stage": "fundamental_research" | "applied_research" | "advanced_development" | "commercialization",
-    "innovation_type": "breakthrough" | "incremental_breakthrough" | "incremental" | "sustaining",
-    "impact_potential": "very_high" | "high" | "medium" | "low",
-    "technical_risk": "low" | "medium" | "high" | "very_high",
-    "adoption_indicators": [string]        // Evidence of research maturity/impact
-  }}
-}}"""
+        # System prompt with universal role taxonomy and config-driven relations
+        # Escape curly braces in JSON for LangChain template
+        relation_defs_json = json.dumps(self.graph_config['relation_definitions'], indent=2)
+        relation_defs_escaped = relation_defs_json.replace('{', '{{').replace('}', '}}')
 
         system_prompt = f"""
-You are a research paper analyst specializing in assessing paper relevance to specific industries and extracting innovation signals for strategic intelligence.
+    You are a research paper analyst extracting entities and relationships for strategic intelligence.
 
-INDUSTRY CONTEXT:
-- Target Industry: {self.industry_name}
-- Industry Description: {self.industry_description}
-- Core Keywords: {', '.join(self.industry_keywords[:10])}
+    ALLOWED RELATION TYPES (use ONLY these from config):
 
-Your task is to analyze research papers and:
+    Company → Technology ({len(self.allowed_company_tech_relations)} types):
+    {', '.join(self.allowed_company_tech_relations)}
 
-1. RELEVANCE ASSESSMENT: Score paper relevance to {self.industry_name} industry (0-10 scale)
-2. KNOWLEDGE GRAPH EXTRACTION: For relevant papers (>= {self.relevance_threshold}), extract technologies and relationships
-3. INNOVATION SIGNALS: Assess research stage and impact potential
+    Technology → Technology ({len(self.allowed_tech_tech_relations)} types):
+    {', '.join(self.allowed_tech_tech_relations)}
 
-OUTPUT SCHEMA:
-{output_schema}
+    Company → Company ({len(self.allowed_company_company_relations)} types):
+    {', '.join(self.allowed_company_company_relations)}
 
-RELEVANCE SCORING GUIDELINES (0-10 scale):
+    RELATION DEFINITIONS:
+    {relation_defs_escaped}
 
-9.0-10.0: HIGHLY RELEVANT - Direct application to {self.industry_name}
-  - Paper explicitly addresses {self.industry_name} technology, design, operations, or applications
-  - Core research findings directly applicable to {self.industry_name} development
-  - Examples: "{self.industry_name} aerodynamics", "{self.industry_name} flight control", "{self.industry_name} certification"
+    TECHNOLOGY ROLES FOR RESEARCH PAPERS (ONE role per mention - create separate mentions for same entity with different roles):
+    - "subject": Primary topic of the paper
+    - "studied": Researched/investigated/analyzed in the paper
+    - "validated": Experimentally validated/tested/proven
+    - "proposed": New method/approach proposed by authors
+    - "evaluated": Performance evaluated/compared/benchmarked
+    - "applied": Technology applied to solve a problem
+    - "surveyed": Reviewed/surveyed in literature review
 
-8.0-8.9: RELEVANT - Enabling technology or critical component
-  - Paper addresses technologies that enable/improve {self.industry_name} systems
-  - Research on key subsystems (batteries, motors, avionics, materials)
-  - Mentions aviation/aircraft applications or has clear {self.industry_name} applicability
-  - Examples: "electric propulsion for aircraft", "aviation-grade power electronics"
+    COMPANY ROLES FOR RESEARCH PAPERS (ONE role per mention - create separate mentions for same entity with different roles):
+    - "author": Author affiliation (university/research institution)
+    - "sponsor": Funded the research
+    - "partner": Research collaboration partner
+    - "developer": Developed technology mentioned in paper
 
-6.0-7.9: MODERATELY RELEVANT - Adjacent research
-  - Technologies applicable to {self.industry_name} but not primary focus
-  - General aviation research with potential {self.industry_name} applicability
-  - Related fields (drones, electric vehicles) with some technical overlap
-  - Below threshold: DO NOT extract knowledge graph
+    STRENGTH SCORING (0.0-1.0) - Importance of THIS ROLE to Paper:
+    - 1.0: Core focus (explicitly central to paper for this role)
+    - 0.7-0.9: Key supporting element (critical but not primary for this role)
+    - 0.4-0.6: Supporting element (mentioned 2-3 times for this role)
+    - 0.1-0.3: Background/peripheral (mentioned once for this role)
 
-4.0-5.9: TANGENTIALLY RELEVANT - Distant connection
-  - Broad topics (machine learning, materials science) without specific {self.industry_name} application
-  - Generic engineering research that could apply to many industries
-  - Below threshold: DO NOT extract knowledge graph
+    CONFIDENCE SCORING (0.0-1.0) - Certainty of THIS ROLE Assignment:
+    - 0.95-1.0: Explicit statement, exact terminology for this role
+    - 0.8-0.94: Strong inference from technical description for this role
+    - 0.6-0.79: Moderate inference from context for this role
+    - 0.5-0.59: Weak inference for this role
 
-0.0-3.9: NOT RELEVANT - No connection to {self.industry_name}
-  - Research in unrelated domains (social sciences, biology, marketing, etc.)
-  - No technical applicability to {self.industry_name}
-  - Below threshold: DO NOT extract knowledge graph
+    QUALITY SCORE (0.0-1.0) - Industry Relevance Assessment:
+    PURPOSE: Determine if this paper is actually relevant to the target industry.
+    Some papers may mention keywords but not be truly related to the industry.
+    Documents with quality_score < 0.85 will be FILTERED OUT in post-processing.
 
-RELEVANCE CATEGORIES:
+    Scoring Guidelines:
+    - 0.95-1.0: Core industry research (direct application to target industry)
+    - 0.85-0.94: Supporting technology (enables or complements industry)
+    - 0.70-0.84: Tangentially related (shares components or methods)
+    - 0.50-0.69: Keyword match only (not actually related to industry)
+    - 0.0-0.49: Not related to industry (false positive from search)
 
-- "direct_application": Paper explicitly studies {self.industry_name} technology/applications
-- "enabling_technology": Paper addresses technologies that enable {self.industry_name} (batteries, motors, controls)
-- "adjacent_research": Related aviation/electric vehicle research with some applicability
-- "not_relevant": No connection to {self.industry_name}
+    Example for eVTOL industry:
+    - 0.98: "eVTOL aerodynamic optimization" (core eVTOL research)
+    - 0.90: "Electric aircraft battery systems" (supporting technology)
+    - 0.75: "Urban air mobility infrastructure" (tangential)
+    - 0.60: "General electric motor control" (keyword match only)
+    - 0.30: "Automotive sentiment analysis" (not eVTOL related)
 
-RELATIONSHIP PREDICATES (use these):
-- "enables": Technology A makes technology B possible
-- "requires": Technology A needs technology B to function
-- "supports": Technology A helps technology B work better
-- "improves_performance_of": Technology A enhances efficiency/capability of B
-- "improves_efficiency_of": Technology A reduces losses/waste in B
-- "validates": Research/testing validates technology
-- "builds_on": Technology A extends prior work in B
-- "competes_with": Technology A is alternative to B
+    CRITICAL: Be strict in scoring to maintain data quality for strategic intelligence.
 
-KNOWLEDGE GRAPH EXTRACTION (ONLY if relevance_score >= {self.relevance_threshold}):
+    OUTPUT SCHEMA:
+    {{{{
+    "quality_score": float,  // 0.0-1.0 industry relevance (0.85+ = relevant, <0.85 = discard)
+    "tech_mentions": [
+        {{{{
+        "name": string,
+        "role": string,  // SINGLE role (not array) - create multiple entries for same tech with different roles
+        "strength": float,  // Strength of THIS specific role
+        "evidence_confidence": float,  // Confidence in THIS specific role
+        "evidence_text": string (max 200 chars, evidence for THIS role)
+        }}}}
+    ],
+    "company_mentions": [
+        {{{{
+        "name": string,
+        "role": string,  // SINGLE role (not array)
+        "strength": float,  // Strength of THIS specific role
+        "evidence_confidence": float,  // Confidence in THIS specific role
+        "evidence_text": string (max 200 chars, evidence for THIS role)
+        }}}}
+    ],
+    "company_tech_relations": [
+        {{{{
+        "company_name": string,
+        "technology_name": string,
+        "relation_type": string,  // Must be from allowed_company_tech_relations
+        "evidence_confidence": float,
+        "evidence_text": string (max 200 chars)
+        }}}}
+    ],
+    "tech_tech_relations": [
+        {{{{
+        "from_tech_name": string,
+        "to_tech_name": string,
+        "relation_type": string,  // Must be from allowed_tech_tech_relations
+        "evidence_confidence": float,
+        "evidence_text": string (max 200 chars)
+        }}}}
+    ],
+    "company_company_relations": [
+        {{{{
+        "from_company_name": string,
+        "to_company_name": string,
+        "relation_type": string,  // Must be from allowed_company_company_relations
+        "evidence_confidence": float,
+        "evidence_text": string (max 200 chars)
+        }}}}
+    ]
+    }}}}
 
-1. IDENTIFY CORE TECHNOLOGIES:
-   - Extract 3-5 key technologies from title + abstract
-   - Focus on novel contributions relevant to {self.industry_name}
-   - Use descriptive names that capture technical essence
+    CRITICAL RULES:
+    - Output ONLY valid JSON (no markdown, no commentary)
+    - Each mention has ONE role only (not an array)
+    - If an entity has multiple roles, create SEPARATE mention entries with different strength/confidence for each role
+    - Example: "eVTOL" as subject (strength=0.95) AND as studied (strength=0.90) = 2 separate entries
+    - Use ONLY allowed relation types from config lists above
+    - Evidence text must be < 200 chars and specific to THAT role
+    - Extract 3-8 technology mentions total (including multiple roles for same tech)
+    - Extract 0-3 company mentions total (research papers often have no company mentions)
+    - All relation_type values must match config enums exactly
+    - If paper has quality_score < 0.85, you can return empty tech_mentions and relations arrays
 
-2. NODE_ID NAMING:
-   - Use snake_case prefixes: tech_*, concept_*
-   - Be specific: "tech_sic_inverter_evtol" not "tech_inverter"
-   - Keep concise but descriptive
-
-3. MATURITY ASSESSMENT:
-   - "emerging": Novel approach, early research stage
-   - "advanced": Proven concept, needs engineering refinement
-   - "mature": Well-understood, widely implemented in other domains
-   - "proven": Commercial deployment in target industry
-
-4. RELATIONSHIPS:
-   - Create 3-6 triplets per paper (if relevant)
-   - Look for enabling relationships (what makes what possible?)
-   - confidence = 0.9-1.0 for explicit facts, 0.7-0.89 for inferences
-   - evidence must cite specific paper content
-
-5. INNOVATION SIGNALS (if relevant):
-   - research_stage: Where is this in R&D pipeline?
-   - innovation_type: How novel? (breakthrough = new paradigm, incremental = refinement)
-   - impact_potential: How important for {self.industry_name}? (consider technical merit + citation metrics)
-   - technical_risk: How hard to implement? (consider physics, safety, certification)
-   - adoption_indicators: List 3-5 concrete signals (citations, validation, publication venue)
-
-6. DOMAIN CATEGORIES (use these):
-   - aerodynamics, propulsion, flight_control, avionics, energy_storage, power_electronics,
-   - materials, manufacturing, thermal_systems, safety_systems, simulation, operations
-
-CRITICAL RULES:
-- Output ONLY valid JSON (no markdown, no commentary)
-- Relevance score must be realistic (be strict: most papers should score < 8.0)
-- If relevance_score < {self.relevance_threshold}: technology_nodes, relationships, and detailed innovation_signals should be EMPTY
-- If relevant: extract knowledge graph with 3-5 nodes and 3-6 relationships
-- All node_ids must be unique within the paper
-- Confidence scores must be realistic (0.7-1.0 range typical)
-- Evidence must be specific, not generic
-- Focus on INNOVATION and {self.industry_name} APPLICABILITY
-
-SPECIAL CASES:
-- If abstract is missing: base assessment on title + fields of study + keywords only
-- If paper is generic survey/review: likely not relevant unless explicitly focused on {self.industry_name}
-- If paper has low citation count: not disqualifying if technically relevant
-"""
+    """
 
         final_prompt = ChatPromptTemplate.from_messages([
             ("system", system_prompt),
@@ -717,7 +709,6 @@ SPECIAL CASES:
         ])
 
         return final_prompt | self.llm | self.output_parser
-
 
 def load_papers_from_file(file_path: str, limit: Optional[int] = None) -> List[Dict[str, Any]]:
     """Load paper data from JSON file."""
