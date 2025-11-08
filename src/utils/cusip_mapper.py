@@ -350,12 +350,17 @@ class CUSIPMapper:
             'BLDE': '092667104',   # Blade Air Mobility
             'EVEX': '29358P106',   # Eve UAM
             'EVTL': '92424F107',   # Vertical Aerospace
-            'BETA': None,           # Beta Technologies (private, no CUSIP yet)
+            'BETA': '08578R100',   # Beta Technologies (IPO Nov 2025)
             'EH': 'G30371105',     # EHang Holdings
             'BA': '097023105',     # Boeing
             'LMT': '539830109',    # Lockheed Martin
             'TXT': '883203101',    # Textron
-            'HO': '438516106',     # Honeywell
+            'HON': '438516106',    # Honeywell (fixed from 'HO')
+            'XTIA': '98426M107',   # XTI Aerospace
+            'AMPRIUS': '032385103',  # Amprius Technologies
+            'PIVOTAL': '724078109',  # Pivotal (placeholder)
+            'KAI': None,           # Korea Aerospace Industries (Korean stock, no US CUSIP)
+            'SRFM': '86828W109',   # Surf Air Mobility
             'EADSY': 'F00162104',  # Airbus (ADR)
             'FER': 'P4801R133',    # Ferrovial (ADR)
             'STLA': 'N82280101',   # Stellantis
