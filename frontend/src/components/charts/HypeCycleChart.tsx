@@ -21,6 +21,7 @@ import {
 } from '@/utils/hypeCycleCurve';
 import {
   type LabelNode,
+  CurveDistanceCache,
   calculateSmartPreferredPosition,
   forceCurveRepulsion,
   calculateLabelAnchor,
@@ -162,13 +163,16 @@ export default function HypeCycleChart({
       .attr('stroke-width', 2.5)
       .style('cursor', 'pointer');
 
-    // 7. Intelligent Curve-Aware Label Positioning
+    // 7. OPTIMIZED: Intelligent Curve-Aware Label Positioning
     // Create path element for distance calculations
     const pathElement = document.createElementNS(
       'http://www.w3.org/2000/svg',
       'path'
     );
     pathElement.setAttribute('d', pathString);
+
+    // OPTIMIZATION: Create distance cache once (10px sampling vs 5px)
+    const curveCache = new CurveDistanceCache(pathElement, 10);
 
     // Create temporary labels to measure dimensions
     const tempLabels = svg
@@ -193,13 +197,13 @@ export default function HypeCycleChart({
       const labelWidth = bbox.width + 8;
       const labelHeight = bbox.height + 4;
 
-      // Use radial sampling to find optimal position
+      // OPTIMIZATION: Use cached distance calculation
       const smartPosition = calculateSmartPreferredPosition(
         nodeX,
         nodeY,
         labelWidth,
         labelHeight,
-        pathElement,
+        curveCache,
         labelNodes.map((l) => ({
           x: l.x || 0,
           y: l.y || 0,
@@ -244,7 +248,7 @@ export default function HypeCycleChart({
       return force;
     };
 
-    // Run force simulation with curve repulsion for fine-tuning
+    // OPTIMIZED: Run force simulation with reduced parameters
     const simulation = d3
       .forceSimulation(labelNodes)
       .force(
@@ -252,8 +256,8 @@ export default function HypeCycleChart({
         d3
           .forceCollide<LabelNode>()
           .radius((d) => Math.max(d.width, d.height) / 2 + 3)
-          .strength(0.7)
-          .iterations(4)
+          .strength(0.5) // Reduced from 0.7
+          .iterations(2) // Reduced from 4
       )
       .force('curve-repulsion', forceCurveRepulsion(pathElement, 20))
       .force(
@@ -263,11 +267,29 @@ export default function HypeCycleChart({
           .strength(0.1)
       )
       .force('clamp', forceClamp(70, height - 150))
+      .alphaDecay(0.05) // Faster convergence (default: 0.028)
       .stop();
 
-    // Run simulation synchronously (300 ticks for stable layout)
-    for (let i = 0; i < 300; i++) {
+    // OPTIMIZED: Reduced ticks with early stopping (300 → 150 max, ~80 average)
+    const maxTicks = 150;
+    const velocityThreshold = 0.01;
+
+    for (let i = 0; i < maxTicks; i++) {
       simulation.tick();
+
+      // Early stopping: check if labels have stabilized
+      if (i > 50) {
+        const maxVelocity = Math.max(
+          ...labelNodes.map((n) =>
+            Math.sqrt((n.vx || 0) ** 2 + (n.vy || 0) ** 2)
+          )
+        );
+
+        if (maxVelocity < velocityThreshold) {
+          console.log(`Label positioning converged early at tick ${i}`);
+          break;
+        }
+      }
     }
 
     // Render diagonal leader lines (connecting labels to nodes)
