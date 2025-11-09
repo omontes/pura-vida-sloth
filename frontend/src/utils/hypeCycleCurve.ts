@@ -135,22 +135,22 @@ export function getPhaseForX(xValue: number): {
   phase: string;
   color: string;
 } {
-  if (xValue < 1.0) {
+  if (xValue < 0.7) {
     return {
       phase: 'Innovation Trigger',
       color: PHASE_COLORS['Innovation Trigger'],
     };
-  } else if (xValue < 2.0) {
+  } else if (xValue < 1.4) {
     return {
       phase: 'Peak of Inflated Expectations',
       color: PHASE_COLORS['Peak of Inflated Expectations'],
     };
-  } else if (xValue < 3.0) {
+  } else if (xValue < 2.7) {
     return {
       phase: 'Trough of Disillusionment',
       color: PHASE_COLORS['Trough of Disillusionment'],
     };
-  } else if (xValue < 4.0) {
+  } else if (xValue < 4.2) {
     return {
       phase: 'Slope of Enlightenment',
       color: PHASE_COLORS['Slope of Enlightenment'],
@@ -165,16 +165,21 @@ export function getPhaseForX(xValue: number): {
 
 /**
  * Phase separator X positions (vertical lines)
+ * Aligned with actual curve geometry:
+ * - 0.7: Before the peak climb
+ * - 1.4: After the peak, start of descent
+ * - 2.7: End of trough, start of slope climb
+ * - 4.2: Start of plateau flattening
  */
-export const PHASE_SEPARATORS = [1.0, 2.0, 3.0, 4.0];
+export const PHASE_SEPARATORS = [0.7, 1.4, 2.7, 4.2];
 
 /**
  * Phase label positions (centered in each phase)
  */
 export const PHASE_LABELS = [
-  { name: 'Innovation\nTrigger', x: 0.5 },
-  { name: 'Peak of Inflated\nExpectations', x: 1.5 },
-  { name: 'Trough of\nDisillusionment', x: 2.5 },
-  { name: 'Slope of\nEnlightenment', x: 3.5 },
-  { name: 'Plateau of\nProductivity', x: 4.5 },
+  { name: 'Innovation\nTrigger', x: 0.35 },
+  { name: 'Peak of Inflated\nExpectations', x: 1.05 },
+  { name: 'Trough of\nDisillusionment', x: 2.05 },
+  { name: 'Slope of\nEnlightenment', x: 3.45 },
+  { name: 'Plateau of\nProductivity', x: 4.6 },
 ];
