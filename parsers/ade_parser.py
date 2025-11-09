@@ -15,6 +15,8 @@ import asyncio
 from pathlib import Path
 from typing import Dict, Optional, Tuple
 from dotenv import load_dotenv
+import requests
+import tqdm
 
 import aiohttp
 import aiofiles
