@@ -222,7 +222,7 @@ class NodeWriter:
                     "document_type": doc.document_type,
                     "decision_type": doc.decision_type,
                     "effective_date": doc.effective_date.isoformat() if doc.effective_date else None,
-                    "docket_id": doc.docket_id,
+                    "docket_number": doc.docket_number,
                 }
             )
 
