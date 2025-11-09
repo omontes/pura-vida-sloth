@@ -129,8 +129,8 @@ Examples:
     parser.add_argument(
         "--samples-dir",
         type=str,
-        default="data/samples-phase/phase3/data",
-        help="Directory containing sample JSON files (default: data/samples-phase/phase3/data)",
+        default="data/eVTOL/PROCESSED_DOCUMENTS",
+        help="Directory containing processed eVTOL JSON files (default: data/eVTOL/PROCESSED_DOCUMENTS)",
     )
 
     parser.add_argument(

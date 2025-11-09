@@ -10,6 +10,7 @@ import logging
 from pathlib import Path
 from typing import Any
 from datetime import datetime
+from tqdm import tqdm
 
 from src.graph.neo4j_client import Neo4jClient
 from src.graph.entity_resolver import EntityResolver
@@ -70,6 +71,9 @@ class GraphIngestor:
         self.resolver = entity_resolver
         self.node_writer = NodeWriter(neo4j_client)
         self.rel_writer = RelationshipWriter(neo4j_client)
+
+        # Current document metadata (for field mapping)
+        self.current_metadata = {}
 
         # Statistics
         self.stats = {
@@ -170,9 +174,72 @@ class GraphIngestor:
 
         logger.info(f"Wrote {len(companies)} companies and {len(technologies)} technologies")
 
+    async def _write_inline_entities(self, record: dict[str, Any]) -> None:
+        """
+        Write Technology and Company entities from document's inline arrays.
+
+        These entities may not be in global catalogs. We write them first
+        (before creating mention relationships) so they exist in the graph.
+        Uses MERGE so duplicates across documents are handled automatically.
+
+        Args:
+            record: Document record containing technologies and companies arrays
+        """
+        inline_techs = record.get("technologies", [])
+        inline_companies = record.get("companies", [])
+
+        # Convert to Pydantic models
+        technologies = [
+            Technology(
+                id=t["id"],
+                name=t["name"],
+                domain=t["domain"],
+                description=t.get("description"),
+                aliases=t.get("aliases", []),
+                updated_at=datetime.utcnow(),
+            )
+            for t in inline_techs
+        ]
+
+        companies = [
+            Company(
+                id=c["id"],
+                name=c["name"],
+                aliases=c.get("aliases", []),
+                ticker=c.get("ticker"),
+                kind=c.get("kind"),
+                sector=c.get("sector"),
+                country=c.get("country"),
+                description=c.get("description"),
+                updated_at=datetime.utcnow(),
+            )
+            for c in inline_companies
+        ]
+
+        # Write to Neo4j (MERGE handles duplicates)
+        if technologies:
+            await self.node_writer.write_technologies_batch(technologies)
+            # Register with resolver for mention matching
+            for tech in inline_techs:
+                self.resolver.add_inline_technology(
+                    tech_id=tech["id"],
+                    name=tech["name"],
+                    aliases=tech.get("aliases", [])
+                )
+
+        if companies:
+            await self.node_writer.write_companies_batch(companies)
+            # Register with resolver for mention matching
+            for company in inline_companies:
+                self.resolver.add_inline_company(
+                    company_id=company["id"],
+                    name=company["name"],
+                    aliases=company.get("aliases", [])
+                )
+
     async def _ingest_file(self, file_path: Path, limit: int | None = None) -> None:
         """
-        Ingest single JSON file.
+        Ingest single JSON file with progress tracking.
 
         Args:
             file_path: Path to JSON file
@@ -187,18 +254,17 @@ class GraphIngestor:
 
         logger.info(f"Loading {len(records)} records from {file_path.name}")
 
-        for idx, record in enumerate(records, 1):
-            try:
-                await self._ingest_record(record)
-                self.stats["documents_processed"] += 1
-
-                if idx % 10 == 0:
-                    logger.info(f"Processed {idx}/{len(records)} records")
-
-            except Exception as e:
-                logger.error(f"Failed to ingest record {idx}: {e}")
-                self.stats["documents_failed"] += 1
-                continue
+        # Progress bar with file name
+        with tqdm(total=len(records), desc=f"{file_path.stem}", unit="doc") as pbar:
+            for idx, record in enumerate(records, 1):
+                try:
+                    await self._ingest_record(record)
+                    self.stats["documents_processed"] += 1
+                except Exception as e:
+                    logger.error(f"Failed to ingest record {idx}: {e}")
+                    self.stats["documents_failed"] += 1
+                finally:
+                    pbar.update(1)
 
     async def _ingest_record(self, record: dict[str, Any]) -> None:
         """
@@ -207,6 +273,12 @@ class GraphIngestor:
         Args:
             record: Document record with document, mentions, and relations
         """
+        # NEW STEP 1: Write inline entities to graph FIRST
+        await self._write_inline_entities(record)
+
+        # Store metadata for later use in _convert_to_document_model()
+        self.current_metadata = record.get("document_metadata", {})
+
         # Extract components
         doc_data = record.get("document", {})
         tech_mentions = record.get("tech_mentions", [])
@@ -215,7 +287,7 @@ class GraphIngestor:
         tech_tech_relations = record.get("tech_tech_relations", [])
         company_company_relations = record.get("company_company_relations", [])
 
-        # 1. Validate and write document
+        # 2. Validate and write document
         doc_type = doc_data.get("doc_type")
         if doc_type not in self.DOC_TYPE_MAP:
             raise ValueError(f"Unknown doc_type: {doc_type}")
@@ -351,6 +423,7 @@ class GraphIngestor:
 
         # Add type-specific fields
         doc_type = doc_data.get("doc_type")
+        metadata = self.current_metadata
 
         if doc_type == "patent":
             model_data.update({
@@ -360,14 +433,87 @@ class GraphIngestor:
                 "legal_status": doc_data.get("legal_status"),
                 "filing_date": self._parse_date(doc_data.get("filing_date")),
                 "grant_date": self._parse_date(doc_data.get("grant_date")),
-                "assignee_name": doc_data.get("assignee"),
+                "assignee_name": doc_data.get("assignee_name") or doc_data.get("assignee"),
                 "citation_count": doc_data.get("citation_count"),
                 "simple_family_size": doc_data.get("simple_family_size"),
                 "applicants": doc_data.get("applicants", []),
             })
 
-        # Add similar mappings for other doc types as needed
-        # (truncated for brevity - add all 7 types)
+        elif doc_type == "technical_paper":
+            model_data.update({
+                "doi": doc_data.get("doi"),
+                "venue_type": doc_data.get("venue_type"),
+                "peer_reviewed": doc_data.get("peer_reviewed"),
+                "source_title": doc_data.get("source_title"),
+                "year_published": doc_data.get("year_published"),
+                "date_published": self._parse_date(doc_data.get("date_published")),
+                "citation_count": doc_data.get("citation_count"),
+                "patent_citations_count": doc_data.get("patent_citations_count"),
+                "authors": doc_data.get("authors", []),
+            })
+
+        elif doc_type == "sec_filing":
+            model_data.update({
+                "filing_type": doc_data.get("filing_type"),
+                "cik": doc_data.get("cik"),
+                "accession_number": doc_data.get("accession_number"),
+                "filing_date": self._parse_date(doc_data.get("filing_date")),
+                "fiscal_year": doc_data.get("fiscal_year"),
+                "fiscal_quarter": doc_data.get("fiscal_quarter"),
+                "ticker": metadata.get("ticker") if metadata else None,
+                "net_insider_value_usd": doc_data.get("net_insider_value_usd"),
+                "total_shares_held": doc_data.get("total_shares_held"),
+                "revenue_mentioned": metadata.get("revenue_mentioned") if metadata else None,
+                "revenue_amount": metadata.get("revenue_amount") if metadata else None,
+                "risk_factor_mentioned": metadata.get("risk_factor_mentioned") if metadata else None,
+                "qoq_change_pct": doc_data.get("qoq_change_pct"),
+            })
+
+        elif doc_type == "regulation":
+            model_data.update({
+                "regulatory_body": doc_data.get("regulatory_body"),
+                "sub_agency": doc_data.get("sub_agency"),
+                "document_type": doc_data.get("document_type"),
+                "decision_type": doc_data.get("decision_type"),
+                "effective_date": self._parse_date(doc_data.get("effective_date")),
+                "docket_number": doc_data.get("docket_number"),
+                "federal_register_doc_id": doc_data.get("federal_register_doc_id"),
+            })
+
+        elif doc_type == "github":
+            model_data.update({
+                "github_id": doc_data.get("github_id"),
+                "repo_name": doc_data.get("repo_name"),
+                "owner": doc_data.get("owner"),
+                "created_at": self._parse_date(doc_data.get("created_at")),
+                "last_pushed_at": self._parse_date(doc_data.get("last_pushed_at")),
+                "stars": doc_data.get("stars"),
+                "forks": doc_data.get("forks"),
+                "contributor_count": doc_data.get("contributor_count"),
+            })
+
+        elif doc_type == "government_contract":
+            model_data.update({
+                "award_id": doc_data.get("award_id"),
+                "recipient_name": doc_data.get("recipient_name"),
+                "award_amount": doc_data.get("award_amount"),
+                "start_date": self._parse_date(doc_data.get("start_date")),
+                "end_date": self._parse_date(doc_data.get("end_date")),
+                "awarding_agency": doc_data.get("awarding_agency"),
+                "awarding_sub_agency": doc_data.get("awarding_sub_agency"),
+            })
+
+        elif doc_type == "news":
+            # Handle missing published_at from metadata
+            if not model_data.get("published_at") and metadata:
+                model_data["published_at"] = self._parse_date(metadata.get("seendate"))
+
+            model_data.update({
+                "domain": metadata.get("domain") if metadata else None,
+                "outlet_tier": metadata.get("outlet_tier") if metadata else None,
+                "seendate": self._parse_date(metadata.get("seendate")) if metadata else None,
+                "tone": doc_data.get("tone"),
+            })
 
         return schema_class(**model_data)
 

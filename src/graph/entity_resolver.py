@@ -105,6 +105,40 @@ class EntityResolver:
         else:
             logger.warning(f"Technologies catalog not found: {self.technologies_catalog_path}")
 
+    def add_inline_company(self, company_id: str, name: str, aliases: list[str] = None) -> None:
+        """
+        Dynamically add a company to the resolver (for inline entities).
+
+        Args:
+            company_id: Canonical company ID
+            name: Company name
+            aliases: List of alternative names
+        """
+        # Add canonical name
+        self.company_lookup[name.lower()] = company_id
+
+        # Add all aliases
+        if aliases:
+            for alias in aliases:
+                self.company_lookup[alias.lower()] = company_id
+
+    def add_inline_technology(self, tech_id: str, name: str, aliases: list[str] = None) -> None:
+        """
+        Dynamically add a technology to the resolver (for inline entities).
+
+        Args:
+            tech_id: Canonical technology ID
+            name: Technology name
+            aliases: List of alternative names
+        """
+        # Add canonical name
+        self.technology_lookup[name.lower()] = tech_id
+
+        # Add all aliases
+        if aliases:
+            for alias in aliases:
+                self.technology_lookup[alias.lower()] = tech_id
+
     def resolve_company(self, mention: str) -> Optional[str]:
         """
         Resolve company mention to canonical ID.

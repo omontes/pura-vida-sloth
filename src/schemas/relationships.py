@@ -11,7 +11,7 @@ Supports 5 relationship types:
 Based on SCHEMA_V2_COMPLETE.md specification.
 """
 
-from typing import Literal, Optional
+from typing import Optional
 from pydantic import BaseModel, Field, field_validator
 
 
@@ -27,15 +27,10 @@ class TechMention(BaseModel):
     doc_id: str = Field(..., description="Document ID")
 
     # Relationship properties
-    role: Literal[
-        "subject",
-        "invented",
-        "studied",
-        "commercialized",
-        "implemented",
-        "procured",
-        "regulated",
-    ] = Field(..., description="Role of technology in document")
+    role: str = Field(
+        ...,
+        description="Role of technology in document (flexible string, e.g., 'subject', 'invented', 'studied', 'commercialized', 'implemented', 'procured', 'regulated', 'supports', etc.)"
+    )
     strength: float = Field(..., ge=0, le=1, description="Mention strength (0-1)")
     evidence_confidence: float = Field(..., ge=0, le=1, description="Confidence in evidence (0-1)")
     evidence_text: str = Field(..., max_length=200, description="Supporting text (max 200 chars)")
@@ -59,17 +54,10 @@ class CompanyMention(BaseModel):
     doc_id: str = Field(..., description="Document ID")
 
     # Relationship properties
-    role: Literal[
-        "owner",
-        "developer",
-        "operator",
-        "contractor",
-        "issuer",
-        "competitor",
-        "sponsor",
-        "investment_target",
-        "employer",
-    ] = Field(..., description="Role of company in document")
+    role: str = Field(
+        ...,
+        description="Role of company in document (flexible string, e.g., 'owner', 'developer', 'operator', 'contractor', 'issuer', 'competitor', 'sponsor', 'investment_target', 'employer', etc.)"
+    )
     strength: float = Field(..., ge=0, le=1, description="Mention strength (0-1)")
     evidence_confidence: float = Field(..., ge=0, le=1, description="Confidence in evidence (0-1)")
     evidence_text: str = Field(..., max_length=200, description="Supporting text (max 200 chars)")
@@ -94,13 +82,10 @@ class CompanyTechRelation(BaseModel):
     tech_id: str = Field(..., description="Technology canonical ID")
 
     # Relationship properties
-    relation_type: Literal[
-        "develops",
-        "uses",
-        "invests_in",
-        "researches",
-        "owns_ip",
-    ] = Field(..., description="Type of company-tech relationship")
+    relation_type: str = Field(
+        ...,
+        description="Type of company-tech relationship (flexible string, e.g., 'develops', 'uses', 'invests_in', 'researches', 'owns_ip', 'manufactures', 'licenses', etc.)"
+    )
     evidence_confidence: float = Field(..., ge=0, le=1, description="Confidence in evidence (0-1)")
     evidence_text: str = Field(..., max_length=200, description="Supporting text (max 200 chars)")
     doc_ref: str = Field(..., description="Source document ID (provenance)")
@@ -125,22 +110,10 @@ class TechTechRelation(BaseModel):
     target_tech_id: str = Field(..., description="Target technology canonical ID")
 
     # Relationship properties
-    relation_type: Literal[
-        "competes_with",
-        "alternative_to",
-        "enables",
-        "supersedes",
-        "component_of",
-        "integrated_with",
-        "derived_from",
-        "precursor_to",
-        "synergistic_with",
-        "incompatible_with",
-        "regulated_by",
-        "standardizes",
-        "certified_for",
-        "successor_to",
-    ] = Field(..., description="Type of tech-tech relationship")
+    relation_type: str = Field(
+        ...,
+        description="Type of tech-tech relationship (flexible string, e.g., 'competes_with', 'alternative_to', 'enables', 'supersedes', 'component_of', 'integrated_with', 'derived_from', 'precursor_to', 'synergistic_with', 'incompatible_with', 'regulated_by', 'standardizes', 'certified_for', 'successor_to', 'complements', etc.)"
+    )
     evidence_confidence: float = Field(..., ge=0, le=1, description="Confidence in evidence (0-1)")
     evidence_text: str = Field(..., max_length=200, description="Supporting text (max 200 chars)")
     doc_ref: str = Field(..., description="Source document ID (provenance)")
@@ -165,14 +138,10 @@ class CompanyCompanyRelation(BaseModel):
     target_company_id: str = Field(..., description="Target company canonical ID")
 
     # Relationship properties
-    relation_type: Literal[
-        "partners_with",
-        "invests_in",
-        "acquires",
-        "competes_with",
-        "supplies",
-        "licenses_from",
-    ] = Field(..., description="Type of company-company relationship")
+    relation_type: str = Field(
+        ...,
+        description="Type of company-company relationship (flexible string, e.g., 'partners_with', 'invests_in', 'acquires', 'competes_with', 'supplies', 'licenses_from', 'collaborates_with', etc.)"
+    )
     evidence_confidence: float = Field(..., ge=0, le=1, description="Confidence in evidence (0-1)")
     evidence_text: str = Field(..., max_length=200, description="Supporting text (max 200 chars)")
     doc_ref: str = Field(..., description="Source document ID (provenance)")

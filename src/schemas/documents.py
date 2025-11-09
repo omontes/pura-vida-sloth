@@ -136,7 +136,8 @@ class RegulationDocument(BaseDocument):
     document_type: Optional[str] = Field(None, description="Document type (e.g., 'rule', 'certification')")
     decision_type: Optional[str] = Field(None, description="Decision type (e.g., 'approved', 'denied')")
     effective_date: Optional[datetime] = Field(None, description="Effective date")
-    docket_id: Optional[str] = Field(None, description="Regulatory docket ID")
+    docket_number: Optional[str] = Field(None, description="Regulatory docket number")
+    federal_register_doc_id: Optional[str] = Field(None, description="Federal Register document ID")
 
 
 class GitHubDocument(BaseDocument):
