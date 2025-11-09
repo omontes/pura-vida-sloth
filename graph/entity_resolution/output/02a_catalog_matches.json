@@ -1,0 +1,282 @@
+[
+  {
+    "mention_name": "eVTOL Aircraft",
+    "canonical_name": "Electric Vertical Takeoff and Landing",
+    "canonical_id": "evtol",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Urban Air Mobility (UAM)",
+    "canonical_name": "Urban Air Mobility",
+    "canonical_id": "urban_air_mobility",
+    "similarity_score": 0.8781822589489403,
+    "match_method": "combined",
+    "confidence": 0.8781822589489403
+  },
+  {
+    "mention_name": "Hydrogen Fuel Cell System",
+    "canonical_name": "Hydrogen Fuel Cell",
+    "canonical_id": "hydrogen_fuel_cell",
+    "similarity_score": 0.8956336078258975,
+    "match_method": "combined",
+    "confidence": 0.8956336078258975
+  },
+  {
+    "mention_name": "Battery Thermal Management System",
+    "canonical_name": "Battery Thermal Management System",
+    "canonical_id": "battery_thermal_management",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Thermal Management System",
+    "canonical_name": "Battery Thermal Management System",
+    "canonical_id": "battery_thermal_management",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Advanced Air Mobility (AAM)",
+    "canonical_name": "Advanced Air Mobility",
+    "canonical_id": "advanced_air_mobility",
+    "similarity_score": 0.8949399672924163,
+    "match_method": "combined",
+    "confidence": 0.8949399672924163
+  },
+  {
+    "mention_name": "Drone Delivery Network System",
+    "canonical_name": "Drone Delivery Systems",
+    "canonical_id": "drone_delivery",
+    "similarity_score": 0.8515079054164345,
+    "match_method": "combined",
+    "confidence": 0.8515079054164345
+  },
+  {
+    "mention_name": "Unmanned Aircraft Control System",
+    "canonical_name": "Unmanned Aircraft System",
+    "canonical_id": "uas",
+    "similarity_score": 0.8778335552590872,
+    "match_method": "combined",
+    "confidence": 0.8778335552590872
+  },
+  {
+    "mention_name": "Electric Propulsion System",
+    "canonical_name": "Electric Propulsion Vehicle",
+    "canonical_id": "electric_propulsion_vehicle",
+    "similarity_score": 0.8639172526704699,
+    "match_method": "combined",
+    "confidence": 0.8639172526704699
+  },
+  {
+    "mention_name": "Hybrid-Electric Propulsion",
+    "canonical_name": "Hybrid-Electric Propulsion",
+    "canonical_id": "hybrid_electric_propulsion",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Lift+Cruise eVTOL Configuration",
+    "canonical_name": "Lift+Cruise Configuration",
+    "canonical_id": "lift_plus_cruise",
+    "similarity_score": 0.8824617545111808,
+    "match_method": "combined",
+    "confidence": 0.8824617545111808
+  },
+  {
+    "mention_name": "Lithium-Ion Battery",
+    "canonical_name": "Lithium-Ion Battery",
+    "canonical_id": "lithium_ion_battery",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Dual Rotor System",
+    "canonical_name": "Coaxial Rotor",
+    "canonical_id": "coaxial_rotor",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Noise Reduction Technology",
+    "canonical_name": "Noise Reduction Technology",
+    "canonical_id": "noise_reduction",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Distributed Electric Propulsion (DEP) System",
+    "canonical_name": "Distributed Electric Propulsion",
+    "canonical_id": "distributed_electric_propulsion",
+    "similarity_score": 0.852108453639102,
+    "match_method": "combined",
+    "confidence": 0.852108453639102
+  },
+  {
+    "mention_name": "Ducted Fans",
+    "canonical_name": "Ducted Fan",
+    "canonical_id": "ducted_fan",
+    "similarity_score": 0.8939012298964925,
+    "match_method": "combined",
+    "confidence": 0.8939012298964925
+  },
+  {
+    "mention_name": "Wind Tunnel Testing",
+    "canonical_name": "Wind Tunnel Testing",
+    "canonical_id": "wind_tunnel_testing",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Hydrogen Fuel Cell Technology",
+    "canonical_name": "Hydrogen Fuel Cell",
+    "canonical_id": "hydrogen_fuel_cell",
+    "similarity_score": 0.864016367941921,
+    "match_method": "combined",
+    "confidence": 0.864016367941921
+  },
+  {
+    "mention_name": "Electric Vertical Take-off and Landing (eVTOL)",
+    "canonical_name": "Electric Vertical Takeoff and Landing",
+    "canonical_id": "evtol",
+    "similarity_score": 0.8693578936267709,
+    "match_method": "combined",
+    "confidence": 0.8693578936267709
+  },
+  {
+    "mention_name": "Lithium-Ion Batteries",
+    "canonical_name": "Lithium-Ion Battery",
+    "canonical_id": "lithium_ion_battery",
+    "similarity_score": 0.8940307380458916,
+    "match_method": "combined",
+    "confidence": 0.8940307380458916
+  },
+  {
+    "mention_name": "Hardware-In-the-Loop (HIL) Testing",
+    "canonical_name": "Hardware-in-the-Loop Testing",
+    "canonical_id": "hardware_in_the_loop",
+    "similarity_score": 0.9061922962437221,
+    "match_method": "combined",
+    "confidence": 0.9061922962437221
+  },
+  {
+    "mention_name": "Distributed Electric Propulsion",
+    "canonical_name": "Distributed Electric Propulsion",
+    "canonical_id": "distributed_electric_propulsion",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Electric Vertical Takeoff and Landing (eVTOL)",
+    "canonical_name": "Electric Vertical Takeoff and Landing",
+    "canonical_id": "evtol",
+    "similarity_score": 0.8781311968105971,
+    "match_method": "combined",
+    "confidence": 0.8781311968105971
+  },
+  {
+    "mention_name": "Deep Reinforcement Learning",
+    "canonical_name": "Reinforcement Learning",
+    "canonical_id": "reinforcement_learning",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Tiltrotor Configuration",
+    "canonical_name": "Tiltrotor",
+    "canonical_id": "tiltrotor",
+    "similarity_score": 0.93128068865373,
+    "match_method": "combined",
+    "confidence": 0.93128068865373
+  },
+  {
+    "mention_name": "Noise Reduction Techniques",
+    "canonical_name": "Noise Reduction Technology",
+    "canonical_id": "noise_reduction",
+    "similarity_score": 0.8668045132290041,
+    "match_method": "combined",
+    "confidence": 0.8668045132290041
+  },
+  {
+    "mention_name": "Hybrid-Electric Propulsion Systems",
+    "canonical_name": "Hybrid-Electric Propulsion",
+    "canonical_id": "hybrid_electric_propulsion",
+    "similarity_score": 0.9156802642463945,
+    "match_method": "combined",
+    "confidence": 0.9156802642463945
+  },
+  {
+    "mention_name": "eVTOL",
+    "canonical_name": "Electric Vertical Takeoff and Landing",
+    "canonical_id": "evtol",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Electric Propulsion",
+    "canonical_name": "Electric Propulsion Vehicle",
+    "canonical_id": "electric_propulsion_vehicle",
+    "similarity_score": 0.87278852839939,
+    "match_method": "combined",
+    "confidence": 0.87278852839939
+  },
+  {
+    "mention_name": "Coaxial Rotor Design",
+    "canonical_name": "Coaxial Rotor",
+    "canonical_id": "coaxial_rotor",
+    "similarity_score": 0.8753886657952602,
+    "match_method": "combined",
+    "confidence": 0.8753886657952602
+  },
+  {
+    "mention_name": "Hydrogen Fuel Cell",
+    "canonical_name": "Hydrogen Fuel Cell",
+    "canonical_id": "hydrogen_fuel_cell",
+    "similarity_score": 1.0,
+    "match_method": "exact",
+    "confidence": 1.0
+  },
+  {
+    "mention_name": "Hybrid Propulsion System",
+    "canonical_name": "Hybrid-Electric Propulsion",
+    "canonical_id": "hybrid_electric_propulsion",
+    "similarity_score": 0.8692522274956562,
+    "match_method": "combined",
+    "confidence": 0.8692522274956562
+  },
+  {
+    "mention_name": "Control Allocation Scheme",
+    "canonical_name": "Control Allocation",
+    "canonical_id": "control_allocation",
+    "similarity_score": 0.8853288722114397,
+    "match_method": "combined",
+    "confidence": 0.8853288722114397
+  },
+  {
+    "mention_name": "Battery Thermal Management System (BTMS)",
+    "canonical_name": "Battery Thermal Management System",
+    "canonical_id": "battery_thermal_management",
+    "similarity_score": 0.9053305464285714,
+    "match_method": "combined",
+    "confidence": 0.9053305464285714
+  },
+  {
+    "mention_name": "Battery Management System (BMS)",
+    "canonical_name": "Battery Management System",
+    "canonical_id": "battery_management_system",
+    "similarity_score": 0.8756965182288218,
+    "match_method": "combined",
+    "confidence": 0.8756965182288218
+  }
+]

@@ -1,0 +1,620 @@
+[
+  {
+    "original_name": "Rotor Assembly Deployment Mechanism",
+    "normalized_name": "rotor assembly deployment mechanism",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "003-712-519-476-908"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Aerial Vehicle Autonomy Architecture",
+    "normalized_name": "aerial vehicle autonomy architecture",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "007-439-058-585-01X"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Dynamic Skylane Routing System",
+    "normalized_name": "dynamic skylane routing system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "011-192-769-255-159"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Unified Command System",
+    "normalized_name": "unified command system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "007-631-447-655-747"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Time-Varying Loudness Prediction System",
+    "normalized_name": "time-varying loudness prediction system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "011-476-724-446-183"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Aircraft Sensory Cue Communication System",
+    "normalized_name": "aircraft sensory cue communication system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "013-215-939-674-842"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Dynamic Aircraft Routing System",
+    "normalized_name": "dynamic aircraft routing system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "014-532-810-204-300"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Electric Tiltrotor Propulsion System",
+    "normalized_name": "electric tiltrotor propulsion system",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "018-790-758-618-414"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Pressure-Sensing Charge Handle",
+    "normalized_name": "pressure-sensing charge handle",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "021-160-548-211-757"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Fault Tolerant Power System Architecture",
+    "normalized_name": "fault tolerant power system architecture",
+    "occurrence_count": 2,
+    "roles": [
+      "subject",
+      "invented"
+    ],
+    "avg_strength": 0.925,
+    "avg_confidence": 0.965,
+    "source_documents": [
+      "022-521-578-910-978"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Torsion Box Construction",
+    "normalized_name": "torsion box construction",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "003-712-519-476-908"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Bar Linkage System",
+    "normalized_name": "bar linkage system",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "003-712-519-476-908"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Rotary Actuators for Deployment",
+    "normalized_name": "rotary actuators for deployment",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.88,
+    "source_documents": [
+      "003-712-519-476-908"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "GNSS Data Processing",
+    "normalized_name": "gnss data processing",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.95,
+    "source_documents": [
+      "007-439-058-585-01X"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Radar Data Integration",
+    "normalized_name": "radar data integration",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "007-439-058-585-01X"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Motion Planning System",
+    "normalized_name": "motion planning system",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "007-439-058-585-01X"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Airspace Data Utilization",
+    "normalized_name": "airspace data utilization",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "011-192-769-255-159"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Three-Dimensional Skylane Waypoints",
+    "normalized_name": "three-dimensional skylane waypoints",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "011-192-769-255-159"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Vertiport Network Integration",
+    "normalized_name": "vertiport network integration",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.88,
+    "source_documents": [
+      "011-192-769-255-159"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Flight Processor",
+    "normalized_name": "flight processor",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "007-631-447-655-747"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Vehicle Navigation System",
+    "normalized_name": "vehicle navigation system",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "007-631-447-655-747"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Vehicle Guidance System",
+    "normalized_name": "vehicle guidance system",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.88,
+    "source_documents": [
+      "007-631-447-655-747"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Dynamic Feature Data Collection",
+    "normalized_name": "dynamic feature data collection",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "011-476-724-446-183"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Trained Model for Loudness Prediction",
+    "normalized_name": "trained model for loudness prediction",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "011-476-724-446-183"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Multi-modal Transportation Data Integration",
+    "normalized_name": "multi-modal transportation data integration",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "013-215-939-674-842"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Sensory Cue Output Mechanism",
+    "normalized_name": "sensory cue output mechanism",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "013-215-939-674-842"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Transport Request Eligibility Determination",
+    "normalized_name": "transport request eligibility determination",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "014-532-810-204-300"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Candidate Route Calculation",
+    "normalized_name": "candidate route calculation",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.92,
+    "source_documents": [
+      "014-532-810-204-300"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Route Selection Based on Parameters",
+    "normalized_name": "route selection based on parameters",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "014-532-810-204-300"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Transformable Propulsion Assembly",
+    "normalized_name": "transformable propulsion assembly",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "018-790-758-618-414"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Tilt Mechanism",
+    "normalized_name": "tilt mechanism",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.92,
+    "source_documents": [
+      "018-790-758-618-414"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Hover and Forward Flight Configurations",
+    "normalized_name": "hover and forward flight configurations",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "018-790-758-618-414"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Coolant Flow Path",
+    "normalized_name": "coolant flow path",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "021-160-548-211-757"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Pressure Sensor Array",
+    "normalized_name": "pressure sensor array",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "021-160-548-211-757"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Communication Interface for Pressure Data",
+    "normalized_name": "communication interface for pressure data",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.88,
+    "source_documents": [
+      "021-160-548-211-757"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Redundant Battery Subsets",
+    "normalized_name": "redundant battery subsets",
+    "occurrence_count": 1,
+    "roles": [
+      "invented"
+    ],
+    "avg_strength": 0.85,
+    "avg_confidence": 0.94,
+    "source_documents": [
+      "022-521-578-910-978"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Motor Failure Mitigation",
+    "normalized_name": "motor failure mitigation",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.8,
+    "avg_confidence": 0.92,
+    "source_documents": [
+      "022-521-578-910-978"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  },
+  {
+    "original_name": "Attitude Control Mechanism",
+    "normalized_name": "attitude control mechanism",
+    "occurrence_count": 1,
+    "roles": [
+      "implemented"
+    ],
+    "avg_strength": 0.75,
+    "avg_confidence": 0.9,
+    "source_documents": [
+      "022-521-578-910-978"
+    ],
+    "doc_types": [
+      "patent"
+    ]
+  }
+]

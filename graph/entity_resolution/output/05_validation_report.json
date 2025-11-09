@@ -1,0 +1,24 @@
+{
+  "total_canonical_technologies": 1852,
+  "total_variants": 2839,
+  "total_source_documents": 0,
+  "coverage_percentage": 132.4778348110126,
+  "duplicate_canonical_names": [],
+  "orphaned_variants": [
+    "compressed hydrogen",
+    "liquid hydrogen"
+  ],
+  "quality_metrics": {
+    "total_canonical_technologies": 1852,
+    "total_variants": 2839,
+    "avg_variants_per_canonical": 1.5329373650107991,
+    "coverage_percentage": 132.4778348110126,
+    "duplicate_check": "PASS",
+    "variant_mapping_check": "FAIL",
+    "coverage_check": "PASS"
+  },
+  "warnings": [
+    "Found 2 variants with != 1 canonical mapping"
+  ],
+  "passed": false
+}
