@@ -22,17 +22,36 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  // ALWAYS default to light mode (ignore localStorage for now)
-  const [themeMode, setThemeModeState] = useState<ThemeMode>('light');
+  // Auto-detect system preference and listen for changes
+  const [themeMode, setThemeModeState] = useState<ThemeMode>(() => {
+    // Detect system preference on startup
+    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+      return 'dark';
+    }
+    return 'light';
+  });
 
-  const [theme, setTheme] = useState<Theme>(() => getTheme('light'));
+  const [theme, setTheme] = useState<Theme>(() => getTheme(themeMode));
+
+  useEffect(() => {
+    // Listen for system theme changes
+    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
+
+    const handleChange = (e: MediaQueryListEvent) => {
+      setThemeModeState(e.matches ? 'dark' : 'light');
+    };
+
+    // Modern browsers
+    mediaQuery.addEventListener('change', handleChange);
+
+    return () => {
+      mediaQuery.removeEventListener('change', handleChange);
+    };
+  }, []);
 
   useEffect(() => {
     // Update theme object when mode changes
     setTheme(getTheme(themeMode));
-
-    // Save preference
-    localStorage.setItem('theme-mode', themeMode);
 
     // Update document class for Tailwind dark mode
     if (themeMode === 'dark') {
@@ -43,11 +62,11 @@ export function ThemeProvider({ children }: ThemeProviderProps) {
   }, [themeMode]);
 
   const toggleTheme = () => {
-    setThemeModeState(prev => prev === 'light' ? 'dark' : 'light');
+    // No-op: theme follows system preference automatically
   };
 
   const setThemeMode = (mode: ThemeMode) => {
-    setThemeModeState(mode);
+    // No-op: theme follows system preference automatically
   };
 
   return (
