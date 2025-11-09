@@ -28,6 +28,18 @@ interface HypeCycleChartProps {
   height?: number;
 }
 
+// Label node for force simulation
+interface LabelNode extends d3.SimulationNodeDatum {
+  id: string;
+  name: string;
+  nodeX: number;       // Fixed X position (on curve)
+  nodeY: number;       // Fixed Y position (on curve)
+  preferredY: number;  // Preferred Y position (above node)
+  width: number;       // Label bounding box width
+  height: number;      // Label bounding box height
+  phase: string;       // For styling
+}
+
 export default function HypeCycleChart({
   technologies,
   onTechnologyClick,
@@ -137,14 +149,6 @@ export default function HypeCycleChart({
           .transition()
           .duration(200)
           .attr('r', 14);
-
-        // Highlight label background (theme-aware)
-        d3.select(this)
-          .select('rect.label-bg')
-          .transition()
-          .duration(200)
-          .attr('fill', theme.colors.background.primary)
-          .attr('stroke', theme.colors.interactive.secondary);
       })
       .on('mouseleave', function () {
         // Restore original size
@@ -153,14 +157,6 @@ export default function HypeCycleChart({
           .transition()
           .duration(200)
           .attr('r', 12);
-
-        // Restore label background (theme-aware)
-        d3.select(this)
-          .select('rect.label-bg')
-          .transition()
-          .duration(200)
-          .attr('fill', theme.colors.chart.labelBackground)
-          .attr('stroke', theme.colors.chart.labelBorder);
       });
 
     // Node circles (uniform size, theme-aware stroke)
@@ -172,27 +168,114 @@ export default function HypeCycleChart({
       .attr('stroke-width', 2.5)
       .style('cursor', 'pointer');
 
-    // Label background (theme-aware)
-    nodeGroups
-      .append('rect')
-      .attr('class', 'label-bg')
-      .attr('x', (d) => {
-        const textLength = d.name.length * 6.5;
-        return -textLength / 2 - 6;
-      })
-      .attr('y', -30)
-      .attr('width', (d) => d.name.length * 6.5 + 12)
-      .attr('height', 20)
-      .attr('fill', theme.colors.chart.labelBackground)
-      .attr('stroke', theme.colors.chart.labelBorder)
-      .attr('stroke-width', 1)
-      .attr('rx', 4)
-      .attr('ry', 4);
-
-    // Node labels (theme-aware)
-    nodeGroups
+    // 7. Smart Label Positioning with Collision Avoidance
+    // Create temporary labels to measure dimensions
+    const tempLabels = svg
+      .selectAll('.temp-label')
+      .data(technologies)
+      .enter()
       .append('text')
-      .attr('y', -16)
+      .attr('class', 'temp-label')
+      .style('font-size', '12px')
+      .style('font-weight', '700')
+      .style('opacity', 0)
+      .text((d) => d.name);
+
+    // Measure label dimensions and create label nodes
+    const labelNodes: LabelNode[] = [];
+    tempLabels.each(function (d) {
+      const bbox = (this as SVGTextElement).getBBox();
+      const nodeX = xScale(d.chart_x);
+      const nodeY = getYForX(d.chart_x);
+
+      labelNodes.push({
+        id: d.id,
+        name: d.name,
+        nodeX: nodeX,
+        nodeY: nodeY,
+        preferredY: nodeY - 35, // Prefer 35px above node
+        width: bbox.width + 8,
+        height: bbox.height + 4,
+        phase: d.phase,
+        x: nodeX,
+        y: nodeY - 35,
+        fx: nodeX, // Fix X position (don't drift horizontally)
+      });
+    });
+
+    // Remove temporary labels
+    tempLabels.remove();
+
+    // Custom clamp force to keep labels within chart bounds
+    const forceClamp = (minY: number, maxY: number) => {
+      let nodes: LabelNode[];
+
+      const force = () => {
+        nodes.forEach((n) => {
+          const halfHeight = n.height / 2;
+          if (n.y !== undefined) {
+            if (n.y - halfHeight < minY) n.y = minY + halfHeight;
+            if (n.y + halfHeight > maxY) n.y = maxY - halfHeight;
+          }
+        });
+      };
+
+      force.initialize = (n: LabelNode[]) => (nodes = n);
+      return force;
+    };
+
+    // Run force simulation for collision avoidance
+    const simulation = d3
+      .forceSimulation(labelNodes)
+      .force(
+        'collide',
+        d3
+          .forceCollide<LabelNode>()
+          .radius((d) => Math.max(d.width, d.height) / 2 + 3)
+          .strength(0.8)
+          .iterations(4)
+      )
+      .force(
+        'y',
+        d3
+          .forceY<LabelNode>((d) => d.preferredY)
+          .strength(0.15)
+      )
+      .force('clamp', forceClamp(70, height - 150))
+      .stop();
+
+    // Run simulation synchronously (300 ticks for stable layout)
+    for (let i = 0; i < 300; i++) {
+      simulation.tick();
+    }
+
+    // Render leader lines (polylines connecting labels to nodes)
+    svg
+      .selectAll('.leader-line')
+      .data(labelNodes.filter((d) => Math.abs((d.y || 0) - d.nodeY) > 10))
+      .enter()
+      .append('polyline')
+      .attr('class', 'leader-line')
+      .attr('points', (d) => {
+        const midY = ((d.y || 0) + d.nodeY) / 2;
+        return `${d.nodeX},${d.nodeY} ${d.nodeX},${midY} ${d.x},${d.y}`;
+      })
+      .attr('fill', 'none')
+      .attr('stroke', theme.colors.chart.separator)
+      .attr('stroke-width', 1)
+      .attr('stroke-dasharray', '2,2')
+      .attr('opacity', 0.5)
+      .style('pointer-events', 'none');
+
+    // Render smart-positioned labels (no background boxes)
+    svg
+      .selectAll('.tech-label')
+      .data(labelNodes)
+      .enter()
+      .append('text')
+      .attr('class', 'tech-label')
+      .attr('x', (d) => d.x || 0)
+      .attr('y', (d) => (d.y || 0) + 4) // Vertical centering adjustment
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.text.primary)
       .style('font-size', '12px')
