@@ -1,0 +1,145 @@
+{
+  "document": {
+    "doc_id": "001-492-286-864-795",
+    "doc_type": "technical_paper",
+    "title": "Tiltwing eVTOL Transition Trajectory Optimization",
+    "url": "https://link.lens.org/001-492-286-864-795",
+    "source": "Lens.org Scholarly API",
+    "published_at": "2024-11-04T00:00:00.000000+00:00",
+    "summary": "",
+    "content": "This paper studies transition trajectory optimization for a tiltwing electrical vertical takeoff and landing (eVTOL) aircraft configuration and evaluates the benefits of equipping it with fluid injection active flow control (AFC). Using a three-degree-of-freedom model of the aircraft’s longitudinal dynamics, both hover-to-cruise (forward) and cruise-to-hover (backward) transition are investigated for a range of center-of-gravity (CG) positions to determine minimum-energy trajectories that achieve zero altitude variation while avoiding wing aerodynamic stall. It is demonstrated that constant-altitude transition can be achieved in the forward direction (with or without AFC), whereas the use of AFC in backward transition reduces the total altitude change by 24%. A comparative constant-altitude backward transition solution using a different airfoil with a higher stall limit suggests that a redesign of the tail wing of this unique tiltwing aircraft could better leverage the benefits of using AFC in this application. Additionally, it is also shown that, in the case of forward transition, AFC can be used to decrease the total transition time and increase the range of CG positions where constant-altitude transition can occur.",
+    "quality_score": 0.85,
+    "relevance_score": 0.0,
+    "doi": "",
+    "venue_type": "journal",
+    "peer_reviewed": true,
+    "source_title": "Journal of Aircraft",
+    "year_published": 2024,
+    "date_published": "2024-11-04T00:00:00.000000+00:00",
+    "citation_count": 0,
+    "patent_citations_count": 0,
+    "embedding": []
+  },
+  "document_metadata": {
+    "publication_type": "journal article",
+    "publication_supplementary_type": [],
+    "external_ids": [
+      {
+        "type": "openalex",
+        "value": "W4404048679"
+      }
+    ],
+    "open_access": {},
+    "source_urls": [],
+    "funding": [],
+    "authors": [
+      {
+        "display_name": "",
+        "affiliations": [
+          {
+            "name": "University of Oxford",
+            "country_code": "GB"
+          }
+        ]
+      },
+      {
+        "display_name": "",
+        "affiliations": [
+          {
+            "name": "University of Oxford",
+            "country_code": "GB"
+          }
+        ]
+      }
+    ],
+    "author_count": 2,
+    "scholarly_citations": [],
+    "patent_citations": [],
+    "references_count": 0,
+    "references": [],
+    "fields_of_study": [
+      "Trajectory optimization",
+      "Trajectory",
+      "Aerospace engineering",
+      "Aileron",
+      "Computer science",
+      "Aerodynamics",
+      "Control theory (sociology)",
+      "Physics",
+      "Engineering",
+      "Control (management)",
+      "Astronomy",
+      "Artificial intelligence"
+    ],
+    "keywords": [],
+    "mesh_terms": [],
+    "clinical_trials": [],
+    "chemicals": [],
+    "source": {
+      "title": "Journal of Aircraft",
+      "publisher": "American Institute of Aeronautics and Astronautics Inc. (AIAA)",
+      "country": "United States"
+    },
+    "matched_keyword": "eVTOL",
+    "harvested_at": "2025-11-06T11:28:41.125081"
+  },
+  "tech_mentions": [
+    {
+      "name": "Tiltwing eVTOL Aircraft",
+      "role": "subject",
+      "strength": 0.95,
+      "evidence_confidence": 0.98,
+      "evidence_text": "Study focuses on transition trajectory optimization for tiltwing eVTOL configuration"
+    },
+    {
+      "name": "Fluid Injection Active Flow Control (AFC)",
+      "role": "studied",
+      "strength": 0.9,
+      "evidence_confidence": 0.96,
+      "evidence_text": "Evaluates benefits of AFC in optimizing transition trajectories"
+    },
+    {
+      "name": "Minimum-Energy Trajectories",
+      "role": "proposed",
+      "strength": 0.85,
+      "evidence_confidence": 0.94,
+      "evidence_text": "Demonstrates minimum-energy trajectories achieving zero altitude variation"
+    },
+    {
+      "name": "Constant-Altitude Transition",
+      "role": "evaluated",
+      "strength": 0.8,
+      "evidence_confidence": 0.92,
+      "evidence_text": "Constant-altitude transition achieved in forward direction with AFC"
+    }
+  ],
+  "company_mentions": [],
+  "company_tech_relations": [],
+  "tech_tech_relations": [
+    {
+      "from_tech_name": "Tiltwing eVTOL Aircraft",
+      "to_tech_name": "Fluid Injection Active Flow Control (AFC)",
+      "relation_type": "complements",
+      "evidence_confidence": 0.93,
+      "evidence_text": "AFC complements tiltwing design by enhancing transition performance",
+      "doc_ref": "001-492-286-864-795"
+    },
+    {
+      "from_tech_name": "Fluid Injection Active Flow Control (AFC)",
+      "to_tech_name": "Minimum-Energy Trajectories",
+      "relation_type": "improves_efficiency_of",
+      "evidence_confidence": 0.91,
+      "evidence_text": "AFC reduces altitude change by 24% during backward transition",
+      "doc_ref": "001-492-286-864-795"
+    },
+    {
+      "from_tech_name": "Tiltwing eVTOL Aircraft",
+      "to_tech_name": "Constant-Altitude Transition",
+      "relation_type": "supports",
+      "evidence_confidence": 0.89,
+      "evidence_text": "Tiltwing design supports constant-altitude transition capabilities",
+      "doc_ref": "001-492-286-864-795"
+    }
+  ],
+  "company_company_relations": []
+}

@@ -1,0 +1,60 @@
+{
+  "document": {
+    "doc_id": "regulatory_federal-aviation-administration_2024-25812",
+    "doc_type": "regulation",
+    "title": "FAA - Notice - 2024-11-06",
+    "url": "https://federalregister.gov/d/2024-25812",
+    "source": "Federal Register",
+    "published_at": "2024-11-06",
+    "summary": "<a id='1b5c25df-927a-46b3-967a-3c57ea37db6c'></a>\n\n<::attestation: Official Mark/Logo\nAuthenticated\nReadable Text: AUTHENTICATED U.S. GOVERNMENT INFORMATION GPO\nA blue logo with a stylized eagle head and the text \"AUTHENTICATED U.S. GOVERNMENT INFORMATION GPO\" is centered on a white background.::>\n\n<a id='acfa2355-259d-4f6e-857a-b7ae4d01563e'></a>\n\n**88108**\n\n<a id='23d13fcb-3043-4b95-8019-bde121d5b0ba'></a>\n\nFederal Register/Vol. 89, No.",
+    "content": "",
+    "quality_score": 0.85,
+    "relevance_score": 0.0,
+    "regulatory_body": "FAA",
+    "sub_agency": null,
+    "document_type": "notice",
+    "decision_type": "proposal",
+    "effective_date": null,
+    "docket_number": null,
+    "federal_register_doc_id": "2024-25812",
+    "embedding": []
+  },
+  "document_metadata": {
+    "federal_register_volume": "89",
+    "federal_register_issue": "215",
+    "section": "Notices",
+    "comment_deadline": "2024-12-06",
+    "contact_email": "ben.walsh@faa.gov",
+    "action_text": ""
+  },
+  "tech_mentions": [
+    {
+      "name": "Small Unmanned Aircraft Systems (sUAS)",
+      "role": "regulated",
+      "strength": 0.9,
+      "evidence_confidence": 0.95,
+      "evidence_text": "FAA requests comments on information collection for sUAS safety event reporting"
+    }
+  ],
+  "company_mentions": [
+    {
+      "name": "FAA",
+      "role": "issuer",
+      "strength": 1.0,
+      "evidence_confidence": 1.0,
+      "evidence_text": "Federal Aviation Administration announces information collection for sUAS"
+    }
+  ],
+  "company_tech_relations": [
+    {
+      "company_name": "FAA",
+      "technology_name": "Small Unmanned Aircraft Systems (sUAS)",
+      "relation_type": "regulates",
+      "evidence_confidence": 0.95,
+      "evidence_text": "FAA regulates sUAS safety event reporting under 14 CFR 107.9",
+      "doc_ref": "regulatory_federal-aviation-administration_2024-25812"
+    }
+  ],
+  "tech_tech_relations": [],
+  "company_company_relations": []
+}

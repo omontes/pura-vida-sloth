@@ -1,0 +1,70 @@
+{
+  "document": {
+    "doc_id": "sec_000162828024007963",
+    "doc_type": "sec_filing",
+    "title": "Archer Aviation Inc. - 10-K - 2024-02-29",
+    "url": "",
+    "source": "SEC EDGAR",
+    "published_at": "2024-02-29",
+    "summary": "10-K 1 achr-20231231.htm 10-K achr-2023123100018245022023FYFALSE0.6667P3YP3D00018245022023-01-012023-12-310001824502us-gaap:CommonClassAMember2023-01-012023-12-310001824502us-gaap:WarrantMember2023-01-012023-12-3100018245022023-06-30iso4217:USD0001824502us-gaap:CommonClassAMember2024-02-23xbrli:shares0001824502us-gaap:CommonClassBMember2024-02-2300018245022023-12-3100018245022022-12-31iso4217:USDxbrli:shares0001824502us-gaap:CommonClassAMember2023-12-310001824502us-gaap:CommonClassAMember2022-12",
+    "content": "",
+    "quality_score": 0.85,
+    "relevance_score": 0.0,
+    "filing_type": "10-K",
+    "cik": "0001824502",
+    "accession_number": "0001628280-24-007963",
+    "filing_date": "2024-02-29",
+    "fiscal_year": 2023,
+    "fiscal_quarter": "Q4",
+    "embedding": []
+  },
+  "document_metadata": {
+    "company_name": "Archer Aviation Inc.",
+    "ticker": "ACHR",
+    "fiscal_year_end": "1231",
+    "sic_code": "3721",
+    "sic_description": "AIRCRAFT",
+    "state_of_incorporation": null,
+    "ein": "852730902",
+    "report_period": "2023-12-31",
+    "revenue_mentioned": true,
+    "revenue_amount": null,
+    "risk_factor_mentioned": true
+  },
+  "tech_mentions": [
+    {
+      "name": "eVTOL Aircraft",
+      "role": "subject",
+      "strength": 0.95,
+      "evidence_confidence": 0.95,
+      "evidence_text": "Developing eVTOL aircraft with reduced noise and zero emissions"
+    },
+    {
+      "name": "Tilt Propeller Technology",
+      "role": "studied",
+      "strength": 0.7,
+      "evidence_confidence": 0.85,
+      "evidence_text": "Tilt propellers aligned with airflow to reduce noise"
+    },
+    {
+      "name": "FAA Certification Process",
+      "role": "studied",
+      "strength": 0.6,
+      "evidence_confidence": 0.8,
+      "evidence_text": "Type Certification required for eVTOL aircraft design and operation"
+    }
+  ],
+  "company_mentions": [],
+  "company_tech_relations": [
+    {
+      "company_name": "Archer Aviation Inc.",
+      "technology_name": "eVTOL Aircraft",
+      "relation_type": "develops",
+      "evidence_confidence": 0.95,
+      "evidence_text": "Archer developing eVTOL aircraft for urban air mobility",
+      "doc_ref": "sec_000162828024007963"
+    }
+  ],
+  "tech_tech_relations": [],
+  "company_company_relations": []
+}

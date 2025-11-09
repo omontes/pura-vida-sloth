@@ -95,7 +95,7 @@ def save_checkpoint_files(
     end_idx: int,
     checkpoint_dir: str,
     industry: str,
-    relevance_threshold: float = 8.0
+    quality_threshold: float = 0.85
 ) -> tuple:
     """
     Save checkpoint files for a batch of results.
@@ -106,7 +106,7 @@ def save_checkpoint_files(
         end_idx: Ending index of this batch
         checkpoint_dir: Directory to save checkpoint files
         industry: Industry name (for filenames)
-        relevance_threshold: Threshold for relevance filtering
+        quality_threshold: Threshold for quality filtering (0.0-1.0 scale, default: 0.85)
 
     Returns:
         Tuple of (checkpoint_all_path, checkpoint_relevant_path)
@@ -122,10 +122,10 @@ def save_checkpoint_files(
     with open(checkpoint_all, "w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False)
 
-    # Save relevant results only
+    # Save relevant results only (quality_score >= 0.85)
     relevant_results = [
         r for r in results
-        if r.get("relevance_assessment", {}).get("is_relevant", False)
+        if r.get("document", {}).get("quality_score", 0.0) >= 0.85
     ]
 
     checkpoint_relevant = os.path.join(checkpoint_dir, f"checkpoint_relevant_{start_str}-{end_str}.json")
@@ -205,21 +205,21 @@ def merge_checkpoints(checkpoint_dir: str, output_all: str, output_relevant: str
     all_results = data["all_results"]
     relevant_results = data["relevant_results"]
 
-    # Deduplicate by lens_id (in case of overlapping checkpoints)
+    # Deduplicate by doc_id (in case of overlapping checkpoints)
     seen_all = set()
     deduped_all = []
     for result in all_results:
-        lens_id = result.get("paper_metadata", {}).get("lens_id", "")
-        if lens_id and lens_id not in seen_all:
-            seen_all.add(lens_id)
+        doc_id = result.get("document", {}).get("doc_id", "")
+        if doc_id and doc_id not in seen_all:
+            seen_all.add(doc_id)
             deduped_all.append(result)
 
     seen_relevant = set()
     deduped_relevant = []
     for result in relevant_results:
-        lens_id = result.get("paper_metadata", {}).get("lens_id", "")
-        if lens_id and lens_id not in seen_relevant:
-            seen_relevant.add(lens_id)
+        doc_id = result.get("document", {}).get("doc_id", "")
+        if doc_id and doc_id not in seen_relevant:
+            seen_relevant.add(doc_id)
             deduped_relevant.append(result)
 
     # Save merged files

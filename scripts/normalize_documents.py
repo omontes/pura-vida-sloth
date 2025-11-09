@@ -21,6 +21,140 @@ from graph.entity_resolution.normalize_tech_company import TechCompanyNormalizer
 from graph.entity_resolution.config import EntityResolutionConfig
 
 
+def get_technology_details(tech_id: str, catalog: dict) -> Dict[str, Any]:
+    """
+    Fetch full technology details from catalog.
+
+    Args:
+        tech_id: Technology canonical ID
+        catalog: Technology catalog dict
+
+    Returns:
+        Technology details dict or None if not found
+    """
+    for tech in catalog.get('technologies', []):
+        if tech.get('id') == tech_id:
+            return {
+                'id': tech.get('id'),
+                'name': tech.get('canonical_name'),
+                'domain': tech.get('domain'),
+                'description': tech.get('description'),
+                'aliases': [v.get('name') if isinstance(v, dict) else v for v in tech.get('variants', [])]
+            }
+    return None
+
+
+def get_company_details(company_id: str, catalog: dict) -> Dict[str, Any]:
+    """
+    Fetch full company details from catalog.
+
+    Args:
+        company_id: Company canonical ID
+        catalog: Company catalog dict
+
+    Returns:
+        Company details dict or None if not found
+    """
+    for company in catalog.get('companies', []):
+        if company.get('id') == company_id:
+            return {
+                'id': company.get('id'),
+                'name': company.get('name'),
+                'aliases': company.get('aliases', []),
+                'ticker': company.get('ticker'),
+                'kind': company.get('kind'),
+                'sector': company.get('sector'),
+                'country': company.get('country'),
+                'description': company.get('description')
+            }
+    return None
+
+
+def enrich_document_with_entities(
+    normalized_doc: Dict[str, Any],
+    tech_catalog: dict,
+    company_catalog: dict
+) -> Dict[str, Any]:
+    """
+    Add technologies and companies arrays with full details from catalogs.
+
+    Args:
+        normalized_doc: Document with normalized mentions
+        tech_catalog: Technology catalog dict
+        company_catalog: Company catalog dict
+
+    Returns:
+        Enriched document with technologies and companies arrays
+    """
+    # Extract unique tech IDs from all sources
+    unique_tech_ids = set()
+
+    # From tech_mentions
+    for mention in normalized_doc.get('tech_mentions', []):
+        tech_id = mention.get('tech_id')
+        if tech_id and mention.get('normalized_name') != "Unknown":
+            unique_tech_ids.add(tech_id)
+
+    # From company_tech_relations
+    for relation in normalized_doc.get('company_tech_relations', []):
+        tech_id = relation.get('tech_id')
+        if tech_id and relation.get('normalized_tech_name') != "Unknown":
+            unique_tech_ids.add(tech_id)
+
+    # From tech_tech_relations
+    for relation in normalized_doc.get('tech_tech_relations', []):
+        from_tech_id = relation.get('from_tech_id')
+        to_tech_id = relation.get('to_tech_id')
+        if from_tech_id and relation.get('normalized_from_tech') != "Unknown":
+            unique_tech_ids.add(from_tech_id)
+        if to_tech_id and relation.get('normalized_to_tech') != "Unknown":
+            unique_tech_ids.add(to_tech_id)
+
+    # Extract unique company IDs from all sources
+    unique_company_ids = set()
+
+    # From company_mentions
+    for mention in normalized_doc.get('company_mentions', []):
+        company_id = mention.get('company_id')
+        if company_id and mention.get('normalized_name') != "Unknown":
+            unique_company_ids.add(company_id)
+
+    # From company_tech_relations
+    for relation in normalized_doc.get('company_tech_relations', []):
+        company_id = relation.get('company_id')
+        if company_id and relation.get('normalized_company_name') != "Unknown":
+            unique_company_ids.add(company_id)
+
+    # From company_company_relations
+    for relation in normalized_doc.get('company_company_relations', []):
+        from_company_id = relation.get('from_company_id')
+        to_company_id = relation.get('to_company_id')
+        if from_company_id and relation.get('normalized_from_company') != "Unknown":
+            unique_company_ids.add(from_company_id)
+        if to_company_id and relation.get('normalized_to_company') != "Unknown":
+            unique_company_ids.add(to_company_id)
+
+    # Fetch full details for technologies
+    technologies = []
+    for tech_id in sorted(unique_tech_ids):
+        details = get_technology_details(tech_id, tech_catalog)
+        if details:
+            technologies.append(details)
+
+    # Fetch full details for companies
+    companies = []
+    for company_id in sorted(unique_company_ids):
+        details = get_company_details(company_id, company_catalog)
+        if details:
+            companies.append(details)
+
+    # Add enrichment arrays to document
+    normalized_doc['technologies'] = technologies
+    normalized_doc['companies'] = companies
+
+    return normalized_doc
+
+
 def create_final_version(normalized_doc: Dict[str, Any]) -> Dict[str, Any]:
     """
     Create clean final version by replacing original names with normalized names
@@ -279,6 +413,21 @@ Outputs:
         company_threshold=args.company_threshold
     )
 
+    # Load catalogs for enrichment
+    print(f"\n{'='*80}")
+    print("LOADING ENTITY CATALOGS FOR ENRICHMENT")
+    print('='*80)
+
+    # Access tech catalog from classifier (Pydantic model)
+    tech_catalog_model = normalizer.tech_classifier.catalog
+    # Convert to dict for helper functions
+    tech_catalog = {'technologies': [t.model_dump() for t in tech_catalog_model.technologies]}
+    print(f"  Loaded {len(tech_catalog['technologies'])} technologies from catalog")
+
+    # Access company catalog from classifier (dict)
+    company_catalog = normalizer.company_classifier.companies_catalog
+    print(f"  Loaded {len(company_catalog.get('companies', []))} companies from catalog")
+
     # Normalize documents
     print(f"\n{'='*80}")
     print("NORMALIZING DOCUMENTS")
@@ -294,15 +443,39 @@ Outputs:
 
     print(f"\n[SUCCESS] Normalized {len(normalized_docs)} documents")
 
+    # Enrich documents with entity details
+    print(f"\n{'='*80}")
+    print("ENRICHING DOCUMENTS WITH ENTITY DETAILS")
+    print('='*80)
+
+    enriched_docs = []
+    for i, doc in enumerate(normalized_docs, 1):
+        if i % 50 == 0 or i == len(normalized_docs):
+            print(f"  Progress: {i}/{len(normalized_docs)}")
+
+        enriched_doc = enrich_document_with_entities(doc, tech_catalog, company_catalog)
+        enriched_docs.append(enriched_doc)
+
+    # Count unique entities across all documents
+    all_tech_ids = set()
+    all_company_ids = set()
+    for doc in enriched_docs:
+        all_tech_ids.update(t['id'] for t in doc.get('technologies', []))
+        all_company_ids.update(c['id'] for c in doc.get('companies', []))
+
+    print(f"\n[SUCCESS] Enriched {len(enriched_docs)} documents")
+    print(f"  Unique technologies across all docs: {len(all_tech_ids)}")
+    print(f"  Unique companies across all docs: {len(all_company_ids)}")
+
     # Create final version
     print(f"\n{'='*80}")
     print("CREATING FINAL VERSION")
     print('='*80)
 
     final_docs = []
-    for i, doc in enumerate(normalized_docs, 1):
-        if i % 50 == 0 or i == len(normalized_docs):
-            print(f"  Progress: {i}/{len(normalized_docs)}")
+    for i, doc in enumerate(enriched_docs, 1):
+        if i % 50 == 0 or i == len(enriched_docs):
+            print(f"  Progress: {i}/{len(enriched_docs)}")
 
         final_doc = create_final_version(doc)
         final_docs.append(final_doc)
@@ -316,14 +489,14 @@ Outputs:
     normalized_path = input_dir / f"{input_stem}_normalized.json"
     final_path = input_dir / f"{input_stem}_final.json"
 
-    # Save normalized version
+    # Save normalized version (with enrichment)
     print(f"\n{'='*80}")
     print("SAVING OUTPUT FILES")
     print('='*80)
 
-    print(f"\nSaving normalized version...")
+    print(f"\nSaving normalized version (with enrichment)...")
     with open(normalized_path, 'w', encoding='utf-8') as f:
-        json.dump(normalized_docs, f, indent=2, ensure_ascii=False)
+        json.dump(enriched_docs, f, indent=2, ensure_ascii=False)
     print(f"  [SUCCESS] {normalized_path}")
 
     # Save final version
@@ -333,7 +506,7 @@ Outputs:
     print(f"  [SUCCESS] {final_path}")
 
     # Print statistics
-    print_statistics(normalized_docs, "NORMALIZATION STATISTICS")
+    print_statistics(enriched_docs, "NORMALIZATION STATISTICS")
 
     # Summary
     print(f"\n{'='*80}")

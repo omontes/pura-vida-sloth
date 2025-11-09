@@ -117,7 +117,8 @@ def batch_process_papers(
     max_retries: int = 2,
     relevance_threshold: float = 8.0,
     checkpoint_interval: int = 100,
-    resume: bool = True
+    resume: bool = True,
+    graph_relations_config: str = "configs/eVTOL_graph_relations.json"
 ):
     """
     Batch process scholarly papers with concurrent execution and checkpointing.
@@ -161,12 +162,12 @@ def batch_process_papers(
     print(f"\n[2/6] Initializing ScholarlyRelevanceParser")
     parser = ScholarlyRelevanceParser(
         openai_api_key=api_key,
+        config_path=graph_relations_config,
         industry_name=industry,
         industry_keywords=industry_keywords,
         industry_description=industry_description,
         model_name="gpt-4o-mini",
-        temperature=0.0,
-        relevance_threshold=relevance_threshold
+        temperature=0.0
     )
     print(f"  Model: gpt-4o-mini")
     print(f"  Relevance Threshold: {relevance_threshold}/10")
@@ -295,7 +296,7 @@ def batch_process_papers(
                                     end_idx=checkpoint_end_idx,
                                     checkpoint_dir=checkpoint_dir,
                                     industry=industry,
-                                    relevance_threshold=relevance_threshold
+                                    quality_threshold=0.85
                                 )
 
                                 # Mark papers as completed (use actual indices)
@@ -342,7 +343,7 @@ def batch_process_papers(
                     end_idx=checkpoint_end_idx,
                     checkpoint_dir=checkpoint_dir,
                     industry=industry,
-                    relevance_threshold=relevance_threshold
+                    quality_threshold=0.85
                 )
 
                 # Mark papers as completed (use actual indices)
