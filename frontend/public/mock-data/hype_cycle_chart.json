@@ -13,8 +13,7 @@
       "phase": "Peak of Inflated Expectations",
       "phase_position": "late",
       "phase_confidence": 0.88,
-      "chart_x": 1.75,
-      "chart_y": 0.84,
+      "chart_x": 1.25,
       "scores": {
         "innovation": 72.5,
         "adoption": 35.8,
@@ -46,7 +45,6 @@
       "phase_position": "mid",
       "phase_confidence": 0.82,
       "chart_x": 2.5,
-      "chart_y": 0.35,
       "scores": {
         "innovation": 45.2,
         "adoption": 28.3,
@@ -76,8 +74,7 @@
       "phase": "Innovation Trigger",
       "phase_position": "mid",
       "phase_confidence": 0.91,
-      "chart_x": 0.5,
-      "chart_y": 0.15,
+      "chart_x": 0.7,
       "scores": {
         "innovation": 85.3,
         "adoption": 12.1,
@@ -104,7 +101,6 @@
       "phase_position": "mid",
       "phase_confidence": 0.85,
       "chart_x": 3.5,
-      "chart_y": 0.55,
       "scores": {
         "innovation": 68.4,
         "adoption": 58.2,
@@ -132,7 +128,6 @@
       "phase_position": "early",
       "phase_confidence": 0.93,
       "chart_x": 4.2,
-      "chart_y": 0.68,
       "scores": {
         "innovation": 52.1,
         "adoption": 82.5,
@@ -160,7 +155,6 @@
       "phase_position": "early",
       "phase_confidence": 0.79,
       "chart_x": 1.2,
-      "chart_y": 0.92,
       "scores": {
         "innovation": 91.2,
         "adoption": 8.5,
@@ -189,8 +183,7 @@
       "phase": "Trough of Disillusionment",
       "phase_position": "late",
       "phase_confidence": 0.87,
-      "chart_x": 2.8,
-      "chart_y": 0.22,
+      "chart_x": 2.4,
       "scores": {
         "innovation": 38.5,
         "adoption": 24.7,
@@ -216,8 +209,7 @@
       "phase": "Innovation Trigger",
       "phase_position": "late",
       "phase_confidence": 0.84,
-      "chart_x": 0.85,
-      "chart_y": 0.28,
+      "chart_x": 0.55,
       "scores": {
         "innovation": 88.7,
         "adoption": 18.3,
@@ -244,7 +236,6 @@
       "phase_position": "early",
       "phase_confidence": 0.81,
       "chart_x": 3.2,
-      "chart_y": 0.48,
       "scores": {
         "innovation": 64.3,
         "adoption": 52.8,
@@ -271,7 +262,6 @@
       "phase_position": "late",
       "phase_confidence": 0.86,
       "chart_x": 3.8,
-      "chart_y": 0.62,
       "scores": {
         "innovation": 58.9,
         "adoption": 68.4,
@@ -299,7 +289,6 @@
       "phase_position": "early",
       "phase_confidence": 0.77,
       "chart_x": 0.3,
-      "chart_y": 0.12,
       "scores": {
         "innovation": 92.3,
         "adoption": 5.2,
@@ -325,7 +314,6 @@
       "phase_position": "early",
       "phase_confidence": 0.83,
       "chart_x": 2.2,
-      "chart_y": 0.31,
       "scores": {
         "innovation": 62.4,
         "adoption": 15.7,
@@ -355,7 +343,6 @@
       "phase_position": "mid",
       "phase_confidence": 0.89,
       "chart_x": 4.5,
-      "chart_y": 0.65,
       "scores": {
         "innovation": 42.7,
         "adoption": 78.3,
@@ -381,8 +368,7 @@
       "phase": "Trough of Disillusionment",
       "phase_position": "mid",
       "phase_confidence": 0.81,
-      "chart_x": 2.4,
-      "chart_y": 0.28,
+      "chart_x": 3.4,
       "scores": {
         "innovation": 54.2,
         "adoption": 12.8,
@@ -409,7 +395,6 @@
       "phase_position": "late",
       "phase_confidence": 0.95,
       "chart_x": 4.8,
-      "chart_y": 0.70,
       "scores": {
         "innovation": 38.5,
         "adoption": 92.3,

@@ -183,3 +183,71 @@ export const PHASE_LABELS = [
   { name: 'Slope of\nEnlightenment', x: 3.45 },
   { name: 'Plateau of\nProductivity', x: 4.6 },
 ];
+
+/**
+ * Get valid X-axis range for a given phase
+ *
+ * @param phase - Lifecycle phase name
+ * @returns Object with min and max X coordinates for the phase
+ */
+export function getPhaseXRange(phase: string): { min: number; max: number } {
+  switch (phase) {
+    case 'Innovation Trigger':
+      return { min: 0.0, max: 0.7 };
+    case 'Peak of Inflated Expectations':
+      return { min: 0.7, max: 1.4 };
+    case 'Trough of Disillusionment':
+      return { min: 1.4, max: 2.7 };
+    case 'Slope of Enlightenment':
+      return { min: 2.7, max: 4.2 };
+    case 'Plateau of Productivity':
+      return { min: 4.2, max: 5.0 };
+    default:
+      // Fallback: return full range
+      console.warn(`Unknown phase: ${phase}, using default range`);
+      return { min: 0.0, max: 5.0 };
+  }
+}
+
+/**
+ * Validate and clamp chart_x position to match assigned phase boundaries
+ *
+ * Ensures visual consistency: nodes are positioned only within their phase region.
+ * Respects phase_position ('early'/'mid'/'late') for fine-grained placement.
+ *
+ * @param phase - Technology's assigned lifecycle phase
+ * @param chart_x - Original X coordinate (may be outside phase range)
+ * @param phase_position - Optional position within phase ('early', 'mid', 'late')
+ * @returns Validated X coordinate within phase boundaries
+ */
+export function validateChartPosition(
+  phase: string,
+  chart_x: number,
+  phase_position?: 'early' | 'mid' | 'late'
+): number {
+  const range = getPhaseXRange(phase);
+
+  // If chart_x already within range, keep it
+  if (chart_x >= range.min && chart_x <= range.max) {
+    return chart_x;
+  }
+
+  // If phase_position specified, use it for placement
+  if (phase_position) {
+    const phaseWidth = range.max - range.min;
+    switch (phase_position) {
+      case 'early':
+        return range.min + phaseWidth * 0.25; // 25% into phase
+      case 'mid':
+        return range.min + phaseWidth * 0.5; // 50% into phase
+      case 'late':
+        return range.min + phaseWidth * 0.75; // 75% into phase
+    }
+  }
+
+  // Otherwise, clamp to nearest boundary
+  if (chart_x < range.min) return range.min + 0.05; // Slightly inside min
+  if (chart_x > range.max) return range.max - 0.05; // Slightly inside max
+
+  return chart_x;
+}

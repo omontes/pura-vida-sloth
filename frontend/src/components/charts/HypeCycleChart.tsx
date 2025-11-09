@@ -18,6 +18,7 @@ import {
   PHASE_COLORS,
   PHASE_SEPARATORS,
   PHASE_LABELS,
+  validateChartPosition,
 } from '@/utils/hypeCycleCurve';
 import {
   type LabelNode,
@@ -43,6 +44,12 @@ export default function HypeCycleChart({
 }: HypeCycleChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { theme } = useTheme();
+
+  // Helper function to truncate long technology names
+  const truncateName = (name: string, maxLength: number = 30): string => {
+    if (name.length <= maxLength) return name;
+    return name.substring(0, maxLength - 3) + '...';
+  };
 
   useEffect(() => {
     if (!svgRef.current || !technologies.length) return;
@@ -74,7 +81,7 @@ export default function HypeCycleChart({
         .attr('y2', height - 140)
         .attr('stroke', theme.colors.chart.separator)
         .attr('stroke-width', 2)
-        .attr('opacity', 0.2)
+        .attr('opacity', 0.3)
         .attr('stroke-dasharray', '8 4');
     });
 
@@ -130,8 +137,10 @@ export default function HypeCycleChart({
       .append('g')
       .attr('class', 'tech-node cursor-pointer')
       .attr('transform', (d) => {
-        const x = xScale(d.chart_x);
-        const y = getYForX(d.chart_x); // Y from curve, NOT d.chart_y
+        // Validate: ensure chart_x matches phase boundaries
+        const validatedX = validateChartPosition(d.phase, d.chart_x, d.phase_position);
+        const x = xScale(validatedX);
+        const y = getYForX(validatedX); // Y from curve, NOT d.chart_y
         return `translate(${x}, ${y})`;
       })
       .on('click', (_event, d) => {
@@ -185,7 +194,7 @@ export default function HypeCycleChart({
       .style('font-size', '12px')
       .style('font-weight', '700')
       .style('opacity', 0)
-      .text((d) => d.name);
+      .text((d) => truncateName(d.name));
 
     // Measure label dimensions and calculate smart positions using radial sampling
     const labelNodes: LabelNode[] = [];
@@ -193,9 +202,11 @@ export default function HypeCycleChart({
 
     tempLabels.each(function (d) {
       const bbox = (this as SVGTextElement).getBBox();
-      const nodeX = xScale(d.chart_x);
-      const nodeY = getYForX(d.chart_x);
-      const labelWidth = bbox.width + 8;
+      // Validate: ensure chart_x matches phase boundaries
+      const validatedX = validateChartPosition(d.phase, d.chart_x, d.phase_position);
+      const nodeX = xScale(validatedX);
+      const nodeY = getYForX(validatedX);
+      const labelWidth = bbox.width + 2;
       const labelHeight = bbox.height + 4;
 
       // OPTIMIZATION: Use cached distance calculation
@@ -256,7 +267,7 @@ export default function HypeCycleChart({
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 12)
+          .radius((d) => Math.max(d.width, d.height) / 2 + 18)
           .strength(0.8) // Stronger repulsion for better spacing
           .iterations(3) // More accurate collision detection
       )
@@ -267,7 +278,7 @@ export default function HypeCycleChart({
           .forceY<LabelNode>((d) => d.preferredY)
           .strength(0.1)
       )
-      .force('clamp', forceClamp(70, height - 150))
+      .force('clamp', forceClamp(50, height - 150))
       .alphaDecay(0.05) // Faster convergence (default: 0.028)
       .stop();
 
@@ -338,7 +349,7 @@ export default function HypeCycleChart({
       .style('font-size', '12px')
       .style('font-weight', '700')
       .style('pointer-events', 'none')
-      .text((d) => d.name);
+      .text((d) => truncateName(d.name));
 
     // Tooltips
     nodeGroups
