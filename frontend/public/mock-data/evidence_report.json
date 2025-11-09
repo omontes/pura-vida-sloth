@@ -1,0 +1,204 @@
+{
+  "technologies": {
+    "evtol": {
+      "innovation_evidence": [
+        {
+          "id": "patent_US11234567",
+          "type": "patent",
+          "title": "Electric VTOL propulsion with redundant motors",
+          "date": "2024-05-15",
+          "source": "USPTO",
+          "strength": 0.92,
+          "summary": "Novel vertical takeoff mechanism with 8-motor redundancy for fault tolerance. Addresses single-point-of-failure concerns in eVTOL aircraft.",
+          "url": "https://patents.google.com/patent/US11234567"
+        },
+        {
+          "id": "paper_arxiv_2024_3421",
+          "type": "paper",
+          "title": "Battery Energy Density Requirements for Urban Air Mobility",
+          "date": "2024-03-22",
+          "source": "MIT AeroAstro",
+          "strength": 0.87,
+          "summary": "Analysis showing current battery technology insufficient for >50 mile range with economic payload. Projects 2030 as earliest viable timeline.",
+          "url": "https://arxiv.org/abs/2024.3421"
+        },
+        {
+          "id": "github_joby_flight_controller",
+          "type": "github",
+          "title": "Joby Aviation flight controller (archived)",
+          "date": "2023-08-12",
+          "source": "GitHub",
+          "strength": 0.34,
+          "summary": "Public repository shows no commits in 18 months. Suggests development shifted to proprietary systems or stalled.",
+          "url": "https://github.com/joby-aviation/flight-controller"
+        }
+      ],
+      "adoption_evidence": [
+        {
+          "id": "contract_dod_2024_aa_001",
+          "type": "government_contract",
+          "title": "DoD Agility Prime Phase II - Joby Aviation",
+          "date": "2024-01-18",
+          "source": "US Department of Defense",
+          "strength": 0.88,
+          "summary": "$55M contract for military eVTOL demonstrations. Validates technology for logistics missions.",
+          "url": "https://www.defense.gov/contracts/joby-2024"
+        },
+        {
+          "id": "regulation_faa_2024_part135",
+          "type": "regulation",
+          "title": "FAA Part 135 Air Carrier Certification Progress",
+          "date": "2024-06-30",
+          "source": "FAA",
+          "strength": 0.72,
+          "summary": "Joby completed 4 of 5 certification stages. Final stage (type certification) estimated 2025-2026.",
+          "url": "https://www.faa.gov/aircraft/air_cert/joby"
+        },
+        {
+          "id": "sec_filing_joby_10q_2024q2",
+          "type": "sec_filing",
+          "title": "Joby Aviation 10-Q (Q2 2024)",
+          "date": "2024-08-09",
+          "source": "SEC",
+          "strength": 0.64,
+          "summary": "$0 revenue reported. $112M cash burn in quarter. Runway extends to Q3 2025 without additional financing.",
+          "url": "https://sec.gov/cgi-bin/browse-edgar?action=getcompany&CIK=0001819438"
+        }
+      ],
+      "narrative_evidence": [
+        {
+          "id": "news_wsj_2024_09_12",
+          "type": "news",
+          "title": "Joby Aviation Stock Soars on Dubai Partnership Announcement",
+          "date": "2024-09-12",
+          "source": "Wall Street Journal",
+          "strength": 0.91,
+          "summary": "Stock jumped 34% on news of Dubai skyport network deal. Analyst skepticism over monetization timeline.",
+          "url": "https://wsj.com/articles/joby-dubai-deal-2024"
+        },
+        {
+          "id": "news_bloomberg_2024_10_02",
+          "type": "news",
+          "title": "The eVTOL Dream Crashes Into Economic Reality",
+          "date": "2024-10-02",
+          "source": "Bloomberg",
+          "strength": 0.78,
+          "summary": "Analysis of sector shows only 2 of 12 startups on track for 2025 commercial operations. Economics remain unproven.",
+          "url": "https://bloomberg.com/news/evtol-reality-check"
+        },
+        {
+          "id": "news_techcrunch_2024_07_15",
+          "type": "news",
+          "title": "Archer Aviation Receives $500M Stellantis Investment",
+          "date": "2024-07-15",
+          "source": "TechCrunch",
+          "strength": 0.85,
+          "summary": "Major OEM backing signals industry confidence. Stellantis commits to manufacturing partnership for 2026 production.",
+          "url": "https://techcrunch.com/2024/07/15/archer-stellantis"
+        }
+      ],
+      "risk_evidence": [
+        {
+          "id": "insider_JOBY_2024_Q3_CEO",
+          "type": "insider_transaction",
+          "title": "JoeBen Bevirt (CEO) sold 2.5M shares at $6.80",
+          "date": "2024-09-12",
+          "source": "SEC Form 4",
+          "strength": 0.87,
+          "summary": "CEO sold $17M worth of shares at 18-month high following Dubai announcement. Largest insider sale on record.",
+          "url": "https://sec.gov/cgi-bin/own-disp?action=getissuer&CIK=0001819438"
+        },
+        {
+          "id": "insider_ACHR_2024_Q2_CFO",
+          "type": "insider_transaction",
+          "title": "Archer CFO Mark Mesler sold 850K shares",
+          "date": "2024-06-18",
+          "source": "SEC Form 4",
+          "strength": 0.72,
+          "summary": "CFO sold 60% of holdings at $4.20/share. Company cited 'personal diversification.'",
+          "url": "https://sec.gov/cgi-bin/own-disp?action=getissuer&CIK=0001855944"
+        },
+        {
+          "id": "sec_risk_joby_battery_supply",
+          "type": "sec_filing",
+          "title": "Joby 10-K Risk Factor: Battery Supply Chain",
+          "date": "2024-03-15",
+          "source": "SEC 10-K",
+          "strength": 0.81,
+          "summary": "Single-source dependency on battery supplier. Alternative suppliers add 18-24 months to timeline if needed.",
+          "url": "https://sec.gov/Archives/edgar/data/1819438/000181943824000012/joby-20231231.htm"
+        }
+      ]
+    },
+    "quantum_computing": {
+      "innovation_evidence": [
+        {
+          "id": "paper_nature_2024_qubit_error",
+          "type": "paper",
+          "title": "Logical qubit error rates below physical threshold",
+          "date": "2024-04-10",
+          "source": "Nature",
+          "strength": 0.95,
+          "summary": "Google demonstrates error-corrected qubits with logical error rate 10x lower than physical. Major breakthrough for scalability.",
+          "url": "https://nature.com/articles/quantum-error-correction-2024"
+        },
+        {
+          "id": "patent_IBM_topological_qubits",
+          "type": "patent",
+          "title": "Topological qubit architecture for fault tolerance",
+          "date": "2024-02-28",
+          "source": "USPTO",
+          "strength": 0.89,
+          "summary": "IBM patent on topological protection approach. Could enable room-temperature quantum computing if successful.",
+          "url": "https://patents.google.com/patent/US20240068521"
+        }
+      ],
+      "adoption_evidence": [
+        {
+          "id": "news_pharma_simulation",
+          "type": "news",
+          "title": "Pfizer uses quantum simulation for drug discovery",
+          "date": "2024-05-22",
+          "source": "Pharma Times",
+          "strength": 0.68,
+          "summary": "Pilot project simulated protein folding 100x faster than classical. Still experimental, not production.",
+          "url": "https://pharmatimes.com/quantum-pfizer-2024"
+        }
+      ],
+      "narrative_evidence": [
+        {
+          "id": "news_hype_quantum_ai",
+          "type": "news",
+          "title": "Quantum Computing Will Revolutionize AI, Experts Say",
+          "date": "2024-08-15",
+          "source": "Forbes",
+          "strength": 0.92,
+          "summary": "Breathless coverage of quantum potential. Light on commercial timelines or economic analysis.",
+          "url": "https://forbes.com/quantum-ai-revolution"
+        },
+        {
+          "id": "news_ionq_nasdaq",
+          "type": "news",
+          "title": "IonQ Stock Soars 200% YTD on AI Hype",
+          "date": "2024-10-01",
+          "source": "CNBC",
+          "strength": 0.88,
+          "summary": "Retail investor enthusiasm driving valuations. Revenue still <$20M/year vs $2B market cap.",
+          "url": "https://cnbc.com/ionq-stock-surge-2024"
+        }
+      ],
+      "risk_evidence": [
+        {
+          "id": "sec_risk_ionq_commercialization",
+          "type": "sec_filing",
+          "title": "IonQ 10-K: Uncertainty of Commercial Viability",
+          "date": "2024-03-01",
+          "source": "SEC 10-K",
+          "strength": 0.84,
+          "summary": "Company states 'uncertain when or if quantum advantage will be achieved for commercial applications.'",
+          "url": "https://sec.gov/Archives/edgar/data/1857855/000185785524000008/ionq-20231231.htm"
+        }
+      ]
+    }
+  }
+}

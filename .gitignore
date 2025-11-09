@@ -234,3 +234,12 @@ __marimo__/
 
 ##docs
 docs/
+
+# Frontend (React + TypeScript + Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/pnpm-lock.yaml

@@ -129,8 +129,8 @@ Examples:
     parser.add_argument(
         "--samples-dir",
         type=str,
-        default="data/samples",
-        help="Directory containing sample JSON files (default: data/samples)",
+        default="data/samples-phase/phase3/data",
+        help="Directory containing sample JSON files (default: data/samples-phase/phase3/data)",
     )
 
     parser.add_argument(
