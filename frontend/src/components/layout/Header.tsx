@@ -20,13 +20,12 @@ export default function Header({ industry, onExport }: HeaderProps) {
           <div className="flex items-center justify-between gap-4 sm:gap-6 md:gap-8">
             {/* Logo and Branding */}
             <div className="flex items-center gap-2 sm:gap-4">
-              {/* Logo Icon - Responsive sizing */}
-              <div className="w-8 h-8 sm:w-10 sm:h-10 md:w-12 md:h-12 rounded-lg bg-gradient-to-br from-teal-600 to-teal-700 dark:from-amber-500 dark:to-amber-600 flex items-center justify-center shadow-md">
-                <svg className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 text-white" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M12 3L4 7V12C4 16.5 7.5 20.5 12 21.5C16.5 20.5 20 16.5 20 12V7L12 3Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M12 8V13L15 15" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </div>
+              {/* Logo Icon - Network Intelligence Design */}
+              <img
+                src="/logo-icon.svg"
+                alt="Canopy Intelligence - Network Intelligence Logo"
+                className="w-10 h-10 sm:w-12 sm:h-12 md:w-14 md:h-14"
+              />
 
               {/* Brand Name and Tagline */}
               <div>

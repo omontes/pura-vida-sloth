@@ -60,8 +60,17 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         return res.json();
       })
       .then((visData: VisGraphData) => {
-        // Data already in vis.js format from backend
-        setGraphData(visData);
+        // Truncate node labels if longer than 23 characters
+        const truncatedData = {
+          ...visData,
+          nodes: visData.nodes.map(node => ({
+            ...node,
+            label: node.label.length > 23
+              ? node.label.substring(0, 20) + '...'
+              : node.label
+          }))
+        };
+        setGraphData(truncatedData);
         setIsLoading(false);
       })
       .catch((err) => {
@@ -106,10 +115,22 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
 
   const options = getVisNetworkOptions(isDarkMode);
 
-  // Get unique node types for legend
-  const uniqueNodeTypes = Array.from(
+  // Get unique node types for legend with hierarchical grouping
+  const allNodeTypes = Array.from(
     new Set(graphData.nodes.map((n) => n.group))
-  ).sort();
+  );
+
+  // Define document types for grouping
+  const documentTypes = [
+    'Patent', 'TechnicalPaper', 'SECFiling', 'Regulation', 'GitHub',
+    'GovernmentContract', 'News', 'InsiderTransaction', 'StockPrice', 'InstitutionalHolding'
+  ];
+
+  // Separate into categories with custom order
+  const primaryNodes = allNodeTypes.filter(t => t === 'Technology');
+  const companyNodes = allNodeTypes.filter(t => t === 'Company');
+  const personNodes = allNodeTypes.filter(t => t === 'Person');
+  const documentNodes = allNodeTypes.filter(t => documentTypes.includes(t)).sort();
 
   return (
     <div className="relative w-full h-[600px] bg-white dark:bg-gray-900 rounded-lg border border-gray-300 dark:border-gray-700">
@@ -172,17 +193,57 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         Relationships: <span className="font-bold text-blue-600 dark:text-blue-400">{graphData.edges.length}</span>
       </div>
 
-      {/* Legend (top-right) */}
-      {uniqueNodeTypes.length > 0 && (
+      {/* Legend (top-right) - Hierarchical */}
+      {allNodeTypes.length > 0 && (
         <div className="absolute top-4 right-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-xs max-h-96 overflow-y-auto">
           <h3 className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3">Node Types</h3>
-          {uniqueNodeTypes.map((type) => (
+
+          {/* Technology (Primary nodes) */}
+          {primaryNodes.map((type) => (
             <div key={type} className="flex items-center gap-2 mb-2">
               <div
                 className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
                 style={{ background: getNodeColor(type) }}
               />
-              <span className="text-xs text-gray-700 dark:text-gray-300">{type}</span>
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{type}</span>
+            </div>
+          ))}
+
+          {/* Documents (Grouped category) */}
+          {documentNodes.length > 0 && (
+            <div className="mt-3 mb-2">
+              <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-2">Document:</div>
+              {documentNodes.map((type) => (
+                <div key={type} className="flex items-center gap-2 mb-1.5 ml-3">
+                  <div
+                    className="w-3 h-3 rounded-full border border-gray-300 dark:border-white/10"
+                    style={{ background: getNodeColor(type) }}
+                  />
+                  <span className="text-xs text-gray-600 dark:text-gray-400">{type}</span>
+                </div>
+              ))}
+            </div>
+          )}
+
+          {/* Company nodes */}
+          {companyNodes.map((type) => (
+            <div key={type} className="flex items-center gap-2 mb-2 mt-3">
+              <div
+                className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
+                style={{ background: getNodeColor(type) }}
+              />
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{type}</span>
+            </div>
+          ))}
+
+          {/* Person nodes (if present) */}
+          {personNodes.map((type) => (
+            <div key={type} className="flex items-center gap-2 mb-2">
+              <div
+                className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
+                style={{ background: getNodeColor(type) }}
+              />
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{type}</span>
             </div>
           ))}
         </div>

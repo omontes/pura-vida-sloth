@@ -128,22 +128,22 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
  * Based on user's Gradio prototype PALETTE
  */
 export const NODE_COLORS: Record<string, string> = {
-  // Entity types
-  Technology: '#4e79a7',
-  Company: '#f28e2b',
-  Person: '#59a14f',
+  // Entity types (Primary hierarchy - high visual weight)
+  Technology: '#0f766e',   // Teal (brand color) - PRIMARY NODE
+  Company: '#f59e0b',      // Amber (warm contrast) - ACTION/ENTERPRISE
+  Person: '#59a14f',       // Green (kept original)
 
-  // Document types
-  Patent: '#e15759',
-  TechnicalPaper: '#76b7b2',
-  SECFiling: '#edc948',
-  Regulation: '#b07aa1',
-  GitHub: '#ff9da7',
-  GovernmentContract: '#9c755f',
-  News: '#bab0ac',
-  InsiderTransaction: '#d4a6c8',
-  StockPrice: '#fabfd2',
-  InstitutionalHolding: '#d7b5a6',
+  // Document types (Secondary hierarchy - subtle grays with slight variations)
+  Patent: '#64748b',              // Slate-500 (blue-gray medium)
+  TechnicalPaper: '#94a3b8',      // Slate-400 (blue-gray light)
+  SECFiling: '#475569',           // Slate-600 (blue-gray dark)
+  Regulation: '#71717a',          // Zinc-500 (neutral gray)
+  GitHub: '#78716c',              // Stone-500 (warm gray)
+  GovernmentContract: '#57534e',  // Stone-600 (warm gray dark)
+  News: '#a8a29e',                // Stone-400 (warm gray light)
+  InsiderTransaction: '#6b7280',  // Gray-500 (pure gray)
+  StockPrice: '#9ca3af',          // Gray-400 (pure gray light)
+  InstitutionalHolding: '#52525b', // Zinc-600 (neutral dark gray)
 };
 
 /**
