@@ -375,7 +375,7 @@ export default function HypeCycleChart({
               className="w-3 h-3 rounded-full"
               style={{ backgroundColor: color }}
             />
-            <span className="text-xs text-gray-600 dark:text-gray-400">
+            <span className="text-xs text-gray-600 dark:text-gray-300">
               {phase}
             </span>
           </div>

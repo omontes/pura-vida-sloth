@@ -102,7 +102,7 @@ export const darkTheme: Theme = {
     chart: {
       curve: '#60a5fa',
       curveShadow: 'rgba(96, 165, 250, 0.2)',
-      separator: '#4b5563',
+      separator: '#9ca3af',      // Lighter gray for visibility in dark mode
       axisText: '#f9fafb',
       nodeStroke: '#1a1d23',
       labelBackground: 'rgba(26, 29, 35, 0.95)',
