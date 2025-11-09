@@ -1,0 +1,702 @@
+[
+  {
+    "merged_from": "Electric Vertical Takeoff and Landing (eVTOL) Systems",
+    "merged_into": "Electric Vertical Takeoff and Landing",
+    "similarity": 0.845482138325917,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Airframe"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 47.1%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.845482138325917,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Vertical Takeoff and Landing",
+      "tech2_name": "Electric Vertical Takeoff and Landing (eVTOL) Systems",
+      "similarity": 0.845482138325917
+    },
+    "variant_count_before": 15,
+    "variant_count_after": 15
+  },
+  {
+    "merged_from": "Quadcopter",
+    "merged_into": "Quadcopter Configuration",
+    "similarity": 0.8552475563004364,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8552475563004364,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Quadcopter Configuration",
+      "tech2_name": "Quadcopter",
+      "similarity": 0.8552475563004364
+    },
+    "variant_count_before": 7,
+    "variant_count_after": 7
+  },
+  {
+    "merged_from": "Unmanned Aircraft System",
+    "merged_into": "Unmanned Aircraft Communication System",
+    "similarity": 0.842253513529067,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 37.5%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.842253513529067,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Unmanned Aircraft Communication System",
+      "tech2_name": "Unmanned Aircraft System",
+      "similarity": 0.842253513529067
+    },
+    "variant_count_before": 7,
+    "variant_count_after": 7
+  },
+  {
+    "merged_from": "Digital Twin",
+    "merged_into": "Digital Twin Framework",
+    "similarity": 0.8646198637406659,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Software"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8646198637406659,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Digital Twin Framework",
+      "tech2_name": "Digital Twin",
+      "similarity": 0.8646198637406659
+    },
+    "variant_count_before": 6,
+    "variant_count_after": 6
+  },
+  {
+    "merged_from": "Flight Simulation",
+    "merged_into": "Flight Simulation Technology",
+    "similarity": 0.8177872247617078,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Software"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8177872247617078,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Flight Simulation Technology",
+      "tech2_name": "Flight Simulation",
+      "similarity": 0.8177872247617078
+    },
+    "variant_count_before": 6,
+    "variant_count_after": 6
+  },
+  {
+    "merged_from": "Monte Carlo Simulation",
+    "merged_into": "Monte Carlo Method",
+    "similarity": 0.8753221021075314,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8753221021075314,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Monte Carlo Method",
+      "tech2_name": "Monte Carlo Simulation",
+      "similarity": 0.8753221021075314
+    },
+    "variant_count_before": 4,
+    "variant_count_after": 4
+  },
+  {
+    "merged_from": "Airflow Control System",
+    "merged_into": "Airflow Management System",
+    "similarity": 0.8196776718397304,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8196776718397304,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Airflow Control System",
+      "similarity": 0.8196776718397304
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Control Allocation",
+    "merged_into": "Control Allocation Optimization",
+    "similarity": 0.8640182561795544,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8640182561795544,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Control Allocation Optimization",
+      "tech2_name": "Control Allocation",
+      "similarity": 0.8640182561795544
+    },
+    "variant_count_before": 6,
+    "variant_count_after": 6
+  },
+  {
+    "merged_from": "Turbine Engine System",
+    "merged_into": "Turbine Engine Assembly",
+    "similarity": 0.8141528258661501,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8141528258661501,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Turbine Engine Assembly",
+      "tech2_name": "Turbine Engine System",
+      "similarity": 0.8141528258661501
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Surrogate-Based Optimization",
+    "merged_into": "Surrogate-Based Multidisciplinary Optimization",
+    "similarity": 0.8312711858945878,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8312711858945878,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Surrogate-Based Multidisciplinary Optimization",
+      "tech2_name": "Surrogate-Based Optimization",
+      "similarity": 0.8312711858945878
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Tilted Rotor Propulsion",
+    "merged_into": "Tilted Rotor System",
+    "similarity": 0.8647303822868482,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8647303822868482,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Tilted Rotor System",
+      "tech2_name": "Tilted Rotor Propulsion",
+      "similarity": 0.8647303822868482
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Design of Experiments",
+    "merged_into": "Statistical Design of Experiments",
+    "similarity": 0.8515705862157146,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8515705862157146,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Statistical Design of Experiments",
+      "tech2_name": "Design of Experiments",
+      "similarity": 0.8515705862157146
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Multi-Modal Transportation System",
+    "merged_into": "Multi-Modal Mobility System",
+    "similarity": 0.8006227723375725,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 8.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8006227723375725,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Modal Mobility System",
+      "tech2_name": "Multi-Modal Transportation System",
+      "similarity": 0.8006227723375725
+    },
+    "variant_count_before": 8,
+    "variant_count_after": 8
+  },
+  {
+    "merged_from": "Wall-Modeled Large Eddy Simulation",
+    "merged_into": "Large Eddy Simulation",
+    "similarity": 0.8962666823408649,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8962666823408649,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Large Eddy Simulation",
+      "tech2_name": "Wall-Modeled Large Eddy Simulation",
+      "similarity": 0.8962666823408649
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Aeroacoustic Analysis",
+    "merged_into": "Aeroacoustic Modeling",
+    "similarity": 0.8033607755869394,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8033607755869394,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aeroacoustic Modeling",
+      "tech2_name": "Aeroacoustic Analysis",
+      "similarity": 0.8033607755869394
+    },
+    "variant_count_before": 5,
+    "variant_count_after": 5
+  },
+  {
+    "merged_from": "Independent Control Propulsion System",
+    "merged_into": "Propulsion Control System",
+    "similarity": 0.8072451188108967,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8072451188108967,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propulsion Control System",
+      "tech2_name": "Independent Control Propulsion System",
+      "similarity": 0.8072451188108967
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "AI-Driven Safety Management System",
+    "merged_into": "AI-Integrated Safety Management System",
+    "similarity": 0.8375251486534835,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8375251486534835,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AI-Integrated Safety Management System",
+      "tech2_name": "AI-Driven Safety Management System",
+      "similarity": 0.8375251486534835
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "eVTOL Services",
+    "merged_into": "On-Demand eVTOL Services",
+    "similarity": 0.8229215118756579,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8229215118756579,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "On-Demand eVTOL Services",
+      "tech2_name": "eVTOL Services",
+      "similarity": 0.8229215118756579
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Charging Connector",
+    "merged_into": "Electric Vehicle Charging Connector",
+    "similarity": 0.8322453322208283,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8322453322208283,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Vehicle Charging Connector",
+      "tech2_name": "Charging Connector",
+      "similarity": 0.8322453322208283
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Flight Operations Management",
+    "merged_into": "eVTOL Operations Management",
+    "similarity": 0.8203931918528704,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Infrastructure/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8203931918528704,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Operations Management",
+      "tech2_name": "Flight Operations Management",
+      "similarity": 0.8203931918528704
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  },
+  {
+    "merged_from": "Aircraft Power Demand Prediction",
+    "merged_into": "Power Demand Prediction",
+    "similarity": 0.8933805181524801,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8933805181524801,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Power Demand Prediction",
+      "tech2_name": "Aircraft Power Demand Prediction",
+      "similarity": 0.8933805181524801
+    },
+    "variant_count_before": 3,
+    "variant_count_after": 3
+  },
+  {
+    "merged_from": "Rotor Hub Assembly",
+    "merged_into": "Hub Assembly",
+    "similarity": 0.8861626070483823,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8861626070483823,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Hub Assembly",
+      "tech2_name": "Rotor Hub Assembly",
+      "similarity": 0.8861626070483823
+    },
+    "variant_count_before": 3,
+    "variant_count_after": 3
+  },
+  {
+    "merged_from": "Lattice-Boltzmann Method for Computational Aerodynamics",
+    "merged_into": "Lattice-Boltzmann Method",
+    "similarity": 0.8637456340497616,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8637456340497616,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Lattice-Boltzmann Method",
+      "tech2_name": "Lattice-Boltzmann Method for Computational Aerodynamics",
+      "similarity": 0.8637456340497616
+    },
+    "variant_count_before": 3,
+    "variant_count_after": 3
+  },
+  {
+    "merged_from": "Rotor Blade Pitch Control Mechanism",
+    "merged_into": "Blade Pitch Control Mechanism",
+    "similarity": 0.9149251932205716,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.9149251932205716,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Blade Pitch Control Mechanism",
+      "tech2_name": "Rotor Blade Pitch Control Mechanism",
+      "similarity": 0.9149251932205716
+    },
+    "variant_count_before": 3,
+    "variant_count_after": 3
+  },
+  {
+    "merged_from": "Deployable Thrust Vectoring System",
+    "merged_into": "Thrust Vectoring System",
+    "similarity": 0.8312129362513634,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8312129362513634,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Thrust Vectoring System",
+      "tech2_name": "Deployable Thrust Vectoring System",
+      "similarity": 0.8312129362513634
+    },
+    "variant_count_before": 2,
+    "variant_count_after": 2
+  }
+]

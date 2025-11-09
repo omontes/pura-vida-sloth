@@ -72,8 +72,33 @@ class TechnologyClassifier:
     def _load_catalog(self) -> Optional[TechnologyCatalog]:
         """Load final catalog for exact variant matching."""
         try:
-            from .chromadb_indexer import load_final_catalog
-            catalog = load_final_catalog(self.config)
+            import json
+            from .schemas import CanonicalTechnology
+            from datetime import datetime, timezone
+
+            # Load from output directory (05_merged_catalog.json)
+            catalog_path = self.config.output_dir / "05_merged_catalog.json"
+
+            if not catalog_path.exists():
+                print(f"  Warning: Catalog not found at {catalog_path}")
+                return None
+
+            with open(catalog_path, 'r', encoding='utf-8') as f:
+                data = json.load(f)
+
+            # Convert to CanonicalTechnology objects
+            technologies = [CanonicalTechnology(**tech) for tech in data]
+
+            # Create TechnologyCatalog
+            catalog = TechnologyCatalog(
+                version="2.0",
+                generated_at=datetime.now(timezone.utc).isoformat(),
+                industry=self.config.industry,
+                total_canonical_technologies=len(technologies),
+                total_variants=sum(len(tech.variants) for tech in technologies),
+                technologies=technologies
+            )
+
             print(f"  Catalog loaded: {catalog.total_canonical_technologies} technologies")
             return catalog
         except Exception as e:

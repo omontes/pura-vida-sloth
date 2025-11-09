@@ -1,0 +1,756 @@
+[
+  {
+    "merged_from": "Ducted Fan Propulsor",
+    "merged_into": "Ducted Fan Propulsor",
+    "similarity": 0.8009587611259597,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8009587611259597,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Propulsor Fan System",
+      "tech2_name": "Ducted Fan Propulsor",
+      "similarity": 0.8009587611259597
+    }
+  },
+  {
+    "merged_from": "Vehicle Digital Twin",
+    "merged_into": "Digital Twin Framework",
+    "similarity": 0.8024003578534736,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8024003578534736,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Digital Twin Framework",
+      "tech2_name": "Vehicle Digital Twin",
+      "similarity": 0.8024003578534736
+    }
+  },
+  {
+    "merged_from": "DC Power Distribution Bus",
+    "merged_into": "DC Power Distribution Bus",
+    "similarity": 0.8138590478133088,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8138590478133088,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "DC Bus Architecture",
+      "tech2_name": "DC Power Distribution Bus",
+      "similarity": 0.8138590478133088
+    }
+  },
+  {
+    "merged_from": "Battery Sizing",
+    "merged_into": "Battery Sizing",
+    "similarity": 0.8001458553357219,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8001458553357219,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Battery Sizing for eVTOL",
+      "tech2_name": "Battery Sizing",
+      "similarity": 0.8001458553357219
+    }
+  },
+  {
+    "merged_from": "Rotor Blade",
+    "merged_into": "Rotor Blade",
+    "similarity": 0.8030488617341351,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8030488617341351,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Rotor Blade Attachment",
+      "tech2_name": "Rotor Blade",
+      "similarity": 0.8030488617341351
+    }
+  },
+  {
+    "merged_from": "Composite Blade",
+    "merged_into": "Composite Blade",
+    "similarity": 0.8811335454656328,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8811335454656328,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Composite Rotor Blade",
+      "tech2_name": "Composite Blade",
+      "similarity": 0.8811335454656328
+    }
+  },
+  {
+    "merged_from": "Flow Machine",
+    "merged_into": "Flow Machine",
+    "similarity": 0.8398527811299121,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8398527811299121,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Flow Machine Propulsion System",
+      "tech2_name": "Flow Machine",
+      "similarity": 0.8398527811299121
+    }
+  },
+  {
+    "merged_from": "Simulation Data Generation",
+    "merged_into": "Simulation Data Generation",
+    "similarity": 0.8115139344965827,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8115139344965827,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Synthetic Data Generation",
+      "tech2_name": "Simulation Data Generation",
+      "similarity": 0.8115139344965827
+    }
+  },
+  {
+    "merged_from": "Particle Image Velocimetry",
+    "merged_into": "Particle Image Velocimetry",
+    "similarity": 0.8463468565485524,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 44.4%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8463468565485524,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Stereoscopic Particle Image Velocimetry",
+      "tech2_name": "Particle Image Velocimetry",
+      "similarity": 0.8463468565485524
+    }
+  },
+  {
+    "merged_from": "eVTOL Noise Exposure Prediction",
+    "merged_into": "eVTOL Acoustic Noise Prediction",
+    "similarity": 0.8238977371205513,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8238977371205513,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "eVTOL Acoustic Noise Prediction",
+      "tech2_name": "eVTOL Noise Exposure Prediction",
+      "similarity": 0.8238977371205513
+    }
+  },
+  {
+    "merged_from": "Stability Control System",
+    "merged_into": "Stability Control System",
+    "similarity": 0.8158651008150624,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8158651008150624,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Control System Stability Analysis",
+      "tech2_name": "Stability Control System",
+      "similarity": 0.8158651008150624
+    }
+  },
+  {
+    "merged_from": "eVTOL Charging Infrastructure",
+    "merged_into": "eVTOL Charging Infrastructure",
+    "similarity": 0.8822623736779522,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8822623736779522,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "eVTOL Infrastructure",
+      "tech2_name": "eVTOL Charging Infrastructure",
+      "similarity": 0.8822623736779522
+    }
+  },
+  {
+    "merged_from": "Fractional-Order PID Controller",
+    "merged_into": "PID Controller",
+    "similarity": 0.8092644579331707,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8092644579331707,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "PID Controller",
+      "tech2_name": "Fractional-Order PID Controller",
+      "similarity": 0.8092644579331707
+    }
+  },
+  {
+    "merged_from": "Valve Mechanism",
+    "merged_into": "Flapper Valve Mechanism",
+    "similarity": 0.806588662378056,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.806588662378056,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Flapper Valve Mechanism",
+      "tech2_name": "Valve Mechanism",
+      "similarity": 0.806588662378056
+    }
+  },
+  {
+    "merged_from": "Finite Element Method",
+    "merged_into": "Finite Element Analysis",
+    "similarity": 0.8687445524030298,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8687445524030298,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Finite Element Analysis",
+      "tech2_name": "Finite Element Method",
+      "similarity": 0.8687445524030298
+    }
+  },
+  {
+    "merged_from": "Software Fault Tree Analysis",
+    "merged_into": "Fault Tree Analysis",
+    "similarity": 0.8509842353576405,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8509842353576405,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Fault Tree Analysis",
+      "tech2_name": "Software Fault Tree Analysis",
+      "similarity": 0.8509842353576405
+    }
+  },
+  {
+    "merged_from": "Numerical Aeroacoustic Modeling",
+    "merged_into": "Aeroacoustic Modeling",
+    "similarity": 0.8347098834435773,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Safety/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8347098834435773,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Aeroacoustic Modeling",
+      "tech2_name": "Numerical Aeroacoustic Modeling",
+      "similarity": 0.8347098834435773
+    }
+  },
+  {
+    "merged_from": "Vertiport System",
+    "merged_into": "Vertiport Arrival Management System",
+    "similarity": 0.8275771824402904,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8275771824402904,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Vertiport Arrival Management System",
+      "tech2_name": "Vertiport System",
+      "similarity": 0.8275771824402904
+    }
+  },
+  {
+    "merged_from": "VTOL Departure Management System",
+    "merged_into": "VTOL Departure Management System",
+    "similarity": 0.8045521849860557,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8045521849860557,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "VTOL Network Management System",
+      "tech2_name": "VTOL Departure Management System",
+      "similarity": 0.8045521849860557
+    }
+  },
+  {
+    "merged_from": "Cloud-Based Aerial Vehicle Service",
+    "merged_into": "Aerial Vehicle Service System",
+    "similarity": 0.8157744892349851,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 42.9%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8157744892349851,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Aerial Vehicle Service System",
+      "tech2_name": "Cloud-Based Aerial Vehicle Service",
+      "similarity": 0.8157744892349851
+    }
+  },
+  {
+    "merged_from": "Navier-Stokes Equations",
+    "merged_into": "Navier-Stokes Equations",
+    "similarity": 0.8226968472343332,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8226968472343332,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Reynolds-Averaged Navier-Stokes Equations",
+      "tech2_name": "Navier-Stokes Equations",
+      "similarity": 0.8226968472343332
+    }
+  },
+  {
+    "merged_from": "Numerical Simulation Method",
+    "merged_into": "Numerical Simulation Method",
+    "similarity": 0.8396855308554219,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8396855308554219,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Unsteady Numerical Simulation Method",
+      "tech2_name": "Numerical Simulation Method",
+      "similarity": 0.8396855308554219
+    }
+  },
+  {
+    "merged_from": "Voltage Management System",
+    "merged_into": "High Voltage Power Management",
+    "similarity": 0.801554246724815,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.801554246724815,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "High Voltage Power Management",
+      "tech2_name": "Voltage Management System",
+      "similarity": 0.801554246724815
+    }
+  },
+  {
+    "merged_from": "Twin-Generator Generative Adversarial Network",
+    "merged_into": "Generative Adversarial Network",
+    "similarity": 0.8301731516230804,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8301731516230804,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Generative Adversarial Network",
+      "tech2_name": "Twin-Generator Generative Adversarial Network",
+      "similarity": 0.8301731516230804
+    }
+  },
+  {
+    "merged_from": "Hydrogen-Powered eVTOL",
+    "merged_into": "Hydrogen-Powered VTOL",
+    "similarity": 0.8332476997678165,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8332476997678165,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Hydrogen-Powered VTOL",
+      "tech2_name": "Hydrogen-Powered eVTOL",
+      "similarity": 0.8332476997678165
+    }
+  },
+  {
+    "merged_from": "Sweep Wing Morphing Technology",
+    "merged_into": "Morphing Wing Technology",
+    "similarity": 0.8213573811100037,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8213573811100037,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Morphing Wing Technology",
+      "tech2_name": "Sweep Wing Morphing Technology",
+      "similarity": 0.8213573811100037
+    }
+  },
+  {
+    "merged_from": "Electrochemical Model",
+    "merged_into": "Electrochemical Energy Storage Model",
+    "similarity": 0.8224130281255462,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8224130281255462,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Electrochemical Energy Storage Model",
+      "tech2_name": "Electrochemical Model",
+      "similarity": 0.8224130281255462
+    }
+  },
+  {
+    "merged_from": "Emergency Resolution System",
+    "merged_into": "Emergency Detection and Resolution System",
+    "similarity": 0.830371255111077,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.830371255111077,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Emergency Detection and Resolution System",
+      "tech2_name": "Emergency Resolution System",
+      "similarity": 0.830371255111077
+    }
+  },
+  {
+    "merged_from": "Secondary Battery System",
+    "merged_into": "Battery System",
+    "similarity": 0.8120101816575359,
+    "validation": {
+      "decision": "auto_merge",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8120101816575359,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Secondary Battery System",
+      "similarity": 0.8120101816575359
+    }
+  }
+]

@@ -1,0 +1,6892 @@
+[
+  {
+    "tech1": "Electric Vertical Takeoff and Landing",
+    "tech2": "Vertical Takeoff and Landing Configuration",
+    "similarity": 0.7771327712617223,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 23.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7771327712617223,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Vertical Takeoff and Landing",
+      "tech2_name": "Vertical Takeoff and Landing Configuration",
+      "similarity": 0.7771327712617223
+    }
+  },
+  {
+    "tech1": "Electric Vertical Takeoff and Landing",
+    "tech2": "Electric Vertical Takeoff and Landing (eVTOL) Systems",
+    "similarity": 0.845482138325917,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Airframe"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 47.1%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.845482138325917,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Vertical Takeoff and Landing",
+      "tech2_name": "Electric Vertical Takeoff and Landing (eVTOL) Systems",
+      "similarity": 0.845482138325917
+    }
+  },
+  {
+    "tech1": "Quadcopter Configuration",
+    "tech2": "Quadcopter",
+    "similarity": 0.8552475563004364,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8552475563004364,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Quadcopter Configuration",
+      "tech2_name": "Quadcopter",
+      "similarity": 0.8552475563004364
+    }
+  },
+  {
+    "tech1": "Propulsor Fan System",
+    "tech2": "Ducted Propulsion System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propulsor Fan System",
+      "tech2_name": "Ducted Propulsion System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Propulsor Fan System",
+    "tech2": "Ducted Fan System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propulsor Fan System",
+      "tech2_name": "Ducted Fan System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Ducted Fan Propulsor",
+    "tech2": "Ducted Fan",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 14.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Ducted Fan Propulsor",
+      "tech2_name": "Ducted Fan",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Ducted Fan Propulsor",
+    "tech2": "Modular Ducted Fan Propulsor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Ducted Fan Propulsor",
+      "tech2_name": "Modular Ducted Fan Propulsor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Ducted Fan Propulsor",
+    "tech2": "Ducted Liftfan System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Ducted Fan Propulsor",
+      "tech2_name": "Ducted Liftfan System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Ducted Fan Propulsor",
+    "tech2": "Electric Ducted Fan",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Ducted Fan Propulsor",
+      "tech2_name": "Electric Ducted Fan",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Series Hybrid Powertrain",
+    "tech2": "Hybrid Electric Powertrain Architecture",
+    "similarity": 0.7855758931048042,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7855758931048042,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Series Hybrid Powertrain",
+      "tech2_name": "Hybrid Electric Powertrain Architecture",
+      "similarity": 0.7855758931048042
+    }
+  },
+  {
+    "tech1": "Series Hybrid Powertrain",
+    "tech2": "Hybrid-Electric Powertrain",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Series Hybrid Powertrain",
+      "tech2_name": "Hybrid-Electric Powertrain",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Series Hybrid Powertrain",
+    "tech2": "Hybrid-Electric Propulsion",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 12.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Series Hybrid Powertrain",
+      "tech2_name": "Hybrid-Electric Propulsion",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Serial Hybrid",
+    "tech2": "Parallel Hybrid",
+    "similarity": 0.7534947239454606,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7534947239454606,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Serial Hybrid",
+      "tech2_name": "Parallel Hybrid",
+      "similarity": 0.7534947239454606
+    }
+  },
+  {
+    "tech1": "Axial Flux Motor",
+    "tech2": "Radial Flux Motor",
+    "similarity": 0.7716400759198064,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7716400759198064,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Axial Flux Motor",
+      "tech2_name": "Radial Flux Motor",
+      "similarity": 0.7716400759198064
+    }
+  },
+  {
+    "tech1": "Traffic Collision Avoidance System",
+    "tech2": "Collision Avoidance Radar",
+    "similarity": 0.7548715048102794,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 18.2%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7548715048102794,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Traffic Collision Avoidance System",
+      "tech2_name": "Collision Avoidance Radar",
+      "similarity": 0.7548715048102794
+    }
+  },
+  {
+    "tech1": "Unmanned Aircraft Communication System",
+    "tech2": "Unmanned Aircraft System",
+    "similarity": 0.842253513529067,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 37.5%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.842253513529067,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Unmanned Aircraft Communication System",
+      "tech2_name": "Unmanned Aircraft System",
+      "similarity": 0.842253513529067
+    }
+  },
+  {
+    "tech1": "Path Planning",
+    "tech2": "Autonomous Path Planning",
+    "similarity": 0.8233017868916821,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8233017868916821,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Path Planning",
+      "tech2_name": "Autonomous Path Planning",
+      "similarity": 0.8233017868916821
+    }
+  },
+  {
+    "tech1": "Multi-Agent Reinforcement Learning",
+    "tech2": "Deep Reinforcement Learning",
+    "similarity": 0.7543513819868868,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7543513819868868,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Agent Reinforcement Learning",
+      "tech2_name": "Deep Reinforcement Learning",
+      "similarity": 0.7543513819868868
+    }
+  },
+  {
+    "tech1": "Multi-Agent Reinforcement Learning",
+    "tech2": "Deep Reinforcement Learning for Path Planning",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Agent Reinforcement Learning",
+      "tech2_name": "Deep Reinforcement Learning for Path Planning",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Multi-Agent Reinforcement Learning",
+    "tech2": "Reinforcement Learning",
+    "similarity": 0.7923167235772441,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7923167235772441,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Agent Reinforcement Learning",
+      "tech2_name": "Reinforcement Learning",
+      "similarity": 0.7923167235772441
+    }
+  },
+  {
+    "tech1": "Multi-Agent Reinforcement Learning",
+    "tech2": "Deep Reinforcement Learning Orchestration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Agent Reinforcement Learning",
+      "tech2_name": "Deep Reinforcement Learning Orchestration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Carbon Fiber Reinforcement",
+    "tech2": "Carbon Fiber Propellers",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Manufacturing/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Carbon Fiber Reinforcement",
+      "tech2_name": "Carbon Fiber Propellers",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Carbon Fiber Reinforcement",
+    "tech2": "Carbon Fiber Composite",
+    "similarity": 0.8325371511320139,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Manufacturing/Materials"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8325371511320139,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Carbon Fiber Reinforcement",
+      "tech2_name": "Carbon Fiber Composite",
+      "similarity": 0.8325371511320139
+    }
+  },
+  {
+    "tech1": "Digital Twin Framework",
+    "tech2": "Digital Twin",
+    "similarity": 0.8646198637406659,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Software"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8646198637406659,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Digital Twin Framework",
+      "tech2_name": "Digital Twin",
+      "similarity": 0.8646198637406659
+    }
+  },
+  {
+    "tech1": "Digital Twin Framework",
+    "tech2": "Digital Twin Technology",
+    "similarity": 0.7735646669799823,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Manufacturing"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 22.2%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7735646669799823,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Digital Twin Framework",
+      "tech2_name": "Digital Twin Technology",
+      "similarity": 0.7735646669799823
+    }
+  },
+  {
+    "tech1": "Computational Fluid Dynamics and Wind Tunnel Testing",
+    "tech2": "Wind Tunnel Testing",
+    "similarity": 0.7625568758924302,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Manufacturing/Testing"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 21.4%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7625568758924302,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computational Fluid Dynamics and Wind Tunnel Testing",
+      "tech2_name": "Wind Tunnel Testing",
+      "similarity": 0.7625568758924302
+    }
+  },
+  {
+    "tech1": "Computational Fluid Dynamics and Wind Tunnel Testing",
+    "tech2": "3DOF Wind Tunnel Testing",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computational Fluid Dynamics and Wind Tunnel Testing",
+      "tech2_name": "3DOF Wind Tunnel Testing",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Flight Simulation Technology",
+    "tech2": "Real-Time Flight Simulation",
+    "similarity": 0.79523566495787,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.79523566495787,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Flight Simulation Technology",
+      "tech2_name": "Real-Time Flight Simulation",
+      "similarity": 0.79523566495787
+    }
+  },
+  {
+    "tech1": "Flight Simulation Technology",
+    "tech2": "Flight Simulation",
+    "similarity": 0.8177872247617078,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Software"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8177872247617078,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Flight Simulation Technology",
+      "tech2_name": "Flight Simulation",
+      "similarity": 0.8177872247617078
+    }
+  },
+  {
+    "tech1": "Handling Qualities Task Elements",
+    "tech2": "Handling Qualities Assessment Framework",
+    "similarity": 0.7626164826242935,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7626164826242935,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Handling Qualities Task Elements",
+      "tech2_name": "Handling Qualities Assessment Framework",
+      "similarity": 0.7626164826242935
+    }
+  },
+  {
+    "tech1": "Motor Control Electronics",
+    "tech2": "Electric Aircraft Motor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Motor Control Electronics",
+      "tech2_name": "Electric Aircraft Motor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Motor Control Electronics",
+    "tech2": "Electric Motor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Motor Control Electronics",
+      "tech2_name": "Electric Motor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Motor Control Electronics",
+    "tech2": "Electric Motor Control System",
+    "similarity": 0.7604381622148785,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7604381622148785,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Motor Control Electronics",
+      "tech2_name": "Electric Motor Control System",
+      "similarity": 0.7604381622148785
+    }
+  },
+  {
+    "tech1": "Modular Airspace Management",
+    "tech2": "Dynamic Airspace Management",
+    "similarity": 0.7988067248190945,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7988067248190945,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Modular Airspace Management",
+      "tech2_name": "Dynamic Airspace Management",
+      "similarity": 0.7988067248190945
+    }
+  },
+  {
+    "tech1": "eVTOL Flight Dynamics Model",
+    "tech2": "eVTOL Dynamic Model",
+    "similarity": 0.770857358125409,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.770857358125409,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Flight Dynamics Model",
+      "tech2_name": "eVTOL Dynamic Model",
+      "similarity": 0.770857358125409
+    }
+  },
+  {
+    "tech1": "eVTOL Flight Dynamics Model",
+    "tech2": "Quadrotor Dynamic Model",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Flight Dynamics Model",
+      "tech2_name": "Quadrotor Dynamic Model",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Flight Dynamics Model",
+    "tech2": "Nonlinear Flight Dynamics Model",
+    "similarity": 0.7909741925288358,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7909741925288358,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Flight Dynamics Model",
+      "tech2_name": "Nonlinear Flight Dynamics Model",
+      "similarity": 0.7909741925288358
+    }
+  },
+  {
+    "tech1": "Battery Module Configuration",
+    "tech2": "Battery Module Assembly",
+    "similarity": 0.7543780971127538,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7543780971127538,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Module Configuration",
+      "tech2_name": "Battery Module Assembly",
+      "similarity": 0.7543780971127538
+    }
+  },
+  {
+    "tech1": "Turbine Engine Stator Vane",
+    "tech2": "Stator Vane Assembly",
+    "similarity": 0.7643906116450027,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7643906116450027,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Turbine Engine Stator Vane",
+      "tech2_name": "Stator Vane Assembly",
+      "similarity": 0.7643906116450027
+    }
+  },
+  {
+    "tech1": "Turbine Engine Stator Vane",
+    "tech2": "Vane Assembly System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Turbine Engine Stator Vane",
+      "tech2_name": "Vane Assembly System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Lift Fan Control System",
+    "tech2": "Lift Fan Assembly",
+    "similarity": 0.7685372307557232,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7685372307557232,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Lift Fan Control System",
+      "tech2_name": "Lift Fan Assembly",
+      "similarity": 0.7685372307557232
+    }
+  },
+  {
+    "tech1": "Lift Fan Control System",
+    "tech2": "Fan Position Control System",
+    "similarity": 0.7521160578975142,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7521160578975142,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Lift Fan Control System",
+      "tech2_name": "Fan Position Control System",
+      "similarity": 0.7521160578975142
+    }
+  },
+  {
+    "tech1": "Lift Fan Control System",
+    "tech2": "Tilting Fan Assembly",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Lift Fan Control System",
+      "tech2_name": "Tilting Fan Assembly",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Hybrid Optimization Algorithm",
+    "tech2": "Dynamic Optimization Algorithm",
+    "similarity": 0.7776586511787514,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7776586511787514,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Hybrid Optimization Algorithm",
+      "tech2_name": "Dynamic Optimization Algorithm",
+      "similarity": 0.7776586511787514
+    }
+  },
+  {
+    "tech1": "Battery Sizing for eVTOL",
+    "tech2": "eVTOL Battery Pack Optimization",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Sizing for eVTOL",
+      "tech2_name": "eVTOL Battery Pack Optimization",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery Sizing",
+    "tech2": "Battery Chemistry for eVTOL",
+    "similarity": 0.7501632830605197,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7501632830605197,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Sizing",
+      "tech2_name": "Battery Chemistry for eVTOL",
+      "similarity": 0.7501632830605197
+    }
+  },
+  {
+    "tech1": "Battery Sizing",
+    "tech2": "eVTOL Battery System",
+    "similarity": 0.7689566293589998,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7689566293589998,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Sizing",
+      "tech2_name": "eVTOL Battery System",
+      "similarity": 0.7689566293589998
+    }
+  },
+  {
+    "tech1": "Datalink",
+    "tech2": "Aircraft Flight Operations Datalink",
+    "similarity": 0.7835658591811799,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7835658591811799,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Datalink",
+      "tech2_name": "Aircraft Flight Operations Datalink",
+      "similarity": 0.7835658591811799
+    }
+  },
+  {
+    "tech1": "Monte Carlo Method",
+    "tech2": "Monte Carlo Simulation",
+    "similarity": 0.8753221021075314,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8753221021075314,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Monte Carlo Method",
+      "tech2_name": "Monte Carlo Simulation",
+      "similarity": 0.8753221021075314
+    }
+  },
+  {
+    "tech1": "Redundant Control System",
+    "tech2": "Redundant Flight Control Actuators",
+    "similarity": 0.7725154988216155,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7725154988216155,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Redundant Control System",
+      "tech2_name": "Redundant Flight Control Actuators",
+      "similarity": 0.7725154988216155
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Downwash Cooling System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Downwash Cooling System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Airflow Control Closure Device",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Airflow Control Closure Device",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Flow Control Device",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Flow Control Device",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Airflow Control System",
+    "similarity": 0.8196776718397304,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8196776718397304,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Airflow Control System",
+      "similarity": 0.8196776718397304
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Cooling Airflow System",
+    "similarity": 0.7649013013143703,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7649013013143703,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Cooling Airflow System",
+      "similarity": 0.7649013013143703
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Liquid Cooling System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Thermal Management"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Liquid Cooling System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Cooling System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Cooling System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Airflow Management System",
+    "tech2": "Variable Cooling System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Airflow Management System",
+      "tech2_name": "Variable Cooling System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Incremental Nonlinear Dynamic Inversion Controller",
+    "tech2": "Dynamic Inversion Control",
+    "similarity": 0.7655764202392608,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7655764202392608,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Incremental Nonlinear Dynamic Inversion Controller",
+      "tech2_name": "Dynamic Inversion Control",
+      "similarity": 0.7655764202392608
+    }
+  },
+  {
+    "tech1": "Battery Voltage Monitoring System",
+    "tech2": "Battery Health Monitoring",
+    "similarity": 0.758243661299366,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.758243661299366,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Voltage Monitoring System",
+      "tech2_name": "Battery Health Monitoring",
+      "similarity": 0.758243661299366
+    }
+  },
+  {
+    "tech1": "Noise Mitigation Strategies",
+    "tech2": "Aircraft Noise Mitigation System",
+    "similarity": 0.7800997799868914,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7800997799868914,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Noise Mitigation Strategies",
+      "tech2_name": "Aircraft Noise Mitigation System",
+      "similarity": 0.7800997799868914
+    }
+  },
+  {
+    "tech1": "Rotor Blade",
+    "tech2": "Turbine Blade Attachment",
+    "similarity": 0.7649886071317025,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7649886071317025,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Rotor Blade",
+      "tech2_name": "Turbine Blade Attachment",
+      "similarity": 0.7649886071317025
+    }
+  },
+  {
+    "tech1": "Rotor Blade",
+    "tech2": "Blade Attachment Mechanism",
+    "similarity": 0.8010393701333922,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8010393701333922,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Rotor Blade",
+      "tech2_name": "Blade Attachment Mechanism",
+      "similarity": 0.8010393701333922
+    }
+  },
+  {
+    "tech1": "Control Allocation Optimization",
+    "tech2": "Model-Based Control Algorithm",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Control Allocation Optimization",
+      "tech2_name": "Model-Based Control Algorithm",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Control Allocation Optimization",
+    "tech2": "Control Allocation",
+    "similarity": 0.8640182561795544,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8640182561795544,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Control Allocation Optimization",
+      "tech2_name": "Control Allocation",
+      "similarity": 0.8640182561795544
+    }
+  },
+  {
+    "tech1": "Control Allocation Optimization",
+    "tech2": "Model-Based Control Allocation",
+    "similarity": 0.7890012503786581,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7890012503786581,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Control Allocation Optimization",
+      "tech2_name": "Model-Based Control Allocation",
+      "similarity": 0.7890012503786581
+    }
+  },
+  {
+    "tech1": "Control Allocation Optimization",
+    "tech2": "Model-Based Control System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Control Allocation Optimization",
+      "tech2_name": "Model-Based Control System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Propeller Model Simulations",
+    "tech2": "Propeller Model Testing",
+    "similarity": 0.7522269474623389,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 22.2%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7522269474623389,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propeller Model Simulations",
+      "tech2_name": "Propeller Model Testing",
+      "similarity": 0.7522269474623389
+    }
+  },
+  {
+    "tech1": "Turbine Engine Assembly",
+    "tech2": "Turbine Engine System",
+    "similarity": 0.8141528258661501,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8141528258661501,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Turbine Engine Assembly",
+      "tech2_name": "Turbine Engine System",
+      "similarity": 0.8141528258661501
+    }
+  },
+  {
+    "tech1": "Rotating Magnet Coupling",
+    "tech2": "Magnet Array Coupling",
+    "similarity": 0.7623017583409446,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7623017583409446,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Rotating Magnet Coupling",
+      "tech2_name": "Magnet Array Coupling",
+      "similarity": 0.7623017583409446
+    }
+  },
+  {
+    "tech1": "Phase Change Materials",
+    "tech2": "Phase Change Material (PCM)",
+    "similarity": 0.789567112665045,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.789567112665045,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Phase Change Materials",
+      "tech2_name": "Phase Change Material (PCM)",
+      "similarity": 0.789567112665045
+    }
+  },
+  {
+    "tech1": "Phase Change Materials",
+    "tech2": "Phase Change Material Battery",
+    "similarity": 0.798655329678856,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.798655329678856,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Phase Change Materials",
+      "tech2_name": "Phase Change Material Battery",
+      "similarity": 0.798655329678856
+    }
+  },
+  {
+    "tech1": "Common Drive Shaft",
+    "tech2": "Redundant Drive Shaft System",
+    "similarity": 0.7649870188441213,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7649870188441213,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Common Drive Shaft",
+      "tech2_name": "Redundant Drive Shaft System",
+      "similarity": 0.7649870188441213
+    }
+  },
+  {
+    "tech1": "Redundant Multi-Rotor Propulsion",
+    "tech2": "Redundant Propulsion System",
+    "similarity": 0.7539562445792912,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7539562445792912,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Redundant Multi-Rotor Propulsion",
+      "tech2_name": "Redundant Propulsion System",
+      "similarity": 0.7539562445792912
+    }
+  },
+  {
+    "tech1": "Redundant Multi-Rotor Propulsion",
+    "tech2": "Multi-Rotor Propulsion System",
+    "similarity": 0.7938090445773814,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7938090445773814,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Redundant Multi-Rotor Propulsion",
+      "tech2_name": "Multi-Rotor Propulsion System",
+      "similarity": 0.7938090445773814
+    }
+  },
+  {
+    "tech1": "Passenger Exchange During Movement",
+    "tech2": "Passenger Exchange Optimization",
+    "similarity": 0.7530365623259395,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7530365623259395,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Passenger Exchange During Movement",
+      "tech2_name": "Passenger Exchange Optimization",
+      "similarity": 0.7530365623259395
+    }
+  },
+  {
+    "tech1": "Unmanned Aerial Vehicle (UAV)",
+    "tech2": "Unmanned Aerial Vehicle Technology",
+    "similarity": 0.7644488304006742,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7644488304006742,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Unmanned Aerial Vehicle (UAV)",
+      "tech2_name": "Unmanned Aerial Vehicle Technology",
+      "similarity": 0.7644488304006742
+    }
+  },
+  {
+    "tech1": "Composite Material Lay-Up",
+    "tech2": "Composite Material Fabrication",
+    "similarity": 0.7535744009862254,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 75.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7535744009862254,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Composite Material Lay-Up",
+      "tech2_name": "Composite Material Fabrication",
+      "similarity": 0.7535744009862254
+    }
+  },
+  {
+    "tech1": "Sealing Component Testing Method",
+    "tech2": "Sealing Component Performance Evaluation",
+    "similarity": 0.762076615684918,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.762076615684918,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Sealing Component Testing Method",
+      "tech2_name": "Sealing Component Performance Evaluation",
+      "similarity": 0.762076615684918
+    }
+  },
+  {
+    "tech1": "Variable Pitch Rotor Blades",
+    "tech2": "Electric Motor with Variable Pitch Rotor",
+    "similarity": 0.7593590784895847,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7593590784895847,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Variable Pitch Rotor Blades",
+      "tech2_name": "Electric Motor with Variable Pitch Rotor",
+      "similarity": 0.7593590784895847
+    }
+  },
+  {
+    "tech1": "Variable Pitch Rotor Blades",
+    "tech2": "Variable Pitch Propeller",
+    "similarity": 0.7804155561873014,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7804155561873014,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Variable Pitch Rotor Blades",
+      "tech2_name": "Variable Pitch Propeller",
+      "similarity": 0.7804155561873014
+    }
+  },
+  {
+    "tech1": "Battery Chemistry Design",
+    "tech2": "Lithium-Ion Battery Chemistry",
+    "similarity": 0.7658312445718816,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7658312445718816,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Chemistry Design",
+      "tech2_name": "Lithium-Ion Battery Chemistry",
+      "similarity": 0.7658312445718816
+    }
+  },
+  {
+    "tech1": "Battery Chemistry Design",
+    "tech2": "Lithium-Ion Battery",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Energy"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 11.1%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Chemistry Design",
+      "tech2_name": "Lithium-Ion Battery",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Particle Impact Dampers",
+    "tech2": "Tailored Particle Impact Damper System",
+    "similarity": 0.7530347644603897,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7530347644603897,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Particle Impact Dampers",
+      "tech2_name": "Tailored Particle Impact Damper System",
+      "similarity": 0.7530347644603897
+    }
+  },
+  {
+    "tech1": "Low-Pressure Compressor Assembly",
+    "tech2": "Low-Pressure Compressor Casing",
+    "similarity": 0.7776496228376117,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7776496228376117,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Low-Pressure Compressor Assembly",
+      "tech2_name": "Low-Pressure Compressor Casing",
+      "similarity": 0.7776496228376117
+    }
+  },
+  {
+    "tech1": "Low-Pressure Compressor Assembly",
+    "tech2": "Turbomachine Compressor Assembly",
+    "similarity": 0.771367621206575,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.771367621206575,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Low-Pressure Compressor Assembly",
+      "tech2_name": "Turbomachine Compressor Assembly",
+      "similarity": 0.771367621206575
+    }
+  },
+  {
+    "tech1": "Noise Reduction System",
+    "tech2": "Noise Reduction Technology",
+    "similarity": 0.7613936189786454,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Safety/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7613936189786454,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Noise Reduction System",
+      "tech2_name": "Noise Reduction Technology",
+      "similarity": 0.7613936189786454
+    }
+  },
+  {
+    "tech1": "Stability Control System",
+    "tech2": "Stability Augmentation System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 37.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Stability Control System",
+      "tech2_name": "Stability Augmentation System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Compass Rose Icon",
+    "tech2": "Compass Icon Control Mechanism",
+    "similarity": 0.7641564398151357,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7641564398151357,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Compass Rose Icon",
+      "tech2_name": "Compass Icon Control Mechanism",
+      "similarity": 0.7641564398151357
+    }
+  },
+  {
+    "tech1": "Asymmetric Lift Distribution",
+    "tech2": "Lift Distribution System",
+    "similarity": 0.7660979840823083,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7660979840823083,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Asymmetric Lift Distribution",
+      "tech2_name": "Lift Distribution System",
+      "similarity": 0.7660979840823083
+    }
+  },
+  {
+    "tech1": "Quadratic Programming Control",
+    "tech2": "Active Set Linear Quadratic Programming",
+    "similarity": 0.778404657741453,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.778404657741453,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Quadratic Programming Control",
+      "tech2_name": "Active Set Linear Quadratic Programming",
+      "similarity": 0.778404657741453
+    }
+  },
+  {
+    "tech1": "eVTOL Air Taxi",
+    "tech2": "Electric Air Taxi Services",
+    "similarity": 0.7948432744449075,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 12.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7948432744449075,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Air Taxi",
+      "tech2_name": "Electric Air Taxi Services",
+      "similarity": 0.7948432744449075
+    }
+  },
+  {
+    "tech1": "Inboard Wing Configuration",
+    "tech2": "Rotating Wing Fuselage",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Inboard Wing Configuration",
+      "tech2_name": "Rotating Wing Fuselage",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Inboard Wing Configuration",
+    "tech2": "Wing Configuration",
+    "similarity": 0.7929259664933515,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7929259664933515,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Inboard Wing Configuration",
+      "tech2_name": "Wing Configuration",
+      "similarity": 0.7929259664933515
+    }
+  },
+  {
+    "tech1": "Inboard Wing Configuration",
+    "tech2": "Rotating Wing Configuration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Inboard Wing Configuration",
+      "tech2_name": "Rotating Wing Configuration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Optimal Traversal Strategy",
+    "tech2": "Energy Optimal Traversal",
+    "similarity": 0.7915011588042633,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7915011588042633,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Optimal Traversal Strategy",
+      "tech2_name": "Energy Optimal Traversal",
+      "similarity": 0.7915011588042633
+    }
+  },
+  {
+    "tech1": "Rotor Dynamics Simulation",
+    "tech2": "Rotor Flapping Dynamics",
+    "similarity": 0.7533665390121689,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7533665390121689,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Rotor Dynamics Simulation",
+      "tech2_name": "Rotor Flapping Dynamics",
+      "similarity": 0.7533665390121689
+    }
+  },
+  {
+    "tech1": "Battery Degradation Mitigation",
+    "tech2": "Battery Degradation Modeling",
+    "similarity": 0.7689649761608724,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7689649761608724,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery Degradation Mitigation",
+      "tech2_name": "Battery Degradation Modeling",
+      "similarity": 0.7689649761608724
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Urban Air Mobility",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Infrastructure/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Urban Air Mobility",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Urban Air Mobility Regulatory Framework",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Urban Air Mobility Regulatory Framework",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Urban Air Mobility Traffic Management",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Infrastructure/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Urban Air Mobility Traffic Management",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Urban Air Traffic Management",
+    "similarity": 0.7715539896003835,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7715539896003835,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Urban Air Traffic Management",
+      "similarity": 0.7715539896003835
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Urban Air Mobility Airspace Structure",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Urban Air Mobility Airspace Structure",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Integrated Air Traffic Management Systems",
+    "tech2": "Air Traffic Control Systems",
+    "similarity": 0.7892911816026341,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7892911816026341,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Integrated Air Traffic Management Systems",
+      "tech2_name": "Air Traffic Control Systems",
+      "similarity": 0.7892911816026341
+    }
+  },
+  {
+    "tech1": "Flapper Valve Mechanism",
+    "tech2": "Movable Valve Mechanism",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Flapper Valve Mechanism",
+      "tech2_name": "Movable Valve Mechanism",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Charging Infrastructure for Batteries",
+    "tech2": "Electric Charging Infrastructure",
+    "similarity": 0.7557253198265221,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7557253198265221,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Charging Infrastructure for Batteries",
+      "tech2_name": "Electric Charging Infrastructure",
+      "similarity": 0.7557253198265221
+    }
+  },
+  {
+    "tech1": "Surrogate-Based Multidisciplinary Optimization",
+    "tech2": "Multidisciplinary Design Optimization",
+    "similarity": 0.7711634040092589,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7711634040092589,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Surrogate-Based Multidisciplinary Optimization",
+      "tech2_name": "Multidisciplinary Design Optimization",
+      "similarity": 0.7711634040092589
+    }
+  },
+  {
+    "tech1": "Surrogate-Based Multidisciplinary Optimization",
+    "tech2": "Surrogate-Based Optimization",
+    "similarity": 0.8312711858945878,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8312711858945878,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Surrogate-Based Multidisciplinary Optimization",
+      "tech2_name": "Surrogate-Based Optimization",
+      "similarity": 0.8312711858945878
+    }
+  },
+  {
+    "tech1": "Aerodynamic Characterization",
+    "tech2": "Aerodynamic Analysis",
+    "similarity": 0.7641693271471287,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7641693271471287,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aerodynamic Characterization",
+      "tech2_name": "Aerodynamic Analysis",
+      "similarity": 0.7641693271471287
+    }
+  },
+  {
+    "tech1": "Aerodynamic Characterization",
+    "tech2": "Aerodynamic Analysis Framework",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aerodynamic Characterization",
+      "tech2_name": "Aerodynamic Analysis Framework",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Aerodynamic Characterization",
+    "tech2": "Aerodynamic Damping Analysis",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aerodynamic Characterization",
+      "tech2_name": "Aerodynamic Damping Analysis",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Drag Reduction Techniques",
+    "tech2": "Induced Drag Reduction",
+    "similarity": 0.7588320091616833,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Aerodynamics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7588320091616833,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Drag Reduction Techniques",
+      "tech2_name": "Induced Drag Reduction",
+      "similarity": 0.7588320091616833
+    }
+  },
+  {
+    "tech1": "Tilted Rotor System",
+    "tech2": "Tilted Rotor Propulsion",
+    "similarity": 0.8647303822868482,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8647303822868482,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Tilted Rotor System",
+      "tech2_name": "Tilted Rotor Propulsion",
+      "similarity": 0.8647303822868482
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Flight Control Circuit",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Flight Control Circuit",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Flight Control Computer",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Aviation"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Flight Control Computer",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Automatic Flight Control System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Automatic Flight Control System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Integrated Flight Control System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Integrated Flight Control System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Flight Control System",
+    "similarity": 0.7973473205111073,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 27.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7973473205111073,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Flight Control System",
+      "similarity": 0.7973473205111073
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Flight Control Processor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Flight Control Processor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Integrated Control System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Integrated Control System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Indirect Flight Control System",
+    "tech2": "Flight Control and Navigation System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Indirect Flight Control System",
+      "tech2_name": "Flight Control and Navigation System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electromagnetic Response Simulations",
+    "tech2": "eVTOL Electromagnetic Response",
+    "similarity": 0.7810918417214671,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7810918417214671,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electromagnetic Response Simulations",
+      "tech2_name": "eVTOL Electromagnetic Response",
+      "similarity": 0.7810918417214671
+    }
+  },
+  {
+    "tech1": "Minimum Energy Trajectories",
+    "tech2": "Energy-Efficient Flight Trajectories",
+    "similarity": 0.7639651618225453,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7639651618225453,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Minimum Energy Trajectories",
+      "tech2_name": "Energy-Efficient Flight Trajectories",
+      "similarity": 0.7639651618225453
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "On-Board Thermal Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "On-Board Thermal Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Fuel Cell Exhaust Management",
+    "similarity": 0.7992081990595896,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7992081990595896,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Fuel Cell Exhaust Management",
+      "similarity": 0.7992081990595896
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Battery Thermal Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Energy"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Battery Thermal Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Battery Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Energy"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 18.8%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Battery Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Powertrain Thermal Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Powertrain Thermal Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Thermal Management System",
+    "similarity": 0.7885783303383906,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 17.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7885783303383906,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Thermal Management System",
+      "similarity": 0.7885783303383906
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Air-Cooled Thermal Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Air-Cooled Thermal Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Battery State Management",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Battery State Management",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Thermal Management Battery System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Thermal Management Battery System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Hydrogen Fuel Cell",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Energy"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Hydrogen Fuel Cell",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fuel Cell Thermal Management System",
+    "tech2": "Fuel Cell System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fuel Cell Thermal Management System",
+      "tech2_name": "Fuel Cell System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Statistical Design of Experiments",
+    "tech2": "Design of Experiments",
+    "similarity": 0.8515705862157146,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8515705862157146,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Statistical Design of Experiments",
+      "tech2_name": "Design of Experiments",
+      "similarity": 0.8515705862157146
+    }
+  },
+  {
+    "tech1": "Sliding Mode Control with Nonlinear Disturbance Observer",
+    "tech2": "Sliding Mode Observer",
+    "similarity": 0.7599448274178251,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7599448274178251,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Sliding Mode Control with Nonlinear Disturbance Observer",
+      "tech2_name": "Sliding Mode Observer",
+      "similarity": 0.7599448274178251
+    }
+  },
+  {
+    "tech1": "Flight Test Data Analysis",
+    "tech2": "Real-Time Flight Data Analysis",
+    "similarity": 0.7520640079765238,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7520640079765238,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Flight Test Data Analysis",
+      "tech2_name": "Real-Time Flight Data Analysis",
+      "similarity": 0.7520640079765238
+    }
+  },
+  {
+    "tech1": "Multi-Modal Mobility System",
+    "tech2": "Multi-Modal Transportation System",
+    "similarity": 0.8006227723375725,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 8.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8006227723375725,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Modal Mobility System",
+      "tech2_name": "Multi-Modal Transportation System",
+      "similarity": 0.8006227723375725
+    }
+  },
+  {
+    "tech1": "Large Eddy Simulation",
+    "tech2": "Wall-Modeled Large Eddy Simulation",
+    "similarity": 0.8962666823408649,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8962666823408649,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Large Eddy Simulation",
+      "tech2_name": "Wall-Modeled Large Eddy Simulation",
+      "similarity": 0.8962666823408649
+    }
+  },
+  {
+    "tech1": "Turbomachine Lubrication System",
+    "tech2": "Lubrication System",
+    "similarity": 0.7674497075002026,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7674497075002026,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Turbomachine Lubrication System",
+      "tech2_name": "Lubrication System",
+      "similarity": 0.7674497075002026
+    }
+  },
+  {
+    "tech1": "Aeroacoustic Modeling",
+    "tech2": "Aeroacoustic Analysis",
+    "similarity": 0.8033607755869394,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8033607755869394,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aeroacoustic Modeling",
+      "tech2_name": "Aeroacoustic Analysis",
+      "similarity": 0.8033607755869394
+    }
+  },
+  {
+    "tech1": "High-Order Trajectory Planning",
+    "tech2": "Real-Time Trajectory Planning",
+    "similarity": 0.7889804357073817,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7889804357073817,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "High-Order Trajectory Planning",
+      "tech2_name": "Real-Time Trajectory Planning",
+      "similarity": 0.7889804357073817
+    }
+  },
+  {
+    "tech1": "Vertiport Arrival Management System",
+    "tech2": "Vertiport Network Integration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Vertiport Arrival Management System",
+      "tech2_name": "Vertiport Network Integration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Vertiport Arrival Management System",
+    "tech2": "Vertiport Network",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Vertiport Arrival Management System",
+      "tech2_name": "Vertiport Network",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Vertiport Arrival Management System",
+    "tech2": "Vertiport Infrastructure",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 12.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Vertiport Arrival Management System",
+      "tech2_name": "Vertiport Infrastructure",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Vertiport Arrival Management System",
+    "tech2": "Vertiport",
+    "similarity": 0.7506251436298036,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 10.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7506251436298036,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Vertiport Arrival Management System",
+      "tech2_name": "Vertiport",
+      "similarity": 0.7506251436298036
+    }
+  },
+  {
+    "tech1": "eVTOL Aircraft Design",
+    "tech2": "Sustainable eVTOL Design",
+    "similarity": 0.7621983068014007,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7621983068014007,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Aircraft Design",
+      "tech2_name": "Sustainable eVTOL Design",
+      "similarity": 0.7621983068014007
+    }
+  },
+  {
+    "tech1": "eVTOL Aircraft Design",
+    "tech2": "Transformational eVTOL Aircraft",
+    "similarity": 0.7655840196328388,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7655840196328388,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Aircraft Design",
+      "tech2_name": "Transformational eVTOL Aircraft",
+      "similarity": 0.7655840196328388
+    }
+  },
+  {
+    "tech1": "eVTOL Aircraft Design",
+    "tech2": "Dragonfly eVTOL Aircraft",
+    "similarity": 0.7584890641885029,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7584890641885029,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Aircraft Design",
+      "tech2_name": "Dragonfly eVTOL Aircraft",
+      "similarity": 0.7584890641885029
+    }
+  },
+  {
+    "tech1": "Coaxial Contra-Rotating Propeller System",
+    "tech2": "Coaxial Propulsion System",
+    "similarity": 0.7740826850005365,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7740826850005365,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Coaxial Contra-Rotating Propeller System",
+      "tech2_name": "Coaxial Propulsion System",
+      "similarity": 0.7740826850005365
+    }
+  },
+  {
+    "tech1": "Multi-Fidelity Gaussian Process Regression Model",
+    "tech2": "Multi-Output Gaussian Process",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Fidelity Gaussian Process Regression Model",
+      "tech2_name": "Multi-Output Gaussian Process",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Multi-Fidelity Gaussian Process Regression Model",
+    "tech2": "Gaussian Process Regression",
+    "similarity": 0.7845972228650173,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7845972228650173,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Fidelity Gaussian Process Regression Model",
+      "tech2_name": "Gaussian Process Regression",
+      "similarity": 0.7845972228650173
+    }
+  },
+  {
+    "tech1": "Propulsion Control System",
+    "tech2": "Independent Control Propulsion System",
+    "similarity": 0.8072451188108967,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8072451188108967,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propulsion Control System",
+      "tech2_name": "Independent Control Propulsion System",
+      "similarity": 0.8072451188108967
+    }
+  },
+  {
+    "tech1": "Propulsion Control System",
+    "tech2": "Propulsion Motor Control Software",
+    "similarity": 0.7686496135294169,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7686496135294169,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Propulsion Control System",
+      "tech2_name": "Propulsion Motor Control Software",
+      "similarity": 0.7686496135294169
+    }
+  },
+  {
+    "tech1": "Vortex Particle Method",
+    "tech2": "Vortex Lattice Method",
+    "similarity": 0.7868993603912318,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7868993603912318,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Vortex Particle Method",
+      "tech2_name": "Vortex Lattice Method",
+      "similarity": 0.7868993603912318
+    }
+  },
+  {
+    "tech1": "Transportation Itinerary Management",
+    "tech2": "Real-Time Itinerary Management",
+    "similarity": 0.7707263242547798,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7707263242547798,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Transportation Itinerary Management",
+      "tech2_name": "Real-Time Itinerary Management",
+      "similarity": 0.7707263242547798
+    }
+  },
+  {
+    "tech1": "Sensor Data Communication",
+    "tech2": "Data Communication System",
+    "similarity": 0.7846570283628628,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7846570283628628,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Sensor Data Communication",
+      "tech2_name": "Data Communication System",
+      "similarity": 0.7846570283628628
+    }
+  },
+  {
+    "tech1": "Sensor Data Communication",
+    "tech2": "Flight Data Communication System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Sensor Data Communication",
+      "tech2_name": "Flight Data Communication System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Sensor Data Communication",
+    "tech2": "Communication Data Connector",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Sensor Data Communication",
+      "tech2_name": "Communication Data Connector",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "AI-Integrated Safety Management System",
+    "tech2": "AI-Driven Safety Management System",
+    "similarity": 0.8375251486534835,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8375251486534835,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AI-Integrated Safety Management System",
+      "tech2_name": "AI-Driven Safety Management System",
+      "similarity": 0.8375251486534835
+    }
+  },
+  {
+    "tech1": "Rotor Control System",
+    "tech2": "Coupled Rotor Control System",
+    "similarity": 0.7800445630095052,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 12.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7800445630095052,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Rotor Control System",
+      "tech2_name": "Coupled Rotor Control System",
+      "similarity": 0.7800445630095052
+    }
+  },
+  {
+    "tech1": "On-Demand eVTOL Services",
+    "tech2": "eVTOL Services",
+    "similarity": 0.8229215118756579,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8229215118756579,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "On-Demand eVTOL Services",
+      "tech2_name": "eVTOL Services",
+      "similarity": 0.8229215118756579
+    }
+  },
+  {
+    "tech1": "Route Assessment System",
+    "tech2": "Route Planning System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Infrastructure/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Route Assessment System",
+      "tech2_name": "Route Planning System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Route Assessment System",
+    "tech2": "Route Optimization System",
+    "similarity": 0.7576183834945496,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Infrastructure/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 22.2%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7576183834945496,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Route Assessment System",
+      "tech2_name": "Route Optimization System",
+      "similarity": 0.7576183834945496
+    }
+  },
+  {
+    "tech1": "Route Assessment System",
+    "tech2": "Flight Route Planning",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Infrastructure/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Route Assessment System",
+      "tech2_name": "Flight Route Planning",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Annular Wall Design",
+    "tech2": "Annular Segmented Design",
+    "similarity": 0.7559271219927508,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7559271219927508,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Annular Wall Design",
+      "tech2_name": "Annular Segmented Design",
+      "similarity": 0.7559271219927508
+    }
+  },
+  {
+    "tech1": "Silicon Oxide Lithium-Ion Battery",
+    "tech2": "Pre-Lithiated Silicon Oxide Anode",
+    "similarity": 0.7994048792078003,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7994048792078003,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Silicon Oxide Lithium-Ion Battery",
+      "tech2_name": "Pre-Lithiated Silicon Oxide Anode",
+      "similarity": 0.7994048792078003
+    }
+  },
+  {
+    "tech1": "Computer Vision",
+    "tech2": "Computer Vision for Autonomous Flight",
+    "similarity": 0.8186483068174008,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8186483068174008,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computer Vision",
+      "tech2_name": "Computer Vision for Autonomous Flight",
+      "similarity": 0.8186483068174008
+    }
+  },
+  {
+    "tech1": "Yaw Control Law",
+    "tech2": "Yaw Control Enhancement",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Yaw Control Law",
+      "tech2_name": "Yaw Control Enhancement",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Yaw Control Law",
+    "tech2": "Yaw Control Optimization",
+    "similarity": 0.7728072885444964,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7728072885444964,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Yaw Control Law",
+      "tech2_name": "Yaw Control Optimization",
+      "similarity": 0.7728072885444964
+    }
+  },
+  {
+    "tech1": "Yaw Control Law",
+    "tech2": "Yaw Control Compensation",
+    "similarity": 0.7527540091858061,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7527540091858061,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Yaw Control Law",
+      "tech2_name": "Yaw Control Compensation",
+      "similarity": 0.7527540091858061
+    }
+  },
+  {
+    "tech1": "Yaw Control Law",
+    "tech2": "Yaw Control Performance",
+    "similarity": 0.7557800252849765,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7557800252849765,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Yaw Control Law",
+      "tech2_name": "Yaw Control Performance",
+      "similarity": 0.7557800252849765
+    }
+  },
+  {
+    "tech1": "Fast Charging Capability",
+    "tech2": "Fast Charging Protocols",
+    "similarity": 0.7641574444579867,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7641574444579867,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fast Charging Capability",
+      "tech2_name": "Fast Charging Protocols",
+      "similarity": 0.7641574444579867
+    }
+  },
+  {
+    "tech1": "Fast Charging Capability",
+    "tech2": "Fast Charging Battery",
+    "similarity": 0.8026296564929614,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Infrastructure/Energy"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 22.2%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8026296564929614,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fast Charging Capability",
+      "tech2_name": "Fast Charging Battery",
+      "similarity": 0.8026296564929614
+    }
+  },
+  {
+    "tech1": "Thermal Runaway Prevention",
+    "tech2": "Thermal Runaway Safety Analysis",
+    "similarity": 0.7544378866267947,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7544378866267947,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Thermal Runaway Prevention",
+      "tech2_name": "Thermal Runaway Safety Analysis",
+      "similarity": 0.7544378866267947
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "RPM-Controlled Multirotor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "RPM-Controlled Multirotor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "eVTOL Multirotor Aircraft",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "eVTOL Multirotor Aircraft",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "Multirotor System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "Multirotor System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "Tiltrotor",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "Tiltrotor",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "Tiltrotor eVTOL Configuration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "Tiltrotor eVTOL Configuration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "Electric Tiltrotor Aircraft",
+    "similarity": 0.8164628100261488,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8164628100261488,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "Electric Tiltrotor Aircraft",
+      "similarity": 0.8164628100261488
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "Multirotor Aircraft",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "Multirotor Aircraft",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Electric Tiltrotor Propulsion System",
+    "tech2": "eVTOL Multirotor Configuration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Tiltrotor Propulsion System",
+      "tech2_name": "eVTOL Multirotor Configuration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery-Electric Propulsion System",
+    "tech2": "Battery Propulsion System",
+    "similarity": 0.7848106484089442,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Propulsion/Energy Storage"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7848106484089442,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery-Electric Propulsion System",
+      "tech2_name": "Battery Propulsion System",
+      "similarity": 0.7848106484089442
+    }
+  },
+  {
+    "tech1": "Heat Exchanger",
+    "tech2": "Combustion Exhaust Heat Exchanger",
+    "similarity": 0.7898952034993267,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7898952034993267,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Heat Exchanger",
+      "tech2_name": "Combustion Exhaust Heat Exchanger",
+      "similarity": 0.7898952034993267
+    }
+  },
+  {
+    "tech1": "Heat Exchanger",
+    "tech2": "Plate-Fin Heat Exchanger",
+    "similarity": 0.775678200237019,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.775678200237019,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Heat Exchanger",
+      "tech2_name": "Plate-Fin Heat Exchanger",
+      "similarity": 0.775678200237019
+    }
+  },
+  {
+    "tech1": "Hybrid Control Scheme",
+    "tech2": "Hybrid Control Architecture",
+    "similarity": 0.7696100851649298,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7696100851649298,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Hybrid Control Scheme",
+      "tech2_name": "Hybrid Control Architecture",
+      "similarity": 0.7696100851649298
+    }
+  },
+  {
+    "tech1": "Equivalent Consumption Minimization Strategy",
+    "tech2": "Minimum Energy Consumption Strategy",
+    "similarity": 0.7557124000836966,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7557124000836966,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Equivalent Consumption Minimization Strategy",
+      "tech2_name": "Minimum Energy Consumption Strategy",
+      "similarity": 0.7557124000836966
+    }
+  },
+  {
+    "tech1": "Equivalent Consumption Minimization Strategy",
+    "tech2": "Energy Minimization Control Strategy",
+    "similarity": 0.7882494068830017,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7882494068830017,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Equivalent Consumption Minimization Strategy",
+      "tech2_name": "Energy Minimization Control Strategy",
+      "similarity": 0.7882494068830017
+    }
+  },
+  {
+    "tech1": "Artificial Intelligence in Advanced Air Mobility",
+    "tech2": "Artificial Intelligence",
+    "similarity": 0.7534764076245174,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7534764076245174,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Artificial Intelligence in Advanced Air Mobility",
+      "tech2_name": "Artificial Intelligence",
+      "similarity": 0.7534764076245174
+    }
+  },
+  {
+    "tech1": "Artificial Intelligence in Advanced Air Mobility",
+    "tech2": "Artificial Intelligence Integration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Artificial Intelligence in Advanced Air Mobility",
+      "tech2_name": "Artificial Intelligence Integration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Artificial Intelligence in Advanced Air Mobility",
+    "tech2": "Explainable Artificial Intelligence",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Artificial Intelligence in Advanced Air Mobility",
+      "tech2_name": "Explainable Artificial Intelligence",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Artificial Intelligence in Advanced Air Mobility",
+    "tech2": "Artificial Intelligence Routing",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Artificial Intelligence in Advanced Air Mobility",
+      "tech2_name": "Artificial Intelligence Routing",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Trajectory Replanning",
+    "tech2": "Trajectory Optimization",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Trajectory Replanning",
+      "tech2_name": "Trajectory Optimization",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Trajectory Replanning",
+    "tech2": "Takeoff Trajectory Design Framework",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Trajectory Replanning",
+      "tech2_name": "Takeoff Trajectory Design Framework",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Trajectory Replanning",
+    "tech2": "Takeoff Trajectory Optimization",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Trajectory Replanning",
+      "tech2_name": "Takeoff Trajectory Optimization",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Trajectory Replanning",
+    "tech2": "Trajectory Management",
+    "similarity": 0.7583333040182232,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7583333040182232,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Trajectory Replanning",
+      "tech2_name": "Trajectory Management",
+      "similarity": 0.7583333040182232
+    }
+  },
+  {
+    "tech1": "Multi-Mode Vibration Control",
+    "tech2": "Active Vibration Control",
+    "similarity": 0.7649017181147658,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7649017181147658,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Multi-Mode Vibration Control",
+      "tech2_name": "Active Vibration Control",
+      "similarity": 0.7649017181147658
+    }
+  },
+  {
+    "tech1": "Non-Rotating Fairing",
+    "tech2": "Aerodynamic Fairing System",
+    "similarity": 0.770690656427997,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.770690656427997,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Non-Rotating Fairing",
+      "tech2_name": "Aerodynamic Fairing System",
+      "similarity": 0.770690656427997
+    }
+  },
+  {
+    "tech1": "High Energy Density Battery",
+    "tech2": "High Power Density Battery",
+    "similarity": 0.7700956321221893,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 36.4%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7700956321221893,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "High Energy Density Battery",
+      "tech2_name": "High Power Density Battery",
+      "similarity": 0.7700956321221893
+    }
+  },
+  {
+    "tech1": "High Energy Density Battery",
+    "tech2": "Battery Energy Density",
+    "similarity": 0.7924581807766609,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy/Energy Storage"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 37.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7924581807766609,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "High Energy Density Battery",
+      "tech2_name": "Battery Energy Density",
+      "similarity": 0.7924581807766609
+    }
+  },
+  {
+    "tech1": "Velocity Measurement System",
+    "tech2": "Velocity Control System",
+    "similarity": 0.7682473446695709,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7682473446695709,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Velocity Measurement System",
+      "tech2_name": "Velocity Control System",
+      "similarity": 0.7682473446695709
+    }
+  },
+  {
+    "tech1": "Tiltwing and Quadrotor Aircraft",
+    "tech2": "Tiltwing eVTOL",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Tiltwing and Quadrotor Aircraft",
+      "tech2_name": "Tiltwing eVTOL",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Tiltwing and Quadrotor Aircraft",
+    "tech2": "Tiltwing eVTOL Aircraft",
+    "similarity": 0.765214261596627,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.765214261596627,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Tiltwing and Quadrotor Aircraft",
+      "tech2_name": "Tiltwing eVTOL Aircraft",
+      "similarity": 0.765214261596627
+    }
+  },
+  {
+    "tech1": "Tiltwing and Quadrotor Aircraft",
+    "tech2": "Tiltwing eVTOL Transition Optimization",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Tiltwing and Quadrotor Aircraft",
+      "tech2_name": "Tiltwing eVTOL Transition Optimization",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Tiltwing and Quadrotor Aircraft",
+    "tech2": "Tiltwing",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Airframe/Aviation"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Tiltwing and Quadrotor Aircraft",
+      "tech2_name": "Tiltwing",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Fast-Charging System",
+    "tech2": "Fast-Charging Electrolyte",
+    "similarity": 0.779239545487761,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 12.5%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.779239545487761,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Fast-Charging System",
+      "tech2_name": "Fast-Charging Electrolyte",
+      "similarity": 0.779239545487761
+    }
+  },
+  {
+    "tech1": "Synthetic Wing Rotor System",
+    "tech2": "Synthetic Wing Design",
+    "similarity": 0.7555898984616268,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Propulsion/Airframe"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7555898984616268,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Synthetic Wing Rotor System",
+      "tech2_name": "Synthetic Wing Design",
+      "similarity": 0.7555898984616268
+    }
+  },
+  {
+    "tech1": "Power Converter System",
+    "tech2": "Power Converter Topology",
+    "similarity": 0.7713178497089281,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7713178497089281,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Power Converter System",
+      "tech2_name": "Power Converter Topology",
+      "similarity": 0.7713178497089281
+    }
+  },
+  {
+    "tech1": "Electric Vehicle Charging Connector",
+    "tech2": "Charging Connector",
+    "similarity": 0.8322453322208283,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8322453322208283,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Electric Vehicle Charging Connector",
+      "tech2_name": "Charging Connector",
+      "similarity": 0.8322453322208283
+    }
+  },
+  {
+    "tech1": "eVTOL Operations Management",
+    "tech2": "Flight Operations Management",
+    "similarity": 0.8203931918528704,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Infrastructure/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8203931918528704,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Operations Management",
+      "tech2_name": "Flight Operations Management",
+      "similarity": 0.8203931918528704
+    }
+  },
+  {
+    "tech1": "Narrow Airfoil Wing",
+    "tech2": "Narrow Airfoil Structures",
+    "similarity": 0.7928122169390105,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7928122169390105,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Narrow Airfoil Wing",
+      "tech2_name": "Narrow Airfoil Structures",
+      "similarity": 0.7928122169390105
+    }
+  },
+  {
+    "tech1": "Autonomous Decision-Making",
+    "tech2": "Decision-Making System",
+    "similarity": 0.782876458301339,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.782876458301339,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Autonomous Decision-Making",
+      "tech2_name": "Decision-Making System",
+      "similarity": 0.782876458301339
+    }
+  },
+  {
+    "tech1": "eVTOL Aircraft Noise Emission",
+    "tech2": "eVTOL Noise Perception",
+    "similarity": 0.7541066916955408,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7541066916955408,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Aircraft Noise Emission",
+      "tech2_name": "eVTOL Noise Perception",
+      "similarity": 0.7541066916955408
+    }
+  },
+  {
+    "tech1": "Power Demand Prediction",
+    "tech2": "Aircraft Power Demand Prediction",
+    "similarity": 0.8933805181524801,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8933805181524801,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Power Demand Prediction",
+      "tech2_name": "Aircraft Power Demand Prediction",
+      "similarity": 0.8933805181524801
+    }
+  },
+  {
+    "tech1": "Real-Time Condition Monitoring",
+    "tech2": "Real-Time Flight Monitoring",
+    "similarity": 0.7678552766999925,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Safety/Avionics"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7678552766999925,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Real-Time Condition Monitoring",
+      "tech2_name": "Real-Time Flight Monitoring",
+      "similarity": 0.7678552766999925
+    }
+  },
+  {
+    "tech1": "Kriging Surrogate Model",
+    "tech2": "Kriging",
+    "similarity": 0.7924576656313329,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7924576656313329,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Kriging Surrogate Model",
+      "tech2_name": "Kriging",
+      "similarity": 0.7924576656313329
+    }
+  },
+  {
+    "tech1": "Aerodynamic Performance Prediction",
+    "tech2": "Vehicle Performance Prediction",
+    "similarity": 0.7527281821790093,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7527281821790093,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Aerodynamic Performance Prediction",
+      "tech2_name": "Vehicle Performance Prediction",
+      "similarity": 0.7527281821790093
+    }
+  },
+  {
+    "tech1": "Coolant Circulation System",
+    "tech2": "Coolant Flow Path",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Thermal Management"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Coolant Circulation System",
+      "tech2_name": "Coolant Flow Path",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Coolant Circulation System",
+    "tech2": "Coolant Flow Control System",
+    "similarity": 0.7602411723580863,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Energy Storage/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7602411723580863,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Coolant Circulation System",
+      "tech2_name": "Coolant Flow Control System",
+      "similarity": 0.7602411723580863
+    }
+  },
+  {
+    "tech1": "Hub Assembly",
+    "tech2": "Rotor Hub Assembly",
+    "similarity": 0.8861626070483823,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8861626070483823,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Hub Assembly",
+      "tech2_name": "Rotor Hub Assembly",
+      "similarity": 0.8861626070483823
+    }
+  },
+  {
+    "tech1": "Containment Vessel",
+    "tech2": "Containment Vessel Restraint System",
+    "similarity": 0.7851303247494793,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7851303247494793,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Containment Vessel",
+      "tech2_name": "Containment Vessel Restraint System",
+      "similarity": 0.7851303247494793
+    }
+  },
+  {
+    "tech1": "Computational Fluid Dynamics",
+    "tech2": "Computational Fluid Dynamics for Wing Design",
+    "similarity": 0.7634294811615604,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 5.6%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7634294811615604,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computational Fluid Dynamics",
+      "tech2_name": "Computational Fluid Dynamics for Wing Design",
+      "similarity": 0.7634294811615604
+    }
+  },
+  {
+    "tech1": "Computational Fluid Dynamics",
+    "tech2": "High-Fidelity Computational Fluid Dynamics",
+    "similarity": 0.8228380991957235,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Airframe"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 11.1%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8228380991957235,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computational Fluid Dynamics",
+      "tech2_name": "High-Fidelity Computational Fluid Dynamics",
+      "similarity": 0.8228380991957235
+    }
+  },
+  {
+    "tech1": "Computational Fluid Dynamics",
+    "tech2": "Computational Fluid Dynamics (CFD) Simulations",
+    "similarity": 0.8253272939328274,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Manufacturing"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 11.1%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8253272939328274,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Computational Fluid Dynamics",
+      "tech2_name": "Computational Fluid Dynamics (CFD) Simulations",
+      "similarity": 0.8253272939328274
+    }
+  },
+  {
+    "tech1": "AC to DC Inverter",
+    "tech2": "Inverter System Integration",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AC to DC Inverter",
+      "tech2_name": "Inverter System Integration",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "AC to DC Inverter",
+    "tech2": "Inverter System",
+    "similarity": 0.7580321745089155,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7580321745089155,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AC to DC Inverter",
+      "tech2_name": "Inverter System",
+      "similarity": 0.7580321745089155
+    }
+  },
+  {
+    "tech1": "AC to DC Inverter",
+    "tech2": "Inverter Circuits",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Energy Storage/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AC to DC Inverter",
+      "tech2_name": "Inverter Circuits",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "AC to DC Inverter",
+    "tech2": "Inverter Technology",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Related domains: Energy Storage/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "AC to DC Inverter",
+      "tech2_name": "Inverter Technology",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Advanced Structural Design",
+    "tech2": "Lightweight Structural Design",
+    "similarity": 0.7626908962329253,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7626908962329253,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Advanced Structural Design",
+      "tech2_name": "Lightweight Structural Design",
+      "similarity": 0.7626908962329253
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Vehicle Control Allocation",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Vehicle Control Allocation",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Optimal Control",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Optimal Control",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Control Strategies",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Control Strategies",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "Full-Envelope Control for eVTOL",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "Full-Envelope Control for eVTOL",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Communication and Control System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Communication and Control System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Propulsion System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Propulsion"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Propulsion System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Control System",
+    "similarity": 0.7687361184717217,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7687361184717217,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Control System",
+      "similarity": 0.7687361184717217
+    }
+  },
+  {
+    "tech1": "eVTOL Control Authority Optimization",
+    "tech2": "eVTOL Flight Control Software",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 60.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Control Authority Optimization",
+      "tech2_name": "eVTOL Flight Control Software",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Horizontal Tail Configuration",
+    "tech2": "Tiltable Horizontal Tail",
+    "similarity": 0.7626062096432007,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7626062096432007,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Horizontal Tail Configuration",
+      "tech2_name": "Tiltable Horizontal Tail",
+      "similarity": 0.7626062096432007
+    }
+  },
+  {
+    "tech1": "System Redundancy",
+    "tech2": "Safety Redundancy Systems",
+    "similarity": 0.7626484265957529,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Safety"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7626484265957529,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "System Redundancy",
+      "tech2_name": "Safety Redundancy Systems",
+      "similarity": 0.7626484265957529
+    }
+  },
+  {
+    "tech1": "Geofencing",
+    "tech2": "Geofencing Technology",
+    "similarity": 0.843170928092276,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 14.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.843170928092276,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Geofencing",
+      "tech2_name": "Geofencing Technology",
+      "similarity": 0.843170928092276
+    }
+  },
+  {
+    "tech1": "Autonomous Aircraft Control",
+    "tech2": "Autonomous Aircraft Design",
+    "similarity": 0.7851744442425217,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Avionics/Airframe"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7851744442425217,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Autonomous Aircraft Control",
+      "tech2_name": "Autonomous Aircraft Design",
+      "similarity": 0.7851744442425217
+    }
+  },
+  {
+    "tech1": "Lattice-Boltzmann Method",
+    "tech2": "Lattice-Boltzmann Method for Computational Aerodynamics",
+    "similarity": 0.8637456340497616,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 28.6%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.8637456340497616,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Lattice-Boltzmann Method",
+      "tech2_name": "Lattice-Boltzmann Method for Computational Aerodynamics",
+      "similarity": 0.8637456340497616
+    }
+  },
+  {
+    "tech1": "Machine Learning Surrogates",
+    "tech2": "Machine Learning",
+    "similarity": 0.7706293947617842,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7706293947617842,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Machine Learning Surrogates",
+      "tech2_name": "Machine Learning",
+      "similarity": 0.7706293947617842
+    }
+  },
+  {
+    "tech1": "Machine Learning Surrogates",
+    "tech2": "Machine Learning for Modeling",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Machine Learning Surrogates",
+      "tech2_name": "Machine Learning for Modeling",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Autopilot System",
+    "tech2": "Autopilot System Integration",
+    "similarity": 0.8033188111703228,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": false,
+          "reason": "Unrelated domains: Aviation/Avionics"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 14.3%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8033188111703228,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Autopilot System",
+      "tech2_name": "Autopilot System Integration",
+      "similarity": 0.8033188111703228
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Hybrid Aircraft Power Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Hybrid Aircraft Power Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Battery Compression System",
+    "similarity": 0.7846391863744091,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7846391863744091,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Battery Compression System",
+      "similarity": 0.7846391863744091
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Power Supply System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 33.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Power Supply System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Electric Power Distribution System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Electric Power Distribution System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Battery Interconnection System",
+    "similarity": 0.7823481209199261,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7823481209199261,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Battery Interconnection System",
+      "similarity": 0.7823481209199261
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Power Management System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 14.3%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Power Management System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Dual Battery System",
+    "similarity": 0.7876687533776592,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7876687533776592,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Dual Battery System",
+      "similarity": 0.7876687533776592
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Power Demand Management Techniques",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Power Demand Management Techniques",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Battery Power System",
+    "similarity": 0.7927135951440166,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 66.7%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7927135951440166,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Battery Power System",
+      "similarity": 0.7927135951440166
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Battery Switching System",
+    "similarity": 0.758835942260487,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 20.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.758835942260487,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Battery Switching System",
+      "similarity": 0.758835942260487
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Isolated Power Distribution System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Isolated Power Distribution System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Power Distribution System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Power Distribution System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "Battery System",
+    "tech2": "Redundant Battery System",
+    "similarity": 0.766263932697041,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.766263932697041,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Battery System",
+      "tech2_name": "Redundant Battery System",
+      "similarity": 0.766263932697041
+    }
+  },
+  {
+    "tech1": "Blade Pitch Control Mechanism",
+    "tech2": "Rotor Blade Pitch Control Mechanism",
+    "similarity": 0.9149251932205716,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 16.7%"
+        },
+        "similarity_tier": {
+          "confidence": "high",
+          "similarity": 0.9149251932205716,
+          "auto_merge": true
+        }
+      },
+      "tech1_name": "Blade Pitch Control Mechanism",
+      "tech2_name": "Rotor Blade Pitch Control Mechanism",
+      "similarity": 0.9149251932205716
+    }
+  },
+  {
+    "tech1": "eVTOL Energy Consumption",
+    "tech2": "Energy Storage System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Energy Consumption",
+      "tech2_name": "Energy Storage System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Energy Consumption",
+    "tech2": "Energy Storage Integration System",
+    "similarity": 0.0,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 25.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.0,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Energy Consumption",
+      "tech2_name": "Energy Storage Integration System",
+      "similarity": 0.0
+    }
+  },
+  {
+    "tech1": "eVTOL Energy Consumption",
+    "tech2": "eVTOL Energy Storage System",
+    "similarity": 0.7618399644750872,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 40.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7618399644750872,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Energy Consumption",
+      "tech2_name": "eVTOL Energy Storage System",
+      "similarity": 0.7618399644750872
+    }
+  },
+  {
+    "tech1": "eVTOL Energy Consumption",
+    "tech2": "eVTOL Energy Demand Analysis",
+    "similarity": 0.7762804064761,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": true,
+          "reason": "Variant overlap: 50.0%"
+        },
+        "similarity_tier": {
+          "confidence": "low",
+          "similarity": 0.7762804064761,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "eVTOL Energy Consumption",
+      "tech2_name": "eVTOL Energy Demand Analysis",
+      "similarity": 0.7762804064761
+    }
+  },
+  {
+    "tech1": "Thrust Vectoring System",
+    "tech2": "Deployable Thrust Vectoring System",
+    "similarity": 0.8312129362513634,
+    "validation": {
+      "decision": "review",
+      "gates": {
+        "domain_compatibility": {
+          "passed": true,
+          "reason": "Same domain"
+        },
+        "variant_overlap": {
+          "passed": false,
+          "reason": "Low variant overlap: 0.0%"
+        },
+        "similarity_tier": {
+          "confidence": "medium",
+          "similarity": 0.8312129362513634,
+          "auto_merge": false
+        }
+      },
+      "tech1_name": "Thrust Vectoring System",
+      "tech2_name": "Deployable Thrust Vectoring System",
+      "similarity": 0.8312129362513634
+    }
+  }
+]

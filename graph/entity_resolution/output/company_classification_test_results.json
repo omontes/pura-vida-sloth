@@ -1,0 +1,162 @@
+[
+  {
+    "query_mention": "Joby Aviation",
+    "canonical_name": "Joby Aviation",
+    "canonical_id": "joby",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Archer Aviation",
+    "canonical_name": "Archer Aviation",
+    "canonical_id": "archer",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Boeing",
+    "canonical_name": "Boeing",
+    "canonical_id": "boeing",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "JOBY",
+    "canonical_name": "Joby Aviation",
+    "canonical_id": "joby",
+    "similarity_score": 1.0,
+    "match_method": "ticker_exact",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "ACHR",
+    "canonical_name": "Archer Aviation",
+    "canonical_id": "archer",
+    "similarity_score": 1.0,
+    "match_method": "ticker_exact",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "BA",
+    "canonical_name": "Boeing",
+    "canonical_id": "boeing",
+    "similarity_score": 1.0,
+    "match_method": "ticker_exact",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Joby",
+    "canonical_name": "Joby Aviation",
+    "canonical_id": "joby",
+    "similarity_score": 1.0,
+    "match_method": "ticker_exact",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Archer Aviation Inc.",
+    "canonical_name": "Archer Aviation",
+    "canonical_id": "archer",
+    "similarity_score": 1.0,
+    "match_method": "exact_alias",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "United Airlines",
+    "canonical_name": "United Airlines",
+    "canonical_id": "united_airlines",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Boeing Company",
+    "canonical_name": "Boeing",
+    "canonical_id": "boeing",
+    "similarity_score": 0.7082937955856323,
+    "match_method": "hybrid_search",
+    "confidence": "low",
+    "alternatives": [
+      {
+        "canonical_name": "GE Aerospace",
+        "canonical_id": "ge_aerospace",
+        "similarity_score": 0.5025795102119446,
+        "kind": "incumbent"
+      }
+    ]
+  },
+  {
+    "query_mention": "Airbus SE",
+    "canonical_name": "Airbus",
+    "canonical_id": "airbus",
+    "similarity_score": 1.0,
+    "match_method": "exact_alias",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Stellantis NV",
+    "canonical_name": "Stellantis",
+    "canonical_id": "stellantis",
+    "similarity_score": 0.79921555519104,
+    "match_method": "hybrid_search",
+    "confidence": "medium",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Archer",
+    "canonical_name": "Archer Aviation",
+    "canonical_id": "archer",
+    "similarity_score": 1.0,
+    "match_method": "exact_alias",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "United",
+    "canonical_name": "United Airlines",
+    "canonical_id": "united_airlines",
+    "similarity_score": 1.0,
+    "match_method": "exact_alias",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Tesla",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Apple Inc.",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "SpaceX",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  }
+]

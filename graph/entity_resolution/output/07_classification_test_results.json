@@ -1,0 +1,110 @@
+[
+  {
+    "query_mention": "Lithium-Ion Battery System",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Flight Control System",
+    "canonical_name": "Flight Control System",
+    "canonical_id": "flight_control_system",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "Li-ion battery pack",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "tilt-rotor propulsion",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "electric motor for propulsion",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "battery management electronics",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "autonomous flight controller",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "carbon fiber composite structure",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "thermal management cooling",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "noise reduction technology",
+    "canonical_name": "Noise Reduction Technology",
+    "canonical_id": "noise_reduction",
+    "similarity_score": 1.0,
+    "match_method": "exact_canonical",
+    "confidence": "high",
+    "alternatives": []
+  },
+  {
+    "query_mention": "quantum entanglement propulsion",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  },
+  {
+    "query_mention": "flux capacitor energy storage",
+    "canonical_name": null,
+    "canonical_id": null,
+    "similarity_score": 0.0,
+    "match_method": "none",
+    "confidence": "low",
+    "alternatives": []
+  }
+]

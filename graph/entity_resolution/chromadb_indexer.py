@@ -189,7 +189,8 @@ class ChromaDBIndexer:
 
 def load_final_catalog(config: EntityResolutionConfig) -> TechnologyCatalog:
     """Load final catalog from data directory."""
-    catalog_file = config.data_dir / "technologies" / config.pipeline_config['output_files']['final_catalog']
+    pipeline_config = get_pipeline_config()
+    catalog_file = config.data_dir / "technologies" / pipeline_config['output_files']['final_catalog']
 
     if not catalog_file.exists():
         raise FileNotFoundError(f"Final catalog not found: {catalog_file}")

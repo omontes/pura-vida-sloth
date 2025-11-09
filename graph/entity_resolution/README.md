@@ -45,6 +45,10 @@ Phase 4: Deduplication
   ↓
 Phase 5: Catalog Building & Validation
   ↓
+Phase 5.5: Canonical Name Clustering ⭐ NEW
+  ↓
+Phase 5.5B: Manual Review Queue Processing ⭐ NEW
+  ↓
 Phase 6: ChromaDB Indexing
   ↓
 Phase 7: Technology Classification (lookup API)
@@ -414,8 +418,14 @@ File size: 1.3 MB
 3. Resolve conflicts (higher occurrence count wins)
 4. Create unified canonical technology list
 
+**Critical Bug Fix** (Session 2):
+- **Issue**: Phase 4 only checked LLM results against existing catalog, NOT against other LLM results
+- **Impact**: 29 duplicate canonical names in output
+- **Fix**: Modified `deduplicator.py:236-238` to check against `combined_catalog = catalog + new_technologies`
+- **Result**: Reduced duplicates from 29 to 0
+
 **Output**:
-- `04_merged_catalog.json` - Deduplicated canonical technologies
+- `04_merged_catalog.json` - **1,852 deduplicated canonical technologies**
 
 ---
 
@@ -452,6 +462,153 @@ File size: 1.3 MB
   "created_by": "entity_resolution_pipeline"
 }
 ```
+
+---
+
+### Phase 5.5: Canonical Name Clustering ⭐ NEW
+
+**Purpose**: Cluster and merge near-duplicate canonical names from Phase 4 output.
+
+**Motivation**:
+- Phase 4 output had 0 exact duplicates but **805 near-duplicates** (0.75-0.85 similarity)
+- Examples: "Battery System" vs "Battery Swap System" (0.848), "Large Eddy Simulation" vs "Wall-Modeled Large Eddy Simulation" (0.896)
+- Need second-pass clustering to catch semantic duplicates missed by exact matching
+
+**Input**:
+- `04_merged_catalog.json` (1,852 canonical technologies)
+
+**Architecture**:
+- **Reuses Phase 2B hybrid clustering** but adapted for canonical names
+- **Richer embeddings**: `canonical_name + domain + description` (vs just name in Phase 2B)
+- **Lower fuzzy weight**: 30% BM25 + 70% semantic (vs 40/60) - names already clean
+- **Quality gates**: Domain compatibility + variant overlap + similarity tiers
+
+**Process**:
+
+1. **Add Canonical Technologies to ChromaDB + BM25**:
+   - Generate embeddings for rich text (name + domain + description)
+   - Build hybrid search index
+
+2. **Build Similarity Graph**:
+   - For each technology, query BM25 + ChromaDB
+   - Calculate hybrid score: `0.3 × BM25 + 0.7 × Semantic`
+   - Create edge if hybrid score ≥ **0.75**
+
+3. **Quality Gate Validation** (3-tier system):
+   - **Gate 1 - Domain Compatibility**: Check if domains are same/related/unrelated
+   - **Gate 2 - Variant Overlap**: Require 30%+ word overlap in variant names
+   - **Gate 3 - Similarity Tier**:
+     - **0.85+**: Auto-merge if other gates pass (high confidence)
+     - **0.80-0.85**: Auto-merge only if ALL gates pass (medium confidence)
+     - **0.75-0.80**: Flag for review (low confidence)
+
+4. **Merge Decision**:
+   - **Auto-merge**: Similarity 0.85+ OR (0.80+ AND all gates pass)
+   - **Review queue**: Similarity 0.75-0.85 but failed quality gates
+
+**Key Parameters**:
+```python
+canonical_cluster_threshold: 0.75      # Similarity threshold
+canonical_fuzzy_weight: 0.30           # BM25 weight (lower for clean names)
+canonical_semantic_weight: 0.70        # Semantic weight (higher)
+use_domain_filtering: True             # Enable domain compatibility check
+min_confidence_for_clustering: 0.75    # Minimum confidence threshold
+```
+
+**Output**:
+- `05_merged_catalog.json` - **1,823 canonical technologies** (29 auto-merged)
+- `05_merge_audit.json` - Audit trail of 29 auto-merged pairs
+- `05_merge_review_queue.json` - **265 borderline pairs** flagged for manual review
+- `05_validation_report_final.json` - Validation report (0 duplicates confirmed)
+
+**Results**:
+- **Auto-merged**: 29 high-confidence pairs (0.85+ similarity, all gates passed)
+- **Review queue**: 265 borderline pairs (0.75+ similarity but failed quality gates)
+- **Reduction**: 1.6% (1,852 → 1,823)
+- **Duplicates**: 0 (validation passed)
+
+**Example Auto-Merge**:
+```json
+{
+  "merged_from": "Finite Element Method",
+  "merged_into": "Finite Element Analysis",
+  "similarity": 0.869,
+  "validation": {
+    "gates": {
+      "domain_compatibility": {"passed": true, "reason": "Same domain"},
+      "variant_overlap": {"passed": true, "reason": "Variant overlap: 45%"},
+      "similarity_tier": {"confidence": "high", "auto_merge": true}
+    }
+  }
+}
+```
+
+**Example Review Queue** (NOT merged):
+```json
+{
+  "tech1": "Battery System",
+  "tech2": "Battery Swap System",
+  "similarity": 0.848,
+  "validation": {
+    "decision": "review",
+    "gates": {
+      "domain_compatibility": {"passed": false, "reason": "Unrelated domains"},
+      "variant_overlap": {"passed": false, "reason": "Low variant overlap: 15%"}
+    }
+  }
+}
+```
+
+---
+
+### Phase 5.5B: Manual Review Queue Processing ⭐
+
+**Purpose**: Merge high-confidence pairs from Phase 5.5 review queue.
+
+**Input**:
+- `05_merge_review_queue.json` (265 borderline pairs)
+- `05_merged_catalog.json` (1,823 technologies)
+
+**Filter Criteria**:
+- Similarity ≥ 0.85 (very high confidence)
+- OR: Similarity ≥ 0.80 AND only 1 quality gate failed
+
+**Process**:
+1. Load review queue and current catalog
+2. Filter for high-confidence merge candidates (25 found)
+3. Apply merges using same logic as Phase 5.5
+4. Save updated catalog and merge audit
+
+**Results**:
+- **High-confidence candidates**: 25 (from 265 total)
+  - Very high (0.85+): 11 pairs
+  - High (0.80-0.85, ≤1 gate failed): 14 pairs
+- **Additional merges applied**: 25
+- **Final catalog**: **1,798 technologies**
+- **Total reduction**: 2.9% cumulative (1,852 → 1,798)
+
+**Top Merges by Similarity**:
+1. "Rotor Blade Pitch Control Mechanism" → "Blade Pitch Control Mechanism" (0.915)
+2. "Wall-Modeled Large Eddy Simulation" → "Large Eddy Simulation" (0.896)
+3. "Aircraft Power Demand Prediction" → "Power Demand Prediction" (0.893)
+4. "Rotor Hub Assembly" → "Hub Assembly" (0.886)
+5. "Monte Carlo Simulation" → "Monte Carlo Method" (0.875)
+
+**Output**:
+- `05_merged_catalog.json` - **1,798 final technologies** (updated)
+- `05_manual_merge_audit.json` - Audit trail of 25 manual merges
+- **0 duplicates** (validation passed)
+- **2,839 total variants** (1.6 avg per technology)
+
+**Cumulative Pipeline Results**:
+```
+Phase 4 output:           1,852 technologies
+Phase 5.5 auto-merge:        -29 (to 1,823)
+Phase 5.5B manual merge:     -25 (to 1,798)
+Total reduction:             -54 (2.9%)
+```
+
+**File Location**: [scripts/merge_review_queue.py](../../scripts/merge_review_queue.py)
 
 ---
 
@@ -531,6 +688,7 @@ graph/entity_resolution/
 ├── llm_canonicalizer.py            # Phase 3: LLM canonicalization
 ├── deduplicator.py                  # Phase 4: Deduplication
 ├── catalog_builder.py               # Phase 5: Catalog building
+├── canonical_name_clusterer.py      # Phase 5.5: Canonical clustering ⭐ NEW
 ├── chromadb_indexer.py             # Phase 6: ChromaDB indexing
 ├── tech_classifier.py               # Phase 7: Classification API
 ├── post_processor.py                # Phase 8: Post-processing
@@ -542,9 +700,18 @@ graph/entity_resolution/
 │   ├── 02a_catalog_matches.json             ✅ 35 matches
 │   ├── 02a_unmatched_mentions.json          ✅ 2,108 unmatched
 │   ├── 02b_mention_clusters.json            ✅ 1,839 clusters
-│   ├── 03_llm_canonical_names.json          ✅ 1,837 canonical names ⭐ Current output
-│   ├── 04_merged_catalog.json               ⏳ Next
-│   └── 05_validation_report.json
+│   ├── 03_llm_canonical_names.json          ✅ 1,837 canonical names
+│   ├── 04_merged_catalog.json               ✅ 1,852 technologies
+│   ├── 05_merged_catalog.json               ✅ 1,798 technologies (final) ⭐
+│   ├── 05_merge_audit.json                  ✅ 29 auto-merges (Phase 5.5)
+│   ├── 05_manual_merge_audit.json           ✅ 25 manual merges (Phase 5.5B)
+│   ├── 05_merge_review_queue.json           ✅ 265 borderline pairs
+│   ├── 05_validation_report_final.json      ✅ Validation (0 duplicates)
+│   └── analyze_near_duplicates_report.json  ✅ Near-duplicate analysis
+│
+├── runs/                            # Execution scripts
+│   ├── run_phase5_5_full.py                 ✅ Phase 5.5 full run
+│   └── ...
 │
 └── chromadb/                        # Persistent vector database
 ```
@@ -742,22 +909,23 @@ Reasoning: "More general than 'pack', encompasses modules and cells,
 
 ## Next Steps
 
-### Phase 3 Completion ✅
+### Phase 5.5B Completion ✅
 
 1. ✅ Review `02b_mention_clusters.json` to validate clustering quality
 2. ✅ Test Phase 3 with 1 cluster (~$0.0003, instant)
 3. ✅ Test Phase 3 with 10 clusters (~$0.0022, 10 seconds)
 4. ✅ Evaluate LLM canonical name quality (avg confidence: 0.94)
 5. ✅ Run full Phase 3 (1,839 clusters, $0.40, 3-5 minutes)
-6. ✅ **COMPLETE**: 1,837 canonical names created with 89.8% avg confidence
+6. ✅ Run Phase 4 deduplication (fixed bug, 1,852 technologies, 0 duplicates)
+7. ✅ Run Phase 5.5 canonical clustering (29 auto-merges, 265 review queue)
+8. ✅ Run Phase 5.5B manual review processing (25 additional merges)
+9. ✅ **COMPLETE**: Final catalog with **1,798 unique technologies**, 0 duplicates, 2.9% total reduction
 
-### Phase 4-8 Pipeline (Next)
+### Phase 6-8 Pipeline (Next)
 
-1. ⏳ **Phase 4**: Deduplication - Merge catalog matches (35) with LLM results (1,837)
-2. ⏳ **Phase 5**: Catalog Building & Validation - Build final catalog and validate quality
-3. ⏳ **Phase 6**: ChromaDB Indexing - Create persistent vector database
-4. ⏳ **Phase 7**: Technology Classification - Deploy lookup API
-5. ⏳ **Phase 8**: Post-Processing - Update original patent/paper files with canonical names
+1. ⏳ **Phase 6**: ChromaDB Indexing - Create persistent vector database
+2. ⏳ **Phase 7**: Technology Classification - Deploy lookup API (top 3 matches)
+3. ⏳ **Phase 8**: Post-Processing - Update original patent/paper files with canonical names
 
 ---
 
