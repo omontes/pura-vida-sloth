@@ -114,6 +114,13 @@ PIPELINE_CONFIG = {
     "cluster_min_similarity": 0.75,  # Minimum similarity to form cluster edge (lowered to capture more variants)
     "cluster_algorithm": "louvain",  # Community detection algorithm
 
+    # Phase 5.5: Canonical Name Clustering
+    "canonical_cluster_threshold": 0.75,  # Threshold for canonical name clustering
+    "canonical_fuzzy_weight": 0.30,  # Lower weight for fuzzy (canonical names already clean)
+    "canonical_semantic_weight": 0.70,  # Higher weight for semantic (meaning matters more)
+    "use_domain_filtering": True,  # Check domain compatibility before merging
+    "min_confidence_for_clustering": 0.75,  # Only cluster Phase 3 results with confidence >= 0.75
+
     # LLM configuration
     "llm_model": "gpt-4o-mini",
     "llm_temperature": 0.0,
