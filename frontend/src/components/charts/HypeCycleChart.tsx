@@ -143,7 +143,7 @@ export default function HypeCycleChart({
       .append('text')
       .attr('transform', 'rotate(-90)')
       .attr('x', -(height / 2))
-      .attr('y', 50)
+      .attr('y', 30)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
       .style('font-size', '20px')
@@ -154,7 +154,7 @@ export default function HypeCycleChart({
     svg
       .append('text')
       .attr('x', width / 2)
-      .attr('y', height - 45)
+      .attr('y', height - 40)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
       .style('font-size', '20px')
