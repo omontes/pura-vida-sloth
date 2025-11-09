@@ -191,30 +191,24 @@ export function getMinDistanceToCurve(
 
 /**
  * OPTIMIZED: Custom D3 force that pushes labels away from the curve
- * Uses caching, bounding box pre-filtering, and throttling for 98% performance gain
+ * Uses caching and bounding box pre-filtering for performance optimization
  *
  * @param pathElement - SVG path element for the curve
- * @param minDistance - Minimum clearance in pixels (default: 20)
+ * @param minDistance - Minimum clearance in pixels (default: 30)
  * @returns D3 force function
  */
 export function forceCurveRepulsion(
   pathElement: SVGPathElement,
-  minDistance: number = 20
+  minDistance: number = 30
 ) {
   let nodes: LabelNode[];
   let cache: CurveDistanceCache | null = null;
-  let tickCount = 0;
 
   const force = (alpha: number) => {
     // Initialize cache on first run (once per simulation)
     if (!cache) {
       cache = new CurveDistanceCache(pathElement, 10); // 10px sampling
     }
-
-    tickCount++;
-
-    // OPTIMIZATION: Throttle - only apply every 3 ticks (67% reduction)
-    if (tickCount % 3 !== 0) return;
 
     nodes.forEach((label) => {
       if (!label.x || !label.y) return;

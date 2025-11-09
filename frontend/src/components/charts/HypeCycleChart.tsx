@@ -74,6 +74,7 @@ export default function HypeCycleChart({
         .attr('y2', height - 140)
         .attr('stroke', theme.colors.chart.separator)
         .attr('stroke-width', 2)
+        .attr('opacity', 0.2)
         .attr('stroke-dasharray', '8 4');
     });
 
@@ -248,18 +249,18 @@ export default function HypeCycleChart({
       return force;
     };
 
-    // OPTIMIZED: Run force simulation with reduced parameters
+    // OPTIMIZED: Run force simulation with strengthened collision parameters
     const simulation = d3
       .forceSimulation(labelNodes)
       .force(
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 3)
-          .strength(0.5) // Reduced from 0.7
-          .iterations(2) // Reduced from 4
+          .radius((d) => Math.max(d.width, d.height) / 2 + 12)
+          .strength(0.8) // Stronger repulsion for better spacing
+          .iterations(3) // More accurate collision detection
       )
-      .force('curve-repulsion', forceCurveRepulsion(pathElement, 20))
+      .force('curve-repulsion', forceCurveRepulsion(pathElement, 30))
       .force(
         'y',
         d3
@@ -319,8 +320,8 @@ export default function HypeCycleChart({
       .attr('y2', (d) => calculateLabelAnchor(d).y)
       .attr('stroke', theme.colors.chart.separator)
       .attr('stroke-width', 1)
-      .attr('stroke-dasharray', '2,2')
-      .attr('opacity', 0.5)
+       .attr('stroke-dasharray', '2,2')
+      .attr('opacity', 0.9)
       .style('pointer-events', 'none');
 
     // Render smart-positioned labels (no background boxes)
