@@ -1,8 +1,9 @@
 /**
  * Theme Configuration
  *
- * Professional light/dark theme system for Pura Vida Sloth
+ * Professional light/dark theme system for Canopy Intelligence
  * Light mode is default for executive presentations
+ * Inspired by modern SaaS design with teal (light) and gold (dark) accents
  */
 
 export type ThemeMode = 'light' | 'dark';
@@ -15,6 +16,7 @@ export interface Theme {
       primary: string;
       secondary: string;
       tertiary: string;
+      card: string;
     };
     // Text colors
     text: {
@@ -24,8 +26,15 @@ export interface Theme {
     };
     // Border colors
     border: {
+      subtle: string;
       default: string;
+      strong: string;
+    };
+    // Accent colors (brand identity)
+    accent: {
+      primary: string;
       hover: string;
+      light: string;
     };
     // Chart colors
     chart: {
@@ -51,32 +60,39 @@ export const lightTheme: Theme = {
   mode: 'light',
   colors: {
     background: {
-      primary: '#ffffff',
-      secondary: '#f8f9fa',
-      tertiary: '#f1f3f5',
+      primary: '#ffffff',       // Pure white
+      secondary: '#f8f9fa',     // Subtle gray
+      tertiary: '#f1f3f5',      // Light gray
+      card: '#ffffff',          // White cards with shadows
     },
     text: {
-      primary: '#000000',        // Pure black for maximum contrast
-      secondary: '#374151',      // Darker gray for better readability
-      tertiary: '#6b7280',
+      primary: '#0a0a0a',       // Near black (softer than pure black)
+      secondary: '#525252',     // Medium gray
+      tertiary: '#737373',      // Light gray
     },
     border: {
-      default: '#d1d5db',       // Slightly darker for visibility
-      hover: '#9ca3af',
+      subtle: '#e5e5e5',        // Very light gray
+      default: '#d4d4d4',       // Light gray
+      strong: '#a3a3a3',        // Medium gray
+    },
+    accent: {
+      primary: '#0f766e',       // Teal - trust, intelligence
+      hover: '#0d9488',         // Teal hover
+      light: '#ccfbf1',         // Teal background
     },
     chart: {
-      curve: '#1E40AF',         // Professional dark blue
-      curveShadow: 'rgba(30, 64, 175, 0.15)',
+      curve: '#0f766e',         // Teal accent (matches brand identity)
+      curveShadow: 'rgba(15, 118, 110, 0.15)',
       separator: '#94a3b8',     // More visible separators
-      axisText: '#000000',      // Pure black for axes
+      axisText: '#0a0a0a',      // Near black for axes
       nodeStroke: '#ffffff',
       labelBackground: 'rgba(255, 255, 255, 0.98)',  // More opaque
       labelBorder: 'rgba(0, 0, 0, 0.15)',           // More visible border
     },
     interactive: {
-      primary: '#2563eb',
-      primaryHover: '#1d4ed8',
-      secondary: '#60a5fa',
+      primary: '#0f766e',       // Teal (matches accent)
+      primaryHover: '#0d9488',  // Teal hover
+      secondary: '#60a5fa',     // Blue
       secondaryHover: '#3b82f6',
     },
   },
@@ -86,32 +102,39 @@ export const darkTheme: Theme = {
   mode: 'dark',
   colors: {
     background: {
-      primary: '#0c111b',
-      secondary: '#1a1d23',
-      tertiary: '#2a2d35',
+      primary: '#0a0a0a',       // Deep black
+      secondary: '#171717',     // Charcoal
+      tertiary: '#1f1f1f',      // Dark gray
+      card: '#1a1a1a',          // Dark cards with borders
     },
     text: {
-      primary: '#f9fafb',
-      secondary: '#d1d5db',
-      tertiary: '#9ca3af',
+      primary: '#fafafa',       // Near white
+      secondary: '#d4d4d4',     // Light gray
+      tertiary: '#a3a3a3',      // Medium gray
     },
     border: {
-      default: '#374151',
-      hover: '#4b5563',
+      subtle: '#262626',        // Very dark gray
+      default: '#404040',       // Dark gray
+      strong: '#525252',        // Medium gray
+    },
+    accent: {
+      primary: '#fbbf24',       // Gold - premium, insight (Nutrient-inspired)
+      hover: '#f59e0b',         // Gold hover
+      light: '#451a03',         // Gold background (dark)
     },
     chart: {
-      curve: '#60a5fa',
+      curve: '#60a5fa',         // Lighter blue for dark mode
       curveShadow: 'rgba(96, 165, 250, 0.2)',
-      separator: '#9ca3af',      // Lighter gray for visibility in dark mode
-      axisText: '#f9fafb',
-      nodeStroke: '#1a1d23',
-      labelBackground: 'rgba(26, 29, 35, 0.95)',
+      separator: '#9ca3af',     // Lighter gray for visibility in dark mode
+      axisText: '#fafafa',      // Near white for axes
+      nodeStroke: '#1a1a1a',
+      labelBackground: 'rgba(26, 26, 26, 0.95)',
       labelBorder: 'rgba(255, 255, 255, 0.1)',
     },
     interactive: {
-      primary: '#3b82f6',
-      primaryHover: '#2563eb',
-      secondary: '#60a5fa',
+      primary: '#fbbf24',       // Gold (matches accent)
+      primaryHover: '#f59e0b',  // Gold hover
+      secondary: '#60a5fa',     // Blue
       secondaryHover: '#93c5fd',
     },
   },

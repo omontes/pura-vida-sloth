@@ -10,9 +10,10 @@
  * - Click to drill down to evidence
  */
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import * as d3 from 'd3';
 import { useTheme } from '@/contexts/ThemeContext';
+import Card, { CardHeader, CardTitle, CardDescription } from '@/components/ui/Card';
 import {
   generateHypeCyclePath,
   PHASE_COLORS,
@@ -36,14 +37,45 @@ interface HypeCycleChartProps {
   height?: number;
 }
 
+// Always use full-size chart with horizontal scroll on smaller devices
+const getResponsiveDimensions = () => {
+  return { width: 1200, height: 700 };
+};
+
 export default function HypeCycleChart({
   technologies,
   onTechnologyClick,
-  width = 1200,
-  height = 700,
+  width: propWidth,
+  height: propHeight,
 }: HypeCycleChartProps) {
   const svgRef = useRef<SVGSVGElement>(null);
   const { theme } = useTheme();
+
+  // Responsive dimensions state
+  const [dimensions, setDimensions] = useState(() => {
+    // Use prop dimensions if provided, otherwise calculate responsive
+    if (propWidth && propHeight) {
+      return { width: propWidth, height: propHeight };
+    }
+    return getResponsiveDimensions();
+  });
+
+  const { width, height } = dimensions;
+
+  // Handle responsive resize (only if no prop dimensions provided)
+  useEffect(() => {
+    if (propWidth && propHeight) return; // Skip if dimensions are provided as props
+
+    const handleResize = () => {
+      setDimensions(getResponsiveDimensions());
+    };
+
+    // Add resize listener
+    window.addEventListener('resize', handleResize);
+
+    // Cleanup
+    return () => window.removeEventListener('resize', handleResize);
+  }, [propWidth, propHeight]);
 
   // Helper function to truncate long technology names
   const truncateName = (name: string, maxLength: number = 30): string => {
@@ -91,10 +123,10 @@ export default function HypeCycleChart({
       const textGroup = svg
         .append('text')
         .attr('x', xScale(x))
-        .attr('y', height - 100)
+        .attr('y', height - 110)
         .attr('text-anchor', 'middle')
         .style('fill', theme.colors.text.secondary)
-        .style('font-size', '14px')
+        .style('font-size', '12px')
         .style('font-weight', '600');
 
       lines.forEach((line, i) => {
@@ -114,7 +146,7 @@ export default function HypeCycleChart({
       .attr('y', 50)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
-      .style('font-size', '18px')
+      .style('font-size', '20px')
       .style('font-weight', '700')
       .text('Market Expectations');
 
@@ -122,12 +154,23 @@ export default function HypeCycleChart({
     svg
       .append('text')
       .attr('x', width / 2)
-      .attr('y', height - 35)
+      .attr('y', height - 45)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
-      .style('font-size', '18px')
+      .style('font-size', '20px')
       .style('font-weight', '700')
       .text('Technology Maturity Timeline');
+
+    // 5b. Draw X-axis horizontal line
+    svg
+      .append('line')
+      .attr('x1', 80)
+      .attr('x2', width - 80)
+      .attr('y1', height - 130)
+      .attr('y2', height - 130)
+      .attr('stroke', theme.colors.chart.separator)
+      .attr('stroke-width', 2)
+      .attr('opacity', 0.4);
 
     // 6. Draw technology nodes ON the curve
     const nodeGroups = svg
@@ -361,26 +404,35 @@ export default function HypeCycleChart({
   }, [technologies, onTechnologyClick, width, height, theme]);
 
   return (
-    <div className="w-full bg-white dark:bg-gray-800 rounded-lg shadow-lg p-6">
-      <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-4">
-        Hype Cycle for Emerging Tech, 2025
-      </h2>
-      <svg ref={svgRef} width={width} height={height} />
+    <Card elevation="raised" padding="spacious" className="w-full">
+      <CardHeader>
+        <CardTitle as="h2">Technology Hype Cycle for Emerging Tech, 2025</CardTitle>
+        <CardDescription>
+          Multi-source intelligence positioning across the adoption lifecycle
+        </CardDescription>
+      </CardHeader>
+
+      {/* Chart container with horizontal scroll on smaller devices */}
+      <div className="overflow-x-auto">
+        <svg ref={svgRef} width={width} height={height} className="mx-auto" />
+      </div>
 
       {/* Phase Legend */}
-      <div className="mt-6 flex items-center justify-center gap-6">
-        {Object.entries(PHASE_COLORS).map(([phase, color]) => (
-          <div key={phase} className="flex items-center gap-2">
-            <div
-              className="w-3 h-3 rounded-full"
-              style={{ backgroundColor: color }}
-            />
-            <span className="text-xs text-gray-600 dark:text-gray-300">
-              {phase}
-            </span>
-          </div>
-        ))}
+      <div className="mt-8 pt-6 border-t border-gray-200 dark:border-gray-800">
+        <div className="flex flex-wrap items-center justify-center gap-6">
+          {Object.entries(PHASE_COLORS).map(([phase, color]) => (
+            <div key={phase} className="flex items-center gap-2">
+              <div
+                className="w-4 h-4 rounded-full shadow-sm"
+                style={{ backgroundColor: color }}
+              />
+              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+                {phase}
+              </span>
+            </div>
+          ))}
+        </div>
       </div>
-    </div>
+    </Card>
   );
 }

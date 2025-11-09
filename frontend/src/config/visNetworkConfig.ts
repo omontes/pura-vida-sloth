@@ -101,7 +101,7 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
         fit: true,
       },
       barnesHut: {
-        gravitationalConstant: -10000,
+        gravitationalConstant: -30000,
         centralGravity: 0.3,
         springLength: 180,
         springConstant: 0.04,
@@ -123,7 +123,7 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
 }
 
 /**
- * Node color palette (adapted for Pura Vida Sloth entity types)
+ * Node color palette (adapted for Canopy Intelligence entity types)
  *
  * Based on user's Gradio prototype PALETTE
  */

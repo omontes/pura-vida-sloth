@@ -1,5 +1,5 @@
 /**
- * TypeScript interfaces for Pura Vida Sloth Phase 6 UI
+ * TypeScript interfaces for Canopy Intelligence Phase 6 UI
  * Defines the data contract between Phase 4/5 (Multi-Agent System) and Phase 6 (UI)
  */
 

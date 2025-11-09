@@ -1,0 +1,40 @@
+<svg width="48" height="48" viewBox="0 0 48 48" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Canopy Intelligence Icon - Minimalist layered intelligence symbol -->
+
+  <!-- Gradient Definitions for Light Mode (Teal) -->
+  <defs>
+    <linearGradient id="gradient-light" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f766e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+    </linearGradient>
+
+    <!-- Gradient for Dark Mode (Gold) -->
+    <linearGradient id="gradient-dark" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#fbbf24;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#f59e0b;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Circle (optional, for standalone use) -->
+  <circle cx="24" cy="24" r="22" fill="url(#gradient-light)" opacity="0.1"/>
+
+  <!-- Layered Canopy Symbol - Three ascending arcs representing elevated perspective -->
+  <g stroke="url(#gradient-light)" stroke-width="2.5" fill="none" stroke-linecap="round" stroke-linejoin="round">
+    <!-- Bottom layer (widest) -->
+    <path d="M10 32 Q24 22, 38 32" />
+
+    <!-- Middle layer -->
+    <path d="M13 24 Q24 16, 35 24" opacity="0.8"/>
+
+    <!-- Top layer (narrowest) -->
+    <path d="M16 18 Q24 12, 32 18" opacity="0.6"/>
+
+    <!-- Central trunk/stem -->
+    <line x1="24" y1="12" x2="24" y2="36" stroke-width="3"/>
+
+    <!-- Intelligence nodes (data points) -->
+    <circle cx="18" cy="26" r="2" fill="url(#gradient-light)"/>
+    <circle cx="24" cy="20" r="2" fill="url(#gradient-light)"/>
+    <circle cx="30" cy="26" r="2" fill="url(#gradient-light)"/>
+  </g>
+</svg>

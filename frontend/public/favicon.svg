@@ -1,0 +1,24 @@
+<svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Canopy Intelligence Favicon - Ultra minimalist -->
+
+  <defs>
+    <linearGradient id="fav-gradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#0f766e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#0d9488;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+
+  <!-- Simplified canopy layers -->
+  <g stroke="url(#fav-gradient)" stroke-width="2" fill="none" stroke-linecap="round">
+    <!-- Three ascending arcs -->
+    <path d="M6 22 Q16 16, 26 22" />
+    <path d="M8 16 Q16 12, 24 16" opacity="0.7"/>
+    <path d="M10 12 Q16 9, 22 12" opacity="0.5"/>
+
+    <!-- Central line -->
+    <line x1="16" y1="9" x2="16" y2="24" stroke-width="2.5"/>
+
+    <!-- Single intelligence node -->
+    <circle cx="16" cy="14" r="1.5" fill="url(#fav-gradient)"/>
+  </g>
+</svg>
