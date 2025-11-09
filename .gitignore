@@ -56,6 +56,9 @@ sources_summary.md
 .env
 .claude/*
 !.claude/Claude.md
+.claude/commands/
+.claude/sessions/
+
 #data - Keep structure, ignore downloaded content
 data/*
 !data/.gitkeep
@@ -231,3 +234,12 @@ __marimo__/
 
 ##docs
 docs/
+
+# Frontend (React + TypeScript + Vite)
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/.cache/
+frontend/package-lock.json
+frontend/yarn.lock
+frontend/pnpm-lock.yaml

@@ -40,7 +40,9 @@ semanticscholar>=0.7.0
 arxiv>=2.0.0
 
 # Patents - Direct USPTO access with PDF downloads
-patent-client>=4.0.0
+# Note: Temporarily disabled due to httpx version conflict with hackathon deps
+# Will use alternative patent API or manual download for demo
+# patent-client==3.2.8
 
 # News Articles - Universal article extraction from any news site
 news-please>=1.5.0
@@ -62,13 +64,40 @@ aiofiles>=23.0.0
 pypdf>=4.0.0
 
 # ============================================================================
-# LLM Integration for Parsers (Patent Analysis, Knowledge Graph Construction)
+# HACKATHON DEPENDENCIES - Financial AI Championship 2025
 # ============================================================================
-langchain>=0.1.0
-langchain-openai>=0.0.5
-langchain-core>=0.1.0
+
+# Agent Framework - LangChain + LangGraph for multi-agent orchestration
+langchain>=0.3.0
+langchain-core>=0.3.0
+langchain-openai>=0.2.0
 langchain-community>=0.0.20
-openai>=1.12.0
+langgraph>=0.2.0
+
+# Graph Database - Neo4j Aura for GraphRAG
+neo4j>=5.25.0
+
+# Vector Embeddings - OpenAI for semantic search
+openai>=1.54.0
+
+# Backend API - FastAPI for REST + WebSocket
+fastapi>=0.115.0
+uvicorn[standard]>=0.32.0
+websockets>=14.0
+
+# Data Validation - Pydantic for schemas
+pydantic>=2.10.0
+pydantic-settings>=2.6.0
+
+# Document Processing - LandingAI ADE (MANDATORY for hackathon)
+# Note: Will be added after API access approval
+# landingai>=0.x.x
+
+# Structured Logging
+structlog>=24.4.0
+
+# HTTP Client - Modern async requests
+httpx>=0.28.0
 
 # ============================================================================
 # Entity Resolution & Vector Search (Technology Normalization)

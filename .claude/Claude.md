@@ -74,6 +74,7 @@ Build a strategic intelligence platform that determines **where emerging technol
 6. Validate quality gates (see Testing section)
 7. Update tests and documentation
 
+
 ---
 
 ## Naming and File Standards
@@ -139,6 +140,15 @@ src/
 4. **❌ Skip incremental testing**: Wastes API quota, breaks iterative flow
 5. **❌ Mix phase responsibilities**: Processor ≠ Ingestor ≠ Agent
 6. **❌ Use blocking I/O**: Kills performance at scale
+
+### Compliance Requirements
+
+**Hackathon Requirements**:
+- ✅ Use LandingAI Agent Data Engine (ADE) for SEC filings
+- ✅ Demonstrate multi-source intelligence (14 sources)
+- ✅ Show reproducible analysis pipeline
+- ✅ Provide executive-grade visualization
+
 
 ### When to Ask for Clarification
 
@@ -222,7 +232,6 @@ This is the CORE analytical insight. When coding, always consider which intellig
 - mypy (type checking)
 - Git + GitHub (version control)
 
----
 
 ## Key Insights
 
@@ -242,5 +251,6 @@ This is the CORE analytical insight. When coding, always consider which intellig
 5. **Blocking I/O**: Kills performance at scale
 
 ---
+
 
 **Remember**: This system helps organizations avoid capital deployment mistakes by identifying technology lifecycle position 12-24 months ahead. Multi-source triangulation reveals truth that single-source analysis misses.
