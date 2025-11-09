@@ -132,6 +132,7 @@ PIPELINE_CONFIG = {
 
     # ChromaDB configuration
     "chromadb_collection_name": "evtol_technologies_v2",
+    "chromadb_company_collection_name": "evtol_companies_v2",  # Company collection
     "embedding_model": "text-embedding-3-small",  # OpenAI embedding model
     "chromadb_search_top_k": 3,  # Top K results for hybrid search
 
