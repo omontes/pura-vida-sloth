@@ -19,6 +19,12 @@ import {
   PHASE_SEPARATORS,
   PHASE_LABELS,
 } from '@/utils/hypeCycleCurve';
+import {
+  type LabelNode,
+  calculateSmartPreferredPosition,
+  forceCurveRepulsion,
+  calculateLabelAnchor,
+} from '@/utils/labelPositioning';
 import type { Technology } from '@/types/hypeCycle';
 
 interface HypeCycleChartProps {
@@ -26,18 +32,6 @@ interface HypeCycleChartProps {
   onTechnologyClick: (techId: string) => void;
   width?: number;
   height?: number;
-}
-
-// Label node for force simulation
-interface LabelNode extends d3.SimulationNodeDatum {
-  id: string;
-  name: string;
-  nodeX: number;       // Fixed X position (on curve)
-  nodeY: number;       // Fixed Y position (on curve)
-  preferredY: number;  // Preferred Y position (above node)
-  width: number;       // Label bounding box width
-  height: number;      // Label bounding box height
-  phase: string;       // For styling
 }
 
 export default function HypeCycleChart({
@@ -168,7 +162,14 @@ export default function HypeCycleChart({
       .attr('stroke-width', 2.5)
       .style('cursor', 'pointer');
 
-    // 7. Smart Label Positioning with Collision Avoidance
+    // 7. Intelligent Curve-Aware Label Positioning
+    // Create path element for distance calculations
+    const pathElement = document.createElementNS(
+      'http://www.w3.org/2000/svg',
+      'path'
+    );
+    pathElement.setAttribute('d', pathString);
+
     // Create temporary labels to measure dimensions
     const tempLabels = svg
       .selectAll('.temp-label')
@@ -181,25 +182,44 @@ export default function HypeCycleChart({
       .style('opacity', 0)
       .text((d) => d.name);
 
-    // Measure label dimensions and create label nodes
+    // Measure label dimensions and calculate smart positions using radial sampling
     const labelNodes: LabelNode[] = [];
+    const chartBounds = { minY: 70, maxY: height - 150 };
+
     tempLabels.each(function (d) {
       const bbox = (this as SVGTextElement).getBBox();
       const nodeX = xScale(d.chart_x);
       const nodeY = getYForX(d.chart_x);
+      const labelWidth = bbox.width + 8;
+      const labelHeight = bbox.height + 4;
+
+      // Use radial sampling to find optimal position
+      const smartPosition = calculateSmartPreferredPosition(
+        nodeX,
+        nodeY,
+        labelWidth,
+        labelHeight,
+        pathElement,
+        labelNodes.map((l) => ({
+          x: l.x || 0,
+          y: l.y || 0,
+          width: l.width,
+          height: l.height,
+        })),
+        chartBounds
+      );
 
       labelNodes.push({
         id: d.id,
         name: d.name,
         nodeX: nodeX,
         nodeY: nodeY,
-        preferredY: nodeY - 35, // Prefer 35px above node
-        width: bbox.width + 8,
-        height: bbox.height + 4,
+        preferredY: smartPosition.y,
+        width: labelWidth,
+        height: labelHeight,
         phase: d.phase,
-        x: nodeX,
-        y: nodeY - 35,
-        fx: nodeX, // Fix X position (don't drift horizontally)
+        x: smartPosition.x,
+        y: smartPosition.y,
       });
     });
 
@@ -224,7 +244,7 @@ export default function HypeCycleChart({
       return force;
     };
 
-    // Run force simulation for collision avoidance
+    // Run force simulation with curve repulsion for fine-tuning
     const simulation = d3
       .forceSimulation(labelNodes)
       .force(
@@ -232,14 +252,15 @@ export default function HypeCycleChart({
         d3
           .forceCollide<LabelNode>()
           .radius((d) => Math.max(d.width, d.height) / 2 + 3)
-          .strength(0.8)
+          .strength(0.7)
           .iterations(4)
       )
+      .force('curve-repulsion', forceCurveRepulsion(pathElement, 20))
       .force(
         'y',
         d3
           .forceY<LabelNode>((d) => d.preferredY)
-          .strength(0.15)
+          .strength(0.1)
       )
       .force('clamp', forceClamp(70, height - 150))
       .stop();
@@ -249,18 +270,31 @@ export default function HypeCycleChart({
       simulation.tick();
     }
 
-    // Render leader lines (polylines connecting labels to nodes)
+    // Render diagonal leader lines (connecting labels to nodes)
     svg
       .selectAll('.leader-line')
-      .data(labelNodes.filter((d) => Math.abs((d.y || 0) - d.nodeY) > 10))
+      .data(
+        labelNodes.filter((d) => {
+          const dx = Math.abs((d.x || 0) - d.nodeX);
+          const dy = Math.abs((d.y || 0) - d.nodeY);
+          const distance = Math.sqrt(dx * dx + dy * dy);
+          return distance > 15; // Only show if label significantly displaced
+        })
+      )
       .enter()
-      .append('polyline')
+      .append('line')
       .attr('class', 'leader-line')
-      .attr('points', (d) => {
-        const midY = ((d.y || 0) + d.nodeY) / 2;
-        return `${d.nodeX},${d.nodeY} ${d.nodeX},${midY} ${d.x},${d.y}`;
+      .attr('x1', (d) => d.nodeX)
+      .attr('y1', (d) => {
+        // Start from edge of node circle, not center
+        const dy = (d.y || 0) - d.nodeY;
+        const distance = Math.sqrt(
+          Math.pow((d.x || 0) - d.nodeX, 2) + Math.pow(dy, 2)
+        ) || 1;
+        return d.nodeY + (dy / distance) * 12; // 12 = node radius
       })
-      .attr('fill', 'none')
+      .attr('x2', (d) => calculateLabelAnchor(d).x)
+      .attr('y2', (d) => calculateLabelAnchor(d).y)
       .attr('stroke', theme.colors.chart.separator)
       .attr('stroke-width', 1)
       .attr('stroke-dasharray', '2,2')
