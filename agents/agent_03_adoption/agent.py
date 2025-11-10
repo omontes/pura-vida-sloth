@@ -11,6 +11,7 @@ This agent:
 
 from typing import Dict, Any
 from neo4j import AsyncDriver
+from datetime import datetime, timedelta
 
 from agents.agent_03_adoption.schemas import (
     AdoptionInput,
@@ -78,11 +79,13 @@ Provide your score and reasoning.
 async def get_adoption_metrics(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-01-01",
-    end_date: str = "2025-12-01"
+    start_date: str = None,
+    end_date: str = None
 ) -> AdoptionMetrics:
     """
     Fetch all adoption metrics for a technology.
+
+    Dates default to current system date (end) and 1 year back (start).
 
     Args:
         driver: Neo4j async driver
@@ -93,6 +96,13 @@ async def get_adoption_metrics(
     Returns:
         AdoptionMetrics with all raw data
     """
+    # Calculate dynamic dates if not provided
+    if end_date is None:
+        end_date = datetime.now().strftime("%Y-%m-%d")
+    if start_date is None:
+        # Look back 1 year for adoption signals
+        start_date = (datetime.now() - timedelta(days=365)).strftime("%Y-%m-%d")
+
     # Query 1: Government contracts (count and value)
     contract_data = await adoption_queries.get_gov_contracts_1yr(
         driver, tech_id, start_date, end_date
@@ -229,8 +239,8 @@ async def adoption_scorer_agent(
 async def score_adoption(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-01-01",
-    end_date: str = "2025-12-01"
+    start_date: str = None,
+    end_date: str = None
 ) -> AdoptionOutput:
     """
     Standalone function for scoring adoption (testing/debugging).

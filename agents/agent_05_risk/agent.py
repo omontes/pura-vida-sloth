@@ -2,6 +2,7 @@
 
 from typing import Dict, Any
 from neo4j import AsyncDriver
+from datetime import datetime, timedelta
 from agents.agent_05_risk.schemas import RiskInput, RiskOutput, RiskMetrics
 from agents.shared.queries import risk_queries
 from agents.shared.openai_client import get_structured_llm
@@ -56,7 +57,14 @@ Metrics:
 Provide your score and reasoning.
 """
 
-async def get_risk_metrics(driver: AsyncDriver, tech_id: str, start_date: str, end_date: str) -> RiskMetrics:
+async def get_risk_metrics(driver: AsyncDriver, tech_id: str, start_date: str = None, end_date: str = None) -> RiskMetrics:
+    # Calculate dynamic dates if not provided
+    if end_date is None:
+        end_date = datetime.now().strftime("%Y-%m-%d")
+    if start_date is None:
+        # Look back 6 months for risk signals
+        start_date = (datetime.now() - timedelta(days=180)).strftime("%Y-%m-%d")
+
     sec_data = await risk_queries.get_sec_risk_mentions_6mo(driver, tech_id, start_date, end_date)
     holdings_data = await risk_queries.get_institutional_holdings(driver, tech_id)
     insider_data = await risk_queries.get_insider_trading_summary(driver, tech_id, start_date, end_date)
@@ -93,7 +101,7 @@ async def risk_scorer_agent(state: Dict[str, Any], driver: AsyncDriver) -> Dict[
         "risk_confidence": result.confidence,
     }
 
-async def score_risk(driver: AsyncDriver, tech_id: str, start_date: str = "2024-07-01", end_date: str = "2025-12-01") -> RiskOutput:
+async def score_risk(driver: AsyncDriver, tech_id: str, start_date: str = None, end_date: str = None) -> RiskOutput:
     state = {"tech_id": tech_id, "start_date": start_date, "end_date": end_date}
     result = await risk_scorer_agent(state, driver)
     return RiskOutput(

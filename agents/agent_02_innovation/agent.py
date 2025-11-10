@@ -12,6 +12,7 @@ This agent:
 
 from typing import Dict, Any
 from neo4j import AsyncDriver
+from datetime import datetime, timedelta
 
 from agents.agent_02_innovation.schemas import (
     InnovationInput,
@@ -82,12 +83,14 @@ Provide your score and reasoning.
 async def get_innovation_metrics(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2023-01-01",
-    end_date: str = "2025-12-01",
+    start_date: str = None,
+    end_date: str = None,
     community_version: str = "v1"
 ) -> InnovationMetrics:
     """
     Fetch all innovation metrics for a technology.
+
+    Dates default to current system date (end) and 2 years back (start).
 
     Args:
         driver: Neo4j async driver
@@ -99,6 +102,13 @@ async def get_innovation_metrics(
     Returns:
         InnovationMetrics with all raw data
     """
+    # Calculate dynamic dates if not provided
+    if end_date is None:
+        end_date = datetime.now().strftime("%Y-%m-%d")
+    if start_date is None:
+        # Look back 2 years for innovation signals
+        start_date = (datetime.now() - timedelta(days=730)).strftime("%Y-%m-%d")
+
     # Query 1: Patent count with PageRank weighting
     patent_data = await innovation_queries.get_patent_count_2yr(
         driver, tech_id, start_date, end_date
@@ -255,8 +265,8 @@ async def innovation_scorer_agent(
 async def score_innovation(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2023-01-01",
-    end_date: str = "2025-12-01",
+    start_date: str = None,
+    end_date: str = None,
     community_version: str = "v1"
 ) -> InnovationOutput:
     """
