@@ -45,6 +45,14 @@ def validate_technology_output(state: Dict[str, Any]) -> tuple[bool, list]:
         if phase_pos not in ["early", "mid", "late"]:
             errors.append(f"Invalid phase_position: {phase_pos} (must be early/mid/late)")
 
+    # Validate phase_confidence (0.0-1.0 float)
+    if "phase_confidence" in state:
+        phase_conf = state["phase_confidence"]
+        if not isinstance(phase_conf, (int, float)):
+            errors.append(f"Invalid phase_confidence type: {type(phase_conf).__name__} (must be numeric float)")
+        elif not (0.0 <= phase_conf <= 1.0):
+            errors.append(f"Invalid phase_confidence: {phase_conf} (must be 0.0-1.0)")
+
     # Validate phase name (accept both code and display)
     if "hype_cycle_phase" in state:
         phase_code = state["hype_cycle_phase"]

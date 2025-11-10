@@ -7,7 +7,7 @@ class PhaseOutput(BaseModel):
     tech_id: str
     phase: str = Field(description="innovation_trigger|peak|trough|slope|plateau")
     reasoning: str
-    confidence: str
+    confidence: float = Field(description="Confidence score 0.0-1.0")
 
 def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float, risk: float, hype: float) -> tuple[str, str]:
     """
@@ -50,16 +50,23 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     if adoption > 20 and innovation > 12 and narrative > 20 and hype < 50:
         return "slope", f"Growing adoption ({adoption:.0f}) with sustained innovation ({innovation:.0f}) and realistic expectations"
 
-    # Phase 3: Trough of Disillusionment (TIGHTENED: 15→25, 20→30)
-    # Technologies with multiple weak signals (adjusted for Tavily baseline)
+    # Phase 3: Trough of Disillusionment (RECALIBRATED v5 for sparse data + min_doc_count=5)
+    # Two-tier detection: "dead" technologies vs underperforming technologies
+
+    # Tier 1: Truly dead technologies (minimal activity across ALL layers)
+    if innovation < 5 and adoption < 5 and narrative < 20:
+        return "trough", f"Minimal activity across all layers: innovation ({innovation:.0f}), adoption ({adoption:.0f}), narrative ({narrative:.0f})"
+
+    # Tier 2: Underperforming technologies (require 3+ weak signals, not just 2)
+    # Adjusted thresholds for min_document_count=5 baseline
     low_count = sum([
-        narrative < 30,
-        adoption < 20,
-        innovation < 20,
-        hype < 30
+        narrative < 35,     # Below Tavily baseline + minimal organic coverage
+        adoption < 18,      # Significantly below moderate adoption
+        innovation < 18,    # Minimal R&D activity
+        hype < 28           # Low media buzz
     ])
-    if low_count >= 2:
-        return "trough", f"Multiple underperforming metrics (2+ low scores): narrative ({narrative:.0f}), adoption ({adoption:.0f}), innovation ({innovation:.0f})"
+    if low_count >= 3:      # Require 3+ criteria (not 2) to avoid over-classification
+        return "trough", f"Multiple underperforming metrics (3+ low scores): narrative ({narrative:.0f}), adoption ({adoption:.0f}), innovation ({innovation:.0f})"
 
     # Default: Slope (for mixed signals that don't fit anywhere)
     return "slope", f"Mixed signals across layers (innov={innovation:.0f}, adopt={adoption:.0f}, narr={narrative:.0f})"
@@ -74,11 +81,15 @@ async def phase_detector_agent(state: Dict[str, Any]) -> Dict[str, Any]:
 
     phase, reasoning = detect_hype_cycle_phase(innovation, adoption, narrative, risk, hype)
 
-    # Confidence based on score clarity
-    if max([innovation, adoption, narrative]) - min([innovation, adoption, narrative]) > 30:
-        confidence = "high"
+    # Confidence based on score clarity (numeric 0.0-1.0)
+    # Higher spread = clearer signal differentiation = higher confidence
+    spread = max([innovation, adoption, narrative]) - min([innovation, adoption, narrative])
+    if spread > 30:
+        confidence = 0.85  # High confidence: clear signal differentiation
+    elif spread > 15:
+        confidence = 0.65  # Medium confidence: moderate clarity
     else:
-        confidence = "medium"
+        confidence = 0.45  # Low confidence: conflicting/unclear signals
 
     return {
         "tech_id": tech_id,

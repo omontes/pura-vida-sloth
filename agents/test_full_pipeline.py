@@ -17,6 +17,7 @@ from agents.langgraph_orchestrator import (
     analyze_single_technology,
     generate_hype_cycle_chart,
 )
+from agents.chart_normalization_ranked import normalize_chart
 
 
 async def test_single_technology():
@@ -81,7 +82,7 @@ async def test_multiple_technologies():
     try:
         chart = await generate_hype_cycle_chart(
             driver=client.driver,
-            limit=100
+            limit=50
         )
 
         print(f"\n[RESULT] Generated chart with {len(chart['technologies'])} technologies")
@@ -106,6 +107,24 @@ async def test_multiple_technologies():
             json.dump(chart, f, indent=2)
 
         print(f"\n[OUTPUT] Saved to {output_file}")
+
+        # Generate normalized chart
+        print(f"\n[NORMALIZATION] Generating normalized chart...")
+        try:
+            normalized_chart = normalize_chart(
+                input_file=output_file,
+                output_file="hype_cycle_chart_normalized.json",
+                top_n=10
+            )
+            if normalized_chart:
+                print(f"[OK] Normalized chart saved to hype_cycle_chart_normalized.json")
+        except Exception as e:
+            print(f"[WARN] Normalization failed: {e}")
+            # Continue anyway - original chart is still valid
+
+        print(f"\n[OUTPUT] Charts generated:")
+        print(f"  - Original: {output_file} ({len(chart['technologies'])} technologies)")
+        print(f"  - Normalized: hype_cycle_chart_normalized.json (top 10 per phase)")
         print("\n[PASS] Multiple technology analysis completed")
         return True
 

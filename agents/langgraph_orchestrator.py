@@ -84,7 +84,7 @@ class HypeCycleState(TypedDict, total=False):
     # Phase detection (Agent 7)
     hype_cycle_phase: str
     phase_reasoning: str
-    phase_confidence: str
+    phase_confidence: float
 
     # LLM analysis (Agent 8)
     executive_summary: str
@@ -248,7 +248,7 @@ async def generate_hype_cycle_chart(
         mid_pct=0.40,    # Target 40% from mid-stage communities (Slope)
         late_pct=0.20,   # Target 20% from late-stage communities (Plateau)
         hype_pct=0.20,   # Target 20% from hype-stage communities (Peak)
-        min_document_count=1
+        min_document_count=15  # Require at least 15 documents for high-quality analysis
     )
 
     tech_ids = [t.id for t in tech_discovery.technologies]

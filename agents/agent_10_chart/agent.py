@@ -15,7 +15,7 @@ def format_technology_for_chart(state: Dict[str, Any]) -> Dict[str, Any]:
         "domain": state.get("domain", "Technology"),
         "phase": phase_display,  # Use display name: "Innovation Trigger", etc.
         "phase_position": state.get("phase_position", "mid"),
-        "phase_confidence": state.get("phase_confidence", "medium"),
+        "phase_confidence": state.get("phase_confidence", 0.5),
         "chart_x": state.get("chart_x", 2.7),  # 0.0-5.0 scale
         "scores": {
             "innovation": state.get("innovation_score", 0),

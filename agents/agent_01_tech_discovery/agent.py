@@ -333,7 +333,12 @@ async def sample_techs_from_communities(
     WITH t, total_docs, breakdown,
          collect(DISTINCT c.ticker) AS companies
 
-    // Return with PageRank ordering
+    // Calculate diversity score (bonus for multiple doc types)
+    WITH t, total_docs, breakdown, companies,
+         size(breakdown) AS doc_type_diversity,
+         coalesce(t.pagerank, 0.0) AS pagerank
+
+    // Return with smart ordering: PageRank + diversity bonus + document count
     RETURN
       t.id AS id,
       t.name AS name,
@@ -343,9 +348,10 @@ async def sample_techs_from_communities(
       total_docs AS document_count,
       breakdown AS doc_type_breakdown,
       t.community_{version} AS community_id,
-      coalesce(t.pagerank, 0.0) AS pagerank
+      pagerank AS pagerank
 
-    ORDER BY pagerank DESC, total_docs DESC
+    // Order by: PageRank (importance) + diversity (2+ types preferred) + total docs
+    ORDER BY pagerank DESC, doc_type_diversity DESC, total_docs DESC
     LIMIT $limit
     """
 
