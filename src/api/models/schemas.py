@@ -8,13 +8,21 @@ from pydantic import BaseModel, Field
 class SubgraphRequest(BaseModel):
     """Request body for POST /api/neo4j/subgraph"""
 
-    tech_id: str = Field(..., description="Technology ID (e.g., 'evtol')")
+    tech_id: str | None = Field(
+        None,
+        description="Technology ID (e.g., 'evtol'). If None, returns full graph with all technologies."
+    )
 
     class Config:
         json_schema_extra = {
-            "example": {
-                "tech_id": "evtol"
-            }
+            "examples": [
+                {
+                    "tech_id": "evtol"
+                },
+                {
+                    "tech_id": None
+                }
+            ]
         }
 
 

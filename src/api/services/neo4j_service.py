@@ -3,23 +3,32 @@ Neo4j Service
 
 Executes Cypher queries to fetch technology subgraphs from Neo4j Aura.
 
-Query Pattern:
-    MATCH (t:Technology {id: $tech_id})
-    OPTIONAL MATCH (t)-[r]-(n)
-    WHERE n IS NULL OR NOT n:Community
-    RETURN t, r, n
+Query Patterns:
+    Full graph (tech_id=None):
+        MATCH (t:Technology)
+        OPTIONAL MATCH (t)-[r]-(n)
+        WHERE n IS NULL OR NOT n:Community
+        RETURN t, r, n
+        LIMIT 1000  # Limit for performance
+
+    Filtered subgraph (tech_id provided):
+        MATCH (t:Technology {id: $tech_id})
+        OPTIONAL MATCH (t)-[r]-(n)
+        WHERE n IS NULL OR NOT n:Community
+        RETURN t, r, n
 """
 
 from neo4j import AsyncDriver
 from ..dependencies import neo4j_session_context
 
 
-async def get_technology_subgraph(tech_id: str, driver: AsyncDriver) -> list[dict]:
+async def get_technology_subgraph(tech_id: str | None, driver: AsyncDriver) -> list[dict]:
     """
-    Execute Cypher query to get technology node and all its relationships.
+    Execute Cypher query to get technology node(s) and relationships.
 
     Args:
-        tech_id: Technology ID (e.g., "evtol", "hydrogen_fuel_cell")
+        tech_id: Optional technology ID. If None, returns full graph of all technologies.
+                 If provided (e.g., "evtol"), returns subgraph for that specific technology.
         driver: Neo4j async driver
 
     Returns:
@@ -34,16 +43,26 @@ async def get_technology_subgraph(tech_id: str, driver: AsyncDriver) -> list[dic
         ]
     """
     async with neo4j_session_context(driver) as session:
-        # Execute user's Cypher query
-        result = await session.run(
+        # Conditional query based on whether tech_id is provided
+        if tech_id:
+            # Filtered subgraph for specific technology
+            query = """
+                MATCH (t:Technology {id: $tech_id})
+                OPTIONAL MATCH (t)-[r]-(n)
+                WHERE n IS NULL OR NOT n:Community
+                RETURN t, r, n
             """
-            MATCH (t:Technology {id: $tech_id})
-            OPTIONAL MATCH (t)-[r]-(n)
-            WHERE n IS NULL OR NOT n:Community
-            RETURN t, r, n
-            """,
-            tech_id=tech_id,
-        )
+            result = await session.run(query, tech_id=tech_id)
+        else:
+            # Full graph with all technologies (limited for performance)
+            query = """
+                MATCH (t:Technology)
+                OPTIONAL MATCH (t)-[r]-(n)
+                WHERE n IS NULL OR NOT n:Community
+                RETURN t, r, n
+                LIMIT 1000
+            """
+            result = await session.run(query)
 
         # Extract records
         records = []

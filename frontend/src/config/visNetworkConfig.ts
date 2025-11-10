@@ -42,9 +42,10 @@ const LIGHT_THEME: ThemeColors = {
  * Get vis-network options with theme-aware styling
  *
  * @param isDarkMode - Whether dark mode is active
+ * @param useHierarchical - Use hierarchical layout instead of physics (for large graphs)
  * @returns vis-network options object
  */
-export function getVisNetworkOptions(isDarkMode: boolean): Options {
+export function getVisNetworkOptions(isDarkMode: boolean, useHierarchical: boolean = false): Options {
   const theme = isDarkMode ? DARK_THEME : LIGHT_THEME;
 
   return {
@@ -52,6 +53,8 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
       shape: 'dot',
       borderWidth: 2,
       borderWidthSelected: 3,
+      // No global color config - use individual node colors from backend
+      // Backend sets colors based on doc_type for Documents and labels for other nodes
       shadow: {
         enabled: true,
         color: theme.shadowColor,
@@ -64,6 +67,88 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
         size: 13,
         face: 'Inter, sans-serif',
         bold: '600',
+      },
+    },
+    groups: {
+      // Entity types (Primary hierarchy)
+      Technology: {
+        color: {
+          background: NODE_COLORS.Technology,
+          border: theme.nodeFontColor,
+        }
+      },
+      Company: {
+        color: {
+          background: NODE_COLORS.Company,
+          border: theme.nodeFontColor,
+        }
+      },
+      Person: {
+        color: {
+          background: NODE_COLORS.Person,
+          border: theme.nodeFontColor,
+        }
+      },
+      // Document types (Secondary hierarchy)
+      Patent: {
+        color: {
+          background: NODE_COLORS.Patent,
+          border: theme.nodeFontColor,
+        }
+      },
+      TechnicalPaper: {
+        color: {
+          background: NODE_COLORS.TechnicalPaper,
+          border: theme.nodeFontColor,
+        }
+      },
+      SECFiling: {
+        color: {
+          background: NODE_COLORS.SECFiling,
+          border: theme.nodeFontColor,
+        }
+      },
+      Regulation: {
+        color: {
+          background: NODE_COLORS.Regulation,
+          border: theme.nodeFontColor,
+        }
+      },
+      GitHub: {
+        color: {
+          background: NODE_COLORS.GitHub,
+          border: theme.nodeFontColor,
+        }
+      },
+      GovernmentContract: {
+        color: {
+          background: NODE_COLORS.GovernmentContract,
+          border: theme.nodeFontColor,
+        }
+      },
+      News: {
+        color: {
+          background: NODE_COLORS.News,
+          border: theme.nodeFontColor,
+        }
+      },
+      InsiderTransaction: {
+        color: {
+          background: NODE_COLORS.InsiderTransaction,
+          border: theme.nodeFontColor,
+        }
+      },
+      StockPrice: {
+        color: {
+          background: NODE_COLORS.StockPrice,
+          border: theme.nodeFontColor,
+        }
+      },
+      InstitutionalHolding: {
+        color: {
+          background: NODE_COLORS.InstitutionalHolding,
+          border: theme.nodeFontColor,
+        }
       },
     },
     edges: {
@@ -81,7 +166,7 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
       },
       smooth: {
         enabled: true,
-        type: 'dynamic',
+        type: useHierarchical ? 'cubicBezier' : 'dynamic',
         roundness: 0.5,
       },
       font: {
@@ -92,8 +177,21 @@ export function getVisNetworkOptions(isDarkMode: boolean): Options {
         align: 'horizontal',
       },
     },
+    layout: useHierarchical ? {
+      hierarchical: {
+        enabled: true,
+        direction: 'UD',           // Top-down tree layout
+        sortMethod: 'directed',    // Use edge direction for layout
+        nodeSpacing: 150,          // Horizontal spacing between nodes
+        levelSeparation: 200,      // Vertical spacing between levels
+        treeSpacing: 250,          // Spacing between disconnected trees
+        blockShifting: true,       // Optimize layout by shifting blocks
+        edgeMinimization: true,    // Minimize edge crossings
+        parentCentralization: true // Center parent nodes over children
+      }
+    } : undefined,
     physics: {
-      enabled: true,
+      enabled: !useHierarchical,
       stabilization: {
         enabled: true,
         iterations: 250,

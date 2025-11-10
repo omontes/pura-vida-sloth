@@ -65,8 +65,60 @@ export interface HypeCycleChartData {
   industry: string;
   generated_at: string;  // ISO 8601 timestamp
   metadata: {
-    total_documents: number;
-    date_range: string;
+    date_from?: string;
+    date_to?: string;
+    total_documents?: number | string;
+    date_range?: string;
+    total_count?: number;
+    phases?: {
+      innovation_trigger?: number;
+      peak?: number;
+      trough?: number;
+      slope?: number;
+      plateau?: number;
+    };
+    normalized_at?: string;
+    normalization_config?: {
+      top_n_per_phase?: number;
+      original_count?: number;
+      filtered_count?: number;
+    };
+    graph_data?: {
+      communities?: {
+        total?: number;
+        versions?: Record<string, number>;
+        classification_v1?: Record<string, number>;
+      };
+      documents?: {
+        total?: number;
+        by_type?: {
+          patent?: number;
+          news?: number;
+          technical_paper?: number;
+          government_contract?: number;
+          sec_filing?: number;
+          github?: number;
+        };
+      };
+      technologies?: {
+        total?: number;
+        with_documents?: number;
+        by_doc_threshold?: {
+          min_5?: number;
+          min_10?: number;
+          min_15?: number;
+          min_20?: number;
+        };
+      };
+      companies?: {
+        total?: number;
+      };
+      relationships?: {
+        total?: number;
+        mentioned_in?: number;
+        has_member?: number;
+      };
+    };
   };
   technologies: Technology[];
 }

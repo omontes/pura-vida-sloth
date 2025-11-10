@@ -24,7 +24,7 @@ import type { Neo4jSubgraph, VisGraphData, VisNode, VisEdge } from '@/types/hype
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface Neo4jGraphVizProps {
-  technologyId: string;
+  technologyId: string | null;
 }
 
 export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
@@ -40,12 +40,12 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const isDarkMode = themeMode === 'dark';
 
   useEffect(() => {
-    if (!technologyId) return;
-
     setIsLoading(true);
     setError(null);
 
     // Fetch subgraph from real Neo4j API
+    // If technologyId is null, fetches full graph with all technologies
+    // If technologyId is provided, fetches filtered subgraph for that technology
     fetch('/api/neo4j/subgraph', {
       method: 'POST',
       headers: {
@@ -80,19 +80,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       });
   }, [technologyId]);
 
-  const events = {
-    click: (params: any) => {
-      if (params.nodes.length > 0) {
-        const nodeId = params.nodes[0];
-        const node = graphData.nodes.find((n) => n.id === nodeId);
-        if (node) {
-          setSelectedNode(node);
-        }
-      } else {
-        setSelectedNode(null);
-      }
-    },
-  };
+  // Click events disabled to prevent navigation issues
+  const events = {};
 
   const handleResetView = () => {
     if (networkRef.current) {
@@ -113,7 +102,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
     }
   };
 
-  const options = getVisNetworkOptions(isDarkMode);
+  // Always use normal force-directed physics layout
+  const options = getVisNetworkOptions(isDarkMode, false);
 
   // Get unique node types for legend with hierarchical grouping
   const allNodeTypes = Array.from(
@@ -143,12 +133,12 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
           getNetwork={(network) => {
             networkRef.current = network;
 
-            // Auto-stop physics after stabilization (like Gradio prototype)
+            // Auto-stop physics after stabilization to reduce CPU usage
             network.once('stabilizationIterationsDone', () => {
               setTimeout(() => {
                 network.setOptions({ physics: false });
                 setPhysicsEnabled(false);
-              }, 15000);
+              }, 30000); // 30 seconds for better layout quality
             });
           }}
         />
@@ -159,7 +149,9 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Querying Neo4j...</p>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              {technologyId ? 'Loading technology subgraph...' : 'Loading full knowledge graph...'}
+            </p>
           </div>
         </div>
       )}

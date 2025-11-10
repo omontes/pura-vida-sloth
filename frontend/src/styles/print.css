@@ -1,0 +1,12 @@
+/* Print Configuration for PDF Export */
+@page {
+  size: A2 portrait;
+  margin: 15mm 10mm;
+}
+
+@media print {
+  /* Hide interactive elements when printing */
+  button {
+    display: none;
+  }
+}
