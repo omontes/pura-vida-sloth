@@ -241,6 +241,8 @@ async def narrative_scorer_agent(
         "narrative_reasoning": output.reasoning,
         "narrative_metrics": metrics.model_dump(),
         "narrative_confidence": output.confidence,
+        # Document counts for evidence
+        "news_count": metrics.news_article_count,
     }
 
 

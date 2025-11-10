@@ -258,6 +258,10 @@ async def innovation_scorer_agent(
         "innovation_reasoning": output.reasoning,
         "innovation_metrics": metrics.model_dump(),
         "innovation_confidence": output.confidence,
+        # Document counts for evidence
+        "patent_count": metrics.patent_count_2yr,
+        "paper_count": metrics.paper_count_2yr,
+        "github_count": metrics.github_repo_count,
     }
 
 
