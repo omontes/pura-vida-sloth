@@ -45,6 +45,11 @@ class HypeCycleState(TypedDict, total=False):
     innovation_metrics: dict
     innovation_confidence: str
 
+    # Document counts for evidence (from innovation)
+    patent_count: int
+    paper_count: int
+    github_count: int
+
     adoption_score: float
     adoption_reasoning: str
     adoption_metrics: dict
@@ -55,10 +60,17 @@ class HypeCycleState(TypedDict, total=False):
     narrative_metrics: dict
     narrative_confidence: str
 
+    # Document counts for evidence
+    news_count: int
+
     risk_score: float
     risk_reasoning: str
     risk_metrics: dict
     risk_confidence: str
+
+    # Document counts for evidence
+    sec_filing_count: int
+    insider_transaction_count: int
 
     # Hype analysis (Agent 6)
     hype_score: float
