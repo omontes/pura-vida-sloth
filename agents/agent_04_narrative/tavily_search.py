@@ -335,8 +335,9 @@ def calculate_freshness_score(
         0.2  # Declining interest
     """
     if graph_count == 0:
-        # No historical baseline - use Tavily count as-is
-        return float(tavily_count) if tavily_count > 0 else 0.0
+        # No historical baseline - return neutral (1.0) to avoid false acceleration signal
+        # Without baseline, we cannot determine if coverage is accelerating
+        return 1.0
 
     # Calculate daily rates
     graph_daily_rate = graph_count / days_graph

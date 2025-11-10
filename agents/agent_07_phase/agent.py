@@ -13,21 +13,25 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     """
     Detect hype cycle phase from layer scores.
 
-    RECALIBRATED THRESHOLDS (2025-01-10 v3): Adjusted for Tavily-enhanced narrative scores.
-    Tavily adds +20-30 points to narrative baseline, causing 96% Peak clustering with old thresholds.
-    New calibration accounts for Tavily-boosted distribution while maintaining phase diversity.
+    RECALIBRATED THRESHOLDS (2025-01-10 v4):
+    - Fixed freshness calculation bug (was returning raw count instead of 1.0 for zero baseline)
+    - Relaxed Innovation Trigger: adoption 10→15, narrative 25→35
+    - Relaxed Plateau: adoption 30→25, innovation 20→15, risk 35→40
+
+    Previous issue: 82% Peak clustering due to freshness bug + too-strict Innovation/Plateau thresholds.
 
     Phases:
     1. Innovation Trigger: High innovation, low adoption/narrative
     2. Peak of Inflated Expectations: High narrative AND hype, low adoption
     3. Trough of Disillusionment: Low scores with 2/4 criteria
     4. Slope of Enlightenment: Moderate growth across metrics
-    5. Plateau of Productivity: High adoption, sustained innovation
+    5. Plateau of Productivity: Moderate-to-high adoption, sustained innovation
     """
 
-    # Phase 1: Innovation Trigger (TIGHTENED: 12→25 to account for Tavily noise)
-    # Early innovation with truly minimal media coverage (harder to achieve with Tavily)
-    if innovation > 15 and adoption < 10 and narrative < 25:
+    # Phase 1: Innovation Trigger (RELAXED: adoption 10→15, narrative 25→35)
+    # Early innovation with minimal adoption and low-to-moderate media coverage
+    # Tavily baseline adds ~10-20 points, so narrative < 35 catches early-stage tech
+    if innovation > 15 and adoption < 15 and narrative < 35:
         return "innovation_trigger", f"Early innovation ({innovation:.0f}) with minimal adoption ({adoption:.0f}) and low media coverage ({narrative:.0f})"
 
     # Phase 2: Peak of Inflated Expectations (TIGHTENED: 20→45, OR→AND, 25→40)
@@ -36,9 +40,9 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     if narrative > 45 and hype > 40 and adoption < 25:
         return "peak", f"Media saturation ({narrative:.0f}) with high hype ({hype:.0f}) but limited adoption ({adoption:.0f})"
 
-    # Phase 5: Plateau of Productivity (KEEP: works well)
-    # Check BEFORE Slope to capture mature technologies
-    if adoption > 30 and innovation > 20 and narrative < 60 and risk < 35:
+    # Phase 5: Plateau of Productivity (RELAXED: adoption 30→25, innovation 20→15, risk 35→40)
+    # Check BEFORE Slope to capture mature technologies with moderate-to-high adoption
+    if adoption > 25 and innovation > 15 and narrative < 60 and risk < 40:
         return "plateau", f"Mature market with high adoption ({adoption:.0f}), sustained innovation ({innovation:.0f}), and stable risk profile"
 
     # Phase 4: Slope of Enlightenment (ADJUSTED: 10→20 for narrative baseline shift)
