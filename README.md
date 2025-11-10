@@ -125,7 +125,7 @@ Phase 6: Interactive Visualization
 **Runtime**: 60-90 minutes with checkpoint/resume capability
 
 ### Phase 2: Document Processing
-**Location**: `src/processors/`
+**Location**: `src/parsers/`
 
 **Single-Purpose Processor**: Converts raw documents into structured JSON
 
