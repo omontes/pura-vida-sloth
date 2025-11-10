@@ -119,7 +119,7 @@ export default function HypeCycleChart({
       const textGroup = svg
         .append('text')
         .attr('x', xScale(x))
-        .attr('y', height - 110)
+        .attr('y', height - 130) // Moved from -110 to -130 for cleaner separation
         .attr('text-anchor', 'middle')
         .style('fill', theme.colors.text.secondary)
         .style('font-size', '12px')
@@ -224,11 +224,11 @@ export default function HypeCycleChart({
     const curveCache = new CurveDistanceCache(pathElement, 10);
 
     // Pre-compute wrapped lines for all technologies (multi-line text wrapping)
-    const wrappedLines = technologies.map((tech) => wrapText(tech.name, 13));
+    const wrappedLines = technologies.map((tech) => wrapText(tech.name, 16)); // Increased from 13 to 16 for better readability
 
     // Measure label dimensions and calculate smart positions using radial sampling
     const labelNodes: LabelNode[] = [];
-    const chartBounds = { minY: 70, maxY: height - 150 };
+    const chartBounds = { minY: 120, maxY: height - 150 }; // Increased from 70 to 120 for peak label breathing room
 
     technologies.forEach((d, i) => {
       // Calculate dimensions from wrapped lines (no need for temporary rendering)
@@ -301,18 +301,18 @@ export default function HypeCycleChart({
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 4) // Reduced from 6 (narrower labels need less padding)
-          .strength(0.6) // Reduced from 0.8 (weaker repulsion for compact multi-line text)
-          .iterations(2) // Reduced from 3 (faster convergence with less collision)
+          .radius((d) => Math.max(d.width, d.height) / 2 + 6) // Tighter collision detection for multi-line labels
+          .strength(0.75) // Stronger repulsion to prevent peak phase crowding
+          .iterations(3) // Better convergence for complex label layouts
       )
-      .force('curve-repulsion', forceCurveRepulsion(pathElement, 18))
+      .force('curve-repulsion', forceCurveRepulsion(pathElement, 24)) // Increased from 18 for more clearance
       .force(
         'y',
         d3
           .forceY<LabelNode>((d) => d.preferredY)
-          .strength(0.12) // Slightly increased from 0.1 (maintain vertical positioning)
+          .strength(0.18) // Increased from 0.12 for stronger vertical anchoring at peak
       )
-      .force('clamp', forceClamp(50, height - 150))
+      .force('clamp', forceClamp(120, height - 140)) // Aligned with chartBounds for consistent margins
       .alphaDecay(0.05) // Faster convergence (default: 0.028)
       .stop();
 
