@@ -6,6 +6,7 @@ Executes Cypher queries to fetch technology subgraphs from Neo4j Aura.
 Query Pattern:
     MATCH (t:Technology {id: $tech_id})
     OPTIONAL MATCH (t)-[r]-(n)
+    WHERE n IS NULL OR NOT n:Community
     RETURN t, r, n
 """
 
@@ -38,6 +39,7 @@ async def get_technology_subgraph(tech_id: str, driver: AsyncDriver) -> list[dic
             """
             MATCH (t:Technology {id: $tech_id})
             OPTIONAL MATCH (t)-[r]-(n)
+            WHERE n IS NULL OR NOT n:Community
             RETURN t, r, n
             """,
             tech_id=tech_id,

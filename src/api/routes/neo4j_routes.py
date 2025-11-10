@@ -24,9 +24,10 @@ async def fetch_technology_subgraph(
 
     Executes Cypher query:
     ```cypher
-    MATCH (t:Technology {id: $tech_id})
-    OPTIONAL MATCH (t)-[r]-(n)
-    RETURN t, r, n
+        MATCH (t:Technology {id: $tech_id})
+        OPTIONAL MATCH (t)-[r]-(n)
+        WHERE n IS NULL OR NOT n:Community
+        RETURN t, r, n;
     ```
 
     Returns vis-network compatible format for frontend visualization.
