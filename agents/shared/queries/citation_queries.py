@@ -415,7 +415,6 @@ async def get_company_tech_document_provenance(
         >>> paths[0]
         {
             'company': 'Joby Aviation',
-            'ticker': 'JOBY',
             'company_relation': 'develops',
             'company_evidence': 'Joby is developing eVTOL aircraft...',
             'company_confidence': 0.95,
@@ -433,7 +432,6 @@ async def get_company_tech_document_provenance(
       AND d.quality_score >= 0.75
     RETURN
       c.name AS company,
-      c.ticker AS ticker,
       r.relation_type AS company_relation,
       r.evidence_text AS company_evidence,
       r.evidence_confidence AS company_confidence,
@@ -454,16 +452,15 @@ async def get_company_tech_document_provenance(
         return [
             {
                 "company": record[0],
-                "ticker": record[1],
-                "company_relation": record[2],
-                "company_evidence": record[3],
-                "company_confidence": record[4],
-                "doc_id": record[5],
-                "doc_type": record[6],
-                "doc_role": record[7],
-                "doc_evidence": record[8],
-                "doc_confidence": record[9],
-                "published_at": record[10],
+                "company_relation": record[1],
+                "company_evidence": record[2],
+                "company_confidence": record[3],
+                "doc_id": record[4],
+                "doc_type": record[5],
+                "doc_role": record[6],
+                "doc_evidence": record[7],
+                "doc_confidence": record[8],
+                "published_at": record[9],
             }
             for record in records
         ]

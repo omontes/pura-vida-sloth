@@ -142,8 +142,8 @@ async def get_adoption_metrics(
         for c in top_contracts_data[:5]
     ]
 
-    # Extract top companies (tickers)
-    top_companies = [c.get("ticker", "") for c in companies_data[:5] if c.get("ticker")]
+    # Extract top companies (names)
+    top_companies = [c.get("name", "") for c in companies_data[:5] if c.get("name")]
 
     return AdoptionMetrics(
         gov_contract_count_1yr=contract_count,

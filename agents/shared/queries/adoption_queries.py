@@ -258,14 +258,13 @@ async def get_revenue_mentions_by_company(
         end_date: End of analysis window
 
     Returns:
-        List of revenue mention dicts with company, ticker, filing, evidence
+        List of revenue mention dicts with company, filing, evidence
 
     Example:
         >>> mentions = await get_revenue_mentions_by_company(driver, "evtol")
         >>> mentions[0]
         {
             'company': 'Joby Aviation',
-            'ticker': 'JOBY',
             'fiscal_period': 'Q3 2024',
             'date': '2024-11-08',
             'doc_type': 'sec_filing',
@@ -283,7 +282,6 @@ async def get_revenue_mentions_by_company(
       AND d.quality_score >= 0.75
     RETURN
       c.name AS company,
-      c.ticker AS ticker,
       d.fiscal_period AS fiscal_period,
       d.published_at AS date,
       d.doc_type AS doc_type,
@@ -300,12 +298,11 @@ async def get_revenue_mentions_by_company(
         return [
             {
                 "company": record[0],
-                "ticker": record[1],
-                "fiscal_period": record[2],
-                "date": record[3],
-                "doc_type": record[4],
-                "evidence": record[5],
-                "strength": record[6],
+                "fiscal_period": record[1],
+                "date": record[2],
+                "doc_type": record[3],
+                "evidence": record[4],
+                "strength": record[5],
             }
             for record in records
         ]
@@ -332,14 +329,13 @@ async def get_companies_developing_tech(
         limit: Maximum number of companies
 
     Returns:
-        List of company dicts with name, ticker, pagerank, relation_type
+        List of company dicts with name, pagerank, relation_type
 
     Example:
         >>> companies = await get_companies_developing_tech(driver, "evtol")
         >>> companies[0]
         {
             'name': 'Joby Aviation',
-            'ticker': 'JOBY',
             'pagerank': 0.0045,
             'relation_type': 'develops',
             'evidence': 'Joby is developing eVTOL aircraft for air taxi services',
@@ -352,7 +348,6 @@ async def get_companies_developing_tech(
       AND c.pagerank IS NOT NULL
     RETURN
       c.name AS name,
-      c.ticker AS ticker,
       c.pagerank AS pagerank,
       r.relation_type AS relation_type,
       r.evidence_text AS evidence,
@@ -368,11 +363,10 @@ async def get_companies_developing_tech(
         return [
             {
                 "name": record[0],
-                "ticker": record[1],
-                "pagerank": record[2],
-                "relation_type": record[3],
-                "evidence": record[4],
-                "confidence": record[5],
+                "pagerank": record[1],
+                "relation_type": record[2],
+                "evidence": record[3],
+                "confidence": record[4],
             }
             for record in records
         ]

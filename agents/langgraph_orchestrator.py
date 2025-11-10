@@ -215,13 +215,18 @@ async def generate_hype_cycle_chart(
     Returns:
         Complete chart JSON ready for D3.js visualization
     """
-    # Step 1: Discover technologies
-    from agents.agent_01_tech_discovery.agent import discover_technologies
+    # Step 1: Discover technologies using ADAPTIVE community-based stratified sampling
+    from agents.agent_01_tech_discovery.agent import discover_technologies_with_community_sampling
 
-    tech_discovery = await discover_technologies(
+    tech_discovery = await discover_technologies_with_community_sampling(
         driver=driver,
-        industry_filter=industry_filter,
-        limit=limit,
+        version="v1",
+        total_limit=limit,
+        early_pct=0.20,  # Target 20% from early-stage communities (Innovation Trigger)
+        mid_pct=0.40,    # Target 40% from mid-stage communities (Slope)
+        late_pct=0.20,   # Target 20% from late-stage communities (Plateau)
+        hype_pct=0.20,   # Target 20% from hype-stage communities (Peak)
+        min_document_count=1
     )
 
     tech_ids = [t.id for t in tech_discovery.technologies]

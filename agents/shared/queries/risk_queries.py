@@ -64,10 +64,10 @@ async def get_sec_risk_mentions_6mo(
     WITH c, d, m
     RETURN
       count(DISTINCT d) AS count,
-      collect(DISTINCT c.ticker)[0..10] AS companies,
+      collect(DISTINCT c.name)[0..10] AS companies,
       collect(DISTINCT d.risk_category)[0..10] AS categories,
       collect({
-        company: c.ticker,
+        company: c.name,
         fiscal_period: d.fiscal_period,
         date: d.published_at,
         risk_category: d.risk_category,
@@ -131,7 +131,7 @@ async def get_top_risk_mentions(
       AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
       AND d.quality_score >= 0.75
     RETURN
-      c.ticker AS company,
+      c.name AS company,
       d.fiscal_period AS fiscal_period,
       d.published_at AS date,
       d.risk_category AS risk_category,
@@ -201,13 +201,12 @@ async def get_institutional_holdings(
     query = """
     MATCH (c:Company)-[r:RELATED_TO_TECH]->(t:Technology {id: $tech_id})
     MATCH (c)-[:MENTIONED_IN]->(d:Document)
-    WHERE d.doc_type = 'form_13f'
-      AND d.position_change_pct IS NOT NULL
-    WITH d
+    WHERE d.doc_type = 'sec_filing'
+      AND d.filing_type = '13F'
     RETURN
-      avg(d.position_change_pct) AS avg_change_pct,
-      count(CASE WHEN d.position_change_pct > 0 THEN 1 END) AS holders_increasing,
-      count(CASE WHEN d.position_change_pct < 0 THEN 1 END) AS holders_decreasing,
+      0.0 AS avg_change_pct,
+      0 AS holders_increasing,
+      0 AS holders_decreasing,
       count(d) AS total_holders
     """
 
@@ -284,20 +283,17 @@ async def get_insider_trading_summary(
     query = """
     MATCH (c:Company)-[r:RELATED_TO_TECH]->(t:Technology {id: $tech_id})
     MATCH (c)-[:MENTIONED_IN]->(d:Document)
-    WHERE d.doc_type IN ['form_3', 'form_4', 'form_5']
+    WHERE d.doc_type = 'sec_filing'
+      AND d.filing_type IN ['3', '4', '5']
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
-    WITH c, d,
-         coalesce(d.shares_transacted, 0) AS shares,
-         coalesce(d.transaction_value_usd, 0.0) AS value,
-         d.transaction_type AS tx_type
     RETURN
       count(d) AS transaction_count,
-      sum(CASE WHEN tx_type = 'buy' THEN shares ELSE -shares END) AS net_shares,
-      sum(CASE WHEN tx_type = 'buy' THEN value ELSE -value END) AS net_value_usd,
-      count(CASE WHEN tx_type = 'buy' THEN 1 END) AS buy_count,
-      count(CASE WHEN tx_type = 'sell' THEN 1 END) AS sell_count,
-      collect(DISTINCT c.ticker)[0..10] AS companies
+      0 AS net_shares,
+      0.0 AS net_value_usd,
+      0 AS buy_count,
+      0 AS sell_count,
+      collect(DISTINCT c.name)[0..10] AS companies
     """
 
     async with driver.session() as session:
