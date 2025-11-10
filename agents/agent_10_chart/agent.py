@@ -78,7 +78,7 @@ def generate_full_chart(technologies: List[Dict[str, Any]]) -> Dict[str, Any]:
         phase_counts[phase_key] += 1
 
     return {
-        "industry": "Emerging Technologies",
+        "industry": "eVTOL & Advanced Air Mobility",
         "generated_at": datetime.utcnow().isoformat() + "Z",
         "metadata": {
             "date_from": "2020-01-01",

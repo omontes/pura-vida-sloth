@@ -10,7 +10,7 @@ This agent:
 4. Returns structured list ready for layer scoring agents
 """
 
-from typing import Dict, Any, List, Tuple
+from typing import Dict, Any, List, Tuple, Optional
 from neo4j import AsyncDriver
 import json
 
@@ -256,7 +256,8 @@ async def sample_techs_from_communities(
     communities: List[Dict[str, Any]],
     limit: int,
     version: str = "v1",
-    min_document_count: int = 1
+    min_document_count: int = 1,
+    exclude_ids: Optional[List[str]] = None
 ) -> List[Technology]:
     """
     Sample top N technologies from specified communities, ordered by PageRank.
@@ -267,6 +268,7 @@ async def sample_techs_from_communities(
         limit: Maximum number of technologies to return
         version: Community version property (v0-v5)
         min_document_count: Minimum documents required
+        exclude_ids: Optional list of technology IDs to exclude from results
 
     Returns:
         List of Technology objects
@@ -304,11 +306,15 @@ async def sample_techs_from_communities(
     if not community_numbers:
         return []
 
+    # Build exclude filter if needed
+    exclude_filter = f"AND NOT t.id IN $exclude_ids" if exclude_ids else ""
+
     query = f"""
     // Get technologies belonging to target communities
     MATCH (t:Technology)-[m:MENTIONED_IN]->(d:Document)
     WHERE t.community_{version} IN $community_numbers
       AND d.quality_score >= 0.75
+      {exclude_filter}
 
     // Aggregate document counts
     WITH t,
@@ -356,12 +362,16 @@ async def sample_techs_from_communities(
     """
 
     async with driver.session() as session:
-        result = await session.run(
-            query,
-            community_numbers=community_numbers,
-            min_document_count=min_document_count,
-            limit=limit
-        )
+        # Build query parameters
+        params = {
+            "community_numbers": community_numbers,
+            "min_document_count": min_document_count,
+            "limit": limit
+        }
+        if exclude_ids:
+            params["exclude_ids"] = exclude_ids
+
+        result = await session.run(query, **params)
         records = await result.values()
 
         technologies = []
@@ -520,11 +530,21 @@ async def discover_technologies_with_community_sampling(
     if current_count < total_limit:
         remaining = total_limit - current_count
         print(f"[COMMUNITY SAMPLING] Filling {remaining} remaining slots from top communities by PageRank...")
+        print(f"[COMMUNITY SAMPLING DEBUG] Requesting {remaining * 2} technologies (2x oversampling)")
+        print(f"[COMMUNITY SAMPLING DEBUG] Already seen: {len(tech_ids_seen)} unique tech IDs")
+        print(f"[COMMUNITY SAMPLING DEBUG] Min document count filter: {min_document_count}")
 
-        # Sample from ALL communities (combined)
+        # Sample from ALL communities (combined), excluding already-seen technologies
         fill_techs = await sample_techs_from_communities(
-            driver, communities, remaining * 2, version, min_document_count  # 2x to ensure we get enough after dedup
+            driver, communities, remaining * 2, version, min_document_count,
+            exclude_ids=list(tech_ids_seen)  # Explicitly exclude already-sampled technologies
         )
+
+        print(f"[COMMUNITY SAMPLING DEBUG] Fill query returned: {len(fill_techs)} technologies")
+
+        # Calculate new techs count BEFORE deduplication loop (for accurate logging)
+        new_techs_count = len([t for t in fill_techs if t.id not in tech_ids_seen])
+        print(f"[COMMUNITY SAMPLING DEBUG] New technologies available: {new_techs_count}")
 
         added = 0
         for tech in fill_techs:
@@ -532,7 +552,6 @@ async def discover_technologies_with_community_sampling(
                 technologies.append(tech)
                 tech_ids_seen.add(tech.id)
                 added += 1
-
         print(f"[COMMUNITY SAMPLING] Added {added} technologies from fill sampling")
 
     # Limit to total_limit (in case we got more)

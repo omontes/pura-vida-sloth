@@ -69,15 +69,15 @@ class Neo4jClient:
             self.driver = AsyncGraphDatabase.driver(
                 self.uri,
                 auth=(self.username, self.password),
-                max_connection_lifetime=600,  # 10 minutes (for slow Tavily searches)
-                max_connection_pool_size=50,  # Increase pool size for parallel processing
-                connection_timeout=300,  # 5 minutes for initial connection
-                max_transaction_retry_time=300,  # 5 minutes for transaction retries
-                connection_acquisition_timeout=300,  # 5 minutes to acquire connection from pool
+                max_connection_lifetime=3600,  # 60 minutes (for long-running batch operations)
+                max_connection_pool_size=50,  # Pool size for parallel processing
+                connection_timeout=600,  # 10 minutes for initial connection
+                max_transaction_retry_time=600,  # 10 minutes for transaction retries
+                connection_acquisition_timeout=600,  # 10 minutes to acquire connection from pool
             )
             # Verify connectivity
             await self.driver.verify_connectivity()
-            logger.info(f"Connected to Neo4j at {self.uri} (timeouts: 300s)")
+            logger.info(f"Connected to Neo4j at {self.uri} (connection pool: 50, timeouts: 600s)")
 
     async def close(self) -> None:
         """Close Neo4j connection."""
@@ -90,13 +90,15 @@ class Neo4jClient:
         self,
         query: str,
         parameters: Optional[dict[str, Any]] = None,
+        max_retries: int = 3,
     ) -> list[dict[str, Any]]:
         """
-        Run a Cypher query and return results.
+        Run a Cypher query and return results with automatic retry on transient failures.
 
         Args:
             query: Cypher query string
             parameters: Query parameters
+            max_retries: Maximum number of retry attempts for transient errors
 
         Returns:
             List of result records as dictionaries
@@ -104,10 +106,23 @@ class Neo4jClient:
         if not self.driver:
             raise RuntimeError("Neo4j driver not connected. Call connect() first.")
 
-        async with self.driver.session(database=self.database) as session:
-            result = await session.run(query, parameters or {})
-            records = await result.data()
-            return records
+        import asyncio
+        from neo4j.exceptions import SessionExpired, ServiceUnavailable
+
+        for attempt in range(max_retries + 1):
+            try:
+                async with self.driver.session(database=self.database) as session:
+                    result = await session.run(query, parameters or {})
+                    records = await result.data()
+                    return records
+            except (SessionExpired, ServiceUnavailable) as e:
+                if attempt < max_retries:
+                    wait_time = 2 ** attempt  # Exponential backoff: 1s, 2s, 4s
+                    logger.warning(f"Transient Neo4j error (attempt {attempt + 1}/{max_retries + 1}): {e}. Retrying in {wait_time}s...")
+                    await asyncio.sleep(wait_time)
+                else:
+                    logger.error(f"Neo4j query failed after {max_retries + 1} attempts: {e}")
+                    raise
 
     async def run_write_transaction(
         self,

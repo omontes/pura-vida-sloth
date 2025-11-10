@@ -198,25 +198,34 @@ async def analyze_single_technology(
 
 async def analyze_multiple_technologies(
     driver: AsyncDriver,
-    tech_ids: List[str]
+    tech_ids: List[str],
+    max_concurrent: int = 20
 ) -> List[Dict[str, Any]]:
     """
-    Analyze multiple technologies in parallel.
+    Analyze multiple technologies in parallel with concurrency limit.
 
     Args:
         driver: Neo4j driver
         tech_ids: List of technology IDs
+        max_concurrent: Maximum number of concurrent analyses (default: 20)
+                       Prevents Neo4j connection pool exhaustion
 
     Returns:
         List of complete analyses
     """
     import asyncio
 
-    tasks = [
-        analyze_single_technology(driver, tech_id)
-        for tech_id in tech_ids
-    ]
+    # Semaphore to limit concurrent database connections
+    semaphore = asyncio.Semaphore(max_concurrent)
 
+    async def analyze_with_limit(tech_id: str) -> Dict[str, Any]:
+        """Analyze single technology with semaphore."""
+        async with semaphore:
+            return await analyze_single_technology(driver, tech_id)
+
+    print(f"\n[ORCHESTRATOR] Analyzing {len(tech_ids)} technologies (max {max_concurrent} concurrent)")
+
+    tasks = [analyze_with_limit(tech_id) for tech_id in tech_ids]
     results = await asyncio.gather(*tasks)
     return results
 
@@ -248,7 +257,7 @@ async def generate_hype_cycle_chart(
         mid_pct=0.40,    # Target 40% from mid-stage communities (Slope)
         late_pct=0.20,   # Target 20% from late-stage communities (Plateau)
         hype_pct=0.20,   # Target 20% from hype-stage communities (Peak)
-        min_document_count=15  # Require at least 15 documents for high-quality analysis
+        min_document_count=5  # Allow early-stage technologies with limited evidence
     )
 
     tech_ids = [t.id for t in tech_discovery.technologies]
