@@ -2,13 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer base {
+  html {
+    color-scheme: light !important;
+  }
+}
+
 :root {
   font-family: 'Inter', system-ui, Avenir, Helvetica, Arial, sans-serif;
   font-size: 16px;
   line-height: 1.6;
   font-weight: 400;
 
-  color-scheme: light dark;
+  color-scheme: light !important; /* Force light mode only */
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -19,11 +25,39 @@
 body {
   margin: 0;
   min-height: 100vh;
-  @apply bg-white dark:bg-[#0a0a0a] text-gray-900 dark:text-white;
+  @apply bg-white text-gray-900;
 }
 
 #root {
   min-height: 100vh;
+}
+
+/*
+ * Typography System Guidelines
+ *
+ * Headers (DM Serif Display):
+ * - Use for semantic content headers (h1-h6)
+ * - Minimum size: 18px (smaller sizes lose serif elegance)
+ * - Recommended sizes: h1 (32-36px), h2 (24-28px), h3 (20-24px), h4 (18px)
+ * - Purpose: Executive authority, professional branding
+ *
+ * Body Text (Inter):
+ * - Use for all body content, UI elements, labels
+ * - Excellent readability at 12-20px
+ * - For small text (<18px), prefer Inter over DM Serif Display
+ *
+ * Small UI Labels (<18px):
+ * - Use div/span with Inter, NOT semantic headers
+ * - Apply .uppercase with letter-spacing for better readability
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DM Serif Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* Enhanced letter spacing for uppercase text (improves readability) */
+.uppercase {
+  letter-spacing: 0.05em;
 }
 
 /* Custom scrollbar styling */
@@ -33,35 +67,26 @@ body {
 }
 
 ::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-900;
+  @apply bg-gray-100;
 }
 
 ::-webkit-scrollbar-thumb {
-  @apply bg-gray-300 dark:bg-gray-700 rounded-lg;
+  @apply bg-gray-300 rounded-lg;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  @apply bg-gray-400 dark:bg-gray-600;
+  @apply bg-gray-400;
 }
 
-/* vis-network tooltip styling override */
+/* vis-network tooltip styling override (light mode always) */
 .vis-tooltip {
-  background: rgba(26, 26, 26, 0.98) !important;
-  border: 1px solid #404040 !important;
+  background: rgba(255, 255, 255, 0.98) !important;
+  border: 1px solid #d4d4d4 !important;
   border-radius: 12px !important;
-  color: #fafafa !important;
+  color: #0a0a0a !important;
   font-family: 'Inter', sans-serif !important;
   font-size: 14px !important;
   padding: 12px 16px !important;
-  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.6) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
   max-width: 400px !important;
-}
-
-@media (prefers-color-scheme: light) {
-  .vis-tooltip {
-    background: rgba(255, 255, 255, 0.98) !important;
-    border: 1px solid #d4d4d4 !important;
-    color: #0a0a0a !important;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08) !important;
-  }
 }

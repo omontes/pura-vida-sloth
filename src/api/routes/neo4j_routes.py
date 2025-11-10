@@ -23,11 +23,22 @@ async def fetch_technology_subgraph(
     Fetch technology subgraph from Neo4j.
 
     Executes Cypher query:
-    ```cypher
-    MATCH (t:Technology {id: $tech_id})
-    OPTIONAL MATCH (t)-[r]-(n)
-    RETURN t, r, n
-    ```
+    - If tech_id is None: Returns full graph (limited to 1000 results for performance)
+      ```cypher
+      MATCH (t:Technology)
+      OPTIONAL MATCH (t)-[r]-(n)
+      WHERE n IS NULL OR NOT n:Community
+      RETURN t, r, n
+      LIMIT 1000
+      ```
+
+    - If tech_id is provided: Returns filtered subgraph for that technology
+      ```cypher
+      MATCH (t:Technology {id: $tech_id})
+      OPTIONAL MATCH (t)-[r]-(n)
+      WHERE n IS NULL OR NOT n:Community
+      RETURN t, r, n
+      ```
 
     Returns vis-network compatible format for frontend visualization.
     """
@@ -36,10 +47,18 @@ async def fetch_technology_subgraph(
         neo4j_records = await get_technology_subgraph(request.tech_id, driver)
 
         if not neo4j_records:
-            raise HTTPException(
-                status_code=404,
-                detail=f"Technology '{request.tech_id}' not found in Neo4j"
-            )
+            if request.tech_id:
+                # Specific technology requested but not found
+                raise HTTPException(
+                    status_code=404,
+                    detail=f"Technology '{request.tech_id}' not found in Neo4j"
+                )
+            else:
+                # Full graph requested but empty (no technologies in database)
+                raise HTTPException(
+                    status_code=404,
+                    detail="No technologies found in Neo4j database"
+                )
 
         # Convert to vis.js format
         vis_data = neo4j_to_vis(neo4j_records)

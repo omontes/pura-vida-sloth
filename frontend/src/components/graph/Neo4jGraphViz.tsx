@@ -24,7 +24,7 @@ import type { Neo4jSubgraph, VisGraphData, VisNode, VisEdge } from '@/types/hype
 import { useTheme } from '@/contexts/ThemeContext';
 
 interface Neo4jGraphVizProps {
-  technologyId: string;
+  technologyId: string | null;
 }
 
 export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
@@ -40,12 +40,12 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const isDarkMode = themeMode === 'dark';
 
   useEffect(() => {
-    if (!technologyId) return;
-
     setIsLoading(true);
     setError(null);
 
     // Fetch subgraph from real Neo4j API
+    // If technologyId is null, fetches full graph with all technologies
+    // If technologyId is provided, fetches filtered subgraph for that technology
     fetch('/api/neo4j/subgraph', {
       method: 'POST',
       headers: {
@@ -80,19 +80,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       });
   }, [technologyId]);
 
-  const events = {
-    click: (params: any) => {
-      if (params.nodes.length > 0) {
-        const nodeId = params.nodes[0];
-        const node = graphData.nodes.find((n) => n.id === nodeId);
-        if (node) {
-          setSelectedNode(node);
-        }
-      } else {
-        setSelectedNode(null);
-      }
-    },
-  };
+  // Click events disabled to prevent navigation issues
+  const events = {};
 
   const handleResetView = () => {
     if (networkRef.current) {
@@ -113,7 +102,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
     }
   };
 
-  const options = getVisNetworkOptions(isDarkMode);
+  // Always use normal force-directed physics layout
+  const options = getVisNetworkOptions(isDarkMode, false);
 
   // Get unique node types for legend with hierarchical grouping
   const allNodeTypes = Array.from(
@@ -143,12 +133,12 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
           getNetwork={(network) => {
             networkRef.current = network;
 
-            // Auto-stop physics after stabilization (like Gradio prototype)
+            // Auto-stop physics after stabilization to reduce CPU usage
             network.once('stabilizationIterationsDone', () => {
               setTimeout(() => {
                 network.setOptions({ physics: false });
                 setPhysicsEnabled(false);
-              }, 15000);
+              }, 30000); // 30 seconds for better layout quality
             });
           }}
         />
@@ -158,8 +148,10 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center">
           <div className="text-center">
-            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-blue-500 mx-auto mb-4"></div>
-            <p className="text-gray-600 dark:text-gray-400 text-sm">Querying Neo4j...</p>
+            <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
+            <p className="text-gray-600 dark:text-gray-400 text-sm">
+              {technologyId ? 'Loading technology subgraph...' : 'Loading full knowledge graph...'}
+            </p>
           </div>
         </div>
       )}
@@ -189,18 +181,29 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
 
       {/* Stats badge (top-left) */}
       <div className="absolute top-4 left-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg px-4 py-2 text-xs text-gray-600 dark:text-gray-400">
-        Nodes: <span className="font-bold text-blue-600 dark:text-blue-400">{graphData.nodes.length}</span> |
-        Relationships: <span className="font-bold text-blue-600 dark:text-blue-400">{graphData.edges.length}</span>
+        Nodes: <span className="font-bold text-teal-700 dark:text-teal-400">{graphData.nodes.length}</span> |
+        Relationships: <span className="font-bold text-teal-700 dark:text-teal-400">{graphData.edges.length}</span>
       </div>
 
       {/* Legend (top-right) - Hierarchical */}
       {allNodeTypes.length > 0 && (
         <div className="absolute top-4 right-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-xs max-h-96 overflow-y-auto">
-          <h3 className="text-sm font-bold text-blue-600 dark:text-blue-400 mb-3">Node Types</h3>
+          <div className="text-base font-bold text-teal-700 dark:text-teal-400 mb-3">Node Types</div>
 
           {/* Technology (Primary nodes) */}
           {primaryNodes.map((type) => (
             <div key={type} className="flex items-center gap-2 mb-2">
+              <div
+                className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
+                style={{ background: getNodeColor(type) }}
+              />
+              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{type}</span>
+            </div>
+          ))}
+
+          {/* Company nodes */}
+          {companyNodes.map((type) => (
+            <div key={type} className="flex items-center gap-2 mb-2 mt-3">
               <div
                 className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
                 style={{ background: getNodeColor(type) }}
@@ -225,20 +228,9 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
             </div>
           )}
 
-          {/* Company nodes */}
-          {companyNodes.map((type) => (
-            <div key={type} className="flex items-center gap-2 mb-2 mt-3">
-              <div
-                className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
-                style={{ background: getNodeColor(type) }}
-              />
-              <span className="text-xs font-semibold text-gray-700 dark:text-gray-300">{type}</span>
-            </div>
-          ))}
-
           {/* Person nodes (if present) */}
           {personNodes.map((type) => (
-            <div key={type} className="flex items-center gap-2 mb-2">
+            <div key={type} className="flex items-center gap-2 mb-2 mt-3">
               <div
                 className="w-4 h-4 rounded-full border-2 border-gray-300 dark:border-white/10"
                 style={{ background: getNodeColor(type) }}
@@ -269,9 +261,9 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {selectedNode && (
         <div className="absolute bottom-20 left-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-md max-h-96 overflow-y-auto">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-bold text-blue-600 dark:text-blue-400">
+            <div className="text-base font-bold text-blue-600 dark:text-blue-400">
               {selectedNode.group}: {selectedNode.label}
-            </h3>
+            </div>
             <button
               onClick={() => setSelectedNode(null)}
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"

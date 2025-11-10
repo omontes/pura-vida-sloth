@@ -276,13 +276,51 @@ export function forceCurveRepulsion(
 }
 
 /**
+ * Custom D3 force that prevents labels from overlapping their anchor nodes
+ * Gently pushes labels away from their node positions for clear separation
+ *
+ * @param minDistance - Minimum distance from node center (default: 25px)
+ * @returns D3 force function
+ */
+export function forceNodeRepulsion(minDistance: number = 25) {
+  let nodes: LabelNode[];
+
+  const force = (alpha: number) => {
+    nodes.forEach((label) => {
+      if (!label.x || !label.y) return;
+
+      // Calculate distance from label center to anchor node
+      const dx = label.x - label.nodeX;
+      const dy = label.y - label.nodeY;
+      const distance = Math.sqrt(dx * dx + dy * dy) || 1;
+
+      // If too close to anchor node, push away
+      if (distance < minDistance) {
+        // Repulsion strength increases as distance decreases
+        const strength = ((minDistance - distance) / minDistance) * alpha * 0.3;
+
+        // Push label away from node
+        label.vx = (label.vx || 0) + (dx / distance) * strength;
+        label.vy = (label.vy || 0) + (dy / distance) * strength;
+      }
+    });
+  };
+
+  force.initialize = (n: LabelNode[]) => {
+    nodes = n;
+  };
+
+  return force;
+}
+
+/**
  * OPTIMIZED: Calculate optimal label position using radial sampling
  * Uses CurveDistanceCache to eliminate redundant curve sampling
  *
  * Tests multiple positions around the node and chooses best one based on:
  * - Maximum distance from curve
  * - Minimum collisions with other labels
- * - Aesthetic preferences (prefer above)
+ * - Aesthetic preferences (configurable above/below via preferredSide)
  *
  * @param nodeX - Node X position
  * @param nodeY - Node Y position
@@ -291,6 +329,7 @@ export function forceCurveRepulsion(
  * @param cache - Pre-computed curve distance cache
  * @param otherLabels - Already positioned labels
  * @param chartBounds - Chart boundaries
+ * @param preferredSide - Optional preference for "above" or "below" curve (default: "above")
  * @returns Optimal position {x, y, angle}
  */
 export function calculateSmartPreferredPosition(
@@ -300,21 +339,40 @@ export function calculateSmartPreferredPosition(
   labelHeight: number,
   cache: CurveDistanceCache,
   otherLabels: BoundingBox[],
-  chartBounds: { minY: number; maxY: number }
+  chartBounds: { minY: number; maxY: number },
+  preferredSide: 'above' | 'below' | 'auto' = 'auto'
 ): { x: number; y: number; angle: number } {
   // Test angles in degrees (0 = right, -90 = up, 90 = down)
-  const testAngles = [
-    -90, // Directly above (preferred)
-    -75, // Above-right
-    -105, // Above-left
-    -60, // More to right
-    -120, // More to left
-    -45, // Far right
-    -135, // Far left
-    90, // Directly below (for crowded regions)
-  ];
+  // Prioritize based on preferred side for zig-zag alternation in dense phases
+  let testAngles: number[];
 
-  const radiusFromNode = 40; // Distance from node center
+  if (preferredSide === 'below') {
+    // Prioritize below curve (positive angles first)
+    testAngles = [
+      90,   // Directly below (preferred)
+      75,   // Below-right
+      105,  // Below-left
+      60,   // More to right
+      120,  // More to left
+      45,   // Far right
+      135,  // Far left
+      -90,  // Fallback: above if below doesn't work
+    ];
+  } else {
+    // Prioritize above curve (negative angles first) - default behavior
+    testAngles = [
+      -90,  // Directly above (preferred)
+      -75,  // Above-right
+      -105, // Above-left
+      -60,  // More to right
+      -120, // More to left
+      -45,  // Far right
+      -135, // Far left
+      90,   // Fallback: below if above doesn't work
+    ];
+  }
+
+  const radiusFromNode = 55; // Distance from node center (increased to prevent overlap)
 
   let bestPosition = { x: nodeX, y: nodeY - 35, angle: -90 };
   let bestScore = -Infinity;
@@ -353,8 +411,15 @@ export function calculateSmartPreferredPosition(
     // Composite score: prioritize curve clearance (2x weight)
     const score = distToCurve * 2.0 + minDistToOthers * 1.0;
 
-    // Bonus for "above" positions (aesthetic preference)
-    const bonusScore = angle < 0 ? 10 : 0;
+    // Bonus for preferred side (zig-zag pattern support)
+    let bonusScore = 0;
+    if (preferredSide === 'below' && angle > 0) {
+      bonusScore = 60; // Strong preference for below (increased from 20 for strict railroad track)
+    } else if (preferredSide === 'above' && angle < 0) {
+      bonusScore = 60; // Strong preference for above (increased from 20 for strict railroad track)
+    } else if (preferredSide === 'auto' && angle < 0) {
+      bonusScore = 10; // Default aesthetic preference for above
+    }
 
     const totalScore = score + bonusScore;
 
@@ -404,4 +469,83 @@ export function calculateLabelAnchor(label: LabelNode): { x: number; y: number }
   }
 
   return { x: anchorX, y: anchorY };
+}
+
+/**
+ * Wrap text to multiple lines at word boundaries
+ * Ensures labels are narrower by stacking text vertically
+ *
+ * @param text - Text to wrap
+ * @param charsPerLine - Target characters per line (default: 13)
+ * @returns Array of wrapped lines
+ */
+export function wrapText(text: string, charsPerLine: number = 13): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let currentLine = '';
+
+  for (const word of words) {
+    // Check if adding this word exceeds limit
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+
+    if (testLine.length <= charsPerLine) {
+      currentLine = testLine;
+    } else {
+      // Word itself is longer than limit - truncate with ellipsis
+      if (word.length > charsPerLine) {
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+        lines.push(word.substring(0, charsPerLine - 3) + '...');
+        currentLine = '';
+      } else {
+        // Start new line
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+        currentLine = word;
+      }
+    }
+  }
+
+  // Add remaining text
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+/**
+ * Calculate dimensions of wrapped text (before rendering)
+ * Used by force simulation to understand label space requirements
+ *
+ * @param lines - Array of text lines from wrapText()
+ * @param fontSize - Font size in pixels (default: 10)
+ * @param fontWeight - Font weight (default: 700)
+ * @param charWidth - Average character width at given font size (default: 6.2px for 10px bold)
+ * @param lineHeight - Line height multiplier (default: 1.3)
+ * @returns {width, height} dimensions in pixels
+ */
+export function calculateWrappedTextDimensions(
+  lines: string[],
+  fontSize: number = 10,
+  fontWeight: number = 700,
+  charWidth: number = 6.2, // Empirically measured for 10px bold
+  lineHeight: number = 1.3 // 13px line height for 10px font
+): { width: number; height: number } {
+  if (lines.length === 0) {
+    return { width: 0, height: 0 };
+  }
+
+  // Find longest line
+  const maxChars = Math.max(...lines.map((line) => line.length));
+
+  // Width: longest line + small margin
+  const width = maxChars * charWidth + 2; // +2 for anti-alias padding
+
+  // Height: line count × line height + margin
+  const height = lines.length * (fontSize * lineHeight) + 2;
+
+  return { width: Math.ceil(width), height: Math.ceil(height) };
 }
