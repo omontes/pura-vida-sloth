@@ -4,8 +4,6 @@
   "metadata": {
     "date_from": "2020-01-01",
     "date_to": "2025-11-10",
-    "total_documents": "N/A",
-    "total_count": 35,
     "phases": {
       "innovation_trigger": 1,
       "peak": 4,
@@ -13,7 +11,7 @@
       "slope": 10,
       "plateau": 10
     },
-    "normalized_at": "2025-11-10T18:58:25.367199Z",
+    "normalized_at": "2025-11-10T19:11:06.145773Z",
     "normalization_config": {
       "top_n_per_phase": 10,
       "original_count": 50,
@@ -26,9 +24,6 @@
           "v0": 59,
           "v1": 49,
           "v2": 50
-        },
-        "classification_v1": {
-          "null": 49
         }
       },
       "documents": {
@@ -58,7 +53,7 @@
       "relationships": {
         "total": 21516,
         "mentioned_in": 7425,
-        "has_member": 0
+        "belongs_to_community": 9943
       }
     }
   },

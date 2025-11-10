@@ -309,18 +309,7 @@ async def query_graph_metadata(client: Neo4jClient) -> Dict[str, Any]:
         community_result = await client.run_query(community_query)
         community_stats = community_result[0] if community_result else {}
 
-        # Query 2: Community classification (v1 only)
-        classification_query = """
-        MATCH (c:Community)
-        WHERE c.id STARTS WITH 'v1_'
-        RETURN
-            c.lifecycle_stage AS stage,
-            count(*) AS count
-        """
-        classification_result = await client.run_query(classification_query)
-        classification = {row['stage']: row['count'] for row in classification_result} if classification_result else {}
-
-        # Query 3: Document statistics
+        # Query 2: Document statistics
         document_query = """
         MATCH (d:Document)
         RETURN
@@ -362,7 +351,7 @@ async def query_graph_metadata(client: Neo4jClient) -> Dict[str, Any]:
         RETURN
             count(*) AS total_relationships,
             count(CASE WHEN type(r) = 'MENTIONED_IN' THEN 1 END) AS mentioned_in,
-            count(CASE WHEN type(r) = 'HAS_MEMBER' THEN 1 END) AS has_member
+            count(CASE WHEN type(r) = 'BELONGS_TO_COMMUNITY' THEN 1 END) AS belongs_to_community
         """
         relationship_result = await client.run_query(relationship_query)
         relationship_stats = relationship_result[0] if relationship_result else {}
@@ -375,8 +364,7 @@ async def query_graph_metadata(client: Neo4jClient) -> Dict[str, Any]:
                     "v0": community_stats.get('v0_count', 0),
                     "v1": community_stats.get('v1_count', 0),
                     "v2": community_stats.get('v2_count', 0)
-                },
-                "classification_v1": classification
+                }
             },
             "documents": {
                 "total": document_stats.get('total_documents', 0),
@@ -405,7 +393,7 @@ async def query_graph_metadata(client: Neo4jClient) -> Dict[str, Any]:
             "relationships": {
                 "total": relationship_stats.get('total_relationships', 0),
                 "mentioned_in": relationship_stats.get('mentioned_in', 0),
-                "has_member": relationship_stats.get('has_member', 0)
+                "belongs_to_community": relationship_stats.get('belongs_to_community', 0)
             }
         }
     except Exception as e:
@@ -491,7 +479,11 @@ async def normalize_chart(
     # Update metadata
     print(f"\n[5/6] Updating metadata...")
     chart["technologies"] = all_technologies
-    chart["metadata"]["total_count"] = len(all_technologies)
+
+    # Remove redundant metadata fields (info available in graph_data)
+    chart["metadata"].pop("total_documents", None)
+    chart["metadata"].pop("total_count", None)
+
     chart["metadata"]["normalized_at"] = datetime.now(timezone.utc).isoformat().replace('+00:00', 'Z')
     chart["metadata"]["normalization_config"] = {
         "top_n_per_phase": top_n,
