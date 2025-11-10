@@ -159,10 +159,10 @@ def classify_communities_by_maturity(
     """
     Classify communities into early/mid/late/hype stages based on doc_type_distribution.
 
-    Maturity indicators:
+    Maturity indicators (RECALIBRATED 2025-01-10):
     - Early-stage: High patent:news ratio (>2), few contracts (<5) → Innovation Trigger
-    - Hype-stage: High news:patent ratio (>2), few contracts (<5) → Peak
-    - Late-stage: High contracts (>10), balanced patent/news → Plateau
+    - Hype-stage: High news:patent ratio (>1.5), few contracts (<5) → Peak
+    - Late-stage: Moderate contracts (≥3), balanced patent/news → Plateau
     - Mid-stage: Everything else → Slope
 
     Args:
@@ -230,15 +230,15 @@ def classify_communities_by_maturity(
             else:
                 mid_stage.append(comm)
         else:
-            # LARGE COMMUNITY: Use ratio-based classification
+            # LARGE COMMUNITY: Use ratio-based classification (RELAXED 2025-01-10)
             if patent_news_ratio > 2 and contracts < 5:
                 # High patent activity, low news → Early-stage innovation
                 early_stage.append(comm)
-            elif news_patent_ratio > 2 and contracts < 5:
+            elif news_patent_ratio > 1.5 and contracts < 5:  # RELAXED: 2→1.5
                 # High news activity, low patents → Hype/Peak
                 hype_stage.append(comm)
-            elif contracts > 10 and patents > 5:
-                # High commercialization → Late-stage/Plateau
+            elif contracts >= 3 and patents > 2:  # RELAXED: >10→≥3, >5→>2
+                # Moderate commercialization → Late-stage/Plateau
                 late_stage.append(comm)
             else:
                 # Balanced signals → Mid-stage/Slope

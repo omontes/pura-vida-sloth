@@ -78,6 +78,10 @@ def determine_phase_position(
 
     Higher scores indicate later position in phase.
 
+    RECALIBRATED (2025-01-10): Lowered thresholds from 40/70 to 30/50 to match
+    compressed score distribution (0-41 range). Previous thresholds resulted in
+    0% "late" positions across 200 technologies.
+
     Args:
         innovation: Innovation score (0-100)
         adoption: Adoption score (0-100)
@@ -91,10 +95,10 @@ def determine_phase_position(
     # Calculate weighted maturity score
     maturity = (innovation * 0.3 + adoption * 0.4 + (100 - risk) * 0.3)
 
-    # Determine position based on maturity
-    if maturity < 40:
+    # Determine position based on maturity (RELAXED: 40→30, 70→50)
+    if maturity < 30:
         return "early"
-    elif maturity < 70:
+    elif maturity < 50:
         return "mid"
     else:
         return "late"

@@ -25,43 +25,40 @@ from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
 
 
-# LLM Prompt for scoring (RECALIBRATED 2025-01-09 for realistic data densities)
+# LLM Prompt for scoring (RECALIBRATED 2025-01-10 - removed conservative anchoring)
 INNOVATION_SCORING_PROMPT = """You are an innovation analyst scoring emerging technologies based on Layer 1 innovation signals.
 
 You will be given raw metrics about patent activity, research papers, and community context for a technology.
 
 Your task:
 1. Analyze the metrics to determine innovation strength
-2. Calculate an innovation score from 0-100 (RECALIBRATED FOR REALISTIC DATA DENSITIES):
+2. Calculate an innovation score from 0-100 using the full range:
    - 0-20: Minimal innovation (0-3 patents, 0-10 papers, minimal citations)
    - 21-40: Low innovation (4-12 patents, 11-30 papers, some citations)
    - 41-60: Moderate innovation (13-30 patents, 31-70 papers, decent citations)
    - 61-80: High innovation (31-60 patents, 71-150 papers, strong citations)
    - 81-100: Breakthrough innovation (60+ patents, 150+ papers, exceptional citations)
 
-   CALIBRATION ANCHOR: Score 50 represents a typical emerging technology with ~15-20 patents
-   and ~40-50 papers in 2 years. Most technologies will score 20-60 based on graph data.
-
 3. Consider:
-   - Patent count (raw volume - 0-50 is typical range)
+   - Patent count (raw volume)
    - PageRank-weighted patent count (importance weighting)
-   - Citation counts (quality indicator - most have 0-100 citations)
+   - Citation counts (quality indicator)
    - Community context (relative activity within graph)
    - Temporal trend (growing/stable/declining)
 
-4. Scoring guidelines:
+4. Scoring guidelines - use the full scale based on data:
    - If patent_count = 0 and paper_count < 5: Score 0-15
    - If patent_count 1-5 and paper_count 5-20: Score 15-35
    - If patent_count 6-20 and paper_count 20-60: Score 35-55
-   - If patent_count > 20 or paper_count > 60: Score 55-80
-   - Reserve 80-100 for exceptional outliers only
+   - If patent_count 21-50 or paper_count 61-120: Score 55-75
+   - If patent_count > 50 or paper_count > 120: Score 75-95
 
 5. Provide:
    - innovation_score: 0-100 score
    - reasoning: 2-3 sentences explaining the score
    - confidence: "high", "medium", or "low"
 
-Be objective and data-driven. Most technologies will score 20-60. Scores above 70 should be rare (top 5%).
+Be objective and data-driven. Use the full 0-100 scale based on the actual metrics.
 
 Technology: {tech_id}
 

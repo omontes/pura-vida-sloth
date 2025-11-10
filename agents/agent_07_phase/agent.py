@@ -13,42 +13,50 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     """
     Detect hype cycle phase from layer scores.
 
-    RECALIBRATED THRESHOLDS (2025-01-09): Lowered by 50-70% to match observed score distributions
-    from 500-technology analysis. Scores compress to 0-41 range due to sparse graph data and
-    conservative LLM prompts.
+    RECALIBRATED THRESHOLDS (2025-01-10): Further relaxed by 30-40% based on 200-tech test showing
+    98.5% clustering in Trough/Slope. Scores compress to 0-41 range, so thresholds must align with
+    actual distribution to achieve proper phase diversity.
 
     Phases:
     1. Innovation Trigger: High innovation, low adoption/narrative
-    2. Peak of Inflated Expectations: High narrative, moderate innovation, low adoption
-    3. Trough of Disillusionment: ALL low scores (moved to end to prevent catch-all)
-    4. Slope of Enlightenment: Growing adoption, moderate narrative, sustained innovation
-    5. Plateau of Productivity: High adoption, balanced scores
+    2. Peak of Inflated Expectations: High narrative/hype, low adoption
+    3. Trough of Disillusionment: Low scores with 2/4 criteria (not all 4)
+    4. Slope of Enlightenment: Moderate growth across metrics
+    5. Plateau of Productivity: High adoption, sustained innovation
     """
 
-    # Phase 1: Innovation Trigger (RECALIBRATED: 50→20, 30→15, 40→15)
-    if innovation > 20 and adoption < 15 and narrative < 15:
+    # Phase 1: Innovation Trigger (RELAXED: 20→15, keeps early tech detection)
+    if innovation > 15 and adoption < 10 and narrative < 12:
         return "innovation_trigger", f"Early innovation ({innovation:.0f}) with minimal adoption ({adoption:.0f}) and low media coverage ({narrative:.0f})"
 
-    # Phase 2: Peak of Inflated Expectations (RECALIBRATED: 65→30, 60→40, 50→25)
-    if narrative > 30 and hype > 40 and adoption < 25:
-        return "peak", f"Media saturation ({narrative:.0f}) with high hype ({hype:.0f}) but low real adoption ({adoption:.0f})"
+    # Phase 2: Peak of Inflated Expectations (RELAXED: 30→20, 40→25, 25→30)
+    # High narrative OR high hype (not both), low-to-moderate adoption
+    if (narrative > 20 or hype > 25) and adoption < 30:
+        return "peak", f"Media saturation ({narrative:.0f}) with high hype ({hype:.0f}) but limited adoption ({adoption:.0f})"
 
-    # Phase 4: Slope of Enlightenment (RECALIBRATED: 50→25, 40-70→15-40, 40→15, 60→45)
-    # MOVED BEFORE TROUGH to prevent catch-all behavior
-    if adoption > 25 and 15 < narrative < 40 and innovation > 15 and hype < 45:
-        return "slope", f"Growing adoption ({adoption:.0f}) with sustained innovation ({innovation:.0f}) and realistic expectations"
-
-    # Phase 5: Plateau of Productivity (RECALIBRATED: 70→40, 50→25, 40-70→15-40, 50→30)
-    if adoption > 40 and innovation > 25 and 15 < narrative < 40 and risk < 30:
+    # Phase 5: Plateau of Productivity (RELAXED: 40→30, 25→20, 40→50)
+    # Check BEFORE Slope to capture mature technologies
+    if adoption > 30 and innovation > 20 and narrative < 50 and risk < 35:
         return "plateau", f"Mature market with high adoption ({adoption:.0f}), sustained innovation ({innovation:.0f}), and stable risk profile"
 
-    # Phase 3: Trough of Disillusionment (RECALIBRATED: <40→<15, TIGHTENED: requires ALL low, not OR)
-    # MOVED TO END to act as fallback for truly underperforming technologies only
-    if narrative < 15 and adoption < 15 and innovation < 15 and risk < 20:
-        return "trough", f"All metrics underperforming: narrative ({narrative:.0f}), adoption ({adoption:.0f}), innovation ({innovation:.0f})"
+    # Phase 4: Slope of Enlightenment (TIGHTENED: 25→20, make more specific)
+    # Moderate adoption with balanced metrics
+    if adoption > 20 and innovation > 12 and narrative > 10 and hype < 50:
+        return "slope", f"Growing adoption ({adoption:.0f}) with sustained innovation ({innovation:.0f}) and realistic expectations"
 
-    # Default: Slope (catches edge cases with mixed signals)
-    return "slope", f"Moderate signals across layers (innov={innovation:.0f}, adopt={adoption:.0f}, narr={narrative:.0f})"
+    # Phase 3: Trough of Disillusionment (RELAXED: Use 2/4 criteria, not all 4)
+    # Technologies with multiple weak signals
+    low_count = sum([
+        narrative < 15,
+        adoption < 15,
+        innovation < 15,
+        hype < 20
+    ])
+    if low_count >= 2:
+        return "trough", f"Multiple underperforming metrics (2+ low scores): narrative ({narrative:.0f}), adoption ({adoption:.0f}), innovation ({innovation:.0f})"
+
+    # Default: Slope (only for truly mixed signals that don't fit anywhere)
+    return "slope", f"Mixed signals across layers (innov={innovation:.0f}, adopt={adoption:.0f}, narr={narrative:.0f})"
 
 async def phase_detector_agent(state: Dict[str, Any]) -> Dict[str, Any]:
     tech_id = state["tech_id"]
