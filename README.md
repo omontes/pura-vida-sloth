@@ -95,9 +95,9 @@ Phase 2: Document Processing
     ↓ (structured JSON)
 Phase 3: Graph Ingestion
     ↓ (Neo4j GraphRAG)
-Phases 4+5: Multi-Agent Intelligence System
+Phase 4: Multi-Agent Intelligence System
     ↓ (11-agent LangGraph state machine)
-Phase 6: Interactive Visualization
+Phase 5: Interactive Visualization
     ↓ (React + D3.js)
 ```
 
@@ -359,7 +359,7 @@ pura-vida-sloth/
 │   │   ├── batch_writer.py
 │   │   ├── entity_resolution/
 │   │   └── prerequisites_configuration/
-│   ├── agents/                   # Phases 4+5: Multi-agent system
+│   ├── agents/                   # Phases 4: Multi-agent system
 │   │   ├── langgraph_orchestrator.py
 │   │   ├── agent_01_tech_discovery/
 │   │   ├── agent_02_innovation/
@@ -530,31 +530,6 @@ Every analytical claim backed by source documents:
 
 ---
 
-## 🧪 Testing & Evaluation
-
-### Unit Tests
-```bash
-# Test individual downloaders (fast, 10-60 seconds each)
-pytest tests/test_downloaders/test_research_papers.py
-pytest tests/test_downloaders/test_sec_filings.py
-
-# Test agent components
-pytest tests/test_agents/test_scorer_innovation.py
-pytest tests/test_agents/test_phase_detector.py
-```
-
-### Integration Tests
-```bash
-# Full pipeline test (4-7 hours)
-pytest tests/test_integration.py
-
-# Phase-by-phase tests (30-90 minutes each)
-pytest tests/test_phase1_collection.py
-pytest tests/test_phase2_processing.py
-pytest tests/test_phase3_ingestion.py
-pytest tests/test_phase45_agents.py
-```
-
 ### Evaluation Metrics
 The system tracks reproducibility and accuracy:
 - **Reproducibility Score**: Same graph → same chart (target: 100%)
@@ -568,16 +543,14 @@ The system tracks reproducibility and accuracy:
 ## 📖 Documentation
 
 ### Core Documentation
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Complete system architecture (1,172 lines)
-- **[FOLDER_STRUCTURE.md](docs/FOLDER_STRUCTURE.md)** - Detailed folder guide (600 lines)
-- **[API_SETUP_GUIDE.md](docs/API_SETUP_GUIDE.md)** - API key registration instructions
+- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Complete system architecture
 
 ### Implementation Guides
 - **Phase 1**: [Data Collection Guide](docs/phase1_collection.md)
 - **Phase 2**: [Document Processing Guide](docs/phase2_processing.md)
 - **Phase 3**: [Graph Ingestion Guide](docs/phase3_ingestion.md)
-- **Phases 4+5**: [Multi-Agent System Guide](docs/phase45_agents.md)
-- **Phase 6**: [Frontend Visualization Guide](docs/phase6_frontend.md)
+- **Phase 4**: [Multi-Agent System Guide](docs/phase4_agents.md)
+- **Phase 5**: [Frontend Visualization Guide](docs/phase5_frontend.md)
 
 ### Reference Documentation
 - **[Neo4j Schema v1.1](src/graph/schema/Schema_v1.1_Complete.md)** - Graph schema specification
@@ -598,8 +571,8 @@ The system tracks reproducibility and accuracy:
 ### In Progress 🔧
 - **Phase 2**: Document processor implementation
 - **Phase 3**: Graph ingestion batch writer
-- **Phases 4+5**: LangGraph agent development (11 agents)
-- **Phase 6**: React frontend (D3.js visualization)
+- **Phase 4**: Muli=Agent with LangGraph (11 agents)
+- **Phase 5**: React frontend (D3.js visualization)
 - **Testing**: Integration test suite
 
 ### Hackathon Priorities (3 days remaining)
@@ -665,7 +638,7 @@ This is a hackathon project (LandingAI Financial AI Hackathon 2025). After the h
 **Priority areas for contribution**:
 - Additional data source collectors (Phase 1)
 - New industry configurations (quantum, biotech, etc.)
-- Agent improvements (Phase 4+5)
+- Agent improvements (Phase 4)
 - Frontend visualization enhancements (Phase 6)
 - Evaluation frameworks and test suites
 
