@@ -345,12 +345,17 @@ pura-vida-sloth/
 │   │   ├── patents.py
 │   │   ├── github_metrics.py
 │   │   └── ...
-│   ├── processors/               # Phase 2: Document processing
-│   │   ├── document_processor.py
-│   │   └── doc_type_handlers/
+│   ├── parsers/               # Phase 2: Document processing
+│   │   ├── ade_parser.py
+│   │   └── patents/
+│   │   └── schilarly/
+│   │   └── sec/
+│   │   └── ...
 │   ├── ingestion/                # Phase 3: Graph ingestion
 │   │   ├── graph_ingestor.py
 │   │   └── batch_writer.py
+│   │   └── entity_resolution/
+│   │   └── prerequisites_configuration/
 │   ├── agents/                   # Phases 4+5: Multi-agent system
 │   │   ├── langgraph_orchestrator.py
 │   │   ├── tech_discovery.py

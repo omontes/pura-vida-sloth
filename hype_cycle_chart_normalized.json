@@ -1,98 +1,83 @@
 {
-  "industry": "Emerging Technologies",
-  "generated_at": "2025-11-10T15:38:47.941332Z",
+  "industry": "eVTOL & Advanced Air Mobility",
+  "generated_at": "2025-11-10T18:56:37.387391Z",
   "metadata": {
     "date_from": "2020-01-01",
     "date_to": "2025-11-10",
-    "total_documents": "N/A",
-    "total_count": 24,
     "phases": {
-      "innovation_trigger": 0,
+      "innovation_trigger": 1,
       "peak": 4,
       "trough": 10,
       "slope": 10,
-      "plateau": 0
+      "plateau": 10
     },
-    "normalized_at": "2025-11-10T16:04:29.581915Z",
+    "normalized_at": "2025-11-10T19:11:06.145773Z",
     "normalization_config": {
       "top_n_per_phase": 10,
-      "original_count": 45,
-      "filtered_count": 24
+      "original_count": 50,
+      "filtered_count": 35
+    },
+    "graph_data": {
+      "communities": {
+        "total": 158,
+        "versions": {
+          "v0": 59,
+          "v1": 49,
+          "v2": 50
+        }
+      },
+      "documents": {
+        "total": 2099,
+        "by_type": {
+          "patent": 732,
+          "news": 262,
+          "technical_paper": 535,
+          "government_contract": 206,
+          "sec_filing": 338,
+          "github": 21
+        }
+      },
+      "technologies": {
+        "total": 1755,
+        "with_documents": 1755,
+        "by_doc_threshold": {
+          "min_5": 257,
+          "min_10": 78,
+          "min_15": 36,
+          "min_20": 20
+        }
+      },
+      "companies": {
+        "total": 122
+      },
+      "relationships": {
+        "total": 21516,
+        "mentioned_in": 7425,
+        "belongs_to_community": 9943
+      }
     }
   },
   "technologies": [
-    {
-      "id": "engine_torque_control_system",
-      "name": "Engine Torque Control System",
-      "domain": "Technology",
-      "phase": "Trough of Disillusionment",
-      "phase_position": "early",
-      "phase_confidence": 0.65,
-      "chart_x": 1.4,
-      "scores": {
-        "innovation": 15.0,
-        "adoption": 10.0,
-        "narrative": 35.0,
-        "risk": 15.0,
-        "hype": 27.826442173916547
-      },
-      "summary": "The engine torque control system is currently positioned in a trough of disillusionment within its technology lifecycle, characterized by low innovation and adoption scores. Despite some media coverage, the overall market interest is waning, as indicated by a low hype score and financial risk signals. The technology has not yet gained significant traction in contracts or revenue generation, suggesting a challenging path ahead for stakeholders.",
-      "insight": "The engine torque control system is struggling to achieve market acceptance and innovation, signaling potential long-term viability concerns.",
-      "evidence_counts": {
-        "patents": 1,
-        "papers": 0,
-        "github": 0,
-        "news": 0,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
     {
       "id": "multidisciplinary_design_optimization",
       "name": "Multidisciplinary Design Optimization",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "early",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 1.5444444444444443,
+      "chart_x": 2.6,
       "scores": {
         "innovation": 0.0,
         "adoption": 15.0,
         "narrative": 35.0,
-        "risk": 15.0,
-        "hype": 21.277186767309857
+        "risk": 20.0,
+        "hype": 21.132486540518713
       },
-      "summary": "Multidisciplinary design optimization (MDO) is currently in a trough phase, reflecting its limited adoption and innovation, with a low hype score of 21. The technology shows minimal traction in terms of contracts and revenue, indicating that while there is some media coverage, it has not translated into significant market interest or financial backing. The divergence score of 14.4 suggests a disconnect between expectations and reality, highlighting the need for a reassessment of its market potential and strategic value.",
-      "insight": "MDO is currently underperforming in the market, with low adoption and innovation, signaling a potential misalignment between industry expectations and actual capabilities.",
+      "summary": "Multidisciplinary design optimization (MDO) is currently in a trough phase, showing limited innovation with no recent patents or significant academic publications. Adoption remains low, reflected in minimal contracts and revenue, while media coverage is sparse, indicating a lack of public interest or understanding. Financial signals suggest a moderate risk environment, highlighting the need for cautious engagement with this technology as it navigates through its current challenges.",
+      "insight": "The technology is struggling to gain traction in the market, with low innovation and adoption scores indicating a need for reevaluation of its potential impact and viability.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
-        "github": 0,
-        "news": 0,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "vortex_ring_state_vrs",
-      "name": "Vortex Ring State Vrs",
-      "domain": "Technology",
-      "phase": "Trough of Disillusionment",
-      "phase_position": "early",
-      "phase_confidence": 0.65,
-      "chart_x": 1.6888888888888889,
-      "scores": {
-        "innovation": 5.0,
-        "adoption": 10.0,
-        "narrative": 35.0,
-        "risk": 15.0,
-        "hype": 23.700443603234167
-      },
-      "summary": "The Vortex Ring State (VRS) technology currently resides in a trough of disillusionment, characterized by low innovation scores and minimal market adoption. Despite some media coverage, the overall hype surrounding VRS is waning, as indicated by a low hype score and significant divergence in market expectations. Financial signals suggest caution, with a risk score indicating potential instability in investment returns. This combination of factors points to a challenging environment for VRS as it struggles to gain traction in the market.",
-      "insight": "VRS technology is currently underperforming in both innovation and adoption, indicating a lack of viable commercial pathways and significant market skepticism.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 1,
         "github": 0,
         "news": 0,
         "sec_filings": 0,
@@ -104,18 +89,18 @@
       "name": "Propulsor Fault Detection System",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "early",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 1.8333333333333333,
+      "chart_x": 2.477777777777778,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
         "narrative": 35.0,
-        "risk": 20.0,
-        "hype": 20.139211888051804
+        "risk": 15.0,
+        "hype": 20.56079711224051
       },
-      "summary": "The propulsor fault detection system currently sits at a low adoption rate with a score of 10/100, indicating limited market penetration and commercial viability. Innovation in this space is stagnant, evidenced by a lack of patents or academic publications. Media coverage is minimal, resulting in a hype score of only 20/100, suggesting that the technology is not capturing significant attention or investment interest. Overall, the technology is in a trough phase, facing challenges in gaining traction and financial backing.",
-      "insight": "The propulsor fault detection system is struggling to gain market traction due to a lack of innovation and adoption, which poses a risk for stakeholders considering investment.",
+      "summary": "The propulsor fault detection system is currently positioned in a trough of disillusionment, characterized by low innovation and adoption scores, indicating limited market traction and a lack of significant advancements. With a hype score of only 21, the technology is not capturing substantial media attention, suggesting that it is not yet perceived as a priority within the industry. Financial signals are weak, reflecting high risk and uncertainty regarding future growth and viability. Overall, the technology appears to be underperforming in a competitive landscape, requiring careful evaluation before further investment.",
+      "insight": "The propulsor fault detection system is struggling with low adoption and innovation, indicating a high risk for stakeholders considering investment.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -126,13 +111,13 @@
       }
     },
     {
-      "id": "tilting_mechanism_control_system",
-      "name": "Tilting Mechanism Control System",
+      "id": "tilting_fan_assembly",
+      "name": "Tilting Fan Assembly",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "mid",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 1.9777777777777779,
+      "chart_x": 2.3555555555555556,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
@@ -140,8 +125,8 @@
         "risk": 15.0,
         "hype": 20.56079711224051
       },
-      "summary": "The tilting mechanism control system currently sits in a trough of disillusionment, characterized by low innovation and adoption scores, indicating a lack of patents and contracts. Media coverage is minimal, reflecting a weak narrative around its potential applications and benefits. Financial signals also suggest a high level of risk, limiting investor confidence and market traction. Overall, the technology is struggling to gain momentum in a competitive landscape, requiring careful evaluation before further investment.",
-      "insight": "The tilting mechanism control system is currently underperforming in innovation and market adoption, indicating significant barriers to entry and acceptance in its intended applications.",
+      "summary": "The tilting fan assembly technology currently sits in a trough of disillusionment, characterized by low innovation scores and minimal market adoption. With a Hype Score of 21/100, the technology has not yet gained traction, as evidenced by its limited media coverage and financial signals indicating a lack of investment interest. Companies considering this technology should be cautious, as its current state suggests it may not deliver immediate returns or competitive advantage.",
+      "insight": "The tilting fan assembly technology is underperforming in terms of innovation and market adoption, indicating a lack of viability in the near term.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -156,9 +141,9 @@
       "name": "Independent Rotor Blade Control",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "mid",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 2.1222222222222222,
+      "chart_x": 2.2333333333333334,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
@@ -166,8 +151,8 @@
         "risk": 15.0,
         "hype": 20.56079711224051
       },
-      "summary": "The independent rotor blade control technology is currently in a trough phase of its lifecycle, characterized by minimal innovation and low adoption rates, as evidenced by a lack of patents and contracts. Despite some media coverage, the overall market interest remains tepid, reflected in a low hype score and significant risk factors. Decision-makers should be cautious as financial signals indicate a lack of robust investment backing for this technology, suggesting it may not be a priority for immediate development or deployment.",
-      "insight": "The technology is currently underperforming with low innovation and adoption, indicating a lack of market readiness and potential viability.",
+      "summary": "The independent rotor blade control technology is currently in a trough phase, characterized by low innovation and adoption scores, indicating limited market traction and technological advancement. Media coverage is modest, suggesting a lack of strong narratives or endorsements that could drive interest. Financial signals also indicate significant risk, with minimal contracts or revenue being generated. Overall, this technology is struggling to gain momentum in a competitive landscape.",
+      "insight": "The independent rotor blade control technology is underperforming in terms of innovation and market adoption, posing a high risk for potential investors.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -184,16 +169,16 @@
       "phase": "Trough of Disillusionment",
       "phase_position": "mid",
       "phase_confidence": 0.85,
-      "chart_x": 2.2666666666666666,
+      "chart_x": 2.111111111111111,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
         "narrative": 35.0,
-        "risk": 15.0,
-        "hype": 20.56079711224051
+        "risk": 20.0,
+        "hype": 20.139211888051804
       },
-      "summary": "The rotor deployment mechanism technology currently sits in a trough of disillusionment, indicated by low innovation scores and minimal market adoption. With a hype score of only 21, it reflects a significant gap between initial expectations and current reality, leading to limited media coverage and financial signals. The technology has not yet gained traction in contracts or revenue, suggesting that it may not be a viable investment opportunity at this time.",
-      "insight": "The rotor deployment mechanism is currently underperforming in innovation and market adoption, indicating a lack of commercial viability and potential stagnation in development.",
+      "summary": "The rotor deployment mechanism technology currently sits in a trough of disillusionment, characterized by low innovation and adoption scores, indicating minimal market traction and a lack of compelling advancements. With a hype score of only 20, the technology is struggling to gain attention and investment, leading to a divergence in expectations versus reality. Financial signals suggest increased risk, further complicating its market viability. Overall, the current landscape indicates a challenging path ahead for this technology without significant changes or breakthroughs.",
+      "insight": "The rotor deployment mechanism is currently underperforming in both innovation and market adoption, signaling a critical need for reevaluation of its development strategy.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -208,9 +193,9 @@
       "name": "Automated Landing Abort System",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "late",
+      "phase_position": "mid",
       "phase_confidence": 0.85,
-      "chart_x": 2.4111111111111114,
+      "chart_x": 1.988888888888889,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
@@ -218,8 +203,60 @@
         "risk": 20.0,
         "hype": 20.139211888051804
       },
-      "summary": "The automated landing abort system is currently in a trough phase of market adoption, evidenced by low innovation scores and minimal contracts or revenue generation. Media coverage remains limited, indicating a lack of awareness or interest in this technology among key stakeholders. Financial signals suggest a cautious approach to investment, as the technology has yet to prove its viability or market demand.",
-      "insight": "The automated landing abort system is struggling to gain traction and credibility in the market, which poses significant risks for potential investors and adopters.",
+      "summary": "The automated landing abort system currently stands at a low adoption rate with a score of 10/100, indicating limited commercial contracts and revenue generation. Despite some media coverage, the technology is in a trough phase of the hype cycle, suggesting that expectations may have been overly optimistic. With a significant risk score of 20/100, financial signals indicate potential challenges in securing funding or investment. Overall, the market dynamics suggest a cautious approach to this technology's viability in the near term.",
+      "insight": "The automated landing abort system is currently underperforming in terms of adoption and financial viability, indicating a need for reevaluation of its market potential.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "vision_based_landing_system",
+      "name": "Vision Based Landing System",
+      "domain": "Technology",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 1.8666666666666667,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 35.0,
+        "risk": 20.0,
+        "hype": 20.139211888051804
+      },
+      "summary": "The vision-based landing system technology is currently in a trough phase of its hype cycle, characterized by low innovation (0/100) and adoption scores (10/100). Despite some media coverage (35/100), the overall market signals indicate a lack of financial viability and interest, with a risk score of 20/100. The divergence in layers suggests that while there is some narrative around the technology, it has not translated into substantial contracts or patents, indicating a disconnect between potential and actual market performance.",
+      "insight": "The vision-based landing system technology is underperforming in both innovation and adoption, signaling a need for reevaluation of its market potential.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "dual_battery_system",
+      "name": "Dual Battery System",
+      "domain": "Technology",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 1.7444444444444445,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 35.0,
+        "risk": 15.0,
+        "hype": 20.56079711224051
+      },
+      "summary": "The dual battery system technology is currently in a trough phase of the hype cycle, indicating a significant gap between its potential and actual market adoption. With an innovation score of 0, there is a lack of patents or academic support, which raises concerns about its viability and future development. Adoption remains low, evidenced by minimal contracts and revenue, while media coverage is limited, contributing to a low overall hype score. Financial signals indicate moderate risk, suggesting caution in investment decisions.",
+      "insight": "The dual battery system technology is currently underdeveloped and lacks traction in the market, making it a high-risk investment at this stage.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -234,9 +271,9 @@
       "name": "Rotary Actuator System",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "late",
+      "phase_position": "early",
       "phase_confidence": 0.85,
-      "chart_x": 2.5555555555555554,
+      "chart_x": 1.6222222222222222,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
@@ -244,8 +281,8 @@
         "risk": 15.0,
         "hype": 20.56079711224051
       },
-      "summary": "The rotary actuator system is currently in a trough phase of market adoption, characterized by low innovation and limited financial signals indicating risk. With a hype score of only 21, the technology is not attracting significant media attention or investment, resulting in minimal contracts and revenue generation. This stagnation suggests that while the technology has potential, it is not yet positioned for growth or widespread adoption in the near term.",
-      "insight": "The rotary actuator system is currently underperforming in innovation and market adoption, indicating a lack of competitive viability.",
+      "summary": "The rotary actuator system currently resides in a trough of disillusionment, characterized by low innovation and adoption scores. With a hype score of only 21, the technology is struggling to gain traction in the market, as evidenced by minimal contracts and revenue generation. Media coverage remains limited, indicating a lack of awareness and interest among potential users and investors. Overall, the technology faces significant challenges that could hinder its growth and market acceptance in the near term.",
+      "insight": "The rotary actuator system is currently underperforming in both innovation and market adoption, signaling a critical need for strategic reevaluation.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -256,13 +293,13 @@
       }
     },
     {
-      "id": "lift_fan_assembly",
-      "name": "Lift Fan Assembly",
+      "id": "evtol_propeller_design",
+      "name": "Evtol Propeller Design",
       "domain": "Technology",
       "phase": "Trough of Disillusionment",
-      "phase_position": "late",
+      "phase_position": "early",
       "phase_confidence": 0.85,
-      "chart_x": 2.7,
+      "chart_x": 1.5,
       "scores": {
         "innovation": 0.0,
         "adoption": 10.0,
@@ -270,193 +307,11 @@
         "risk": 15.0,
         "hype": 20.56079711224051
       },
-      "summary": "The lift fan assembly technology is currently in a trough phase of its lifecycle, characterized by low innovation and adoption scores, indicating limited market traction and development activity. Despite some media coverage, the overall hype surrounding this technology is minimal, suggesting that it has not yet gained significant attention or investment interest. Financial signals indicate a high level of risk, which may deter potential investors and partners from engaging with this technology at this time.",
-      "insight": "The lift fan assembly technology is struggling with low adoption and innovation, posing a significant risk for stakeholders considering investment or partnership opportunities.",
+      "summary": "The eVTOL propeller design technology is currently in a trough phase of hype, characterized by low innovation scores and minimal adoption in the market. With a low patent and publication output, the technology lacks a robust foundation for future growth, while financial signals indicate significant risk. Media coverage is limited, suggesting a lack of public interest and awareness, which further hampers potential investment and development opportunities.",
+      "insight": "The eVTOL propeller design market is currently stagnant, with insufficient innovation and adoption metrics to justify immediate investment.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
-        "github": 0,
-        "news": 0,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "advanced_air_mobility",
-      "name": "Advanced Air Mobility",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "early",
-      "phase_confidence": 0.85,
-      "chart_x": 2.7,
-      "scores": {
-        "innovation": 0.0,
-        "adoption": 45.0,
-        "narrative": 75.0,
-        "risk": 20.0,
-        "hype": 100
-      },
-      "summary": "Advanced Air Mobility (AAM) is currently experiencing significant media hype, reflected in a high narrative score of 75, but struggles with innovation and adoption, evidenced by a low patent activity score of 0 and a moderate adoption score of 45. The technology is in a growth phase, indicated by a slope in its hype cycle, yet financial risks are apparent with a concerning risk score of 20. This divergence suggests that while the concept garners attention, tangible market traction and innovation are lagging behind expectations.",
-      "insight": "Despite high media interest, the lack of patents and low adoption rates indicate that Advanced Air Mobility is not yet a viable market opportunity.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 0,
-        "github": 0,
-        "news": 20,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "evtol_technology",
-      "name": "Evtol Technology",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "early",
-      "phase_confidence": 0.85,
-      "chart_x": 2.8666666666666667,
-      "scores": {
-        "innovation": 10.0,
-        "adoption": 35.0,
-        "narrative": 75.0,
-        "risk": 15.0,
-        "hype": 100
-      },
-      "summary": "eVTOL technology is currently experiencing significant media hype, reflected in a high narrative score of 75. However, the innovation and adoption scores are low, indicating that while interest is strong, actual technological advancements and market penetration are lagging behind. Financial risk signals are also concerning, suggesting that investments in this sector may be precarious at this stage. The divergence in hype versus reality indicates a potential market bubble that could impact future investments.",
-      "insight": "The overwhelming hype surrounding eVTOL technology does not align with its current innovation and adoption levels, indicating a potential market bubble.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 3,
-        "github": 0,
-        "news": 1,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "urban_air_mobility",
-      "name": "Urban Air Mobility",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "early",
-      "phase_confidence": 0.85,
-      "chart_x": 3.0333333333333337,
-      "scores": {
-        "innovation": 5.0,
-        "adoption": 35.0,
-        "narrative": 95.0,
-        "risk": 20.0,
-        "hype": 100
-      },
-      "summary": "Urban air mobility (UAM) is currently experiencing significant media hype, with a narrative score of 95/100, indicating strong public interest and optimism. However, the technology is in a nascent stage with low innovation (5/100) and adoption (35/100) scores, suggesting that practical implementations and revenue generation are lagging behind expectations. Financial signals indicate a high-risk environment (20/100), which may deter investment without clear pathways to profitability. The divergence of 39.4 between hype and actual market readiness highlights a critical gap that decision-makers must navigate carefully.",
-      "insight": "Despite high media enthusiasm, urban air mobility is still far from achieving commercial viability and widespread adoption, presenting a significant risk for investors and stakeholders.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 0,
-        "github": 0,
-        "news": 2,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "friction_welding_process",
-      "name": "Friction Welding Process",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "early",
-      "phase_confidence": 0.85,
-      "chart_x": 3.2,
-      "scores": {
-        "innovation": 45.0,
-        "adoption": 10.0,
-        "narrative": 45.0,
-        "risk": 15.0,
-        "hype": 55.81187913226531
-      },
-      "summary": "The friction welding process is currently positioned in a growth phase, characterized by moderate innovation and media coverage but low adoption and financial signals. Despite a notable number of patents and research papers indicating potential, the technology has not yet gained significant traction in contracts or revenue generation. The divergence in layer scores suggests a disconnect between innovation and market readiness, indicating challenges in translating technical advancements into commercial success.",
-      "insight": "The friction welding process shows promise through innovation but is hindered by low market adoption and financial performance, indicating a potential gap between development and practical application.",
-      "evidence_counts": {
-        "patents": 19,
-        "papers": 0,
-        "github": 0,
-        "news": 0,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "unmanned_aerial_vehicle_uav",
-      "name": "Unmanned Aerial Vehicle Uav",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "mid",
-      "phase_confidence": 0.65,
-      "chart_x": 3.3666666666666667,
-      "scores": {
-        "innovation": 25.0,
-        "adoption": 20.0,
-        "narrative": 45.0,
-        "risk": 15.0,
-        "hype": 23.700443603234167
-      },
-      "summary": "Unmanned Aerial Vehicles (UAVs) are currently positioned in a challenging market landscape characterized by low innovation and adoption scores, indicating limited advancements and commercial traction. Despite a moderate level of media coverage, the overall hype surrounding UAV technology remains low, suggesting that investor interest may not be translating into tangible business opportunities. The financial risk signals are concerning, reflecting potential instability in the sector. This combination of factors suggests that while UAVs have potential, they face significant hurdles before achieving widespread acceptance and profitability.",
-      "insight": "The UAV market is currently underperforming in innovation and adoption, indicating a need for strategic reevaluation before committing resources.",
-      "evidence_counts": {
-        "patents": 1,
-        "papers": 2,
-        "github": 0,
-        "news": 0,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "evtol",
-      "name": "Evtol",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "mid",
-      "phase_confidence": 0.85,
-      "chart_x": 3.5333333333333337,
-      "scores": {
-        "innovation": 10.0,
-        "adoption": 25.0,
-        "narrative": 55.0,
-        "risk": 30.0,
-        "hype": 55.56243040080456
-      },
-      "summary": "The eVTOL market is currently positioned in a growth phase, characterized by moderate innovation and adoption levels. While media coverage is gaining traction, translating into a Hype Score of 56, actual contracts and revenue remain low, indicating a gap between perception and reality. Financial signals suggest a cautious environment, with risks that could impact investment decisions. Stakeholders should be aware of the divergence in expectations versus actual market readiness, as reflected in the 18.7 Layer Divergence score.",
-      "insight": "The eVTOL sector is generating significant media interest, but actual market adoption and financial viability remain underdeveloped, posing risks for stakeholders.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 3,
-        "github": 0,
-        "news": 101,
-        "sec_filings": 0,
-        "insider_transactions": 0
-      }
-    },
-    {
-      "id": "lithium_ion_battery",
-      "name": "Lithium Ion Battery",
-      "domain": "Technology",
-      "phase": "Slope of Enlightenment",
-      "phase_position": "mid",
-      "phase_confidence": 0.85,
-      "chart_x": 3.7,
-      "scores": {
-        "innovation": 10.0,
-        "adoption": 20.0,
-        "narrative": 45.0,
-        "risk": 20.0,
-        "hype": 20.139211888051804
-      },
-      "summary": "The lithium-ion battery technology is currently positioned in a phase of moderate innovation and adoption, with a low hype score indicating a lack of significant market excitement despite its critical role in various industries. While media coverage is relatively strong, reflecting ongoing interest, the low scores in innovation and adoption suggest that advancements and commercial uptake are lagging. Financial signals also indicate risk, highlighting potential vulnerabilities in investment and market stability. Overall, the technology is essential but facing challenges that could hinder its growth potential.",
-      "insight": "The lithium-ion battery market is at a critical juncture, where innovation and adoption rates are insufficient to meet growing demand, signaling potential stagnation.",
-      "evidence_counts": {
-        "patents": 0,
-        "papers": 4,
         "github": 0,
         "news": 0,
         "sec_filings": 0,
@@ -467,19 +322,19 @@
       "id": "hybrid_electric_propulsion",
       "name": "Hybrid Electric Propulsion",
       "domain": "Technology",
-      "phase": "Slope of Enlightenment",
+      "phase": "Plateau of Productivity",
       "phase_position": "late",
-      "phase_confidence": 0.65,
-      "chart_x": 3.866666666666667,
+      "phase_confidence": 0.85,
+      "chart_x": 4.9,
       "scores": {
         "innovation": 10.0,
         "adoption": 20.0,
-        "narrative": 40.0,
-        "risk": 20.0,
-        "hype": 24.833885215764166
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 50.818447632722034
       },
-      "summary": "Hybrid electric propulsion technology is currently in a developmental phase with low innovation and adoption scores, indicating limited patent activity and revenue generation. Despite a moderate level of media coverage, the overall hype surrounding this technology is low, suggesting that it has not yet captured significant market interest or investment. Financial signals indicate a cautious environment, with a risk score that reflects potential challenges in scaling this technology. As the market evolves, stakeholders should be aware of both the opportunities and the limitations inherent in this technology.",
-      "insight": "The hybrid electric propulsion market is currently underperforming in innovation and adoption, which suggests that while there is interest, substantial barriers to entry and development remain.",
+      "summary": "Hybrid electric propulsion technology is currently at a plateau phase, characterized by moderate media coverage and low innovation and adoption scores. Despite a growing narrative around sustainability and efficiency in transportation, the financial signals indicate significant risk, suggesting that market readiness is still developing. Stakeholders should be aware of the potential for future growth as the technology matures, but must navigate the current landscape cautiously due to limited contracts and revenue generation.",
+      "insight": "The hybrid electric propulsion market is not yet ready for significant investment, as evidenced by low adoption rates and high financial risk, despite a moderately positive media narrative.",
       "evidence_counts": {
         "patents": 0,
         "papers": 2,
@@ -490,25 +345,259 @@
       }
     },
     {
-      "id": "flight_control_system",
-      "name": "Flight Control System",
+      "id": "lithium_ion_battery",
+      "name": "Lithium Ion Battery",
       "domain": "Technology",
-      "phase": "Slope of Enlightenment",
+      "phase": "Plateau of Productivity",
       "phase_position": "late",
-      "phase_confidence": 0.65,
-      "chart_x": 4.033333333333333,
+      "phase_confidence": 0.85,
+      "chart_x": 4.833333333333334,
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 20.0,
+        "narrative": 45.0,
+        "risk": 20.0,
+        "hype": 20.139211888051804
+      },
+      "summary": "The lithium-ion battery technology is currently in a plateau phase, characterized by moderate innovation and adoption levels. Despite a significant presence in media narratives, the overall market sentiment is cautious, reflected in low financial signals and a hype score of only 20. This indicates that while the technology is established, it faces challenges in driving substantial growth or breakthroughs in the near term.",
+      "insight": "The lithium-ion battery market is stabilizing, with limited prospects for rapid innovation or adoption growth, necessitating a reassessment of investment strategies.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 4,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "computational_fluid_dynamics",
+      "name": "Computational Fluid Dynamics",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 4.766666666666667,
+      "scores": {
+        "innovation": 15.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 51.51171589037318
+      },
+      "summary": "Computational fluid dynamics (CFD) is currently in a plateau phase, characterized by moderate media coverage but limited innovation and adoption. The technology has a low score in innovation and adoption metrics, indicating that while it is recognized, its practical application and revenue generation remain weak. The hype surrounding CFD is moderate, suggesting that while there is interest, it may not translate into significant market growth or investment opportunities in the near term.",
+      "insight": "The lack of innovation and adoption in CFD indicates a potential stagnation in its market viability, making it crucial for decision-makers to reassess their engagement with this technology.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 6,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "variable_pitch_propeller",
+      "name": "Variable Pitch Propeller",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 4.7,
+      "scores": {
+        "innovation": 5.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 54.45482331605978
+      },
+      "summary": "The variable pitch propeller technology is currently at a plateau phase, characterized by moderate media coverage but low levels of innovation and adoption. Despite a reasonable hype score, the lack of patents and contracts indicates limited market traction and potential financial risk. Decision makers should be cautious as the divergence in hype suggests a disconnect between expectations and reality, which could impact investment decisions.",
+      "insight": "The technology has significant media attention but lacks the necessary innovation and adoption metrics to justify heavy investment at this time.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "evtol_aircraft_design",
+      "name": "Evtol Aircraft Design",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 4.633333333333334,
+      "scores": {
+        "innovation": 5.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 54.45482331605978
+      },
+      "summary": "The eVTOL aircraft design sector is currently experiencing a plateau phase, characterized by moderate media coverage but limited innovation and adoption metrics. With a low patent activity score and minimal revenue generation, the market is struggling to transition from conceptualization to practical implementation. Financial signals indicate significant risk, suggesting that while interest exists, the technology has yet to prove its viability in the commercial aviation landscape.",
+      "insight": "The eVTOL market is at a critical juncture where high media interest does not translate into tangible business outcomes, highlighting a gap between innovation and practical application.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 2,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "thermal_management_system",
+      "name": "Thermal Management System",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 4.566666666666666,
+      "scores": {
+        "innovation": 5.0,
+        "adoption": 10.0,
+        "narrative": 40.0,
+        "risk": 15.0,
+        "hype": 50.818447632722034
+      },
+      "summary": "The thermal management system technology is currently in a plateau phase, indicating a stabilization in its market presence with moderate media coverage but low innovation and adoption scores. Despite a reasonable hype score of 51, the underlying financial signals suggest that the technology is not yet a strong revenue driver. Decision makers should note that while there is some public interest, the lack of patents and contracts indicates limited growth potential in the near term.",
+      "insight": "The thermal management system technology is underperforming in innovation and adoption, signaling a potential stagnation in market growth.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 1,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "electro_mechanical_actuators",
+      "name": "Electro Mechanical Actuators",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 4.5,
+      "scores": {
+        "innovation": 15.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 51.51171589037318
+      },
+      "summary": "Electro-mechanical actuators are currently experiencing a plateau phase in their market lifecycle, characterized by moderate media coverage and low adoption rates. Despite a reasonable level of innovation as indicated by patent activity, the overall financial signals suggest a cautious investment environment. The divergence in hype indicates that while there is some interest, the technology has not yet translated into significant commercial success. This presents both challenges and opportunities for stakeholders in the sector.",
+      "insight": "The low adoption rates and financial signals indicate that electro-mechanical actuators may not be ready for significant investment, suggesting a need for careful monitoring rather than immediate action.",
+      "evidence_counts": {
+        "patents": 1,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "blade_pitch_control_mechanism",
+      "name": "Blade Pitch Control Mechanism",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 4.433333333333334,
       "scores": {
         "innovation": 25.0,
         "adoption": 10.0,
-        "narrative": 35.0,
-        "risk": 20.0,
-        "hype": 29.18334000533867
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 50.717719526258385
       },
-      "summary": "The flight control system technology is currently in a nascent stage, exhibiting low innovation and adoption scores, indicating limited patents and commercial contracts. Despite some media coverage, the overall hype surrounding this technology is low, suggesting that it has not yet captured significant market interest or investment. Financial signals point to a moderate risk profile, indicating potential challenges in securing funding and scaling operations. As the technology progresses through its development phase, stakeholders should remain vigilant about emerging opportunities and threats.",
-      "insight": "The flight control system technology is underperforming in innovation and market adoption, signaling a need for strategic reevaluation before significant investment.",
+      "summary": "The blade pitch control mechanism technology is currently at a plateau phase, characterized by moderate media coverage and low adoption rates. Despite a reasonable level of innovation reflected in patents and research papers, its commercial viability remains weak, as indicated by low revenue and contract activity. The financial risk signals suggest caution, indicating potential challenges in scaling this technology effectively in the market.",
+      "insight": "The low adoption and financial risk signals indicate that while the technology has potential, it is not yet a viable investment opportunity for immediate deployment.",
       "evidence_counts": {
-        "patents": 2,
-        "papers": 2,
+        "patents": 1,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "liquid_cooling_system",
+      "name": "Liquid Cooling System",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 4.366666666666666,
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 52.74876234590519
+      },
+      "summary": "The liquid cooling system technology is currently positioned at a plateau phase in its market lifecycle, characterized by moderate media coverage and low adoption rates reflected in its minimal contracts and revenue generation. Despite a strong innovation score indicating potential for future development, the financial signals suggest heightened risk. With a hype score of 53, there is a noticeable divergence in perceptions versus reality, indicating that while interest exists, practical implementation remains limited.",
+      "insight": "The liquid cooling system technology has significant innovation potential but is struggling with adoption and financial viability, making it a risky investment at this time.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 3,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "engine_torque_control_system",
+      "name": "Engine Torque Control System",
+      "domain": "Technology",
+      "phase": "Plateau of Productivity",
+      "phase_position": "early",
+      "phase_confidence": 0.65,
+      "chart_x": 4.3,
+      "scores": {
+        "innovation": 15.0,
+        "adoption": 10.0,
+        "narrative": 35.0,
+        "risk": 15.0,
+        "hype": 27.826442173916547
+      },
+      "summary": "The engine torque control system is currently positioned at a plateau phase in its market lifecycle, characterized by low innovation and adoption scores. Despite some media coverage, the overall financial signals indicate a high level of risk associated with investment in this technology. The divergence in layer scores suggests a disconnect between public perception and actual market viability, highlighting the need for cautious evaluation before further engagement.",
+      "insight": "The low adoption and innovation scores indicate that the engine torque control system is not yet a viable investment opportunity, despite some media interest.",
+      "evidence_counts": {
+        "patents": 1,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "electric_motor",
+      "name": "Electric Motor",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 4.1000000000000005,
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 25.0,
+        "hype": 52.3746859276655
+      },
+      "summary": "The electric motor technology is currently in a phase of moderate hype, with a Hype Score of 52, indicating growing interest but limited commercial traction, reflected in a low adoption score of 10/100. Despite a relatively high innovation score of 10/100, the lack of significant contracts and revenue suggests that the market is not yet ready for widespread implementation. Media coverage is present, but it does not translate into substantial financial signals, as indicated by a risk score of 25/100. This landscape indicates a potential future growth area, but with considerable caution required in investment decisions.",
+      "insight": "The electric motor technology is generating interest but lacks the necessary commercial adoption and financial backing to justify significant investments at this time.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 3,
         "github": 0,
         "news": 0,
         "sec_filings": 0,
@@ -522,16 +611,224 @@
       "phase": "Slope of Enlightenment",
       "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 4.2,
+      "chart_x": 3.9555555555555557,
       "scores": {
         "innovation": 0.0,
         "adoption": 20.0,
         "narrative": 45.0,
-        "risk": 15.0,
-        "hype": 55.56243040080456
+        "risk": 20.0,
+        "hype": 55.14168048436998
       },
-      "summary": "The 'Six Levels of Autonomy' technology is currently in a developmental phase, with moderate media coverage but limited innovation and adoption metrics. The low patent activity and revenue generation indicate a nascent market that is still struggling to find traction. Despite a moderate hype score, the divergence in layers suggests a disconnect between expectations and actual performance, posing potential risks for investors and stakeholders.",
-      "insight": "The technology is not yet ready for widespread adoption, as evidenced by low innovation and adoption scores, indicating a need for further development and validation before significant investment.",
+      "summary": "The 'Six Levels of Autonomy' technology is currently positioned in a nascent stage with low innovation scores reflected by a lack of patents and academic papers. Adoption remains limited, with only a modest revenue generation and contract activity suggesting that market penetration is still developing. Media coverage is moderate, indicating some interest, but financial signals point to significant risk, reflecting uncertainty in investment viability. Overall, the technology is experiencing a slope phase of hype, suggesting cautious optimism but also a need for careful monitoring.",
+      "insight": "The technology is at a critical juncture where initial interest has not yet translated into substantial market adoption or innovation, indicating potential volatility and risk for investors.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "tilting_mechanism_control_system",
+      "name": "Tilting Mechanism Control System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 3.811111111111112,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 20.0,
+        "hype": 56.466575565641165
+      },
+      "summary": "The tilting mechanism control system is currently in a developmental phase, indicated by a low innovation score and minimal adoption in the market. Despite some media coverage, the technology has not yet gained significant traction, with a high layer divergence suggesting a disconnect between hype and actual market readiness. Financial signals indicate moderate risk, highlighting the need for cautious engagement as the technology matures.",
+      "insight": "The tilting mechanism control system is not yet ready for widespread adoption, and its current market presence is weak, suggesting a need for further development before significant investment is warranted.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "tilted_rotor_system",
+      "name": "Tilted Rotor System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "late",
+      "phase_confidence": 0.85,
+      "chart_x": 3.666666666666667,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 20.0,
+        "hype": 56.466575565641165
+      },
+      "summary": "The tilted rotor system technology is currently in a nascent stage, evidenced by low innovation scores and minimal adoption in the market. Despite a moderate level of media coverage, the overall hype surrounding this technology is moderate, indicating potential but also uncertainty. Financial signals suggest a cautious approach is warranted, as the technology has yet to demonstrate substantial commercial viability. As such, stakeholders should be aware of the risks while monitoring developments closely.",
+      "insight": "The tilted rotor system is not yet commercially viable, with significant barriers to innovation and adoption that need to be addressed before it can gain traction in the market.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "evtol_battery_system",
+      "name": "Evtol Battery System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 3.5222222222222226,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 56.547375096555626
+      },
+      "summary": "The eVTOL battery system technology is currently in a developmental phase with a low innovation score, indicating limited patents and academic papers. Adoption remains minimal, with only a few contracts and low revenue generation, while media coverage is moderate, suggesting growing interest but not yet widespread recognition. Financial signals indicate a high level of risk, highlighting uncertainty in market viability and investment returns.",
+      "insight": "The eVTOL battery system technology is still nascent, with significant barriers to adoption and innovation that could hinder market entry and profitability.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "additive_manufacturing",
+      "name": "Additive Manufacturing",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 3.377777777777778,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 15.0,
+        "hype": 56.547375096555626
+      },
+      "summary": "Additive manufacturing is currently in a transitional phase characterized by moderate media coverage and low adoption rates, evidenced by minimal contracts and revenue generation. The technology has not yet seen significant innovation, as reflected by a lack of patents and academic papers. Financial signals indicate a high level of risk, suggesting that investment in this area may not yield immediate returns. As the hype surrounding additive manufacturing continues to grow, stakeholders should be cautious about overcommitting resources at this stage.",
+      "insight": "The additive manufacturing sector is experiencing a disconnect between hype and actual market viability, indicating potential overvaluation and risk for investors.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "lift_fan_assembly",
+      "name": "Lift Fan Assembly",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 3.233333333333334,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 20.0,
+        "hype": 56.466575565641165
+      },
+      "summary": "The lift fan assembly technology is currently in a growth phase, characterized by moderate media coverage and low adoption rates, indicated by limited contracts and revenue generation. Despite having no patents or significant innovations to date, the technology shows potential for future development as interest grows, reflected in a hype score of 56. However, financial signals suggest a cautious approach is necessary due to existing risks. The divergence in hype indicates a gap between expectations and actual market performance, requiring strategic focus from decision-makers.",
+      "insight": "The lift fan assembly technology is currently underperforming in terms of adoption and innovation, signaling a need for strategic reevaluation before significant investments are made.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "multi_modal_mobility_system",
+      "name": "Multi Modal Mobility System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 3.088888888888889,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 45.0,
+        "risk": 20.0,
+        "hype": 56.466575565641165
+      },
+      "summary": "The multi-modal mobility system is currently positioned in a developing phase with moderate media attention but limited patent activity and low adoption rates. Despite a hype score of 56, indicating some interest, the technology faces significant challenges in gaining traction due to financial risks and a lack of concrete contracts or revenue generation. The divergence in layer scores suggests a disconnect between the technology's potential and its current market performance, highlighting the need for strategic reassessment.",
+      "insight": "The multi-modal mobility system is struggling to transition from concept to viable market solution, with minimal innovation and adoption metrics indicating a potential stagnation in growth.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "fire_suppression_system",
+      "name": "Fire Suppression System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 2.9444444444444446,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 40.0,
+        "risk": 20.0,
+        "hype": 53.117376914899
+      },
+      "summary": "The fire suppression system technology currently exhibits low innovation and adoption scores, indicating limited advancements and market penetration. Despite a moderate level of media coverage, the overall hype surrounding this technology is tepid, reflected in a hype score of 53. Financial signals suggest caution, with a risk score of 20, highlighting potential vulnerabilities in investment. The market dynamics indicate a technology in a 'slope' phase, suggesting gradual growth but requiring strategic attention to enhance its competitive positioning.",
+      "insight": "The fire suppression system technology is underperforming in both innovation and adoption, signaling a need for strategic investment or development to improve its market viability.",
+      "evidence_counts": {
+        "patents": 0,
+        "papers": 0,
+        "github": 0,
+        "news": 0,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "tilting_propeller_system",
+      "name": "Tilting Propeller System",
+      "domain": "Technology",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 2.8000000000000003,
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 40.0,
+        "risk": 15.0,
+        "hype": 53.02572232082767
+      },
+      "summary": "The tilting propeller system currently exhibits low innovation and adoption scores, indicating a nascent technology struggling to gain traction in the market. Despite a moderate level of media coverage, the overall interest is tempered by financial risks and a lack of substantial contracts or revenue generation. As the technology is in a 'slope' phase of hype, it is critical for stakeholders to assess the viability and potential of this system before committing resources.",
+      "insight": "The tilting propeller system is not yet a market-ready solution, with significant barriers to adoption and innovation that need to be addressed.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -546,9 +843,9 @@
       "name": "Electric Propulsion Vehicle",
       "domain": "Technology",
       "phase": "Peak of Inflated Expectations",
-      "phase_position": "early",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 0.7,
+      "chart_x": 1.2999999999999998,
       "scores": {
         "innovation": 30.0,
         "adoption": 20.0,
@@ -556,8 +853,8 @@
         "risk": 15.0,
         "hype": 100
       },
-      "summary": "Electric propulsion vehicles are currently at the peak of hype, evidenced by extensive media coverage and a high hype score of 100. However, the technology faces significant challenges in innovation and adoption, with low scores in patents, contracts, and revenue generation. Financial signals indicate a high risk environment, suggesting that while public interest is strong, actual market viability is still uncertain. This divergence between hype and reality necessitates careful consideration by stakeholders.",
-      "insight": "The electric propulsion vehicle technology is highly hyped but lacks substantial innovation and adoption metrics, indicating a potential disconnect between market excitement and practical implementation.",
+      "summary": "Electric propulsion vehicles are currently at the peak of their hype cycle, driven by significant media coverage and public interest. However, the underlying metrics indicate a concerning lack of innovation and adoption, with low scores in patents, contracts, and revenue generation. This divergence suggests that while the narrative around electric propulsion is strong, the actual market viability and financial stability are still unproven. Decision makers should be cautious as the high hype may not translate into sustainable growth or profitability in the near term.",
+      "insight": "Despite high media hype, the electric propulsion vehicle market is not yet backed by substantial innovation or adoption metrics, indicating potential overvaluation.",
       "evidence_counts": {
         "patents": 3,
         "papers": 4,
@@ -572,18 +869,18 @@
       "name": "Electric Drive System",
       "domain": "Technology",
       "phase": "Peak of Inflated Expectations",
-      "phase_position": "early",
+      "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 0.9333333333333332,
+      "chart_x": 1.1333333333333333,
       "scores": {
-        "innovation": 20.0,
+        "innovation": 25.0,
         "adoption": 10.0,
         "narrative": 95.0,
         "risk": 15.0,
         "hype": 100
       },
-      "summary": "The electric drive system technology is currently at its peak hype phase, characterized by extensive media coverage but lacking substantial innovation and adoption metrics. With a low score in patents and contracts, the technology faces significant challenges in translating excitement into tangible market presence and revenue. Financial signals indicate a high risk environment, suggesting that while the narrative is strong, the underlying fundamentals are weak. Executives should be cautious as the disparity between hype and reality could lead to potential pitfalls in investment.",
-      "insight": "The electric drive system is highly hyped but lacks the necessary innovation and adoption to support sustainable growth, posing a risk for stakeholders.",
+      "summary": "The electric drive system technology is currently at its peak hype phase, characterized by extensive media coverage and public interest. However, its innovation and adoption scores indicate a significant gap, with low levels of patents and contracts, suggesting that the technology has not yet translated into commercial success. The financial risk signals further highlight potential instability in the market, making it crucial for stakeholders to approach this technology with caution despite its current popularity.",
+      "insight": "The electric drive system is highly hyped but lacks substantial innovation and adoption, indicating a potential bubble that could burst if market expectations are not met.",
       "evidence_counts": {
         "patents": 1,
         "papers": 1,
@@ -594,13 +891,39 @@
       }
     },
     {
-      "id": "autonomous_navigation_system",
-      "name": "Autonomous Navigation System",
+      "id": "vtol_drive_system",
+      "name": "Vtol Drive System",
       "domain": "Technology",
       "phase": "Peak of Inflated Expectations",
       "phase_position": "mid",
       "phase_confidence": 0.85,
-      "chart_x": 1.1666666666666665,
+      "chart_x": 0.9666666666666666,
+      "scores": {
+        "innovation": 15.0,
+        "adoption": 15.0,
+        "narrative": 85.0,
+        "risk": 15.0,
+        "hype": 100
+      },
+      "summary": "The VTOL drive system technology is currently at its peak hype phase, characterized by significant media coverage but lacking in tangible adoption and innovation metrics. With a low score in patents and contracts, the technology faces substantial risks that could hinder its transition from concept to market viability. Despite the buzz, the financial signals indicate a precarious position, suggesting that investor enthusiasm may not be matched by actual market readiness. Decision-makers should be cautious as the disparity between hype and reality could lead to disillusionment.",
+      "insight": "The overwhelming media hype surrounding the VTOL drive system does not correlate with its current innovation and adoption metrics, indicating a potential market bubble.",
+      "evidence_counts": {
+        "patents": 1,
+        "papers": 0,
+        "github": 0,
+        "news": 17,
+        "sec_filings": 0,
+        "insider_transactions": 0
+      }
+    },
+    {
+      "id": "autonomous_navigation_system",
+      "name": "Autonomous Navigation System",
+      "domain": "Technology",
+      "phase": "Peak of Inflated Expectations",
+      "phase_position": "early",
+      "phase_confidence": 0.85,
+      "chart_x": 0.7999999999999999,
       "scores": {
         "innovation": 0.0,
         "adoption": 15.0,
@@ -608,8 +931,8 @@
         "risk": 15.0,
         "hype": 100
       },
-      "summary": "The autonomous navigation system is currently at the peak of its hype cycle, evidenced by significant media coverage and a perfect hype score of 100. However, the technology faces challenges in terms of actual adoption, with low revenue and contract scores indicating that practical implementation is lagging behind public interest. This divergence between hype and reality suggests that while the narrative is strong, the market is not yet ready for widespread deployment. Companies should be cautious as the financial signals indicate potential risks associated with investment in this space.",
-      "insight": "Despite high media attention, the lack of adoption and financial backing signals that the market for autonomous navigation systems is not yet mature.",
+      "summary": "The autonomous navigation system is currently at the peak of its hype cycle, characterized by significant media coverage but lacking in substantial innovation and adoption metrics. With a high hype score of 100/100, the technology is generating considerable interest; however, its low scores in innovation and adoption indicate a disconnect between perception and reality. Financial signals also reflect a cautious market, suggesting that while the narrative is strong, the practical applications and market readiness are still developing.",
+      "insight": "Despite its high visibility and media attention, the autonomous navigation system is not yet a viable investment opportunity due to its low innovation and adoption rates.",
       "evidence_counts": {
         "patents": 0,
         "papers": 0,
@@ -620,27 +943,27 @@
       }
     },
     {
-      "id": "vtol_drive_system",
-      "name": "Vtol Drive System",
+      "id": "friction_welding_process",
+      "name": "Friction Welding Process",
       "domain": "Technology",
-      "phase": "Peak of Inflated Expectations",
+      "phase": "Innovation Trigger",
       "phase_position": "late",
       "phase_confidence": 0.85,
-      "chart_x": 1.4,
+      "chart_x": 0.35,
       "scores": {
-        "innovation": 15.0,
+        "innovation": 45.0,
         "adoption": 10.0,
-        "narrative": 55.0,
-        "risk": 20.0,
-        "hype": 58.118621784789724
+        "narrative": 35.0,
+        "risk": 15.0,
+        "hype": 52.28028450199876
       },
-      "summary": "The VTOL drive system technology is currently experiencing significant media attention, indicated by its moderate hype score of 58, yet it lags in innovation and adoption metrics with scores of 15 and 10, respectively. This suggests that while the narrative around the technology is strong, actual implementation and revenue generation are minimal. The divergence in layer scores indicates a disconnect between public perception and market reality, highlighting potential risks for stakeholders. As the technology is at its peak hype phase, it is crucial for decision-makers to assess the sustainability of this interest against the backdrop of its current performance.",
-      "insight": "The significant gap between media hype and actual market adoption signals a potential overvaluation of the VTOL drive system technology, which may lead to financial risks if expectations are not met.",
+      "summary": "The friction welding process is currently in the innovation trigger phase, showing potential for growth with a moderate innovation score of 45. However, its adoption remains low at 10, indicating that while the technology is being developed, it has not yet penetrated the market significantly. Media coverage is limited, resulting in a narrative score of 35, which may hinder broader recognition and investment. Financial signals suggest a cautious outlook with a risk score of 15, emphasizing the need for careful evaluation before significant commitments.",
+      "insight": "The friction welding process presents a promising innovation but is currently underutilized in the market, indicating a gap between technological development and commercial adoption.",
       "evidence_counts": {
-        "patents": 1,
+        "patents": 19,
         "papers": 0,
         "github": 0,
-        "news": 17,
+        "news": 0,
         "sec_filings": 0,
         "insider_transactions": 0
       }
