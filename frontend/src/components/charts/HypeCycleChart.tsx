@@ -78,7 +78,7 @@ export default function HypeCycleChart({
   }, [propWidth, propHeight]);
 
   // Helper function to truncate long technology names
-  const truncateName = (name: string, maxLength: number = 30): string => {
+  const truncateName = (name: string, maxLength: number = 24): string => {
     if (name.length <= maxLength) return name;
     return name.substring(0, maxLength - 3) + '...';
   };
@@ -234,7 +234,7 @@ export default function HypeCycleChart({
       .enter()
       .append('text')
       .attr('class', 'temp-label')
-      .style('font-size', '12px')
+      .style('font-size', '10px')
       .style('font-weight', '700')
       .style('opacity', 0)
       .text((d) => truncateName(d.name));
@@ -249,8 +249,8 @@ export default function HypeCycleChart({
       const validatedX = validateChartPosition(d.phase, d.chart_x, d.phase_position);
       const nodeX = xScale(validatedX);
       const nodeY = getYForX(validatedX);
-      const labelWidth = bbox.width + 2;
-      const labelHeight = bbox.height + 4;
+      const labelWidth = bbox.width + 1;
+      const labelHeight = bbox.height + 2;
 
       // OPTIMIZATION: Use cached distance calculation
       const smartPosition = calculateSmartPreferredPosition(
@@ -303,18 +303,18 @@ export default function HypeCycleChart({
       return force;
     };
 
-    // OPTIMIZED: Run force simulation with strengthened collision parameters
+    // OPTIMIZED: Run force simulation with tighter collision parameters
     const simulation = d3
       .forceSimulation(labelNodes)
       .force(
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 18)
+          .radius((d) => Math.max(d.width, d.height) / 2 + 6)
           .strength(0.8) // Stronger repulsion for better spacing
           .iterations(3) // More accurate collision detection
       )
-      .force('curve-repulsion', forceCurveRepulsion(pathElement, 30))
+      .force('curve-repulsion', forceCurveRepulsion(pathElement, 18))
       .force(
         'y',
         d3
@@ -389,7 +389,7 @@ export default function HypeCycleChart({
       .attr('y', (d) => (d.y || 0) + 4) // Vertical centering adjustment
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.text.primary)
-      .style('font-size', '12px')
+      .style('font-size', '10px')
       .style('font-weight', '700')
       .style('pointer-events', 'none')
       .text((d) => truncateName(d.name));
