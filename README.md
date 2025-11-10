@@ -345,40 +345,45 @@ pura-vida-sloth/
 │   │   ├── lens_scholarly.py
 │   │   ├── github_metrics.py
 │   │   └── ...
-│   ├── parsers/               # Phase 2: Document processing
+│   ├── parsers/                  # Phase 2: Document processing
 │   │   ├── ade_parser.py
-│   │   └── patents/
-│   │   └── schilarly/
-│   │   └── sec/
-│   │   └── ...
+│   │   ├── patents/
+│   │   ├── scholarly/
+│   │   ├── sec/
+│   │   ├── news/
+│   │   ├── regulatory/
+│   │   ├── github_activity/
+│   │   └── gov_contracts/
 │   ├── ingestion/                # Phase 3: Graph ingestion
 │   │   ├── graph_ingestor.py
-│   │   └── batch_writer.py
-│   │   └── entity_resolution/
+│   │   ├── batch_writer.py
+│   │   ├── entity_resolution/
 │   │   └── prerequisites_configuration/
 │   ├── agents/                   # Phases 4+5: Multi-agent system
 │   │   ├── langgraph_orchestrator.py
-│   │   ├── tech_discovery.py
-│   │   ├── scorer_innovation.py
-│   │   ├── scorer_adoption.py
-│   │   ├── scorer_narrative.py
-│   │   ├── scorer_risk.py
-│   │   ├── scorer_hype.py
-│   │   ├── phase_detector.py
-│   │   ├── llm_analyst.py
-│   │   ├── ensemble.py
-│   │   ├── chart_generator.py
-│   │   └── evidence_compiler.py
+│   │   ├── agent_01_tech_discovery/
+│   │   ├── agent_02_innovation/
+│   │   ├── agent_03_adoption/
+│   │   ├── agent_04_narrative/
+│   │   ├── agent_05_risk/
+│   │   ├── agent_06_hype/
+│   │   ├── agent_07_phase/
+│   │   ├── agent_08_analyst/
+│   │   ├── agent_09_ensemble/
+│   │   ├── agent_10_chart/
+│   │   ├── agent_11_evidence/
+│   │   ├── agent_12_validator/
+│   │   └── shared/
 │   ├── graph/                    # Neo4j abstraction layer
 │   │   ├── neo4j_client.py
-│   │   ├── cypher_queries.py
-│   │   └── schema/
+│   │   ├── entity_resolver.py
+│   │   └── node_writer.py
 │   ├── schemas/                  # Pydantic models
-│   ├── prompts/                  # LLM prompt templates
 │   ├── utils/                    # Utilities
 │   ├── core/                     # Core logic
-│   └── cli/                      # CLI commands
-│   └── scripts/                  # Scripts
+│   ├── cli/                      # CLI commands
+│   ├── scripts/                  # Utility scripts
+│   └── api/                      # FastAPI backend
 ├── frontend/                     # Phase 6: React UI
 │   ├── src/
 │   │   ├── components/
@@ -394,10 +399,9 @@ pura-vida-sloth/
 │   ├── test_agents/
 │   └── test_integration.py
 ├── docs/                         # Documentation
-│   ├── ARCHITECTURE.md           # System architecture (1,172 lines)
-│   ├── FOLDER_STRUCTURE.md       # Detailed folder guide
-│   ├── API_SETUP_GUIDE.md
-│   └── ...
+│   ├── ARCHITECTURE.md
+│   ├── FOLDER_STRUCTURE.md
+│   └── API_SETUP_GUIDE.md
 ├── data/                         # Downloaded data (gitignored)
 ├── .env.template                 # Environment template
 ├── requirements.txt              # Python dependencies
