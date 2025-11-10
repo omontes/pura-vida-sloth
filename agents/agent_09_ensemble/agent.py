@@ -1,40 +1,53 @@
-"""Agent 9: Ensemble - Calculates final X/Y positioning on hype cycle."""
+"""Agent 9: Ensemble - Calculates chart positioning per HYPE_CYCLE.md spec."""
 
 from typing import Dict, Any
 from pydantic import BaseModel, Field
 from agents.shared.constants import LAYER_WEIGHTS
+from agents.shared.hype_cycle_spec import (
+    PHASE_NAMES,
+    calculate_chart_x,
+    determine_phase_position,
+)
 
 class EnsembleOutput(BaseModel):
     tech_id: str
-    x_position: float = Field(description="X-axis: maturity (0-100)", ge=0, le=100)
-    y_position: float = Field(description="Y-axis: expectations (0-100)", ge=0, le=100)
+    chart_x: float = Field(description="X-axis: maturity (0.0-5.0)", ge=0, le=5.0)
+    chart_y: float = Field(description="Y-axis: expectations (0-100)", ge=0, le=100)
+    phase_position: str = Field(description="Position in phase: early|mid|late")
     weighted_score: float = Field(description="Overall weighted score")
-    positioning: str = Field(description="Chart quadrant/description")
 
 def calculate_hype_cycle_position(
     innovation: float,
     adoption: float,
     narrative: float,
     risk: float,
-    phase: str
-) -> tuple[float, float, float, str]:
+    phase_code: str
+) -> tuple[float, float, str, float]:
     """
-    Calculate X/Y position on hype cycle chart.
+    Calculate chart position on hype cycle per HYPE_CYCLE.md spec.
 
-    X-axis (Maturity/Time):
-    - Driven by Innovation + Adoption (real progress)
-    - innovation_trigger: 0-20
-    - peak: 20-40
-    - trough: 40-60
-    - slope: 60-80
-    - plateau: 80-100
+    Args:
+        innovation: Innovation score (0-100)
+        adoption: Adoption score (0-100)
+        narrative: Narrative score (0-100)
+        risk: Risk score (0-100)
+        phase_code: Phase code (innovation_trigger, peak, trough, slope, plateau)
 
-    Y-axis (Expectations/Visibility):
-    - Driven by Narrative + Hype
-    - Low: 0-30 (trough)
-    - Medium: 30-70 (trigger, slope, plateau)
-    - High: 70-100 (peak)
+    Returns:
+        (chart_x, chart_y, phase_position, weighted_score)
+
+    Chart X-axis (0.0 to 5.0):
+    - Innovation Trigger: 0.0 - 0.7
+    - Peak of Inflated Expectations: 0.7 - 1.4
+    - Trough of Disillusionment: 1.4 - 2.7
+    - Slope of Enlightenment: 2.7 - 4.2
+    - Plateau of Productivity: 4.2 - 5.0
+
+    Chart Y-axis (0-100): Expectations/Visibility
+    - Driven by narrative + hype signals
     """
+    # Convert phase code to display name
+    phase_display = PHASE_NAMES.get(phase_code, "Slope of Enlightenment")
 
     # Calculate weighted overall score
     weighted_score = (
@@ -44,43 +57,31 @@ def calculate_hype_cycle_position(
         (100 - risk) * LAYER_WEIGHTS["risk"]  # Invert risk (lower risk = better)
     )
 
-    # X-axis: Maturity (innovation + adoption weighted)
-    maturity = (innovation * 0.4 + adoption * 0.6)  # Adoption weighs more for maturity
+    # Determine position within phase (early/mid/late)
+    phase_position = determine_phase_position(
+        innovation, adoption, narrative, risk, phase_display
+    )
 
-    # Y-axis: Expectations (narrative dominates)
-    expectations = narrative * 0.7 + (innovation * 0.3)
+    # Calculate chart_x using spec formula
+    chart_x = calculate_chart_x(phase_display, phase_position)
 
-    # Adjust based on detected phase
-    phase_adjustments = {
-        "innovation_trigger": (15, 40),
-        "peak": (35, 85),
-        "trough": (55, 25),
-        "slope": (70, 55),
-        "plateau": (85, 60),
+    # Calculate chart_y: Expectations (narrative dominates, 0-100 scale)
+    # Higher narrative = higher expectations
+    chart_y = narrative * 0.7 + (innovation * 0.2) + (adoption * 0.1)
+
+    # Apply phase-specific Y adjustments for realism
+    phase_y_adjustments = {
+        "Innovation Trigger": 0.8,        # Lower expectations, early tech
+        "Peak of Inflated Expectations": 1.3,  # Inflated expectations
+        "Trough of Disillusionment": 0.5,      # Crashed expectations
+        "Slope of Enlightenment": 0.9,         # Recovering expectations
+        "Plateau of Productivity": 0.85,       # Stable, realistic expectations
     }
 
-    if phase in phase_adjustments:
-        target_x, target_y = phase_adjustments[phase]
-        # Blend calculated position with phase target (70% calculated, 30% phase)
-        x_position = maturity * 0.7 + target_x * 0.3
-        y_position = expectations * 0.7 + target_y * 0.3
-    else:
-        x_position = maturity
-        y_position = expectations
+    y_multiplier = phase_y_adjustments.get(phase_display, 1.0)
+    chart_y = min(100, chart_y * y_multiplier)
 
-    # Determine positioning description
-    if y_position > 70:
-        positioning = "Peak of Inflated Expectations"
-    elif y_position < 35:
-        positioning = "Trough of Disillusionment"
-    elif x_position > 75:
-        positioning = "Plateau of Productivity"
-    elif x_position > 55:
-        positioning = "Slope of Enlightenment"
-    else:
-        positioning = "Innovation Trigger"
-
-    return x_position, y_position, weighted_score, positioning
+    return chart_x, chart_y, phase_position, weighted_score
 
 async def ensemble_agent(state: Dict[str, Any]) -> Dict[str, Any]:
     tech_id = state["tech_id"]
@@ -88,16 +89,20 @@ async def ensemble_agent(state: Dict[str, Any]) -> Dict[str, Any]:
     adoption = state.get("adoption_score", 50.0)
     narrative = state.get("narrative_score", 50.0)
     risk = state.get("risk_score", 50.0)
-    phase = state.get("hype_cycle_phase", "slope")
+    phase_code = state.get("hype_cycle_phase", "slope")
 
-    x_pos, y_pos, weighted, positioning = calculate_hype_cycle_position(
-        innovation, adoption, narrative, risk, phase
+    chart_x, chart_y, phase_position, weighted = calculate_hype_cycle_position(
+        innovation, adoption, narrative, risk, phase_code
     )
+
+    # Convert phase code to display name for output
+    phase_display = PHASE_NAMES.get(phase_code, "Slope of Enlightenment")
 
     return {
         "tech_id": tech_id,
-        "x_position": round(x_pos, 2),
-        "y_position": round(y_pos, 2),
+        "chart_x": round(chart_x, 3),
+        "chart_y": round(chart_y, 2),
+        "phase_position": phase_position,
+        "hype_cycle_phase_display": phase_display,  # Display name for output
         "weighted_score": round(weighted, 2),
-        "chart_positioning": positioning,
     }

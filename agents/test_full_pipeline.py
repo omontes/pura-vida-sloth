@@ -81,17 +81,20 @@ async def test_multiple_technologies():
     try:
         chart = await generate_hype_cycle_chart(
             driver=client.driver,
-            limit=50
+            limit=100
         )
 
         print(f"\n[RESULT] Generated chart with {len(chart['technologies'])} technologies")
 
         print(f"\n[TECHNOLOGIES]")
-        print(f"{'Tech ID':<35} {'Phase':<20} {'X':<8} {'Y':<8}")
-        print("-" * 80)
+        print(f"{'Tech ID':<35} {'Phase':<35} {'chart_x':<8} {'Position':<8}")
+        print("-" * 95)
 
         for tech in chart['technologies']:
-            print(f"{tech['id']:<35} {tech['phase']:<20} {tech['x']:<8.1f} {tech['y']:<8.1f}")
+            phase = tech.get('phase', 'Unknown')
+            chart_x = tech.get('chart_x', 0)
+            phase_pos = tech.get('phase_position', 'mid')
+            print(f"{tech['id']:<35} {phase:<35} {chart_x:<8.3f} {phase_pos:<8}")
 
         print(f"\n[PHASE DISTRIBUTION]")
         for phase, count in chart['metadata']['phases'].items():

@@ -1,23 +1,24 @@
-"""Agent 12: Output Validator - Validates final output structure."""
+"""Agent 12: Output Validator - Validates final output per HYPE_CYCLE.md spec."""
 
 from typing import Dict, Any
+from agents.shared.hype_cycle_spec import validate_chart_x, PHASE_NAMES
 
 def validate_technology_output(state: Dict[str, Any]) -> tuple[bool, list]:
-    """Validate that all required fields are present and valid."""
+    """Validate that all required fields are present and valid per HYPE_CYCLE.md."""
     errors = []
 
     # Required fields
     required_fields = [
         "tech_id", "innovation_score", "adoption_score", "narrative_score",
-        "risk_score", "hype_score", "hype_cycle_phase", "x_position", "y_position",
-        "executive_summary", "key_insight", "recommendation"
+        "risk_score", "hype_score", "hype_cycle_phase", "chart_x", "phase_position",
+        "executive_summary", "key_insight"
     ]
 
     for field in required_fields:
         if field not in state or state[field] is None:
             errors.append(f"Missing required field: {field}")
 
-    # Validate score ranges
+    # Validate score ranges (0-100)
     score_fields = ["innovation_score", "adoption_score", "narrative_score", "risk_score", "hype_score"]
     for field in score_fields:
         if field in state:
@@ -25,21 +26,31 @@ def validate_technology_output(state: Dict[str, Any]) -> tuple[bool, list]:
             if not isinstance(score, (int, float)) or not (0 <= score <= 100):
                 errors.append(f"Invalid {field}: {score} (must be 0-100)")
 
-    # Validate positions
-    if "x_position" in state:
-        x = state["x_position"]
-        if not isinstance(x, (int, float)) or not (0 <= x <= 100):
-            errors.append(f"Invalid x_position: {x}")
+    # Validate chart_x (0.0-5.0 scale)
+    if "chart_x" in state:
+        chart_x = state["chart_x"]
+        if not isinstance(chart_x, (int, float)) or not (0.0 <= chart_x <= 5.0):
+            errors.append(f"Invalid chart_x: {chart_x} (must be 0.0-5.0)")
 
-    if "y_position" in state:
-        y = state["y_position"]
-        if not isinstance(y, (int, float)) or not (0 <= y <= 100):
-            errors.append(f"Invalid y_position: {y}")
+        # Validate chart_x matches phase range
+        phase_display = state.get("hype_cycle_phase_display")
+        if phase_display:
+            is_valid, error_msg = validate_chart_x(phase_display, chart_x)
+            if not is_valid:
+                errors.append(error_msg)
 
-    # Validate phase
-    valid_phases = ["innovation_trigger", "peak", "trough", "slope", "plateau"]
-    if "hype_cycle_phase" in state and state["hype_cycle_phase"] not in valid_phases:
-        errors.append(f"Invalid phase: {state['hype_cycle_phase']}")
+    # Validate phase_position
+    if "phase_position" in state:
+        phase_pos = state["phase_position"]
+        if phase_pos not in ["early", "mid", "late"]:
+            errors.append(f"Invalid phase_position: {phase_pos} (must be early/mid/late)")
+
+    # Validate phase name (accept both code and display)
+    if "hype_cycle_phase" in state:
+        phase_code = state["hype_cycle_phase"]
+        valid_phase_codes = ["innovation_trigger", "peak", "trough", "slope", "plateau"]
+        if phase_code not in valid_phase_codes:
+            errors.append(f"Invalid phase code: {phase_code}")
 
     is_valid = len(errors) == 0
     return is_valid, errors
