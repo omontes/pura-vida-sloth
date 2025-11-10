@@ -64,7 +64,7 @@ async def get_gov_contracts_1yr(
     RETURN
       count(d) AS count,
       sum(award_amount) AS total_value,
-      collect(DISTINCT d.agency)[0..10] AS agencies,
+      collect(DISTINCT d.awarding_agency)[0..10] AS agencies,
       avg(award_amount) AS avg_contract_value
     """
 
@@ -125,7 +125,7 @@ async def get_top_contracts_by_value(
     WITH d, m, coalesce(d.award_amount, 0.0) AS award_amount
     RETURN
       d.doc_id AS doc_id,
-      d.agency AS agency,
+      d.awarding_agency AS agency,
       d.awardee AS awardee,
       award_amount AS value,
       d.published_at AS date,
@@ -203,12 +203,12 @@ async def get_regulatory_approvals(
     WITH d, m
     RETURN
       count(d) AS count,
-      collect(DISTINCT d.agency)[0..10] AS agencies,
-      collect(DISTINCT d.regulation_type)[0..10] AS approval_types,
+      collect(DISTINCT d.regulatory_body)[0..10] AS agencies,
+      collect(DISTINCT d.document_type)[0..10] AS approval_types,
       collect({
         doc_id: d.doc_id,
-        agency: d.agency,
-        type: d.regulation_type,
+        agency: d.regulatory_body,
+        type: d.document_type,
         date: d.published_at,
         evidence: m.evidence_text,
         strength: m.strength
