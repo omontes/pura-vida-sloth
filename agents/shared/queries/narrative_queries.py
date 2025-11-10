@@ -24,10 +24,12 @@ async def get_news_count_3mo(
     end_date: str = "2025-01-01"
 ) -> Dict[str, Any]:
     """
-    Get news coverage in last 3-6 months with sentiment analysis.
+    Get news coverage in last 3-6 months.
 
     News volume is a lagging indicator: peaks happen AFTER technology
     has already reached maximum hype.
+
+    Note: Sentiment analysis removed as news documents lack sentiment property.
 
     Args:
         driver: Neo4j async driver
@@ -38,10 +40,10 @@ async def get_news_count_3mo(
     Returns:
         {
             "article_count": int,
-            "avg_sentiment": float,  # -1.0 (negative) to +1.0 (positive)
-            "positive_count": int,
-            "negative_count": int,
-            "neutral_count": int
+            "avg_sentiment": float,  # Always 0.0 (property not available)
+            "positive_count": int,   # Always 0
+            "negative_count": int,   # Always 0
+            "neutral_count": int     # Always 0
         }
 
     Example:
@@ -49,10 +51,10 @@ async def get_news_count_3mo(
         >>> result
         {
             'article_count': 127,
-            'avg_sentiment': 0.35,  # Moderately positive
-            'positive_count': 78,
-            'negative_count': 12,
-            'neutral_count': 37
+            'avg_sentiment': 0.0,
+            'positive_count': 0,
+            'negative_count': 0,
+            'neutral_count': 0
         }
     """
     query = """
@@ -62,13 +64,7 @@ async def get_news_count_3mo(
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'subject'
       AND d.quality_score >= 0.75
-    WITH d, coalesce(d.sentiment, 0.0) AS sentiment
-    RETURN
-      count(d) AS article_count,
-      avg(sentiment) AS avg_sentiment,
-      count(CASE WHEN sentiment > 0.2 THEN 1 END) AS positive_count,
-      count(CASE WHEN sentiment < -0.2 THEN 1 END) AS negative_count,
-      count(CASE WHEN sentiment >= -0.2 AND sentiment <= 0.2 THEN 1 END) AS neutral_count
+    RETURN count(d) AS article_count
     """
 
     async with driver.session() as session:
@@ -86,10 +82,10 @@ async def get_news_count_3mo(
 
         return {
             "article_count": record["article_count"] or 0,
-            "avg_sentiment": float(record["avg_sentiment"] or 0.0),
-            "positive_count": record["positive_count"] or 0,
-            "negative_count": record["negative_count"] or 0,
-            "neutral_count": record["neutral_count"] or 0,
+            "avg_sentiment": 0.0,
+            "positive_count": 0,
+            "negative_count": 0,
+            "neutral_count": 0,
         }
 
 
@@ -227,7 +223,6 @@ async def get_top_articles_by_prominence(
       d.title AS title,
       d.source AS source,
       d.outlet_tier AS outlet_tier,
-      coalesce(d.sentiment, 0.0) AS sentiment,
       d.published_at AS published_at,
       m.evidence_text AS evidence,
       m.strength AS strength
@@ -245,10 +240,10 @@ async def get_top_articles_by_prominence(
                 "title": record[1],
                 "source": record[2],
                 "outlet_tier": record[3],
-                "sentiment": float(record[4]),
-                "published_at": record[5],
-                "evidence": record[6],
-                "strength": record[7],
+                "sentiment": 0.0,  # Property not available in news docs
+                "published_at": record[4],
+                "evidence": record[5],
+                "strength": record[6],
             }
             for record in records
         ]
@@ -266,7 +261,8 @@ async def get_sentiment_temporal_trend(
     """
     Analyze sentiment trend over time (improving, stable, deteriorating).
 
-    Compares recent sentiment (last 3 months) to historical average.
+    Note: Sentiment analysis removed as news documents lack sentiment property.
+    This function now always returns stable trend with 0.0 sentiment.
 
     Args:
         driver: Neo4j async driver
@@ -275,59 +271,26 @@ async def get_sentiment_temporal_trend(
 
     Returns:
         {
-            "recent_avg": float,
-            "historical_avg": float,
-            "trend": "improving" | "stable" | "deteriorating"
+            "recent_avg": float,      # Always 0.0
+            "historical_avg": float,  # Always 0.0
+            "trend": "stable"         # Always stable
         }
 
     Example:
         >>> result = await get_sentiment_temporal_trend(driver, "evtol")
         >>> result
         {
-            'recent_avg': 0.65,
-            'historical_avg': 0.42,
-            'trend': 'improving'  # Sentiment is getting more positive
+            'recent_avg': 0.0,
+            'historical_avg': 0.0,
+            'trend': 'stable'
         }
     """
-    query = """
-    MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
-    WHERE d.doc_type = 'news'
-      AND m.role = 'subject'
-      AND d.quality_score >= 0.75
-      AND d.sentiment IS NOT NULL
-    WITH d,
-         date(datetime(d.published_at)) AS pub_date,
-         date() - duration({months: $window_months}) AS cutoff_date,
-         d.sentiment AS sentiment
-    WITH
-      avg(CASE WHEN pub_date >= cutoff_date THEN sentiment END) AS recent_avg,
-      avg(CASE WHEN pub_date < cutoff_date THEN sentiment END) AS historical_avg
-    RETURN
-      coalesce(recent_avg, 0.0) AS recent_avg,
-      coalesce(historical_avg, 0.0) AS historical_avg,
-      CASE
-        WHEN recent_avg > historical_avg + 0.1 THEN 'improving'
-        WHEN recent_avg < historical_avg - 0.1 THEN 'deteriorating'
-        ELSE 'stable'
-      END AS trend
-    """
-
-    async with driver.session() as session:
-        result = await session.run(query, tech_id=tech_id, window_months=window_months)
-        record = await result.single()
-
-        if not record:
-            return {
-                "recent_avg": 0.0,
-                "historical_avg": 0.0,
-                "trend": "stable",
-            }
-
-        return {
-            "recent_avg": float(record["recent_avg"] or 0.0),
-            "historical_avg": float(record["historical_avg"] or 0.0),
-            "trend": record["trend"] or "stable",
-        }
+    # Sentiment property not available - return neutral results
+    return {
+        "recent_avg": 0.0,
+        "historical_avg": 0.0,
+        "trend": "stable",
+    }
 
 
 # =============================================================================
