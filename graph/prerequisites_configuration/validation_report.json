@@ -1,0 +1,40 @@
+{
+  "indexes": {
+    "document_published_at": "FAIL",
+    "document_type_published": "PASS",
+    "technology_id": "PASS",
+    "company_name": "PASS",
+    "document_doc_id": "FAIL"
+  },
+  "embeddings": {
+    "documents": "PASS",
+    "technologies": "PASS",
+    "companies": "PASS"
+  },
+  "search_indexes": {
+    "fulltext": "PASS",
+    "vector": "PASS"
+  },
+  "communities": {
+    "v0": "PASS",
+    "v1": "PASS",
+    "v2": "PASS",
+    "v3": "FAIL",
+    "v4": "FAIL",
+    "v5": "FAIL"
+  },
+  "community_summaries": {
+    "v0": "PASS",
+    "v1": "PASS",
+    "v2": "PASS",
+    "v3": "FAIL",
+    "v4": "FAIL",
+    "v5": "FAIL"
+  },
+  "algorithms": {
+    "PageRank": "PASS",
+    "Degree Centrality": "PASS",
+    "Betweenness Centrality": "PASS"
+  },
+  "overall_status": "FAIL"
+}
