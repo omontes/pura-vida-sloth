@@ -83,6 +83,35 @@ def get_node_group(labels: set[str], properties: dict[str, Any] | None = None) -
     return list(labels)[0] if labels else "Node"
 
 
+def get_edge_label(relationship_type: str, properties: dict[str, Any]) -> str:
+    """
+    Get semantic edge label based on relationship type and properties.
+
+    Uses meaningful property values instead of generic relationship types:
+    - MENTIONED_IN → uses "role" property (e.g., owner, developer, operator)
+    - RELATED_COMPANY/TECH/TO_TECH → uses "relation_type" property
+
+    Falls back to relationship type if property not found.
+    """
+    # Mapping of relationship types to their semantic property
+    SEMANTIC_PROPERTY_MAP = {
+        "MENTIONED_IN": "role",
+        "RELATED_COMPANY": "relation_type",
+        "RELATED_TECH": "relation_type",
+        "RELATED_TO_TECH": "relation_type",
+    }
+
+    # Check if this relationship type has a semantic property
+    if relationship_type in SEMANTIC_PROPERTY_MAP:
+        property_name = SEMANTIC_PROPERTY_MAP[relationship_type]
+        semantic_value = properties.get(property_name)
+        if semantic_value:
+            return str(semantic_value)
+
+    # Fallback to relationship type
+    return relationship_type
+
+
 def get_node_label(node: Any) -> str:
     """
     Extract best label for node display.
@@ -195,7 +224,7 @@ def neo4j_to_vis(neo4j_records: list[dict]) -> dict:
             edges.append({
                 "from": str(tech_node.element_id),
                 "to": str(related_node.element_id),
-                "label": relationship.type,
+                "label": get_edge_label(relationship.type, rel_props),
                 "title": " | ".join(tooltip_parts),
                 "arrows": "to",
             })
