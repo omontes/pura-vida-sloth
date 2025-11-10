@@ -110,7 +110,7 @@ async def get_top_contracts_by_value(
         {
             'doc_id': 'contract_NASA_2024_001',
             'agency': 'NASA',
-            'awardee': 'Joby Aviation',
+            'recipient': 'Joby Aviation',
             'value': 15000000.0,
             'date': '2024-03-15',
             'evidence': 'NASA awarded Joby for eVTOL flight testing...',
@@ -126,7 +126,7 @@ async def get_top_contracts_by_value(
     RETURN
       d.doc_id AS doc_id,
       d.awarding_agency AS agency,
-      d.awardee AS awardee,
+      d.recipient_name AS recipient,
       award_amount AS value,
       d.published_at AS date,
       m.evidence_text AS evidence,
@@ -143,7 +143,7 @@ async def get_top_contracts_by_value(
             {
                 "doc_id": record[0],
                 "agency": record[1],
-                "awardee": record[2],
+                "recipient": record[2],
                 "value": float(record[3]),
                 "date": record[4],
                 "evidence": record[5],

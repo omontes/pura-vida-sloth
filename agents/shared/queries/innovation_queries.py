@@ -58,7 +58,7 @@ async def get_patent_count_2yr(
     WITH d, coalesce(d.pagerank, 0.0) as pagerank
     RETURN
       count(d) AS patent_count,
-      sum(coalesce(d.citations_received, 0)) AS total_citations,
+      sum(coalesce(d.citation_count, 0)) AS total_citations,
       avg(pagerank) AS avg_pagerank,
       sum(1.0 + (pagerank * 100)) AS pagerank_weighted_count
     """
@@ -130,7 +130,7 @@ async def get_top_patents_by_citations(
     RETURN
       d.doc_id AS doc_id,
       d.title AS title,
-      coalesce(d.citations_received, 0) AS citations,
+      coalesce(d.citation_count, 0) AS citations,
       d.published_at AS published_at,
       coalesce(d.pagerank, 0.0) AS pagerank,
       m.evidence_text AS evidence,
@@ -243,7 +243,7 @@ async def get_paper_count_2yr(
       AND d.quality_score >= 0.75
     RETURN
       count(d) AS paper_count,
-      sum(coalesce(d.citations_received, 0)) AS total_citations,
+      sum(coalesce(d.citation_count, 0)) AS total_citations,
       avg(coalesce(d.pagerank, 0.0)) AS avg_pagerank
     """
 
@@ -285,7 +285,7 @@ async def get_top_papers_by_citations(
     RETURN
       d.doc_id AS doc_id,
       d.title AS title,
-      coalesce(d.citations_received, 0) AS citations,
+      coalesce(d.citation_count, 0) AS citations,
       d.published_at AS published_at,
       coalesce(d.pagerank, 0.0) AS pagerank,
       m.evidence_text AS evidence,
