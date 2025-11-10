@@ -77,9 +77,15 @@ class HypeCycleState(TypedDict, total=False):
     recommendation: str
 
     # Ensemble positioning (Agent 9)
+    chart_x: float  # 0.0-5.0 scale per HYPE_CYCLE.md
+    chart_y: float  # 0-100 expectations
+    phase_position: str  # "early", "mid", "late"
+    hype_cycle_phase_display: str  # Display name: "Innovation Trigger", etc.
+    weighted_score: float
+
+    # Legacy fields (deprecated but kept for compatibility)
     x_position: float
     y_position: float
-    weighted_score: float
     chart_positioning: str
 
     # Chart data (Agent 10)
