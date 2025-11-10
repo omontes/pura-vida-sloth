@@ -21,8 +21,8 @@ interface ThemeColors {
 const DARK_THEME: ThemeColors = {
   nodeFontColor: '#ffffff',
   edgeColor: 'rgba(150, 166, 186, 0.5)',
-  edgeHighlight: 'rgba(156, 192, 255, 0.8)',
-  edgeHover: 'rgba(156, 192, 255, 0.6)',
+  edgeHighlight: 'rgba(20, 184, 166, 0.8)',  // Teal-500 for dark mode visibility
+  edgeHover: 'rgba(20, 184, 166, 0.6)',
   edgeFontColor: '#97a6ba',
   edgeFontBg: 'rgba(12, 17, 23, 0.85)',
   shadowColor: 'rgba(0,0,0,0.3)',
@@ -31,8 +31,8 @@ const DARK_THEME: ThemeColors = {
 const LIGHT_THEME: ThemeColors = {
   nodeFontColor: '#1a1d23',
   edgeColor: 'rgba(100, 116, 139, 0.4)',
-  edgeHighlight: 'rgba(37, 99, 235, 0.8)',
-  edgeHover: 'rgba(37, 99, 235, 0.6)',
+  edgeHighlight: 'rgba(15, 118, 110, 0.8)',  // Teal-700 brand color
+  edgeHover: 'rgba(15, 118, 110, 0.6)',
   edgeFontColor: '#5a6370',
   edgeFontBg: 'rgba(255, 255, 255, 0.85)',
   shadowColor: 'rgba(0,0,0,0.15)',
