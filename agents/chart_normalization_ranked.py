@@ -11,9 +11,16 @@ Usage:
 
 import json
 import argparse
+import asyncio
+import sys
+import os
 from pathlib import Path
-from typing import Dict, List, Any
+from typing import Dict, List, Any, Optional
 from datetime import datetime, timezone
+
+# Add project root to path for Neo4j client import
+sys.path.insert(0, os.path.dirname(os.path.dirname(__file__)))
+from src.graph.neo4j_client import Neo4jClient
 
 
 # Phase ranges from HYPE_CYCLE.md
@@ -25,12 +32,25 @@ PHASE_RANGES = {
     "Plateau of Productivity": (4.2, 5.0)
 }
 
+# Generic industry terms to exclude (not specific technologies)
+GENERIC_TERMS = [
+    "evtol",
+    "evtol_technology",
+    "advanced_air_mobility",
+    "unmanned_aerial_vehicle_uav",
+    "urban_air_mobility",
+    "drone_delivery"
+]
+
+# Boundary padding to prevent technologies from appearing at exact phase boundaries
+BOUNDARY_PADDING = 0.1  # Keep technologies 0.1 units away from phase boundaries
+
 
 def calculate_ranking_score(tech: Dict[str, Any], phase: str) -> float:
     """
     Calculate composite ranking score based on phase-specific criteria.
 
-    Higher score = better rank (will appear earlier in phase on x-axis)
+    Higher score = better rank (will appear later in phase on x-axis, reflecting maturity)
 
     Args:
         tech: Technology dictionary with scores and phase_confidence
@@ -83,11 +103,11 @@ def calculate_ranking_score(tech: Dict[str, Any], phase: str) -> float:
         return (primary * 10) + (secondary * 5) + (tertiary * 0.1)
 
     elif phase == "Slope of Enlightenment":
-        # Rank by market traction + sustained innovation
-        primary = adoption
-        secondary = innovation
-        tertiary = confidence
-        return (primary * 10) + (secondary * 5) + (tertiary * 2)
+        # Rank by research backing + market tracking (narrative)
+        # Prioritize technologies with academic/IP validation + market importance
+        papers = evidence.get("papers", 0)
+        patents = evidence.get("patents", 0)
+        return (papers * 25) + (patents * 8) + (narrative * 2) + (adoption * 3) + (confidence * 20)
 
     elif phase == "Plateau of Productivity":
         # Rank by market maturity + stability
@@ -156,6 +176,36 @@ def filter_top_n(ranked_by_phase: Dict[str, List[Dict[str, Any]]], n: int) -> Di
     return filtered
 
 
+def apply_minimum_spacing(technologies: List[Dict[str, Any]], min_x: float, max_x: float, min_spacing: float = 0.05) -> None:
+    """
+    Ensure minimum spacing between adjacent technologies to prevent overlapping.
+
+    Args:
+        technologies: List of tech dicts with chart_x values (pre-sorted by chart_x descending)
+        min_x: Minimum allowed x position for this phase
+        max_x: Maximum allowed x position for this phase
+        min_spacing: Minimum distance between adjacent techs (default: 0.05)
+    """
+    if len(technologies) <= 1:
+        return
+
+    # Sort by chart_x descending (highest to lowest)
+    technologies.sort(key=lambda t: t["chart_x"], reverse=True)
+
+    # Enforce minimum spacing from right to left
+    for i in range(1, len(technologies)):
+        prev_x = technologies[i-1]["chart_x"]
+        curr_x = technologies[i]["chart_x"]
+
+        # If too close, push current tech to the left
+        if prev_x - curr_x < min_spacing:
+            technologies[i]["chart_x"] = prev_x - min_spacing
+
+        # Ensure we don't go below min_x
+        if technologies[i]["chart_x"] < min_x:
+            technologies[i]["chart_x"] = min_x
+
+
 def normalize_chart_positions(ranked_by_phase: Dict[str, List[Dict[str, Any]]]) -> Dict[str, List[Dict[str, Any]]]:
     """
     Normalize chart_x positions to spread technologies evenly within their phase range.
@@ -172,21 +222,28 @@ def normalize_chart_positions(ranked_by_phase: Dict[str, List[Dict[str, Any]]]) 
             continue
 
         min_x, max_x = PHASE_RANGES[phase]
-        width = max_x - min_x
+
+        # Apply boundary padding to avoid exact phase boundaries
+        padded_min = min_x + BOUNDARY_PADDING
+        padded_max = max_x - BOUNDARY_PADDING
+        width = padded_max - padded_min
         k = len(techs)
 
         if k == 0:
             continue
         elif k == 1:
-            # Single tech: place at midpoint
-            techs[0]["chart_x"] = min_x + (width * 0.5)
+            # Single tech: place at midpoint of padded range
+            techs[0]["chart_x"] = padded_min + (width * 0.5)
         else:
-            # Multiple techs: spread evenly
-            # Rank 1 (best) appears earliest (leftmost) in phase
+            # Multiple techs: spread evenly within padded range
+            # Rank 1 (best) appears latest (rightmost) in phase
             for i, tech in enumerate(techs):
-                # Linear interpolation: rank 1 → min_x, rank K → max_x
-                position_fraction = i / (k - 1)
-                tech["chart_x"] = min_x + (width * position_fraction)
+                # Linear interpolation: rank 1 → padded_max, rank K → padded_min
+                position_fraction = (k - 1 - i) / (k - 1)
+                tech["chart_x"] = padded_min + (width * position_fraction)
+
+            # Apply minimum spacing to prevent overlaps (within padded boundaries)
+            apply_minimum_spacing(techs, padded_min, padded_max, min_spacing=0.05)
 
         # Update phase_position based on new chart_x
         for tech in techs:
@@ -231,7 +288,132 @@ def validate_chart(technologies: List[Dict[str, Any]]) -> bool:
     return valid
 
 
-def normalize_chart(
+async def query_graph_metadata(client: Neo4jClient) -> Dict[str, Any]:
+    """
+    Query Neo4j for comprehensive graph statistics.
+
+    Returns:
+        Dictionary with communities, documents, technologies, companies, and relationships stats
+    """
+    try:
+        # Query 1: Community statistics
+        community_query = """
+        MATCH (c:Community)
+        WITH c.id AS community_id
+        RETURN
+            count(*) AS total_communities,
+            size([id IN collect(community_id) WHERE id STARTS WITH 'v0_']) AS v0_count,
+            size([id IN collect(community_id) WHERE id STARTS WITH 'v1_']) AS v1_count,
+            size([id IN collect(community_id) WHERE id STARTS WITH 'v2_']) AS v2_count
+        """
+        community_result = await client.run_query(community_query)
+        community_stats = community_result[0] if community_result else {}
+
+        # Query 2: Community classification (v1 only)
+        classification_query = """
+        MATCH (c:Community)
+        WHERE c.id STARTS WITH 'v1_'
+        RETURN
+            c.lifecycle_stage AS stage,
+            count(*) AS count
+        """
+        classification_result = await client.run_query(classification_query)
+        classification = {row['stage']: row['count'] for row in classification_result} if classification_result else {}
+
+        # Query 3: Document statistics
+        document_query = """
+        MATCH (d:Document)
+        RETURN
+            count(*) AS total_documents,
+            count(CASE WHEN d.doc_type = 'patent' THEN 1 END) AS patents,
+            count(CASE WHEN d.doc_type = 'news' THEN 1 END) AS news,
+            count(CASE WHEN d.doc_type = 'technical_paper' THEN 1 END) AS papers,
+            count(CASE WHEN d.doc_type = 'government_contract' THEN 1 END) AS contracts,
+            count(CASE WHEN d.doc_type = 'sec_filing' THEN 1 END) AS sec_filings,
+            count(CASE WHEN d.doc_type = 'github' THEN 1 END) AS github
+        """
+        document_result = await client.run_query(document_query)
+        document_stats = document_result[0] if document_result else {}
+
+        # Query 4: Technology statistics with document thresholds
+        technology_query = """
+        MATCH (t:Technology)
+        OPTIONAL MATCH (t)-[:MENTIONED_IN]->(d:Document)
+        WITH t, count(DISTINCT d) AS doc_count
+        RETURN
+            count(*) AS total_technologies,
+            sum(CASE WHEN doc_count > 0 THEN 1 ELSE 0 END) AS with_documents,
+            sum(CASE WHEN doc_count >= 5 THEN 1 ELSE 0 END) AS min_5,
+            sum(CASE WHEN doc_count >= 10 THEN 1 ELSE 0 END) AS min_10,
+            sum(CASE WHEN doc_count >= 15 THEN 1 ELSE 0 END) AS min_15,
+            sum(CASE WHEN doc_count >= 20 THEN 1 ELSE 0 END) AS min_20
+        """
+        technology_result = await client.run_query(technology_query)
+        technology_stats = technology_result[0] if technology_result else {}
+
+        # Query 5: Company statistics
+        company_query = "MATCH (c:Company) RETURN count(*) AS total_companies"
+        company_result = await client.run_query(company_query)
+        company_stats = company_result[0] if company_result else {}
+
+        # Query 6: Relationship statistics
+        relationship_query = """
+        MATCH ()-[r]->()
+        RETURN
+            count(*) AS total_relationships,
+            count(CASE WHEN type(r) = 'MENTIONED_IN' THEN 1 END) AS mentioned_in,
+            count(CASE WHEN type(r) = 'HAS_MEMBER' THEN 1 END) AS has_member
+        """
+        relationship_result = await client.run_query(relationship_query)
+        relationship_stats = relationship_result[0] if relationship_result else {}
+
+        # Construct comprehensive metadata
+        return {
+            "communities": {
+                "total": community_stats.get('total_communities', 0),
+                "versions": {
+                    "v0": community_stats.get('v0_count', 0),
+                    "v1": community_stats.get('v1_count', 0),
+                    "v2": community_stats.get('v2_count', 0)
+                },
+                "classification_v1": classification
+            },
+            "documents": {
+                "total": document_stats.get('total_documents', 0),
+                "by_type": {
+                    "patent": document_stats.get('patents', 0),
+                    "news": document_stats.get('news', 0),
+                    "technical_paper": document_stats.get('papers', 0),
+                    "government_contract": document_stats.get('contracts', 0),
+                    "sec_filing": document_stats.get('sec_filings', 0),
+                    "github": document_stats.get('github', 0)
+                }
+            },
+            "technologies": {
+                "total": technology_stats.get('total_technologies', 0),
+                "with_documents": technology_stats.get('with_documents', 0),
+                "by_doc_threshold": {
+                    "min_5": technology_stats.get('min_5', 0),
+                    "min_10": technology_stats.get('min_10', 0),
+                    "min_15": technology_stats.get('min_15', 0),
+                    "min_20": technology_stats.get('min_20', 0)
+                }
+            },
+            "companies": {
+                "total": company_stats.get('total_companies', 0)
+            },
+            "relationships": {
+                "total": relationship_stats.get('total_relationships', 0),
+                "mentioned_in": relationship_stats.get('mentioned_in', 0),
+                "has_member": relationship_stats.get('has_member', 0)
+            }
+        }
+    except Exception as e:
+        print(f"Warning: Could not query graph metadata: {e}")
+        return {}
+
+
+async def normalize_chart(
     input_file: str = "hype_cycle_chart.json",
     output_file: str = "hype_cycle_chart_normalized.json",
     top_n: int = 10
@@ -262,9 +444,19 @@ def normalize_chart(
     for phase, count in chart.get("metadata", {}).get("phases", {}).items():
         print(f"    {phase}: {count}")
 
+    # Filter out generic industry terms
+    filtered_techs = [
+        tech for tech in chart["technologies"]
+        if tech.get("id") not in GENERIC_TERMS
+    ]
+    filtered_count = len(filtered_techs)
+    if filtered_count < original_count:
+        print(f"  Filtered out {original_count - filtered_count} generic industry terms")
+        print(f"  Remaining: {filtered_count} specific technologies")
+
     # Rank technologies within each phase
     print(f"\n[2/6] Ranking technologies by phase-specific criteria...")
-    ranked_by_phase = rank_technologies_by_phase(chart["technologies"])
+    ranked_by_phase = rank_technologies_by_phase(filtered_techs)
     for phase, techs in ranked_by_phase.items():
         print(f"  {phase}: {len(techs)} technologies ranked")
 
@@ -330,6 +522,28 @@ def normalize_chart(
 
     chart["metadata"]["phases"] = phase_counts
 
+    # Query graph metadata for transparency
+    print(f"\n  Querying graph metadata...")
+    try:
+        client = Neo4jClient()
+        await client.connect()
+        try:
+            graph_data = await query_graph_metadata(client)
+            if graph_data:
+                chart["metadata"]["graph_data"] = graph_data
+                print(f"  [OK] Graph metadata added:")
+                print(f"    Communities: {graph_data.get('communities', {}).get('total', 0)}")
+                print(f"    Documents: {graph_data.get('documents', {}).get('total', 0)}")
+                print(f"    Technologies: {graph_data.get('technologies', {}).get('total', 0)}")
+                print(f"    Companies: {graph_data.get('companies', {}).get('total', 0)}")
+            else:
+                print(f"  [WARN] No graph metadata available")
+        finally:
+            await client.close()
+    except Exception as e:
+        print(f"  [WARN] Could not connect to Neo4j: {e}")
+        print(f"  [INFO] Continuing without graph metadata...")
+
     # Validate
     print(f"\n[6/6] Validating normalized chart...")
     if validate_chart(all_technologies):
@@ -359,7 +573,7 @@ def normalize_chart(
     return chart
 
 
-def main():
+async def main():
     """CLI entry point."""
     parser = argparse.ArgumentParser(
         description="Normalize hype cycle chart with ranking and position spreading"
@@ -384,7 +598,7 @@ def main():
     args = parser.parse_args()
 
     try:
-        normalize_chart(
+        await normalize_chart(
             input_file=args.input,
             output_file=args.output,
             top_n=args.top_n
@@ -398,4 +612,4 @@ def main():
 
 
 if __name__ == "__main__":
-    exit(main())
+    exit(asyncio.run(main()))

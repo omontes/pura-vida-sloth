@@ -1,0 +1,12 @@
+[
+  {
+    "community_id": "v0_2128",
+    "version": 0,
+    "numeric_id": 2128,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 32,
+    "linked_count": 63,
+    "summary": "This community of 32 nodes primarily focuses on emerging technologies, emphasizing innovations in artificial intelligence and blockchain. Key research areas include decentralized applications and machine learning algorithms, with common themes revolving around enhancing digital security, data privacy, and the integration of intelligent systems across various sectors."
+  }
+]

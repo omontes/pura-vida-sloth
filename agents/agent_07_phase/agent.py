@@ -13,19 +13,23 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     """
     Detect hype cycle phase from layer scores.
 
-    RECALIBRATED THRESHOLDS (2025-01-10 v4):
-    - Fixed freshness calculation bug (was returning raw count instead of 1.0 for zero baseline)
-    - Relaxed Innovation Trigger: adoption 10→15, narrative 25→35
-    - Relaxed Plateau: adoption 30→25, innovation 20→15, risk 35→40
+    RECALIBRATED THRESHOLDS (2025-01-10 v7):
+    - v6: Fixed freshness calculation bug + recalibrated Innovation Trigger and Plateau
+    - v7: Lowered Plateau thresholds to capture mature component technologies
+      * adoption 30→10, innovation 18→5, narrative 75→45, risk 45→20
+      * Targets: lithium-ion batteries, brushless DC motors, carbon fiber, CFD, FEA
+      * Blocks: market categories (eVTOL, UAM) with high narrative (>45)
 
-    Previous issue: 82% Peak clustering due to freshness bug + too-strict Innovation/Plateau thresholds.
+    Previous issues:
+    - v4-v6: 0% Plateau due to overly strict thresholds (adoption >30 AND innovation >18)
+    - Mature general-purpose technologies had low scores due to limited eVTOL-specific evidence
 
     Phases:
     1. Innovation Trigger: High innovation, low adoption/narrative
     2. Peak of Inflated Expectations: High narrative AND hype, low adoption
     3. Trough of Disillusionment: Low scores with 2/4 criteria
     4. Slope of Enlightenment: Moderate growth across metrics
-    5. Plateau of Productivity: Moderate-to-high adoption, sustained innovation
+    5. Plateau of Productivity: Established technologies with proven innovation and low hype
     """
 
     # Phase 1: Innovation Trigger (RECALIBRATED v6 for min_doc_count=5)
@@ -40,11 +44,12 @@ def detect_hype_cycle_phase(innovation: float, adoption: float, narrative: float
     if narrative > 45 and hype > 40 and adoption < 25:
         return "peak", f"Media saturation ({narrative:.0f}) with high hype ({hype:.0f}) but limited adoption ({adoption:.0f})"
 
-    # Phase 5: Plateau of Productivity (RECALIBRATED v6 for realistic late-stage thresholds)
-    # Check BEFORE Slope to capture mature technologies with high adoption
-    # Relaxed narrative threshold to allow media coverage for commercialized tech
-    if adoption > 30 and innovation > 18 and narrative < 75 and risk < 45:
-        return "plateau", f"Mature market with high adoption ({adoption:.0f}), sustained innovation ({innovation:.0f}), and stable risk profile"
+    # Phase 5: Plateau of Productivity (RECALIBRATED v7 for mature component technologies)
+    # Lowered thresholds to capture established technologies (batteries, motors, materials, CFD, FEA)
+    # that have low eVTOL-specific scores but are mature in general industry
+    # Narrative <=45 blocks market categories with high media hype
+    if adoption >= 10 and innovation >= 5 and narrative <= 45 and risk <= 20:
+        return "plateau", f"Mature market with established adoption ({adoption:.0f}) and proven innovation ({innovation:.0f})"
 
     # Phase 4: Slope of Enlightenment (ADJUSTED: 10→20 for narrative baseline shift)
     # Moderate adoption with balanced metrics (accounts for Tavily baseline)

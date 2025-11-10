@@ -1,5 +1,15 @@
 [
   {
+    "community_id": "v0_338",
+    "version": 0,
+    "numeric_id": 338,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 229,
+    "linked_count": 229,
+    "summary": "The community revolves around advanced aerospace technologies, primarily focusing on design analysis, control optimization, and testing methodologies. Key participants include the US Department of Defense, with a strong emphasis on research areas such as genetic algorithms for scheduling and innovative testing systems, as reflected in projects like SUAVE and eVTOL."
+  },
+  {
     "community_id": "v0_155",
     "version": 0,
     "numeric_id": 155,
@@ -7,17 +17,7 @@
     "resolution": 0.8,
     "member_count": 172,
     "linked_count": 172,
-    "summary": "The community centers around advanced propulsion and energy storage technologies, particularly focusing on hybrid propulsion systems and innovative battery solutions like lithium-sulfur and lithium-ion batteries. Key players include companies such as Piasecki Aircraft and Boeing, with a common theme of securing Department of the Air Force contracts, highlighting a strong emphasis on aerospace applications and cutting-edge research in sustainable energy technologies."
-  },
-  {
-    "community_id": "v0_84",
-    "version": 0,
-    "numeric_id": 84,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 200,
-    "linked_count": 200,
-    "summary": "This community primarily focuses on advanced technologies in the eVTOL (electric Vertical Take-Off and Landing) domain, emphasizing Model-Based Systems Engineering and powertrain systems. Key players include companies like Lift Aircraft, Jetoptera, and the US Air Force, with common themes centering around innovative aerospace solutions and collaboration on military contracts."
+    "summary": "The community focuses primarily on advanced propulsion and battery technologies, particularly in the context of hybrid propulsion systems and energy storage solutions like lithium-sulfur and lithium-ion batteries. Key players include companies such as Boeing and Vertical Aerospace, with common themes revolving around defense contracts, the development of electric vertical takeoff and landing (eVTOL) aircraft, and challenges related to certification and market acceptance."
   },
   {
     "community_id": "v0_174",
@@ -27,27 +27,17 @@
     "resolution": 0.8,
     "member_count": 13,
     "linked_count": 13,
-    "summary": "The community primarily focuses on the technological domain of electric vertical takeoff and landing (eVTOL) systems, emphasizing advancements in propulsor design, control systems, and aerodynamic modeling. Key research areas include the development of efficient and quiet eVTOL propulsion technologies, with relevant documentation highlighting innovative designs and testing methodologies."
+    "summary": "The community centers on advanced technological innovations in electric Vertical Takeoff and Landing (eVTOL) systems, with a focus on propulsor design, control systems, and aerodynamic modeling. Key themes include the development of efficient and quiet propulsion technologies, as evidenced by research documents related to military contracts and personal racing eVTOL designs."
   },
   {
-    "community_id": "v0_338",
+    "community_id": "v0_84",
     "version": 0,
-    "numeric_id": 338,
+    "numeric_id": 84,
     "algorithm": "Louvain",
     "resolution": 0.8,
-    "member_count": 229,
-    "linked_count": 229,
-    "summary": "The community primarily focuses on advanced simulation and optimization technologies, particularly in the aerospace and defense sectors, as demonstrated by the involvement of the US Department of Defense. Key themes include the application of genetic algorithms for scheduling and task allocation, alongside robust design and testing methodologies such as wind tunnel testing and verification systems."
-  },
-  {
-    "community_id": "v0_369",
-    "version": 0,
-    "numeric_id": 369,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 263,
-    "linked_count": 263,
-    "summary": "The community primarily focuses on advanced urban air mobility technologies, particularly Electric Vertical Takeoff and Landing (eVTOL) and associated systems like Energy Storage Integration and Failure Resilience. Key players include companies such as Atech, Inertial Labs, and AIR, with a common theme of securing Department of the Air Force contracts, indicating a strong interest in military applications and innovations in this emerging field."
+    "member_count": 200,
+    "linked_count": 200,
+    "summary": "The community centers around the technological domain of advanced eVTOL (electric Vertical Take-Off and Landing) systems, emphasizing frameworks for Model-Based Systems Engineering and energy demand analysis. Key companies involved include the US Air Force, Lift Aircraft, and Safran, with common themes revolving around innovative aerospace solutions, safety measures like Detect and Avoid technologies, and collaborative contracts with NASA for research and development."
   },
   {
     "community_id": "v0_423",
@@ -57,17 +47,17 @@
     "resolution": 0.8,
     "member_count": 13,
     "linked_count": 13,
-    "summary": "This community focuses on advanced communication technologies, primarily emphasizing 5G and emerging 6G wireless systems alongside UAV applications for video streaming and aerial relaying. Key research areas include collaboration with NASA contracts involving Continuum Dynamics and Altaport, highlighting themes of innovation in connectivity and intelligent routing strategies for enhanced aerial operations."
+    "summary": "The community primarily revolves around advanced communication technologies, particularly focused on 5G and 6G wireless systems, along with UAV applications for video streaming and autonomous relay operations. While there are no specific companies represented, the presence of industry reports and technical documents indicates a strong interest in trends and innovations within the EVTOL communication systems sector."
   },
   {
-    "community_id": "v0_571",
+    "community_id": "v0_369",
     "version": 0,
-    "numeric_id": 571,
+    "numeric_id": 369,
     "algorithm": "Louvain",
     "resolution": 0.8,
-    "member_count": 15,
-    "linked_count": 15,
-    "summary": "This technology graph community primarily focuses on advanced navigation and safety systems, such as GPS/GNSS Navigation and Autonomous Safety Systems. Key entities include ARCHER AVIATION INC. and LIFT AIRCRAFT INC., which are involved in defense contracts, alongside the NATIONAL INSTITUTE OF AEROSPACE ASSOCIATES, indicating a common theme of aerospace innovation and military applications."
+    "member_count": 263,
+    "linked_count": 263,
+    "summary": "The community revolves around the emerging technological domain of Electric Vertical Takeoff and Landing (eVTOL) and Urban Air Mobility, with key players including Atech, Inertial Labs, and ARCHER AVIATION INC. Common themes include advancements in energy storage integration, operational management for eVTOL systems, and resilience strategies for ensuring reliable urban air transport."
   },
   {
     "community_id": "v0_432",
@@ -77,17 +67,17 @@
     "resolution": 0.8,
     "member_count": 174,
     "linked_count": 174,
-    "summary": "This community primarily focuses on advanced technologies in the aviation sector, particularly in eVTOL (electric vertical takeoff and landing) systems, battery innovations, and adaptive control systems. Key players include Overair and government entities like the FAA and the US Department of Transportation, with common themes revolving around enhancing safety, efficiency, and performance in aerial mobility through cutting-edge research and development contracts."
+    "summary": "This community primarily focuses on advanced technologies in eVTOL (electric Vertical Take-Off and Landing) systems, emphasizing rotor optimization, battery efficiency, and autonomous control through adaptive neural networks. Key players include Overair and regulatory bodies like the FAA and the US Department of Transportation, with common themes centering around multidisciplinary design optimization, emergency response systems, and innovative battery solutions."
   },
   {
-    "community_id": "v0_657",
+    "community_id": "v0_571",
     "version": 0,
-    "numeric_id": 657,
+    "numeric_id": 571,
     "algorithm": "Louvain",
     "resolution": 0.8,
-    "member_count": 58,
-    "linked_count": 58,
-    "summary": "This community primarily focuses on advanced aviation technologies, particularly in the realm of Vertical Takeoff and Landing (VTOL) systems and autonomous flight solutions. Key players include companies like AutoFlight and H3X Technologies, with a strong emphasis on simulation-driven design and communication systems for unmanned aircraft, reflected in their collaborative research and development efforts."
+    "member_count": 15,
+    "linked_count": 15,
+    "summary": "This community primarily focuses on advanced navigation and safety technologies for aerial vehicles, particularly in the realm of electric vertical takeoff and landing (eVTOL) systems. Key research areas include autonomous landing systems, precision navigation, and safety protocols, with Archer Aviation Inc. being a notable entity involved in relevant contracts and innovative solutions for advanced air mobility."
   },
   {
     "community_id": "v0_638",
@@ -97,7 +87,7 @@
     "resolution": 0.8,
     "member_count": 92,
     "linked_count": 92,
-    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in propulsion systems and autonomous flight control. Key companies such as BETA Technologies and GE Aerospace are involved, with a common theme of securing Department of the Air Force contracts to advance innovations in aviation and rotor performance."
+    "summary": "The community centers around advanced aviation technologies, particularly in propulsion systems and autonomous control, with key players including BETA Technologies and GE Aerospace. Common themes include the development of hybrid electric planes and innovative rotor performance, highlighting a significant focus on sustainable and efficient aerospace solutions."
   },
   {
     "community_id": "v0_626",
@@ -107,7 +97,17 @@
     "resolution": 0.8,
     "member_count": 32,
     "linked_count": 32,
-    "summary": "This community primarily revolves around advanced aviation technologies, particularly in the development of electric vertical takeoff and landing (eVTOL) aircraft. Key research areas include high discharge current battery technologies and enhanced modeling techniques for flight simulation, with common themes emphasizing the integration of innovative battery solutions and autonomous aircraft design."
+    "summary": "The community primarily focuses on advanced technologies in the aerospace and energy sectors, particularly emphasizing cloud-based flight simulation and innovative battery solutions. Key themes include data-driven modeling techniques and predictive analytics, reflecting a strong interest in enhancing operational efficiency and capacity management in future transportation systems."
+  },
+  {
+    "community_id": "v0_657",
+    "version": 0,
+    "numeric_id": 657,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 58,
+    "linked_count": 58,
+    "summary": "The community focuses on advanced air mobility technologies, including VTOL Drive Systems and Autopilot Systems, with key companies like AutoFlight and UrbanV leading the innovation. Common themes include simulation-driven design and communication systems for unmanned aircraft, reflecting a strong emphasis on enhancing aerial transportation and operational efficiency."
   },
   {
     "community_id": "v0_637",
@@ -117,7 +117,7 @@
     "resolution": 0.8,
     "member_count": 31,
     "linked_count": 31,
-    "summary": "The community primarily focuses on advanced aerospace technologies, particularly in urban air mobility (UAM) and satellite communications, with key contributions from companies like AFWERX and research activities highlighted in contracts with ASTER LABS, INC. and INFINITY LABS LLC. Common themes include innovation in rotor and compressor technologies, indicating a strong emphasis on enhancing aerial vehicle performance and infrastructure development for future air transport systems."
+    "summary": "The community primarily focuses on advanced aerospace technologies, including Urban Air Mobility (UAM) Infrastructure and satellite communications, with key participants such as AFWERX and various defense contractors like ASTER LABS, INC. and INFINITY LABS LLC. Common themes include defense innovation, collaboration with the Department of the Air Force, and participation in major defense exhibitions, highlighting the intersection of cutting-edge technology and military applications."
   },
   {
     "community_id": "v0_993",
@@ -127,17 +127,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced aviation technologies, specifically in the development and optimization of eVTOL (electric Vertical Take-Off and Landing) aircraft through methodologies like the Task-Pilot-Vehicle approach and envelope protection systems. The common themes revolve around innovative design strategies and management practices in aerospace engineering, as highlighted by discussions in press releases and research documents."
-  },
-  {
-    "community_id": "v0_1111",
-    "version": 0,
-    "numeric_id": 1111,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "This community primarily focuses on advanced aviation technologies, specifically in optimizing aircraft scheduling and flight planning through algorithms like Multi-Aircraft Scheduling Systems and Trajectory-Based Operations. The common themes revolve around enhancing operational efficiency in urban air traffic management, as highlighted by research such as \"Multi-Aircraft Scheduling Optimization in Urban Environments.\""
+    "summary": "This community focuses on advanced aerial technologies, particularly the Tiltwing and Quadrotor Aircraft, and emphasizes innovative approaches like the Task-Pilot-Vehicle method for enhancing envelope protection systems in electric vertical takeoff and landing (eVTOL) aircraft. Common themes include the intersection of design and management in aeronautical engineering, as highlighted by documents related to press release strategies and the investigation of protective systems for emerging aircraft technologies."
   },
   {
     "community_id": "v0_772",
@@ -147,7 +137,7 @@
     "resolution": 0.8,
     "member_count": 97,
     "linked_count": 97,
-    "summary": "This community primarily focuses on advanced technologies in electric propulsion and energy systems, including eVTOL electrical power systems and solid oxide fuel cells. Key contributors include OXEON ENERGY LLC and CORNERSTONE RESEARCH GROUP INC, with a common theme of Department of the Air Force contracts emphasizing innovative solutions for electric drive systems and predictive maintenance in aerospace applications."
+    "summary": "This community primarily focuses on advanced technologies for electric vertical takeoff and landing (eVTOL) systems, with significant emphasis on electrical power systems, lightweight structures, and fuel cells. The key entities involved include OXEON ENERGY LLC, with ongoing research centered on compliance assessment for eVTOL applications, highlighting a common theme of innovation in certification and reliability for emerging aerospace technologies."
   },
   {
     "community_id": "v0_1732",
@@ -157,17 +147,17 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced aerodynamics and acoustic evaluations within the eVTOL (electric Vertical Takeoff and Landing) technology domain, emphasizing high-fidelity computational fluid dynamics and noise assessment methodologies. Common themes include the integration of innovative design frameworks like the Skybus eVTOL and the use of Effective Perceived Noise Level (EPNL) metrics to enhance performance and compliance in heavy-lift aircraft applications."
+    "summary": "This community primarily focuses on advanced aerodynamics and acoustic evaluations within the eVTOL (electric Vertical Take-Off and Landing) technology domain, emphasizing high-fidelity computational fluid dynamics and noise assessment methodologies. The key research areas revolve around effective noise level measurement and aerodynamic performance, particularly in the context of heavy-lift eVTOL designs."
   },
   {
-    "community_id": "v0_1890",
+    "community_id": "v0_1111",
     "version": 0,
-    "numeric_id": 1890,
+    "numeric_id": 1111,
     "algorithm": "Louvain",
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced technologies related to intelligent routing and decision-making systems, particularly in the context of air traffic management, as evidenced by the emphasis on eVTOL aircraft dynamic rerouting and reactive rerouting frameworks. The key research areas encompass Answer Set Programming for optimization and knowledge representation, highlighting common themes of automation, human factors, and dynamic adaptability in transportation systems."
+    "summary": "The community focuses on advanced aviation technologies, primarily centered around optimizing multi-aircraft operations and flight planning through algorithms and systems. A common theme is the enhancement of air traffic management in urban environments, as reflected in the sample document discussing multi-aircraft scheduling optimization."
   },
   {
     "community_id": "v0_1797",
@@ -177,7 +167,17 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community focuses on advanced trajectory generation and planning for eVTOL aircraft, emphasizing techniques such as high-order trajectory planning, noise analysis, and smoothing strategies. The key research areas revolve around optimizing flight trajectories to enhance performance and reduce noise, with a notable emphasis on kinematic methods as outlined in the sample document."
+    "summary": "This community focuses on advanced trajectory generation and planning for eVTOL aircraft, emphasizing research in kinematics, noise analysis, and trajectory optimization strategies. The common themes center around enhancing flight performance and safety through innovative algorithms and methodologies in trajectory management."
+  },
+  {
+    "community_id": "v0_1890",
+    "version": 0,
+    "numeric_id": 1890,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "The community primarily focuses on advanced routing and decision-making technologies, specifically in the realms of reactive rerouting and knowledge representation. Key research areas include the development of frameworks for dynamic rerouting in eVTOL aircraft and the integration of human factors into automated systems, as highlighted by their collaborative document on designing reactive route change rules."
   },
   {
     "community_id": "v0_1866",
@@ -187,27 +187,7 @@
     "resolution": 0.8,
     "member_count": 156,
     "linked_count": 156,
-    "summary": "The community primarily focuses on advanced technologies related to eVTOL (electric Vertical Take-Off and Landing) systems, encompassing areas such as model-based control, acoustic measurement, and supply chain management for eVTOL manufacturing. Key contributors include contracts from the Department of the Air Force with entities like WISNIEWSKI ENTERPRISES, INC. and JAUNT AIR MOBILITY LLC, highlighting a strong emphasis on aerospace innovation and integration."
-  },
-  {
-    "community_id": "v0_1949",
-    "version": 0,
-    "numeric_id": 1949,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 6,
-    "linked_count": 6,
-    "summary": "This community primarily focuses on advanced aviation technologies, particularly in the realm of eVTOL (electric Vertical Take-Off and Landing) aircraft, with a notable emphasis on distributed lifting systems and hover flight approaches. Key players include the company Leonardo, and common themes in their research highlight aerodynamic analysis, design innovations, and lessons learned from past projects in the evolving field of aerial mobility."
-  },
-  {
-    "community_id": "v0_2062",
-    "version": 0,
-    "numeric_id": 2062,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 113,
-    "linked_count": 113,
-    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in the fields of electric vertical takeoff and landing (eVTOL) and control systems, as evidenced by the presence of technologies like the Terrain-Matching Algorithm and Active Disturbance Rejection Control. Key players include Horizon Aircraft and consulting firms like McKinsey & Company, with common themes revolving around government contracts from agencies such as the Department of Defense and NASA, indicating a strong emphasis on innovative aviation solutions and research collaborations."
+    "summary": "This community primarily focuses on advanced technologies related to eVTOL (electric Vertical Take-Off and Landing) aircraft, encompassing areas such as model-based control systems and acoustic measurement techniques. Common themes include the development of innovative control strategies and testing methodologies, as evidenced by research documents exploring multicopter control and wind-tunnel testing for eVTOL applications."
   },
   {
     "community_id": "v0_1857",
@@ -217,7 +197,27 @@
     "resolution": 0.8,
     "member_count": 12,
     "linked_count": 12,
-    "summary": "This community primarily focuses on reliability and safety analysis within the aerospace and software engineering domains, particularly through methodologies such as Common Cause Analysis and Fault Tree Analysis. Key themes include the assessment of propulsion motor control systems and fault-tolerant multi-processor architectures, emphasizing the application of evidence theory and hierarchical software architectures in ensuring system safety and reliability."
+    "summary": "The community focuses on reliability and safety analysis within the aerospace and automotive technology domain, emphasizing methodologies such as Common Cause Analysis, Fault Tree Analysis, and Evidence Theory. Key research areas include the analysis of propulsion motor control software and fault-tolerant systems, highlighting a common theme of enhancing system reliability and safety through advanced analytical techniques."
+  },
+  {
+    "community_id": "v0_1949",
+    "version": 0,
+    "numeric_id": 1949,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 6,
+    "linked_count": 6,
+    "summary": "This community primarily revolves around advanced aerospace technologies, specifically focusing on distributed lifting systems and hover flight approaches. Key players like Leonardo contribute to research on eVTOL aircraft design and the aerodynamic interactions of multirotor systems, with common themes centering on innovative flight methodologies and lessons learned from longstanding projects in the field."
+  },
+  {
+    "community_id": "v0_2062",
+    "version": 0,
+    "numeric_id": 2062,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 113,
+    "linked_count": 113,
+    "summary": "The community centers around advanced aerospace technologies, particularly focusing on electric vertical takeoff and landing (eVTOL) systems and navigation algorithms, as evidenced by research on terrain-matching and LiDAR-assisted optimization. Key players include Horizon Aircraft and major consulting firms like McKinsey & Company, highlighting a collaborative effort between technology developers and defense contracts, emphasizing innovation in aerospace and automation."
   },
   {
     "community_id": "v0_2104",
@@ -227,7 +227,7 @@
     "resolution": 0.8,
     "member_count": 7,
     "linked_count": 7,
-    "summary": "The community primarily focuses on the technological domain of autonomous systems, particularly in the context of path planning and optimization for vertical takeoff and landing aircraft. Key themes include advancements in autonomous path planning, location constraint generation, and waypoint optimization, with research often linked to defense applications, as evidenced by documents like the Department of the Air Force contract."
+    "summary": "This community focuses on the technological domain of autonomous systems, particularly emphasizing autonomous path planning and optimization algorithms for applications such as vertical takeoff and landing aircraft. The key themes center around developing advanced methodologies for efficient navigation in complex environments, as highlighted by documents related to contracts with the Department of the Air Force and research on optimization strategies."
   },
   {
     "community_id": "v0_2128",
@@ -237,7 +237,7 @@
     "resolution": 0.8,
     "member_count": 63,
     "linked_count": 63,
-    "summary": "This community primarily focuses on advanced aviation technologies, particularly in the realm of eVTOL (electric Vertical Take-Off and Landing) systems and associated technologies like Automated Multicopter UAVs and deep reinforcement learning for flight management. Key players include GAC Group and GOVY, with a notable emphasis on partnerships and pilot projects that enhance eVTOL deployment and operational validation in various global regions."
+    "summary": "The community primarily focuses on urban air mobility technologies, particularly through the development of systems like the Vertiport Arrival Management System and Automated Multicopter UAVs, leveraging advanced methodologies such as Deep Reinforcement Learning and Simulation-Based Policy Validation. Key players include GAC Group and GOVY, with common themes revolving around efficient space utilization and self-organized arrival systems to enhance urban transportation networks."
   },
   {
     "community_id": "v0_2424",
@@ -247,17 +247,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced technologies in aircraft energy storage systems, specifically emphasizing innovations in venting solutions and protective enclosures. Common themes include enhancing safety and efficiency in battery management through technologies like Burst Membrane Technology and Flexible Vent Coupling, although no specific companies are identified within this domain."
-  },
-  {
-    "community_id": "v0_2162",
-    "version": 0,
-    "numeric_id": 2162,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 7,
-    "linked_count": 7,
-    "summary": "The community primarily focuses on advanced data analysis techniques within the domain of electric vehicle technology, particularly emphasizing eye-tracking data analysis and handling qualities assessment frameworks. Common themes include the integration of machine learning models, such as Long Short-Term Memory, for applications in electric vehicle performance evaluation and predictive analytics."
+    "summary": "The community focuses on advanced aircraft energy storage technologies, specifically emphasizing innovative venting systems and enclosures for battery safety and efficiency. Common themes include the development of specialized components such as burst membrane technology and flexible vent couplings to enhance the performance and reliability of aircraft batteries."
   },
   {
     "community_id": "v0_2583",
@@ -267,7 +257,17 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community primarily focuses on advanced measurement and positioning technologies, specifically within the domains of radar and velocity measurement systems. Key themes include innovations in odometry techniques and systems for precise frequency and position determination, as evidenced by relevant sample documents."
+    "summary": "This community primarily focuses on the technological domain of measurement and positioning systems, with an emphasis on frequency difference and radar odometry techniques. Common themes revolve around advanced methodologies for enhancing accuracy in velocity and position determination, as evidenced by the sample document discussing radar odometry systems."
+  },
+  {
+    "community_id": "v0_2162",
+    "version": 0,
+    "numeric_id": 2162,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 7,
+    "linked_count": 7,
+    "summary": "This community primarily focuses on advanced data analysis techniques within the realm of aviation technology, particularly through the use of eye-tracking data analysis and machine learning models like Long Short-Term Memory for assessing handling qualities in electric vertical takeoff and landing vehicles. Common themes include the development of objective assessment frameworks and predictive modeling for electric vehicle systems, with an emphasis on enhancing performance and safety in emerging transportation technologies."
   },
   {
     "community_id": "v0_2364",
@@ -277,7 +277,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community revolves around advanced technologies for aircraft routing and assignment, particularly in the context of Skylane operations, as evidenced by the focus on methods like Candidate Skylane Selection and eVTOL Skylane Assignment. While there are no companies represented, the key research areas highlight themes of efficient aircraft deployment and route optimization in emerging transportation systems."
+    "summary": "The community focuses on advanced air transportation technologies, particularly in the realm of aircraft assignment and route optimization within designated skylanes. Key research areas revolve around innovative systems and methods for efficient aircraft deployment, emphasizing the development of eVTOL (electric Vertical Take-Off and Landing) solutions, although no specific companies are highlighted within this cluster."
   },
   {
     "community_id": "v0_2751",
@@ -287,17 +287,7 @@
     "resolution": 0.8,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "The community centers around advanced aerospace technologies, specifically focusing on ducted fan systems and movable wing edge control for enhanced aerodynamic performance. Key themes include innovative control mechanisms for exhaust flow management and optimizing aircraft design for improved efficiency and maneuverability."
-  },
-  {
-    "community_id": "v0_2823",
-    "version": 0,
-    "numeric_id": 2823,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 6,
-    "linked_count": 6,
-    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in the domain of acoustic engineering and propulsion systems, as evidenced by innovations like the Modular Ducted Fan Propulsor and Acoustic Property Variability. The common theme revolves around enhancing performance and efficiency in air intake systems, as highlighted by the emphasis on components such as the Removable Inlet Liner and related documents."
+    "summary": "The community primarily focuses on advanced aerospace technologies, specifically in the realm of propulsion systems with an emphasis on ducted fan systems and movable wing edge control. Common themes among the documents include innovations in exhaust area management and flow control, highlighting the importance of aerodynamic efficiency in modern aviation design."
   },
   {
     "community_id": "v0_2773",
@@ -307,7 +297,17 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community primarily focuses on the domain of command and monitoring technologies, with an emphasis on backup control architectures and monitoring systems. Key themes include the development of robust command modules and architectures that enhance system reliability and oversight, although no specific companies are mentioned in the analysis."
+    "summary": "The community centers around the technological domain of command and monitoring systems, specifically highlighting the \"Command Monitor Backup Control Architecture\" and \"Monitoring System.\" There are no companies mentioned, indicating a focus on research and development in backup control and monitoring technologies, with themes of reliability and system oversight prevalent in the documentation."
+  },
+  {
+    "community_id": "v0_2823",
+    "version": 0,
+    "numeric_id": 2823,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 6,
+    "linked_count": 6,
+    "summary": "This community primarily focuses on advanced technologies related to acoustic properties and modular propulsion systems, specifically highlighting innovations like the Modular Ducted Fan Propulsor and Removable Inlet Liner. The prevalent theme revolves around enhancing efficiency and performance in aerospace applications, as evidenced by the repeated documentation of inlet seal and liner technologies."
   },
   {
     "community_id": "v0_2999",
@@ -317,27 +317,7 @@
     "resolution": 0.8,
     "member_count": 138,
     "linked_count": 138,
-    "summary": "The community primarily focuses on the eVTOL (electric Vertical Takeoff and Landing) technology domain, with key contributions from prominent companies such as NASA, CAIC, and BAE Systems. Common themes include advancements in eVTOL vehicle design, aerodynamics through proprotor design, and performance evaluation, underscored by significant research collaborations and contracts with governmental agencies."
-  },
-  {
-    "community_id": "v0_3009",
-    "version": 0,
-    "numeric_id": 3009,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 6,
-    "linked_count": 6,
-    "summary": "This community focuses on advanced technologies related to battery assembly, specifically emphasizing methodologies for cell matching and compatibility assessment. The common theme revolves around optimizing battery performance through systematic evaluation and selection processes, though no specific companies are noted in this domain."
-  },
-  {
-    "community_id": "v0_3084",
-    "version": 0,
-    "numeric_id": 3084,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "This community revolves around advanced aerospace engineering technologies, specifically focusing on components such as centering mechanisms and composite housing for turbomachinery. The common themes include structural reinforcement and optimization of aircraft engine components, although there are no specific companies identified within this node."
+    "summary": "This community primarily focuses on the technological domain of electric vertical takeoff and landing (eVTOL) vehicles, encompassing key areas such as proprotor design and aeroacoustics measurement. Prominent companies like NASA and BAE Systems are central to this domain, with common themes revolving around performance modeling and collaborative research efforts in advancing eVTOL technologies."
   },
   {
     "community_id": "v0_3122",
@@ -347,7 +327,17 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily revolves around advanced turbine technologies, specifically focusing on devices and methods that enhance performance and efficiency, such as the Dampfturbine and Axial Load Limiting Device. Key themes include the optimization of fluid dynamics and operational methodologies within turbine systems, with an emphasis on innovative engineering solutions."
+    "summary": "This community primarily focuses on technologies related to turbine systems and their operational efficiency, highlighted by the presence of the Dampfturbine and Axial Load Limiting Device. Common themes include advancements in turbine design and optimization methods, particularly in flow management and operational techniques."
+  },
+  {
+    "community_id": "v0_3009",
+    "version": 0,
+    "numeric_id": 3009,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 6,
+    "linked_count": 6,
+    "summary": "This community primarily focuses on advanced technologies related to battery assembly, emphasizing methods for cell compatibility and characteristic matching. While there are no companies represented, the key themes revolve around optimizing cell selection and assessment processes to enhance battery performance and efficiency."
   },
   {
     "community_id": "v0_3001",
@@ -357,7 +347,17 @@
     "resolution": 0.8,
     "member_count": 36,
     "linked_count": 36,
-    "summary": "The community primarily focuses on advanced aviation technologies, particularly in vertical takeoff and landing systems, electric propulsion, and innovative mechanisms like blade pitch control and fail-safe features. The absence of companies suggests a strong emphasis on research and development in these cutting-edge aerospace domains, with themes centered around enhancing aircraft performance and safety."
+    "summary": "The community primarily focuses on advanced aerospace technologies, particularly in electric aviation, with an emphasis on innovative flight modes and propulsion systems. Key themes include the development of vertical takeoff and landing capabilities, safety mechanisms, and the integration of cutting-edge technologies, as highlighted by collaborative efforts and contracts with organizations like NASA."
+  },
+  {
+    "community_id": "v0_3084",
+    "version": 0,
+    "numeric_id": 3084,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "This community focuses on technologies related to annular housing and structural components for aerospace applications, specifically in turbomachinery. The common themes include the design and fixation mechanisms for low-pressure compressor casings, emphasizing advancements in composite materials and structural reinforcements."
   },
   {
     "community_id": "v0_3167",
@@ -367,7 +367,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on radiation effects in electronics, particularly through models and prediction methods for fault rates and reliability in systems like FPGAs. Common themes include the evaluation of single event effects and sensitivity analyses, emphasizing the importance of understanding and mitigating radiation-induced failures in technology."
+    "summary": "The community primarily focuses on radiation effects in electronic systems, particularly through various predictive models for fault rates and reliability in devices like FPGAs. Key themes include methodologies for assessing single event effects and overall system resilience against radiation-induced failures, although no specific companies are represented within this group."
   },
   {
     "community_id": "v0_3152",
@@ -377,7 +377,7 @@
     "resolution": 0.8,
     "member_count": 12,
     "linked_count": 12,
-    "summary": "The community primarily focuses on testing methods related to sealing components under various environmental conditions, such as damp heat and salt spray. Key research areas include performance evaluation and service life prediction of sealing technologies, with an emphasis on methods applicable to marine and aerospace applications."
+    "summary": "The community primarily revolves around testing methodologies for sealing components in various environmental conditions, particularly focusing on damp heat and salt spray testing. While no specific companies are highlighted, the research emphasizes the evaluation and prediction of sealing performance under temperature variations, indicating a strong interest in advancing reliability and longevity in sealing technologies."
   },
   {
     "community_id": "v0_3236",
@@ -387,7 +387,7 @@
     "resolution": 0.8,
     "member_count": 10,
     "linked_count": 10,
-    "summary": "The community primarily focuses on advanced magnetic technologies, particularly mechanisms and systems involving magnetic coupling and locking mechanisms, such as the Detent Mechanism and Magnetic Lock Lift Fan. While there are no companies represented, the common theme centers around innovative applications of magnetics in engineering solutions, emphasizing integration and efficiency in mechanical systems."
+    "summary": "The community primarily focuses on innovative magnetic technologies, particularly in fan and motor integration, as exemplified by the presence of various magnet-based systems. Key themes include the development of advanced mechanisms, such as detent mechanisms and magnetic locks, indicating a strong emphasis on enhancing efficiency and performance in mechanical applications."
   },
   {
     "community_id": "v0_3241",
@@ -397,37 +397,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced data extraction and processing technologies, such as semantic feature extraction and multi-field data extraction methods. Common themes include the development of innovative techniques for information retrieval and measurement, as evidenced by the sample document highlighting adaptive extraction systems in the aviation sector."
-  },
-  {
-    "community_id": "v0_3274",
-    "version": 0,
-    "numeric_id": 3274,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 265,
-    "linked_count": 265,
-    "summary": "The community centers around advancements in aviation technology, particularly focusing on multicopter configurations, AI-enhanced safety systems, and sustainable practices. Key players include companies like Ferrovial and Palantir Technologies, with common themes encompassing aviation cybersecurity and innovative VTOL systems, as highlighted in sample documents related to eVTOL projects and federal aviation contracts."
-  },
-  {
-    "community_id": "v0_3279",
-    "version": 0,
-    "numeric_id": 3279,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 175,
-    "linked_count": 175,
-    "summary": "This community primarily focuses on advanced technologies in the electric vertical takeoff and landing (eVTOL) domain, emphasizing innovations in battery sizing, energy consumption modeling, and acoustic noise prediction for electric aircraft. Although there are no prominent companies represented, the community is characterized by collaborative research efforts and the development of simulation tools, as evidenced by sample documents related to eVTOL drone simulations and design optimization."
-  },
-  {
-    "community_id": "v0_3363",
-    "version": 0,
-    "numeric_id": 3363,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 79,
-    "linked_count": 79,
-    "summary": "The community centers around advanced aerospace technologies, particularly in electric power systems and flight data analysis, with key companies like magniX and Wingborne Aeronautics engaged in significant contracts with NASA and the Department of the Air Force. Common themes include innovation in safety redundancy, fast-charging systems, and RF ranging technologies, highlighting a collaborative effort to enhance aerospace capabilities."
+    "summary": "This community primarily focuses on advanced data extraction and information retrieval techniques, particularly within the domain of semantic feature extraction and multi-field data processing. The key themes include the development of innovative methods for efficient data handling and similarity measurement, with an emphasis on applications in industries such as aviation."
   },
   {
     "community_id": "v0_3318",
@@ -437,7 +407,37 @@
     "resolution": 0.8,
     "member_count": 206,
     "linked_count": 206,
-    "summary": "The community centers around advanced propulsion and energy technologies, particularly in electric and hybrid systems, with key players including Archer Aviation, Stellantis, and United Airlines. Common themes include government contracts for research and development, highlighting a focus on innovation in aerospace and mobility solutions."
+    "summary": "The community primarily focuses on advanced aviation technologies, particularly in the realm of electric propulsion and battery systems. Key players such as Archer Aviation, Stellantis, and United Airlines are involved, highlighting themes of innovation in aerospace applications and collaborations with defense contracts."
+  },
+  {
+    "community_id": "v0_3274",
+    "version": 0,
+    "numeric_id": 3274,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 265,
+    "linked_count": 265,
+    "summary": "The community of 265 nodes in the technology graph primarily focuses on advanced air mobility, featuring technologies such as multicopter configurations and AI-enhanced safety systems. Key players include companies like Ferrovial and Palantir Technologies, with common themes revolving around sustainable aviation practices, aviation cybersecurity, and contemporary research on rotorcraft applications and vertiport development."
+  },
+  {
+    "community_id": "v0_3279",
+    "version": 0,
+    "numeric_id": 3279,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 175,
+    "linked_count": 175,
+    "summary": "This community primarily focuses on the technological domain of electric vertical takeoff and landing (eVTOL) aircraft, particularly emphasizing battery sizing, energy consumption modeling, and noise reduction technologies. Key research areas include optimizing cooling systems and acoustic noise prediction for eVTOL applications, with a notable absence of company involvement in the discussions or documentation."
+  },
+  {
+    "community_id": "v0_3363",
+    "version": 0,
+    "numeric_id": 3363,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 79,
+    "linked_count": 79,
+    "summary": "This community primarily focuses on advanced electric power systems and testing technologies, particularly in the context of high-performance applications like fast-charging systems and safety redundancy systems. Key players include magniX and Unmanned Experts, with a common emphasis on research and development contracts with NASA, highlighting innovation in electric power testing and data analysis."
   },
   {
     "community_id": "v0_3416",
@@ -447,7 +447,7 @@
     "resolution": 0.8,
     "member_count": 181,
     "linked_count": 181,
-    "summary": "This community primarily focuses on advanced aviation technologies, particularly in the domains of electric and hybrid aircraft design, including eVTOL systems and UAVs. Key players include companies like BlackRock and research entities involved in government contracts with the Department of Defense and NASA, emphasizing themes of innovation in aerodynamics and performance prediction within the aerospace sector."
+    "summary": "The community primarily focuses on the eVTOL (electric Vertical Takeoff and Landing) technology domain, highlighting innovations in flight simulation, hybrid-electric aircraft design, and UAV capabilities. Key players include companies like BlackRock, with prevalent themes surrounding advancements in aerodynamic performance and the development of specialized flight simulators for the eVTOL sector."
   },
   {
     "community_id": "v0_3432",
@@ -457,7 +457,7 @@
     "resolution": 0.8,
     "member_count": 41,
     "linked_count": 41,
-    "summary": "The community revolves around advanced aviation technologies, particularly focusing on electric vertical takeoff and landing (eVTOL) aircraft and optimization algorithms for propulsion systems. Key players include Steadywin and research efforts on power management and the impact of environmental factors on battery systems, reflecting a common theme of enhancing electric flight efficiency and performance."
+    "summary": "The community primarily focuses on advanced aerospace technologies, particularly in high-speed flight configurations and electric vertical takeoff and landing (eVTOL) aircraft. Key players like Steadywin and research areas involving particle swarm optimization and power demand management techniques highlight a common theme of innovation in optimizing aircraft performance and efficiency within the aerospace sector."
   },
   {
     "community_id": "v0_3440",
@@ -467,7 +467,7 @@
     "resolution": 0.8,
     "member_count": 44,
     "linked_count": 44,
-    "summary": "This community primarily focuses on the technological domain of thermal management and propulsion systems for electric vertical take-off and landing (eVTOL) aircraft, highlighting innovations such as energy-efficient propeller designs and advanced cooling systems. Common themes include the design and simulation of thermal management solutions, with an emphasis on optimizing performance for hybrid and fully electric propulsion systems."
+    "summary": "The community primarily focuses on advanced thermal management technologies and energy-efficient designs, particularly in the context of propeller optimization and cooling systems. Although there are no companies represented, the presence of documents related to WISNIEWSKI ENTERPRISES, INC. highlights a research emphasis on contracts with the Department of the Air Force, suggesting a theme of innovation in aerospace thermal solutions and energy efficiency."
   },
   {
     "community_id": "v0_3446",
@@ -477,37 +477,7 @@
     "resolution": 0.8,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "This community primarily focuses on the technological domain of lightning protection systems, particularly in relation to composite materials and eVTOL aircraft. Key research areas include compliance verification methods for lightning protection and bonding assemblies designed to safeguard composite aircraft components from lightning strikes, highlighting common themes of safety and regulatory compliance in advanced aviation technologies."
-  },
-  {
-    "community_id": "v0_3610",
-    "version": 0,
-    "numeric_id": 3610,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 7,
-    "linked_count": 7,
-    "summary": "This community focuses on advanced networking technologies, particularly in the realm of 5G/6G and low-altitude intelligent networks, with an emphasis on resource management and orchestration strategies. The key themes include the integration of network slicing and deep reinforcement learning to enhance mobility solutions, as exemplified by research on network slice-based applications for advanced air mobility."
-  },
-  {
-    "community_id": "v0_3456",
-    "version": 0,
-    "numeric_id": 3456,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 35,
-    "linked_count": 35,
-    "summary": "The community primarily focuses on advanced aerodynamics and design methodologies for electric vertical takeoff and landing (eVTOL) aircraft, utilizing technologies such as the Tilting Propeller System and Parametric Modeling. Key research areas include optimization strategies for aerodynamic configurations and innovative structural designs, with an emphasis on enhancing performance and safety in advanced air mobility applications."
-  },
-  {
-    "community_id": "v0_3574",
-    "version": 0,
-    "numeric_id": 3574,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 10,
-    "linked_count": 10,
-    "summary": "The community primarily focuses on advanced signal processing and simulation technologies, particularly in the context of aerospace and telecommunications. Key themes include the development of innovative systems like Software Defined Radio and Intermediate Frequency Switching Matrices, alongside research in autonomous vehicle control and mission tasking, as evidenced by sample documents highlighting new provider networks and holographic cues."
+    "summary": "The community focuses on the technological domain of lightning protection methods and systems, particularly in relation to composite materials and eVTOL aircraft. Key research areas include compliance verification methods for lightning protection and bonding assemblies for safeguarding composite aircraft propellers, emphasizing themes of safety and compliance in innovative aviation technologies."
   },
   {
     "community_id": "v0_3544",
@@ -517,7 +487,37 @@
     "resolution": 0.8,
     "member_count": 87,
     "linked_count": 87,
-    "summary": "The community primarily focuses on advanced technologies in the aerospace and transportation sectors, with an emphasis on predictive logistics, mobility solutions, and conflict resolution systems. Notable research areas include government contracts with organizations like the Department of the Air Force and the National Aeronautics and Space Administration, highlighting themes of collaboration and innovation in aviation and urban mobility."
+    "summary": "The community primarily focuses on advanced technologies in autonomous mobility and logistics, with an emphasis on predictive modeling and conflict resolution in air transportation systems. Key research areas include AI-driven solutions for urban mobility and innovative aerospace applications, as evidenced by contracts with organizations like the Department of the Air Force and NASA."
+  },
+  {
+    "community_id": "v0_3574",
+    "version": 0,
+    "numeric_id": 3574,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 10,
+    "linked_count": 10,
+    "summary": "This community primarily focuses on advanced technologies in signal processing and simulation systems, particularly within the aerospace and defense sectors. Key areas of research include software-defined radio, airborne RF equipment testing, and innovative visual aids for mission tasks, reflecting a common theme of enhancing communication and operational efficiency in complex environments."
+  },
+  {
+    "community_id": "v0_3610",
+    "version": 0,
+    "numeric_id": 3610,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 7,
+    "linked_count": 7,
+    "summary": "This community primarily focuses on advanced telecommunications technologies, particularly in the realm of 5G/6G network slicing and low-altitude intelligent networks, with an emphasis on enhancing air mobility through innovative resource management and orchestration methods. The key research areas include deep reinforcement learning and access pairing methods, reflecting a common theme of optimizing network performance and efficiency in emerging technological landscapes."
+  },
+  {
+    "community_id": "v0_3456",
+    "version": 0,
+    "numeric_id": 3456,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 35,
+    "linked_count": 35,
+    "summary": "This community primarily focuses on advanced aerodynamics and design methodologies for electric vertical takeoff and landing (eVTOL) aircraft, highlighted by technologies such as the Tilting Propeller System and Parametric Modeling. Key themes include innovative flight control systems and the integration of propeller design with noise reduction strategies, as evidenced by documents like the \"Archer Midnight Air Taxi Reaches New Heights.\""
   },
   {
     "community_id": "v0_3624",
@@ -527,17 +527,7 @@
     "resolution": 0.8,
     "member_count": 17,
     "linked_count": 17,
-    "summary": "This community is centered around advanced rotorcraft and eVTOL technology, with a focus on validation studies, structural modeling, and aerodynamic analysis through tools like the Rotorcraft Comprehensive Analysis System (RCAS). Key themes include the exploration of innovative flight technologies and their practical applications, as highlighted by documents related to NASA contracts and the emergence of flying cars."
-  },
-  {
-    "community_id": "v0_3798",
-    "version": 0,
-    "numeric_id": 3798,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 13,
-    "linked_count": 13,
-    "summary": "The community focuses on advanced technologies for Urban Air Mobility, particularly in the realm of eVTOL scheduling optimization and traffic management. Key players include companies like Thales and Korea Aerospace Industries, with common themes revolving around data analysis for scheduling efficiency and the regulatory landscape as evidenced by documentation from Eve Holding, Inc."
+    "summary": "The community primarily focuses on rotorcraft and eVTOL technologies, with an emphasis on RCAS capabilities, validation studies, and fluid management systems. While no specific companies are highlighted, common themes include advancements in rotorcraft analysis and modeling, as well as the development of innovative flying vehicles."
   },
   {
     "community_id": "v0_3706",
@@ -547,7 +537,7 @@
     "resolution": 0.8,
     "member_count": 56,
     "linked_count": 56,
-    "summary": "The community primarily focuses on advancements in autonomous navigation and computer vision technologies within the aerospace sector, particularly for multirotor aircraft. Key players include prominent companies like Lockheed Martin, Bell, and Textron, with common themes revolving around the development and deployment of autonomous flight systems and innovations in integrating navigation capabilities for military and commercial applications, such as flying taxis."
+    "summary": "The community primarily focuses on advanced technologies in autonomous navigation and computer vision, particularly for aviation applications. Key players include companies like Lockheed Martin, Bell, and Textron, with common themes revolving around government contracts and innovations in drone technology, such as the development of integrated navigation systems and multirotor aircraft."
   },
   {
     "community_id": "v0_3780",
@@ -557,7 +547,17 @@
     "resolution": 0.8,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "This community primarily focuses on advanced nozzle technologies, including the Frusto-Conical and Micro-Diameter Nozzles, alongside innovative manufacturing processes and turbulence channel designs. While there are no specific companies highlighted beyond a mention of BOEING CO, the common themes revolve around enhancing nozzle efficiency and performance in engineering applications."
+    "summary": "The community primarily focuses on advanced nozzle technologies, including designs and manufacturing processes, with a particular emphasis on applications in aerospace and fluid dynamics. Although there are no specific companies represented, the inclusion of a document from BOEING indicates a potential link to aerospace innovations and research in nozzle efficiency and performance."
+  },
+  {
+    "community_id": "v0_3798",
+    "version": 0,
+    "numeric_id": 3798,
+    "algorithm": "Louvain",
+    "resolution": 0.8,
+    "member_count": 13,
+    "linked_count": 13,
+    "summary": "This community focuses on the technological domain of urban air mobility, particularly emphasizing eVTOL (electric Vertical Take-Off and Landing) systems through scheduling optimization and traffic analysis. Key players include companies like Thales and Korea Aerospace Industries, with research centered on enhancing air traffic management and optimizing flight schedules using data-driven methodologies."
   },
   {
     "community_id": "v0_3805",
@@ -567,27 +567,7 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community primarily revolves around financial and corporate reporting, as evidenced by the sample documents indicating regulatory filings. Key companies include Siemens and Citibank, suggesting a focus on technology and finance sectors, while common themes may include corporate governance, compliance, and financial performance analysis."
-  },
-  {
-    "community_id": "v0_3886",
-    "version": 0,
-    "numeric_id": 3886,
-    "algorithm": "Louvain",
-    "resolution": 0.8,
-    "member_count": 7,
-    "linked_count": 7,
-    "summary": "The community primarily focuses on advanced air flow technologies, particularly in the context of aircraft turbine engines, as evidenced by innovations like the Multi-Flow Axial Turbine Engine and Airflow Splitter. While there are no specific companies represented, the themes revolve around enhancing aerodynamic efficiency and design optimization, as highlighted in relevant sample documents such as patents and business reports."
-  },
-  {
-    "community_id": "v1_67",
-    "version": 1,
-    "numeric_id": 67,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 221,
-    "linked_count": 221,
-    "summary": "The community centers around the technological domain of eVTOL (electric Vertical Take-Off and Landing) aircraft, with key contributions from companies like BETA Technologies and magniX, as well as research in model-based control systems and energy consumption modeling. Common themes include advancements in hybrid-electric aircraft design and the integration of innovative technologies for efficient air mobility solutions."
+    "summary": "The community primarily revolves around financial and corporate disclosures, with key companies such as Siemens and Citibank involved. Common themes include corporate governance and financial performance, as evidenced by the sample documents detailing SEC filings from Honeywell International and Eve Holding, Inc."
   },
   {
     "community_id": "v0_3847",
@@ -597,27 +577,27 @@
     "resolution": 0.8,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community centers around Silicon Carbide Power Electronics, highlighting its significance in advanced technological applications. Key player Syensqo is involved, with relevant documentation from Honeywell International Inc. indicating ongoing developments and disclosures in this domain, suggesting a focus on innovation and regulatory compliance in the power electronics sector."
+    "summary": "This community focuses on Silicon Carbide Power Electronics, highlighting significant contributions from the company Syensqo. The recent filings from Honeywell International Inc, including multiple 8-K reports, suggest active engagement in advancements and developments within this technological domain, emphasizing themes of innovation and corporate strategy in power electronics."
   },
   {
-    "community_id": "v1_174",
+    "community_id": "v1_67",
     "version": 1,
-    "numeric_id": 174,
+    "numeric_id": 67,
     "algorithm": "Louvain",
     "resolution": 1.0,
-    "member_count": 13,
-    "linked_count": 13,
-    "summary": "The community focuses on the technological domain of electric vertical takeoff and landing (eVTOL) systems, particularly emphasizing propulsor design and control systems. Key research areas include advanced aerodynamics and propulsion technologies, with a common theme of developing efficient and quiet solutions for next-generation aerial mobility."
+    "member_count": 221,
+    "linked_count": 221,
+    "summary": "This community centers around the development of advanced electric and hybrid-electric aviation technologies, particularly eVTOL systems and model-based control methodologies. Key companies such as BETA Technologies and Lift Aircraft, alongside research efforts from entities like the US Air Force, highlight a strong emphasis on innovative aircraft design, energy efficiency, and military applications in this rapidly evolving sector."
   },
   {
-    "community_id": "v1_661",
-    "version": 1,
-    "numeric_id": 661,
+    "community_id": "v0_3886",
+    "version": 0,
+    "numeric_id": 3886,
     "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 37,
-    "linked_count": 37,
-    "summary": "This community primarily focuses on advanced aviation technologies, particularly in areas such as VTOL systems and autonomous navigation. Key players include companies like Wisk Aero and UrbanV, with common themes revolving around innovative air mobility solutions, human-machine collaboration, and the development of autonomous systems for future urban transport."
+    "resolution": 0.8,
+    "member_count": 7,
+    "linked_count": 7,
+    "summary": "This community primarily focuses on advanced airflow management technologies, particularly in the context of turbine engines and fluid dynamics. Key themes include innovative designs like the Airflow Splitter and Multi-Flow Axial Turbine Engine, with an emphasis on separating and optimizing airflow to enhance performance, as highlighted by the sample document related to turbine technology."
   },
   {
     "community_id": "v1_283",
@@ -627,7 +607,27 @@
     "resolution": 1.0,
     "member_count": 152,
     "linked_count": 152,
-    "summary": "The community primarily focuses on advanced aviation and connectivity technologies, particularly around 5G connectivity and innovative aerial systems such as UAVs and eVTOL aircraft. Key players include companies like Overair and GAC Group GOVY, with common themes centering on military contracts and the development of hybrid-electric propulsion systems for enhanced operational efficiency and sustainability in aviation."
+    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in the realms of 5G connectivity and eVTOL (electric Vertical Takeoff and Landing) systems, highlighting innovations in energy consumption and hybrid-electric propulsion. Key players include Overair and GAC Group GOVY, with common themes centered around UAV video streaming systems and the integration of advanced communication systems in the aerospace sector."
+  },
+  {
+    "community_id": "v1_661",
+    "version": 1,
+    "numeric_id": 661,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 37,
+    "linked_count": 37,
+    "summary": "The community focuses on advanced aviation technologies, particularly in areas such as VTOL systems, autonomous navigation, and human-machine collaboration. Key players include companies like Wisk Aero and H3X Technologies, with common themes revolving around innovative air mobility solutions and the integration of autonomy in aviation systems."
+  },
+  {
+    "community_id": "v1_174",
+    "version": 1,
+    "numeric_id": 174,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 13,
+    "linked_count": 13,
+    "summary": "The community primarily focuses on advanced technologies related to electric vertical takeoff and landing (eVTOL) aircraft, with a strong emphasis on propulsor design, control systems, and aerodynamic modeling. Key themes include innovation in eVTOL propulsion and efficiency, as evidenced by research collaborations and projects like the Department of the Air Force contract and the development of racing-inspired eVTOL designs."
   },
   {
     "community_id": "v1_446",
@@ -637,27 +637,7 @@
     "resolution": 1.0,
     "member_count": 167,
     "linked_count": 167,
-    "summary": "The community predominantly focuses on advanced technologies in the domain of aerospace systems, particularly emphasizing Model-Based Systems Engineering and optimization techniques like Genetic Algorithms for scheduling and control allocation. A notable theme is the development of eVTOL (electric Vertical Take-Off and Landing) systems, as evidenced by projects like the eVTOL Emergency Medical Service and the Dual Propeller VTOL System, with key contributions from entities such as LIFT AIRCRAFT INC and various research initiatives."
-  },
-  {
-    "community_id": "v1_701",
-    "version": 1,
-    "numeric_id": 701,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 164,
-    "linked_count": 164,
-    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in Model Predictive Control and eVTOL manufacturing for urban air mobility solutions. Key players include Blade Air Mobility and Leonardo, with common themes centered around government contracts from agencies like the Department of the Air Force and NASA, highlighting a strong emphasis on innovation in aircraft safety and noise reduction."
-  },
-  {
-    "community_id": "v1_993",
-    "version": 1,
-    "numeric_id": 993,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "This community primarily focuses on advanced aerospace technologies, particularly in the development of eVTOL aircraft and their safety systems, such as envelope protection designs. The key research areas involve innovative approaches like the Task-Pilot-Vehicle methodology, emphasizing the integration of cutting-edge design and management strategies in press releases related to these technologies."
+    "summary": "The community primarily focuses on advanced technologies in aerospace and systems engineering, particularly emphasizing Model-Based Systems Engineering and optimization techniques for eVTOL applications. Key players include firms like Booz Allen Hamilton and Deloitte, highlighting a strong connection to NASA contracts and collaborative research in innovative aviation solutions."
   },
   {
     "community_id": "v1_703",
@@ -667,7 +647,7 @@
     "resolution": 1.0,
     "member_count": 132,
     "linked_count": 132,
-    "summary": "The community is centered around advanced aerospace technologies, particularly in high-fidelity simulation and eVTOL systems, with key players including companies like Lilium and ARK Invest, alongside notable government contracts from NASA and the Department of the Air Force. Common themes include innovation in electric air taxi services and enhancing rotor control and stability through cutting-edge simulation models and communication systems."
+    "summary": "The community focuses on advanced technologies in the eVTOL (electric Vertical Takeoff and Landing) sector, emphasizing high-fidelity simulation models and innovative control systems. Key players include companies like Lilium and ARK Invest, alongside research efforts concentrated on autonomous trajectory control and partnerships with organizations such as NASA, highlighting themes of cutting-edge aeronautics and urban air mobility solutions."
   },
   {
     "community_id": "v1_735",
@@ -677,7 +657,27 @@
     "resolution": 1.0,
     "member_count": 50,
     "linked_count": 50,
-    "summary": "The community primarily focuses on advanced technologies in aerospace, particularly unmanned systems and flight efficiency, as evidenced by the presence of UAVs and eVTOL acoustic noise prediction. Key contributors include various research entities involved in contracts with the Department of the Air Force and NASA, reflecting a common theme of governmental collaboration in cutting-edge aviation research and development."
+    "summary": "This community primarily focuses on advanced aviation technologies, notably Unmanned Aerial Vehicles (UAV) and eVTOL systems, alongside innovations in wireless power transmission and situational awareness systems. Key entities involved include LIFT AIRCRAFT INC, GRAPHENIX DEVELOPMENT, INC, and REACH POWER, INC., all of which are engaged in contracts with the Department of the Air Force, highlighting a common theme of government collaboration in aerospace advancements."
+  },
+  {
+    "community_id": "v1_993",
+    "version": 1,
+    "numeric_id": 993,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "The community primarily focuses on advanced aerial mobility technologies, specifically related to eVTOL aircraft and their envelope protection systems. Key research areas include the Task-Pilot-Vehicle approach and press release management, highlighting themes of innovation in aircraft design and safety protocols within the aerospace sector."
+  },
+  {
+    "community_id": "v1_701",
+    "version": 1,
+    "numeric_id": 701,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 164,
+    "linked_count": 164,
+    "summary": "This community primarily focuses on advanced technologies in the field of eVTOL (electric Vertical Take-Off and Landing) systems, emphasizing innovations such as Model Predictive Control and Aircraft Conflict Avoidance Systems. Key players include Blade Air Mobility and Leonardo, with common themes revolving around trajectory control, noise reduction, and supply chain optimization in the evolving landscape of aerial mobility."
   },
   {
     "community_id": "v1_1111",
@@ -687,7 +687,7 @@
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community focuses on the technological domain of air traffic management and optimization, particularly through advanced scheduling and flight planning systems for multiple aircraft. The key research areas include multi-aircraft scheduling, trajectory-based operations, and algorithms for efficient track planning, with common themes centered around enhancing operational efficiency in urban aviation environments."
+    "summary": "The community primarily focuses on advanced aviation technologies, particularly in multi-aircraft scheduling and flight planning systems. Key themes include optimization techniques for urban air traffic management and trajectory-based operations, as highlighted by the sample document on multi-aircraft scheduling in urban environments."
   },
   {
     "community_id": "v1_1356",
@@ -697,17 +697,7 @@
     "resolution": 1.0,
     "member_count": 75,
     "linked_count": 75,
-    "summary": "The community primarily focuses on advanced technologies in eVTOL (electric Vertical Takeoff and Landing) systems, particularly in rotor optimization and urban mobility design, alongside methodologies like multidisciplinary design optimization and additive manufacturing. Key themes include experimental validation techniques and collaborations with prominent research institutions, such as NASA and the Department of the Air Force, emphasizing innovation in aerospace technologies."
-  },
-  {
-    "community_id": "v1_1732",
-    "version": 1,
-    "numeric_id": 1732,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "The community focuses on advanced aerodynamics and noise evaluation technologies, particularly in the emerging field of electric vertical takeoff and landing (eVTOL) aircraft design. Key research areas include effective noise assessment methods like Effective Perceived Noise Level (EPNL) and high-fidelity simulations for aerodynamic performance, as evidenced by studies such as high-fidelity aero-acoustic evaluations of heavy-lift eVTOLs in hover."
+    "summary": "The community primarily focuses on advanced technologies related to eVTOL (electric Vertical Takeoff and Landing) aircraft, emphasizing rotor optimization and urban mobility design. Key research areas include multidisciplinary design optimization and additive manufacturing, with common themes revolving around innovative optimization techniques and experimental validation methods."
   },
   {
     "community_id": "v1_1544",
@@ -717,17 +707,17 @@
     "resolution": 1.0,
     "member_count": 7,
     "linked_count": 7,
-    "summary": "This community primarily focuses on advanced data analysis techniques and frameworks within the domain of technology assessment and predictive modeling, specifically pertaining to electric vertical takeoff and landing vehicles and electric vehicle charging stations. The key research areas include handling qualities assessment and the application of deep learning models, particularly Long Short-Term Memory networks, to enhance decision-making and predictive accuracy in these emerging transportation technologies."
+    "summary": "This community primarily focuses on advanced data analysis techniques within the realm of electric vertical takeoff and landing (eVTOL) technologies, emphasizing the use of Eye-Tracking Data Analysis and Long Short-Term Memory Models for performance assessment and predictive modeling. The common theme revolves around developing objective frameworks and methodologies for evaluating handling qualities and operational efficiency in emerging transportation technologies, particularly in electric vehicle infrastructure."
   },
   {
-    "community_id": "v1_1857",
+    "community_id": "v1_1732",
     "version": 1,
-    "numeric_id": 1857,
+    "numeric_id": 1732,
     "algorithm": "Louvain",
     "resolution": 1.0,
-    "member_count": 12,
-    "linked_count": 12,
-    "summary": "This community primarily focuses on reliability and safety analysis within the aerospace and automotive sectors, emphasizing methodologies such as Common Cause Analysis (CCA) and Fault Tree Analysis (FTA). Key research areas include the evaluation of propulsion motor control software and the application of evidence theory in safety assessments, highlighting a common theme of enhancing system resilience and performance in complex technological environments."
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "This community primarily focuses on advanced aerodynamics and noise evaluation technologies, particularly in the context of electric vertical takeoff and landing (eVTOL) aircraft. Key research areas include high-fidelity aerodynamic evaluations and computational fluid dynamics, with a common theme of enhancing the performance and acoustic efficiency of heavy-lift eVTOL designs."
   },
   {
     "community_id": "v1_1890",
@@ -737,17 +727,17 @@
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community focuses on advanced technologies in automated decision-making and dynamic routing, emphasizing areas such as Answer Set Programming and reactive rerouting frameworks. Common themes include the integration of human factors in automated systems, particularly in the context of urban air traffic management (UATM) and the optimization of aircraft routing strategies."
+    "summary": "This community primarily focuses on advanced routing technologies within the domain of autonomous systems, particularly in air traffic management and decision-making frameworks. Key research areas include Answer Set Programming for knowledge representation and reasoning, alongside dynamic rerouting solutions for eVTOL aircraft, with a common theme of integrating human factors into reactive routing strategies."
   },
   {
-    "community_id": "v1_1797",
+    "community_id": "v1_1857",
     "version": 1,
-    "numeric_id": 1797,
+    "numeric_id": 1857,
     "algorithm": "Louvain",
     "resolution": 1.0,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "The community focuses on advanced trajectory generation and analysis technologies, primarily in the context of eVTOL aircraft, highlighting key research areas such as high-order trajectory planning, noise analysis, and smoothing strategies. Common themes include the development of innovative algorithms for optimizing flight trajectories and enhancing the overall performance and safety of aerial mobility solutions."
+    "member_count": 12,
+    "linked_count": 12,
+    "summary": "This community primarily focuses on reliability and safety analysis within the domain of propulsion systems, specifically leveraging methodologies such as Common Cause Analysis (CCA) and Fault Tree Analysis (FTA). Key research areas include the application of evidence theory in safety assessments and fault tolerance in multi-processor systems for aerospace technologies."
   },
   {
     "community_id": "v1_2104",
@@ -757,17 +747,17 @@
     "resolution": 1.0,
     "member_count": 7,
     "linked_count": 7,
-    "summary": "This community primarily focuses on advancements in autonomous technologies, particularly in path planning and optimization for vertical takeoff and landing aircraft in complex environments. The key research areas include location constraint generation and waypoint optimization algorithms, with contributions from organizations like MULTI AI, INC. under contracts with the Department of the Air Force, highlighting a common theme of enhancing navigation and operational efficiency in challenging scenarios."
+    "summary": "This community primarily focuses on the technological domain of autonomous systems, particularly in autonomous path planning and optimization for vertical takeoff and landing aircraft in complex environments. The key themes include advanced algorithm development for location constraints and waypoint optimization, with notable contributions from organizations like MULTI AI, INC. through their collaboration with the Department of the Air Force."
   },
   {
-    "community_id": "v1_2364",
+    "community_id": "v1_1797",
     "version": 1,
-    "numeric_id": 2364,
+    "numeric_id": 1797,
     "algorithm": "Louvain",
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community focuses on the technological domain of aerial transportation optimization, specifically through advancements in Skylane management and assignment systems for eVTOL aircraft. Key themes include the development of innovative methodologies for aircraft deployment and route assessment, reflecting a strong emphasis on enhancing operational efficiency in urban air mobility."
+    "summary": "This community focuses on advanced trajectory generation and planning for eVTOL aircraft, emphasizing methodologies such as jerk-level trajectory generation and noise analysis. The common themes include enhancing flight efficiency and safety through sophisticated trajectory smoothing strategies and high-order planning techniques, although no specific companies are identified within this group."
   },
   {
     "community_id": "v1_2583",
@@ -777,17 +767,7 @@
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily revolves around advanced measurement technologies, including frequency difference measurement and various positioning systems such as radar odometry and velocity measurement systems. The focus is on innovative methodologies and applications in precise navigation and tracking, as evidenced by documents like those discussing radar odometry systems."
-  },
-  {
-    "community_id": "v1_2424",
-    "version": 1,
-    "numeric_id": 2424,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "This community primarily focuses on advanced technologies related to aircraft energy storage, specifically emphasizing innovations in battery venting systems and enclosure designs. While no companies are mentioned, the common themes revolve around enhancing safety and efficiency in aircraft battery management through various specialized components like burst membranes and flexible vent couplings."
+    "summary": "The community primarily focuses on technologies related to measurement and positioning systems, specifically emphasizing radar odometry and frequency difference measurement techniques. Common themes include the development of advanced methods for accurate velocity and position determination, highlighting a strong research interest in enhancing navigation and tracking systems."
   },
   {
     "community_id": "v1_2638",
@@ -797,17 +777,27 @@
     "resolution": 1.0,
     "member_count": 7,
     "linked_count": 7,
-    "summary": "This community focuses on advanced composite technologies, specifically in the context of aerospace applications, emphasizing innovations like Carbon Fiber Reinforcement and Multi-Tube Wing Structures. Common themes include the development of lightweight, strong structural components and effective joining techniques to enhance aircraft performance and efficiency."
+    "summary": "The community focuses on advanced composite technologies, particularly in the aerospace sector, emphasizing structural innovations such as multi-tube wing structures and composite joining mechanisms. Common themes include the integration of lightweight materials like carbon fiber and the development of innovative attachment systems to enhance aircraft performance and efficiency."
   },
   {
-    "community_id": "v1_2773",
+    "community_id": "v1_2424",
     "version": 1,
-    "numeric_id": 2773,
+    "numeric_id": 2424,
     "algorithm": "Louvain",
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "The community primarily revolves around command and monitoring technologies, with a focus on systems designed for backup control architectures and monitoring functionalities. Although there are no specific companies identified, the common themes emphasize the development and integration of reliable command modules and systems for effective operational oversight and redundancy in technology management."
+    "summary": "This community primarily revolves around advancements in aircraft energy storage solutions, specifically focusing on technologies related to battery venting systems and enclosures. Common themes include innovations in safety and efficiency through burst membrane technology and flexible vent coupling, aimed at enhancing the performance and reliability of aircraft battery systems."
+  },
+  {
+    "community_id": "v1_2364",
+    "version": 1,
+    "numeric_id": 2364,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "The community centers around the technological domain of aerial transportation and air traffic management, specifically focusing on methodologies for assigning and deploying aircraft within designated skylanes. The key research areas include advanced systems for eVTOL (Electric Vertical Takeoff and Landing) aircraft operations, with common themes revolving around optimization and efficiency in route and trip assignment systems."
   },
   {
     "community_id": "v1_2715",
@@ -817,17 +807,7 @@
     "resolution": 1.0,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "The community focuses on advanced technologies related to battery assembly, specifically emphasizing methods for cell compatibility and characteristic matching. While there are no companies represented, the key research areas highlight the importance of integrating multiple characteristics for efficient cell selection and assessment in battery production processes."
-  },
-  {
-    "community_id": "v1_2751",
-    "version": 1,
-    "numeric_id": 2751,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 265,
-    "linked_count": 265,
-    "summary": "The community primarily focuses on advanced aerospace technologies, particularly in simulation-driven design and navigation systems, with key companies such as Joby Aviation, Delta Air Lines, and Uber Technologies leading innovation. Common themes include military contracts, such as those with the Department of the Air Force and Army, indicating a strong connection between commercial aviation advancements and defense applications."
+    "summary": "The community focuses on advanced technologies for optimizing battery assembly processes, particularly through methods like batch compatibility number calculation and cell characteristic matching. Key themes include enhancing efficiency in cell selection and compatibility assessment, emphasizing the importance of integrating multiple characteristics for improved battery performance."
   },
   {
     "community_id": "v1_2823",
@@ -837,7 +817,27 @@
     "resolution": 1.0,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "This community primarily revolves around advanced aerospace technologies, specifically focusing on acoustic properties and innovative fan propulsion systems. The prevalent theme is the development of adaptable and efficient components, as evidenced by the emphasis on designs like the removable inlet liner and associated sealing mechanisms."
+    "summary": "This community primarily focuses on aerospace technologies, particularly innovations related to acoustic property variability and modular ducted fan propulsors, alongside removable inlet liners. The recurring theme in the sample documents highlights advancements in inlet sealing solutions, emphasizing a niche within aerodynamics and noise reduction."
+  },
+  {
+    "community_id": "v1_2773",
+    "version": 1,
+    "numeric_id": 2773,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "This community primarily focuses on the technological domain of monitoring and control systems, specifically emphasizing the Command Monitor Backup Control Architecture and related monitoring technologies. The absence of companies suggests a strong emphasis on research and development in system reliability and operational resilience, with common themes centering around enhancing command and control functionalities in complex environments."
+  },
+  {
+    "community_id": "v1_2751",
+    "version": 1,
+    "numeric_id": 2751,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 265,
+    "linked_count": 265,
+    "summary": "The community focuses on advanced aviation technologies, particularly in autonomous systems and navigation, with key players including Joby Aviation, Delta Air Lines, and Toyota Motor Corporation. Common themes revolve around simulation-driven design and optimization for vertical takeoff and landing (VTOL) aircraft, emphasizing safety, precision, and innovative power unit designs."
   },
   {
     "community_id": "v1_3084",
@@ -847,7 +847,7 @@
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced components for aerospace applications, specifically in the realm of housing and support structures for turbomachinery. The common themes include innovations in materials and design for enhanced performance and reliability in aircraft engine systems, though there are currently no specific companies associated with this technology graph."
+    "summary": "The community focuses on technologies related to annular housing and structural components for turbomachinery, emphasizing innovations in centering mechanisms and composite materials. While no specific companies are mentioned, the recurring themes in the sample documents highlight the importance of fixation brackets for low-pressure compressor housings in aerospace applications."
   },
   {
     "community_id": "v1_3122",
@@ -857,17 +857,7 @@
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on innovative technologies related to turbine systems, including components like Dampfturbines and Axial Load Limiting Devices, which enhance efficiency and performance in energy generation. The common themes center around optimizing turbine operations and flow management, though no specific companies are identified within this community."
-  },
-  {
-    "community_id": "v1_3167",
-    "version": 1,
-    "numeric_id": 3167,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 5,
-    "linked_count": 5,
-    "summary": "The community focuses on advanced modeling techniques for predicting the reliability and failure rates of electronic systems, particularly in radiation environments, as evidenced by the emphasis on fluence and single event effects. Although there are no specific companies involved, the research areas highlight a strong interest in enhancing the resilience of technologies such as Field Programmable Gate Arrays (FPGAs) against radiation-induced failures."
+    "summary": "This community primarily focuses on advancements in energy generation technologies, particularly in turbine systems and their operational methodologies. Key themes include the optimization of turbine performance and efficiency, as evidenced by the inclusion of technologies like the Dampfturbine and the Axial Load Limiting Device, which aim to enhance the reliability and effectiveness of energy conversion processes."
   },
   {
     "community_id": "v1_3152",
@@ -877,37 +867,17 @@
     "resolution": 1.0,
     "member_count": 12,
     "linked_count": 12,
-    "summary": "This community primarily focuses on testing methodologies for sealing components in demanding environments, particularly involving heat and humidity. Key research areas include performance evaluations and life prediction methods, although no specific companies are identified within this group. Common themes revolve around the assessment and durability of sealing technologies under various environmental conditions."
+    "summary": "The community primarily focuses on testing methods for sealing components in challenging environmental conditions, such as damp heat and salt spray. Key research areas include performance evaluation and service life prediction of sealing technologies, with an emphasis on temperature impacts, although no specific companies are identified within this network."
   },
   {
-    "community_id": "v1_3236",
+    "community_id": "v1_3167",
     "version": 1,
-    "numeric_id": 3236,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 10,
-    "linked_count": 10,
-    "summary": "The community primarily focuses on magnetic technologies and mechanisms, with key innovations including detent mechanisms and magnetic coupling systems. Common themes revolve around the integration of magnetic components in fan and motor designs, highlighting advancements in efficiency and functionality within the technology domain."
-  },
-  {
-    "community_id": "v1_3241",
-    "version": 1,
-    "numeric_id": 3241,
+    "numeric_id": 3167,
     "algorithm": "Louvain",
     "resolution": 1.0,
     "member_count": 5,
     "linked_count": 5,
-    "summary": "This community primarily focuses on advanced data extraction and processing technologies, particularly in the realm of semantic feature extraction and multi-field data adaptation. Key themes include the development of methodologies such as inverted index tables and similarity measurement techniques to enhance data handling, though no specific companies are represented in this context."
-  },
-  {
-    "community_id": "v1_3410",
-    "version": 1,
-    "numeric_id": 3410,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 89,
-    "linked_count": 89,
-    "summary": "The community revolves around the technological domain of advanced aviation and energy solutions, particularly focusing on innovations like energy-efficient propeller designs and hydrogen-powered vehicles. Key players include Piasecki Aircraft and Horizon Aircraft, with a common theme of securing government contracts and grants to advance projects in electric vertical takeoff and landing (eVTOL) technology and hydrogen fuel systems."
+    "summary": "This community focuses on advanced modeling techniques for assessing reliability and failure rates of semiconductor systems, particularly in radiation environments, as evidenced by the emphasis on fault-free fluence models and single event effect prediction methods. While no companies are represented, the common themes revolve around enhancing the resilience of technology, particularly Field Programmable Gate Arrays (FPGAs), against radiation-induced failures."
   },
   {
     "community_id": "v1_3288",
@@ -917,17 +887,27 @@
     "resolution": 1.0,
     "member_count": 330,
     "linked_count": 330,
-    "summary": "The community primarily focuses on advanced aviation technologies, particularly in propulsion systems and electric vehicle innovations. Key players include Archer Aviation and Safran, with common themes revolving around military and regulatory contracts in aerospace development, reflecting a significant interest in integrating cutting-edge propulsion solutions within the aviation sector."
+    "summary": "This community primarily focuses on advanced propulsion technologies, particularly in the context of electric and vertical takeoff and landing (eVTOL) systems. Key players include Archer Aviation and Safran, with a notable emphasis on government contracts, as evidenced by multiple documents related to the Department of the Air Force."
   },
   {
-    "community_id": "v1_3459",
+    "community_id": "v1_3241",
     "version": 1,
-    "numeric_id": 3459,
+    "numeric_id": 3241,
     "algorithm": "Louvain",
     "resolution": 1.0,
-    "member_count": 40,
-    "linked_count": 40,
-    "summary": "This community primarily focuses on the technological domain of advanced aerial mobility, specifically the design and optimization of propulsion systems and structures for electric vertical takeoff and landing (eVTOL) aircraft. Key research areas include parametric modeling, aerodynamic configuration design, and the development of innovative structures for crashworthiness, reflecting a common theme of enhancing the performance and safety of next-generation aviation technologies."
+    "member_count": 5,
+    "linked_count": 5,
+    "summary": "This community is centered around advanced data extraction and semantic analysis technologies, with a focus on methods like multi-field data extraction and semantic feature extraction. Key themes include the development of innovative extraction techniques and similarity measurement, aimed at enhancing data processing efficiency in various applications, as evidenced by the sample document on aviation data extraction systems."
+  },
+  {
+    "community_id": "v1_3236",
+    "version": 1,
+    "numeric_id": 3236,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 10,
+    "linked_count": 10,
+    "summary": "This community primarily focuses on advanced magnet-based technologies and mechanisms, evidenced by innovations such as the Detent Mechanism and various magnetic coupling systems. The key themes revolve around the integration of magnetic components in combined fan and motor systems, highlighting a research area dedicated to enhancing efficiency and functionality in mechanical design."
   },
   {
     "community_id": "v1_3446",
@@ -937,7 +917,17 @@
     "resolution": 1.0,
     "member_count": 6,
     "linked_count": 6,
-    "summary": "This community primarily focuses on the technological domain of lightning protection systems, particularly in relation to composite materials used in eVTOL aircraft. Key research areas include compliance verification methods and bonding assemblies for ensuring lightning strike protection, highlighting a common theme of enhancing safety and reliability in advanced aerospace technologies."
+    "summary": "This community primarily focuses on the technological domain of lightning protection, specifically in the context of composite materials and eVTOL aircraft systems. Key research areas include compliance verification methods and bonding assemblies for effective lightning strike protection, highlighting a common theme of ensuring safety and reliability in advanced aviation technologies."
+  },
+  {
+    "community_id": "v1_3410",
+    "version": 1,
+    "numeric_id": 3410,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 89,
+    "linked_count": 89,
+    "summary": "The community centers around advanced aviation technologies, particularly focusing on energy efficiency and hydrogen propulsion systems. Key players include Piasecki Aircraft and Horizon Aircraft, with common themes revolving around innovative propeller design and hybrid energy solutions, as highlighted by the associated documents on defense contracts and propeller optimization."
   },
   {
     "community_id": "v1_3550",
@@ -947,7 +937,7 @@
     "resolution": 1.0,
     "member_count": 96,
     "linked_count": 96,
-    "summary": "The community primarily focuses on advanced simulation and analysis technologies for aerospace applications, including design analysis, trajectory management, and rotor dynamics. While there are no prominent companies represented, the sample documents indicate a strong emphasis on innovative research in eVTOL (electric Vertical Take-Off and Landing) and military contracts related to aeronautics."
+    "summary": "This community primarily focuses on advanced simulation and analysis technologies related to aviation and aerospace, particularly emphasizing design and trajectory management. Key research areas include rotor dynamics and adaptive detection methodologies, with notable contributions from projects such as SUAVE and eVTOL, reflecting a common theme of innovation in aircraft design and performance optimization."
   },
   {
     "community_id": "v1_3574",
@@ -957,37 +947,17 @@
     "resolution": 1.0,
     "member_count": 10,
     "linked_count": 10,
-    "summary": "The community primarily focuses on advanced communication and signal processing technologies, including Broadband RF Signal Processing and Software Defined Radio, with an emphasis on simulation and control systems for aerospace applications, as highlighted by the research on VTOL vehicles and holographic cues. While no specific companies are mentioned, the common themes revolve around innovation in aerospace technology and the integration of sophisticated signal processing methods into practical applications."
+    "summary": "This community primarily focuses on advanced technologies in signal processing and simulation systems, particularly in the context of airborne radio frequency equipment. Common themes include the development of innovative testing methodologies and the integration of software-defined solutions to enhance aviation applications."
   },
   {
-    "community_id": "v1_3610",
+    "community_id": "v1_3459",
     "version": 1,
-    "numeric_id": 3610,
+    "numeric_id": 3459,
     "algorithm": "Louvain",
     "resolution": 1.0,
-    "member_count": 7,
-    "linked_count": 7,
-    "summary": "This community primarily focuses on advanced networking technologies, particularly in the context of 5G/6G, emphasizing innovative solutions such as network slicing and low-altitude intelligent networks. The key research areas include deep reinforcement learning for orchestration and resource management algorithms, with a notable theme around enhancing connectivity for advanced air mobility applications."
-  },
-  {
-    "community_id": "v1_3590",
-    "version": 1,
-    "numeric_id": 3590,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 76,
-    "linked_count": 76,
-    "summary": "The community of 76 nodes primarily focuses on advanced aviation technologies, with a strong emphasis on AI-enhanced safety systems, sustainable practices, and innovative eVTOL powertrain systems. While no specific companies are represented, key research areas include aviation cybersecurity and modeling software, highlighting a common theme of integrating cutting-edge technology to improve safety and sustainability in the aviation sector."
-  },
-  {
-    "community_id": "v1_3575",
-    "version": 1,
-    "numeric_id": 3575,
-    "algorithm": "Louvain",
-    "resolution": 1.0,
-    "member_count": 38,
-    "linked_count": 38,
-    "summary": "This community primarily focuses on advanced technologies in electric propulsion systems and optimization techniques, particularly for eVTOL aircraft. Key research areas include the application of Particle Swarm Optimization and the impact of temperature on battery systems, with common themes revolving around optimizing performance and efficiency in aerospace technologies."
+    "member_count": 40,
+    "linked_count": 40,
+    "summary": "The community primarily focuses on advanced aviation technologies, specifically in the development and optimization of electric vertical takeoff and landing (eVTOL) aircraft, highlighted by innovations such as the Tilting Propeller System and integrated design methodologies like the SUAVE Propeller Design Platform. Common themes include flight control systems, aerodynamics, and the use of surrogate modeling techniques, reflecting a strong emphasis on enhancing the efficiency and performance of next-generation air mobility solutions."
   },
   {
     "community_id": "v1_3596",
@@ -997,6 +967,36 @@
     "resolution": 1.0,
     "member_count": 200,
     "linked_count": 200,
-    "summary": "The community primarily revolves around advanced eVTOL (electric Vertical Take-Off and Landing) technologies, focusing on energy demand analysis, certification processes, and flight configurations. Key players include companies like Skylys Aircraft and Collins Aerospace, with common themes centering on innovative aircraft design and military contracts, as evidenced by documents related to the Department of the Air Force."
+    "summary": "The community centers around the advanced development of eVTOL (electric Vertical Take-Off and Landing) technologies, with a focus on energy demand analysis, certification processes, and innovative flight configurations. Key players include Skylys Aircraft and Collins Aerospace, with collaborative efforts evident in government contracts from the Department of the Air Force and NASA, highlighting themes of technological innovation and regulatory compliance in the aerospace sector."
+  },
+  {
+    "community_id": "v1_3610",
+    "version": 1,
+    "numeric_id": 3610,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 7,
+    "linked_count": 7,
+    "summary": "This community focuses on advanced networking technologies, particularly in the realm of 5G/6G network slicing and its applications in low-altitude intelligent networks, evidenced by research like network slice-based solutions for advanced air mobility. Key themes include the integration of deep reinforcement learning for orchestration and resource management, highlighting a strong emphasis on optimizing network performance and efficiency in emerging technological landscapes."
+  },
+  {
+    "community_id": "v1_3590",
+    "version": 1,
+    "numeric_id": 3590,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 76,
+    "linked_count": 76,
+    "summary": "The community primarily focuses on advanced aviation technologies, particularly in the realms of AI-enhanced safety, sustainable practices, and eVTOL systems. Key research areas include safety assessment systems and cybersecurity, with a notable document from CONTINUUM DYNAMICS INC related to NASA, highlighting the community's emphasis on innovation and collaboration in aviation technology development."
+  },
+  {
+    "community_id": "v1_3575",
+    "version": 1,
+    "numeric_id": 3575,
+    "algorithm": "Louvain",
+    "resolution": 1.0,
+    "member_count": 38,
+    "linked_count": 38,
+    "summary": "The community primarily revolves around advanced propulsion and battery systems, particularly in the context of eVTOL (electric Vertical Take-Off and Landing) aircraft, with a focus on technologies such as Particle Swarm Optimization and Power Demand Management Techniques. Key research areas include aerodynamic optimization and energy management strategies, highlighting common themes of enhancing efficiency and performance in aerial transportation systems."
   }
 ]
