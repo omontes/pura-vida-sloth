@@ -83,7 +83,7 @@ async def get_innovation_metrics(
     driver: AsyncDriver,
     tech_id: str,
     start_date: str = "2023-01-01",
-    end_date: str = "2025-01-01",
+    end_date: str = "2025-12-01",
     community_version: str = "v1"
 ) -> InnovationMetrics:
     """
@@ -256,7 +256,7 @@ async def score_innovation(
     driver: AsyncDriver,
     tech_id: str,
     start_date: str = "2023-01-01",
-    end_date: str = "2025-01-01",
+    end_date: str = "2025-12-01",
     community_version: str = "v1"
 ) -> InnovationOutput:
     """

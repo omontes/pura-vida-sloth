@@ -78,8 +78,8 @@ Provide your score and reasoning.
 async def get_adoption_metrics(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2023-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = "2024-01-01",
+    end_date: str = "2025-12-01"
 ) -> AdoptionMetrics:
     """
     Fetch all adoption metrics for a technology.
@@ -229,8 +229,8 @@ async def adoption_scorer_agent(
 async def score_adoption(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2023-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = "2024-01-01",
+    end_date: str = "2025-12-01"
 ) -> AdoptionOutput:
     """
     Standalone function for scoring adoption (testing/debugging).

@@ -58,7 +58,7 @@ async def get_gov_contracts_1yr(
     WHERE d.doc_type = 'government_contract'
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
-      AND m.role = 'procured'
+      AND m.role IN ['deployed', 'funded', 'researched']
       AND d.quality_score >= 0.75
     WITH d, coalesce(d.award_amount, 0.0) AS award_amount
     RETURN
@@ -120,7 +120,7 @@ async def get_top_contracts_by_value(
     query = """
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'government_contract'
-      AND m.role = 'procured'
+      AND m.role IN ['deployed', 'funded', 'researched']
       AND d.quality_score >= 0.75
     WITH d, m, coalesce(d.award_amount, 0.0) AS award_amount
     RETURN

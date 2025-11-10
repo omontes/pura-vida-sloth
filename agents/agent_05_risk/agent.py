@@ -93,7 +93,7 @@ async def risk_scorer_agent(state: Dict[str, Any], driver: AsyncDriver) -> Dict[
         "risk_confidence": result.confidence,
     }
 
-async def score_risk(driver: AsyncDriver, tech_id: str, start_date: str = "2024-07-01", end_date: str = "2025-01-01") -> RiskOutput:
+async def score_risk(driver: AsyncDriver, tech_id: str, start_date: str = "2024-07-01", end_date: str = "2025-12-01") -> RiskOutput:
     state = {"tech_id": tech_id, "start_date": start_date, "end_date": end_date}
     result = await risk_scorer_agent(state, driver)
     return RiskOutput(

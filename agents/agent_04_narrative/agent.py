@@ -80,8 +80,8 @@ Provide your score and reasoning.
 async def get_narrative_metrics(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = "2025-05-01",
+    end_date: str = "2025-12-01"
 ) -> NarrativeMetrics:
     """
     Fetch all narrative metrics for a technology.
@@ -238,8 +238,8 @@ async def narrative_scorer_agent(
 async def score_narrative(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = "2025-05-01",
+    end_date: str = "2025-12-01"
 ) -> NarrativeOutput:
     """
     Standalone function for scoring narrative (testing/debugging).
