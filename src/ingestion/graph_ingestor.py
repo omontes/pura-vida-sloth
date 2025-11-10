@@ -245,7 +245,7 @@ class GraphIngestor:
             file_path: Path to JSON file
             limit: Optional limit on number of documents
         """
-        with open(file_path, "r") as f:
+        with open(file_path, "r", encoding="utf-8") as f:
             records = json.load(f)
 
         # Apply limit if specified

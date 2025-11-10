@@ -1,0 +1,106 @@
+{
+  "chart_type": "hype_cycle",
+  "generated_at": "2025-01-01T00:00:00Z",
+  "technologies": [
+    {
+      "id": "evtol",
+      "name": "Evtol",
+      "x": 23.5,
+      "y": 14.5,
+      "phase": "trough",
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 10.0,
+        "narrative": 10.0,
+        "risk": 10.0,
+        "hype": 50.0,
+        "weighted": 26.0
+      },
+      "summary": "The eVTOL (electric Vertical Takeoff and Landing) technology is currently positioned in a trough phase of market development, characterized by low innovation, adoption, and media coverage scores. Despite a moderate hype score, the lack of significant financial signals and contracts indicates that the market is not yet ready for widespread implementation. This stagnation suggests that while the potential for eVTOL exists, the current landscape is fraught with challenges that need to be addressed before it can gain traction.",
+      "insight": "The eVTOL market is currently underperforming across all key metrics, indicating a critical need for innovation and strategic partnerships to drive adoption.",
+      "recommendation": "Monitor the eVTOL space closely, as it may present future opportunities for investment once innovation and adoption metrics improve. Engaging with startups and research initiatives could position your organization favorably when the market begins to recover."
+    },
+    {
+      "id": "urban_air_mobility",
+      "name": "Urban Air Mobility",
+      "x": 23.5,
+      "y": 9.6,
+      "phase": "trough",
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 10.0,
+        "narrative": 0.0,
+        "risk": 10.0,
+        "hype": 40.0,
+        "weighted": 24.5
+      },
+      "summary": "Urban air mobility (UAM) is currently in a trough phase of hype, with low scores across innovation, adoption, and narrative dimensions, indicating a lack of significant progress and market traction. Despite a few patents and contracts, the technology has not yet gained substantial media attention or financial backing, reflecting skepticism about its viability. The divergence in layer scores suggests that while there is some innovation, it has not translated into widespread acceptance or commercial success. This stagnation indicates that stakeholders should exercise caution in their expectations and investments in UAM.",
+      "insight": "The urban air mobility sector is currently underperforming in innovation and adoption, suggesting a disconnect between technological potential and market readiness.",
+      "recommendation": "Monitor the urban air mobility sector closely. Given the current trough phase and low adoption rates, it is prudent to keep an eye on developments without making significant investments until clearer signs of market viability and consumer acceptance emerge."
+    },
+    {
+      "id": "advanced_air_mobility",
+      "name": "Advanced Air Mobility",
+      "x": 23.5,
+      "y": 9.6,
+      "phase": "trough",
+      "scores": {
+        "innovation": 10.0,
+        "adoption": 10.0,
+        "narrative": 0.0,
+        "risk": 10.0,
+        "hype": 40.0,
+        "weighted": 24.5
+      },
+      "summary": "Advanced air mobility (AAM) is currently in a trough phase, characterized by low innovation and adoption scores, indicating a lack of significant breakthroughs and market traction. The technology has received minimal media coverage, suggesting a weak narrative and public interest. Financial signals indicate that investment and revenue generation remain limited, creating a challenging environment for stakeholders. This combination of factors suggests that while AAM has potential, it is not yet positioned for immediate growth or widespread adoption.",
+      "insight": "The advanced air mobility sector is currently underperforming in innovation and market adoption, indicating a need for strategic reassessment before significant investments are made.",
+      "recommendation": "Monitor the advanced air mobility market closely for signs of innovation and adoption improvements. Given the current low scores and hype phase, it is prudent to avoid significant investments until clearer indicators of market viability emerge."
+    },
+    {
+      "id": "electric_propulsion_vehicle",
+      "name": "Electric Propulsion Vehicle",
+      "x": 32.18,
+      "y": 16.11,
+      "phase": "trough",
+      "scores": {
+        "innovation": 41.0,
+        "adoption": 10.0,
+        "narrative": 0.0,
+        "risk": 10.0,
+        "hype": 54.20323014168885,
+        "weighted": 33.8
+      },
+      "summary": "Electric propulsion vehicles are currently in a trough phase of hype, characterized by low adoption rates and minimal media coverage, despite a moderate level of innovation reflected in patent filings. With an adoption score of only 10/100, the market is not yet ready for widespread implementation, indicating significant barriers to entry and acceptance. The financial risk signals further complicate the landscape, suggesting that investment in this technology may be premature at this stage.",
+      "insight": "The electric propulsion vehicle market is currently underperforming with low adoption and high financial risk, making it a challenging environment for investment.",
+      "recommendation": "Monitor the electric propulsion vehicle sector closely, as the technology shows potential for innovation but lacks current market traction. Continued observation of patent developments and shifts in consumer interest will be crucial before considering any substantial investment."
+    },
+    {
+      "id": "electric_air_taxi_services",
+      "name": "Electric Air Taxi Services",
+      "x": 20.7,
+      "y": 7.5,
+      "phase": "trough",
+      "scores": {
+        "innovation": 0.0,
+        "adoption": 10.0,
+        "narrative": 0.0,
+        "risk": 10.0,
+        "hype": 38.452994616207484,
+        "weighted": 21.5
+      },
+      "summary": "Electric air taxi services are currently in a trough phase of hype, characterized by minimal innovation, low adoption rates, and negligible media coverage. Despite some early contracts and revenue generation, the overall market signals indicate significant financial risk and uncertainty. Stakeholders should be cautious, as the technology lacks robust intellectual property backing and has yet to establish a compelling narrative to attract broader investment and public interest.",
+      "insight": "The electric air taxi sector is underperforming across all key metrics, indicating a lack of readiness for significant investment or expansion at this time.",
+      "recommendation": "Monitor the market closely for emerging trends and technological advancements, but avoid making substantial investments until there is clear evidence of innovation and improved adoption rates. This cautious approach will mitigate financial risk while allowing for strategic positioning as the market matures."
+    }
+  ],
+  "metadata": {
+    "total_count": 5,
+    "phases": {
+      "innovation_trigger": 0,
+      "peak": 0,
+      "trough": 5,
+      "slope": 0,
+      "plateau": 0
+    }
+  }
+}

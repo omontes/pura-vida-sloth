@@ -15,7 +15,7 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 ### System Overview
 
 **Input**: Neo4j Knowledge Graph (pure storage, zero derived scores)
-**Output**: `hype_cycle_chart.json` with technologies positioned on 5 Gartner phases
+**Output**: `hype_cycle_chart.json` with technologies positioned on 5 Gartner phases must be the same format as this example: agents\outputs\hype_cycle_chart_example.json
 **Architecture**: 11 specialized agents orchestrated via LangGraph state machine
 **Multi-Run Consensus**: 10-20 analytical runs → Convergent verdict with confidence metrics
 **Cost**: ~$0.91 per technology (GPT-4o-mini @ $0.150/$0.600 per M tokens)
@@ -28,6 +28,20 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 2. **Multi-Run Consensus**: Each run provides different analytical perspective → Scientific convergence across 10-20 runs builds confidence.
 3. **4-Layer Intelligence Framework**: Cross-layer contradiction detection reveals lifecycle position.
 4. **Evidence Tracing**: Every score backed by 5-15 source documents with citations.
+5. **Agent Independence for Testing**: For each agent you must create a full test simulating both the input and output. This is crucial for get evals about the performance of the task of this agent.
+
+### Multi Query Graph RAG
+1. Always try to get the same information from the graph but using distincts approaches: by hybrid search, by some x cypher, by another y cypher, using some extra source, etc. 
+2. Dont trust always in the pure cypher for get the ideal result. The graph is not perfect but could be a good initial view.
+3. The graph has communities and must be used in every agent because it is another approach or pesrpective that use the power of the graph. 
+
+## Evidence Approach
+1. Almost any relation or edges of the graph has an evidence_confindence and evidence_text and this is very crucial to get in almost every step. This one of the best insights the graph could give you along with the connections.
+2. Use the communities in every stage the Community Summary is an important tool to query the graph and have insights.
+
+## Multi-Hop GraphRAG 
+1. It is ok to do different queries to get more data and if you get some and need another one feel free to do it. 
+
 
 ### The 11-Agent Architecture
 
@@ -92,29 +106,25 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 
 ## 2. Knowledge Graph Foundation
 
-### 2.1 Schema Overview (SCHEMA V2 COMPLETE.md)
+### 2.1 Schema Overview (NEO4J_SCHEMA.md)
 
 **Node Types**:
 - `Technology`: Core entities being analyzed (id, name, domain, aliases)
 - `Company`: Organizations developing/using technologies (name, ticker, type)
 - `Document`: 7 subtypes (patent, technical_paper, sec_filing, regulation, github, government_contract, news)
-- `Entity`: Extracted entities (person, organization, place, technology)
-- `Event`: Temporal occurrences (regulatory_approval, contract_award, filing)
 
 **Critical Relationships**:
 - `MENTIONED_IN`: Technology/Company → Document (role, strength, evidence_confidence, evidence_text)
-- `RELATED_TO_TECH`: Company → Technology (relation_type: develops, uses, invests_in, researches, owns_ip)
-- `RELATED_TECH`: Technology ↔ Technology (14 relation types: competes_with, enables, supersedes, etc.)
-- `RELATED_COMPANY`: Company ↔ Company (6 relation types: partners_with, invests_in, acquires, etc.)
+- `RELATED_TO_TECH`: Company → Technology (relation_type: any relation term in the graph, trust in the graph and make group by always, the names of relation type are not a rigid exclusive term)
+- `RELATED_TECH`: Technology ↔ Technology (relation_type: any relation term in the graph, trust in the graph and make group by always, the names of relation type are not a rigid exclusive term)
+- `RELATED_COMPANY`: Company ↔ Company (relation_type: any relation term in the graph, trust in the graph and make group by always, the names of relation type are not a rigid exclusive term)
 
 **Temporal Fields** (CRITICAL for scoring):
 - `Document.published_at`: Publication date (datetime)
 - `Document.quality_score`: Relevance threshold (0.85-1.0)
 - `MENTIONED_IN.strength`: Entity centrality in document (0-1)
 
-**Vector Embeddings**:
-- `Document.embedding`: 768-dim OpenAI text-embedding-3-small
-- `Technology.embedding`: 768-dim (from ChromaDB entity resolution)
+**Vector Embeddings**: You will need to create this because the graph does not have any embeddings. 
 
 ### 2.2 Data Availability Per Intelligence Layer
 
@@ -123,19 +133,16 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 **Data Sources**:
 - **Patents**: `Document.doc_type = "patent"`
   - Fields: `filing_date`, `grant_date`, `claims_count`, `citations_received`, `citations_made`
-  - Role: "invented" in MENTIONED_IN
-  - Volume: High (100-500 patents per tech)
+  - Role: "invented" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 - **Research Papers**: `Document.doc_type = "technical_paper"`
   - Fields: `published_at`, `citation_count`, `venue`, `composite_score`
-  - Role: "studied" in MENTIONED_IN
-  - Volume: Medium (50-200 papers per tech)
+  - Role: "studied" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
   - **DuckDB Tool**: `ScholarlyPapersDatabase` for composite scoring
 
 - **GitHub Activity**: `Document.doc_type = "github"`
   - Fields: `stars`, `forks`, `contributors`, `last_updated`, `commits_count`
-  - Role: "implemented" in MENTIONED_IN
-  - Volume: Low-Medium (10-50 repos per tech)
+  - Role: "implemented" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 **Lookback Window**: 2 years (innovation moves slowly)
 
@@ -144,18 +151,15 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 **Data Sources**:
 - **Government Contracts**: `Document.doc_type = "government_contract"`
   - Fields: `award_date`, `contract_value`, `agency`, `awardee`, `contract_type`
-  - Role: "procured" in MENTIONED_IN
-  - Volume: Medium (50-200 contracts per tech)
+  - Role: "procured" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 - **Regulatory Filings**: `Document.doc_type = "regulation"`
   - Fields: `published_at`, `regulation_type`, `agency`, `approval_status`
-  - Role: "regulated" in MENTIONED_IN
-  - Volume: Low (5-20 filings per tech)
+  - Role: "regulated" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 - **SEC Revenue Recognition**: `Document.doc_type = "sec_filing"`
   - Fields: `filing_date`, `filing_type` (10-K, 10-Q), `fiscal_period`, `revenue_mentioned`
-  - Role: "commercialized" in MENTIONED_IN
-  - Volume: Medium (20-100 filings per tech)
+  - Role: "commercialized" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 **Lookback Window**: 1 year (market formation accelerates)
 
@@ -164,18 +168,15 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 **Data Sources**:
 - **SEC Risk Factors**: `Document.doc_type = "sec_filing"` WHERE `risk_factor_mentioned = true`
   - Fields: `filing_date`, `risk_category`, `sentiment`, `severity`
-  - Role: "subject" in MENTIONED_IN (tech is subject of risk)
-  - Volume: High (50-200 filings per tech)
+  - Role: "subject" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 - **Insider Transactions**: External DuckDB tool (Forms 3/4/5)
   - Fields: `transaction_date`, `transaction_code` (P/S), `shares`, `price_per_share`, `net_insider_value_usd`
   - **DuckDB Tool**: `InsiderTransactionsDatabase.query_transactions_by_ticker()`
-  - Volume: Medium (100-500 transactions per company)
 
 - **Institutional Holdings**: `Document.doc_type = "sec_filing"` (13F forms)
   - Fields: `filing_date`, `holder_name`, `shares_held`, `value_usd`, `percent_change`
-  - Role: "owned" in MENTIONED_IN
-  - Volume: Medium (50-200 filings per tech)
+  - Role: "owned" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 **Lookback Window**: 6 months (financial reality changes quickly)
 
@@ -184,14 +185,12 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 **Data Sources**:
 - **News Articles**: `Document.doc_type = "news"`
   - Fields: `published_at`, `title`, `domain`, `outlet_tier`, `sentiment`, `socialimage`
-  - Role: "subject" in MENTIONED_IN
-  - Volume: High (200-1000 articles per tech)
+  - Role: "subject" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
   - **Outlet Tier Classification**: Industry Authority > Financial Authority > Mainstream > Wire > Niche
 
 - **Press Releases**: `Document.doc_type = "news"` WHERE `domain IN ['prnewswire.com', 'businesswire.com']`
   - Fields: `published_at`, `title`, `company`
-  - Role: "announced" in MENTIONED_IN
-  - Volume: Medium (50-200 releases per tech)
+  - Role: "announced" in MENTIONED_IN (ALWAYS CHECK FIRST WHAT ARE THE ROLES ACCORDING TO THE GRAPH)
 
 **Lookback Window**: 3 months (news cycles are short)
 
@@ -201,7 +200,6 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 - ✅ Raw documents (patents, papers, news, SEC filings)
 - ✅ Relationships (MENTIONED_IN, RELATED_TO_TECH)
 - ✅ Metadata (dates, counts, quality scores)
-- ✅ Vector embeddings (for semantic search)
 
 **Graph Does NOT Contain**:
 - ❌ Innovation scores
@@ -220,8 +218,8 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 
 **CRITICAL**: Before running the multi-agent system, the Neo4j graph must be configured with:
 
-1. **Temporal Indexes** (for efficient date-range queries)
-2. **Hybrid Search Infrastructure** (vector + BM25 full-text)
+1. **Temporal Indexes** (for efficient date-range queries) ALL DATE FIELDS ARE IN DATETIME NOT DATE.
+2. **Hybrid Search Infrastructure** (vector (with open ai v3 small) + BM25 full-text)
 3. **Pre-Computed Community Structures** (6 different perspectives)
 4. **Graph Algorithm Configurations** (PageRank, centrality metrics)
 
@@ -236,9 +234,11 @@ This document defines the end-to-end architecture for the **11-agent LangGraph s
 // TEMPORAL INDEXES (for date-range filtering)
 // ============================================================
 
-// Index on published_at for all documents
-CREATE INDEX document_published_at IF NOT EXISTS
-FOR (d:Document) ON (d.published_at);
+// Index on published_at for all documents (REMEMBER IS DATETIME AND NOT DATE)
+CREATE INDEX document_published_at IF NOT EXISTS date(datetime(d.published_at)
+FOR (d:Document) ON (d.published_at); --> date(datetime(d.published_at)
+
+Example: WHERE date(datetime(d.published_at)) >= date() - duration('P730D') --> this is how it works now just to clarify.
 
 // Composite index for doc_type + published_at (Layer-specific queries)
 CREATE INDEX document_type_published IF NOT EXISTS
@@ -249,8 +249,8 @@ CREATE INDEX technology_id IF NOT EXISTS
 FOR (t:Technology) ON (t.id);
 
 // Company ticker index (for financial queries)
-CREATE INDEX company_ticker IF NOT EXISTS
-FOR (c:Company) ON (c.ticker);
+CREATE INDEX company_name IF NOT EXISTS
+FOR (c:Company) ON (c.name);
 
 // Doc ID index (for deduplication and citations)
 CREATE INDEX document_doc_id IF NOT EXISTS
@@ -271,6 +271,7 @@ FOR (d:Document) ON (d.doc_id);
 // ============================================================
 // VECTOR SEARCH INDEX (OpenAI text-embedding-3-small, 768 dims)
 // ============================================================
+THE GRAPH DOES NOT HAVE ANY EMBEDDING NOW. SO FEEL FREE TO CREATE THE FIELDS FOR DOCUMENT AND TECHNOLOGY AND COMPANY.
 
 CALL db.index.vector.createNodeIndex(
     'document_embeddings',        // Index name
@@ -639,11 +640,19 @@ has_pagerank: true
 
 ```cypher
 // Reproducible: ORDER BY ensures consistent ordering
-MATCH (t:Technology)
-OPTIONAL MATCH (c:Company)-[:RELATED_TO_TECH]->(t)
-WITH t, collect(DISTINCT c.ticker) AS tickers
-RETURN t.id, t.name, t.domain, t.aliases, tickers
-ORDER BY t.id ASC
+MATCH (t:Technology)-[:MENTIONED_IN]->(d:Document)
+WITH t, d.doc_type AS doc_type, count(DISTINCT d) AS doc_count
+WITH
+  t,
+  collect({doc_type: doc_type, doc_count: doc_count}) AS counts_by_type,
+  sum(doc_count) AS total_doc_count
+RETURN
+  t.id   AS tech_id,
+  t.name AS technology,
+  total_doc_count,
+  counts_by_type   // aquí viene el desglose por doc_type
+ORDER BY total_doc_count DESC
+LIMIT 20;
 ```
 
 **ChromaDB Augmentation** (if graph is sparse):

@@ -1,0 +1,327 @@
+{
+  "industry": "eVTOL & Advanced Air Mobility",
+  "generated_at": "2025-11-08T10:30:00Z",
+  "metadata": {
+    "total_documents": 1247,
+    "date_range": "2020-01-01 to 2025-11-08"
+  },
+  "technologies": [
+    {
+      "id": "evtol",
+      "name": "Electric Vertical Takeoff and Landing",
+      "domain": "Aviation",
+      "phase": "Peak of Inflated Expectations",
+      "phase_position": "late",
+      "phase_confidence": 0.88,
+      "chart_x": 1.25,
+      "scores": {},
+      "summary": "High media coverage (269 articles) but minimal revenue. Insider selling at $16-18 suggests executive exits. GitHub repos 0% active - innovation stalled.",
+      "key_contradictions": [
+        "Layer 4 (narrative) extremely bullish but Layer 1-2 (innovation) declining",
+        "Insider selling contradicts public optimistic statements"
+      ],
+      "evidence_counts": {
+        "patents": 42,
+        "papers": 18,
+        "github": 3,
+        "news": 269,
+        "sec_filings": 12,
+        "insider_transactions": 8
+      },
+      "companies_developing": ["JOBY", "ACHR", "LILM"],
+      "companies_using": []
+    },
+    {
+      "id": "hydrogen_fuel_cell",
+      "name": "Hydrogen Fuel Cell",
+      "domain": "Energy",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "mid",
+      "phase_confidence": 0.82,
+      "chart_x": 2.5,
+      "scores": {},
+      "summary": "Infrastructure costs exceeding projections. Media coverage declining. Limited commercial aviation adoption.",
+      "key_contradictions": [
+        "High innovation (patents) but low market adoption",
+        "Government support but private sector skepticism"
+      ],
+      "evidence_counts": {
+        "patents": 87,
+        "papers": 52,
+        "news": 124,
+        "government_contracts": 15,
+        "regulations": 8
+      },
+      "companies_developing": ["ZeroAvia", "Universal Hydrogen"],
+      "companies_using": []
+    },
+    {
+      "id": "solid_state_battery",
+      "name": "Solid-State Battery",
+      "domain": "Energy",
+      "phase": "Innovation Trigger",
+      "phase_position": "mid",
+      "phase_confidence": 0.91,
+      "chart_x": 0.7,
+      "scores": {},
+      "summary": "Breakthrough patent activity for aviation. Early academic research accelerating. No commercial products yet but strong fundamentals.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 156,
+        "papers": 94,
+        "github": 12,
+        "news": 78
+      },
+      "companies_developing": ["QS", "SLDP"],
+      "companies_using": []
+    },
+    {
+      "id": "autonomous_flight",
+      "name": "Autonomous Flight",
+      "domain": "Aviation",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "mid",
+      "phase_confidence": 0.85,
+      "chart_x": 3.5,
+      "scores": {},
+      "summary": "Real revenue traction in cargo operations. Regulatory framework maturing. Military and cargo leading adoption.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 124,
+        "papers": 45,
+        "news": 198,
+        "government_contracts": 28,
+        "sec_filings": 18
+      },
+      "companies_developing": ["Zipline", "Wing"],
+      "companies_using": ["UPS", "AMZN"]
+    },
+    {
+      "id": "detect_and_avoid",
+      "name": "Detect and Avoid",
+      "domain": "Aviation",
+      "phase": "Plateau of Productivity",
+      "phase_position": "early",
+      "phase_confidence": 0.93,
+      "chart_x": 4.2,
+      "scores": {},
+      "summary": "Mainstream adoption in UAM. Proven safety record. Innovation slowing as standards mature. Low risk profile.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 312,
+        "papers": 124,
+        "news": 542,
+        "government_contracts": 87,
+        "sec_filings": 45
+      },
+      "companies_developing": ["Iris Automation", "Echodyne"],
+      "companies_using": ["JOBY", "ACHR", "LILM"]
+    },
+    {
+      "id": "urban_air_mobility",
+      "name": "Urban Air Mobility",
+      "domain": "Aviation",
+      "phase": "Peak of Inflated Expectations",
+      "phase_position": "early",
+      "phase_confidence": 0.79,
+      "chart_x": 1.2,
+      "scores": {},
+      "summary": "Extreme media hype. Minimal commercial operations. High infrastructure risk. Valuations disconnected from reality.",
+      "key_contradictions": [
+        "Massive narrative but near-zero adoption",
+        "Record funding despite no clear path to profitability"
+      ],
+      "evidence_counts": {
+        "patents": 234,
+        "papers": 412,
+        "github": 87,
+        "news": 687
+      },
+      "companies_developing": ["JOBY", "ACHR", "LILM"],
+      "companies_using": []
+    },
+    {
+      "id": "blockchain_aviation",
+      "name": "Blockchain for Aviation",
+      "domain": "Software",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "late",
+      "phase_confidence": 0.87,
+      "chart_x": 2.4,
+      "scores": {},
+      "summary": "Post-hype reality check for maintenance records. Many failed pilots. Traditional systems still winning.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 124,
+        "papers": 87,
+        "news": 98,
+        "government_contracts": 5
+      },
+      "companies_developing": ["Honeywell", "Boeing"],
+      "companies_using": []
+    },
+    {
+      "id": "distributed_electric_propulsion",
+      "name": "Distributed Electric Propulsion",
+      "domain": "Aviation",
+      "phase": "Innovation Trigger",
+      "phase_position": "late",
+      "phase_confidence": 0.84,
+      "chart_x": 0.55,
+      "scores": {},
+      "summary": "Multi-motor breakthroughs accelerating. Early flight testing successful. Redundancy benefits proven.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 287,
+        "papers": 542,
+        "news": 156,
+        "regulations": 23
+      },
+      "companies_developing": ["Lilium", "Beta Technologies"],
+      "companies_using": []
+    },
+    {
+      "id": "edge_ai",
+      "name": "Edge AI",
+      "domain": "Aviation",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "early",
+      "phase_confidence": 0.81,
+      "chart_x": 3.2,
+      "scores": {},
+      "summary": "Use cases clarifying for onboard processing. Real deployments scaling. Hybrid architectures emerging.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 198,
+        "papers": 124,
+        "news": 324,
+        "government_contracts": 42
+      },
+      "companies_developing": ["NVIDIA", "Qualcomm"],
+      "companies_using": ["JOBY", "Zipline"]
+    },
+    {
+      "id": "digital_twin",
+      "name": "Digital Twin",
+      "domain": "Software",
+      "phase": "Slope of Enlightenment",
+      "phase_position": "late",
+      "phase_confidence": 0.86,
+      "chart_x": 3.8,
+      "scores": {},
+      "summary": "Aerospace ROI proven for predictive maintenance. eVTOL manufacturers adopting. Standards emerging.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 156,
+        "papers": 87,
+        "news": 212,
+        "government_contracts": 34,
+        "sec_filings": 28
+      },
+      "companies_developing": ["Siemens", "Ansys", "PTC"],
+      "companies_using": ["Boeing", "Joby", "Archer"]
+    },
+    {
+      "id": "vertiport",
+      "name": "Vertiport",
+      "domain": "Infrastructure",
+      "phase": "Innovation Trigger",
+      "phase_position": "early",
+      "phase_confidence": 0.77,
+      "chart_x": 0.3,
+      "scores": {},
+      "summary": "Early prototypes operational. Real estate costs uncertain. Regulatory pathway being defined.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 87,
+        "papers": 324,
+        "news": 124
+      },
+      "companies_developing": ["Skyports", "Ferrovial"],
+      "companies_using": []
+    },
+    {
+      "id": "utm",
+      "name": "Unmanned Traffic Management",
+      "domain": "Aviation",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "early",
+      "phase_confidence": 0.83,
+      "chart_x": 2.2,
+      "scores": {},
+      "summary": "Standardization challenges persist. Multiple competing systems. Integration with ATM delayed.",
+      "key_contradictions": [
+        "High innovation but fragmented standards preventing adoption"
+      ],
+      "evidence_counts": {
+        "patents": 124,
+        "papers": 187,
+        "news": 156,
+        "government_contracts": 18,
+        "regulations": 12
+      },
+      "companies_developing": ["NASA", "FAA", "EASA"],
+      "companies_using": []
+    },
+    {
+      "id": "ballistic_parachute",
+      "name": "Ballistic Parachute System",
+      "domain": "Aviation",
+      "phase": "Plateau of Productivity",
+      "phase_position": "mid",
+      "phase_confidence": 0.89,
+      "chart_x": 4.5,
+      "scores": {},
+      "summary": "Proven safety record in general aviation. eVTOL integration standardizing. Cost-effective safety enhancement.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 87,
+        "papers": 156,
+        "news": 298,
+        "github": 542
+      },
+      "companies_developing": ["BRS Aerospace", "Galaxy GRS"],
+      "companies_using": ["Cirrus", "Icon", "Joby"]
+    },
+    {
+      "id": "tiltrotor",
+      "name": "Tiltrotor",
+      "domain": "Aviation",
+      "phase": "Trough of Disillusionment",
+      "phase_position": "mid",
+      "phase_confidence": 0.81,
+      "chart_x": 3.4,
+      "scores": {},
+      "summary": "Complexity challenges for eVTOL scale. Military success not translating to commercial. Simpler configurations winning.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 342,
+        "papers": 98,
+        "news": 187,
+        "sec_filings": 15
+      },
+      "companies_developing": ["Bell", "Leonardo"],
+      "companies_using": ["US Military"]
+    },
+    {
+      "id": "fly_by_wire",
+      "name": "Fly-by-Wire",
+      "domain": "Aviation",
+      "phase": "Plateau of Productivity",
+      "phase_position": "late",
+      "phase_confidence": 0.95,
+      "chart_x": 4.8,
+      "scores": {},
+      "summary": "Mature technology. Standard for all eVTOL designs. Proven reliability. Innovation shifted to software optimization.",
+      "key_contradictions": [],
+      "evidence_counts": {
+        "patents": 456,
+        "papers": 234,
+        "news": 124,
+        "sec_filings": 67
+      },
+      "companies_developing": ["Honeywell", "Collins Aerospace"],
+      "companies_using": ["All major eVTOL manufacturers"]
+    }
+  ]
+}
