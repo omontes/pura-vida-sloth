@@ -23,34 +23,45 @@ from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
 
 
-# LLM Prompt for scoring
+# LLM Prompt for scoring (RECALIBRATED 2025-01-09 for realistic data densities)
 NARRATIVE_SCORING_PROMPT = """You are a narrative analyst scoring emerging technologies based on Layer 4 narrative signals.
 
 You will be given raw metrics about news coverage, media outlet quality, and sentiment.
 
 Your task:
 1. Analyze the metrics to determine narrative strength and media saturation
-2. Calculate a narrative score from 0-100:
-   - 0-20: Minimal coverage (few articles, low-tier outlets, neutral sentiment)
-   - 21-40: Low coverage (some articles, mostly tier 3, mixed sentiment)
-   - 41-60: Moderate coverage (steady articles, tier 2 outlets, positive trend)
-   - 61-80: High coverage (many articles, tier 1 outlets, strong positive sentiment)
-   - 81-100: Media saturation (exceptional volume, top outlets, overwhelmingly positive)
+2. Calculate a narrative score from 0-100 (RECALIBRATED FOR REALISTIC DATA DENSITIES):
+   - 0-20: Minimal coverage (0-5 articles, no tier-1 outlets, neutral sentiment)
+   - 21-40: Low coverage (6-20 articles, 1-3 tier-2 outlets, mixed sentiment)
+   - 41-60: Moderate coverage (21-50 articles, some tier-2, positive trend)
+   - 61-80: High coverage (51-120 articles, multiple tier-1, strong positive sentiment)
+   - 81-100: Media saturation (120+ articles, dominant tier-1, overwhelmingly positive)
+
+   CALIBRATION ANCHOR: Score 50 represents a typical emerging technology with ~30-40 news
+   articles in 3 months, 2-4 tier-2 outlets, and neutral-to-positive sentiment. Most
+   technologies will score 5-40 based on short 3-month window and quality filters.
 
 3. Consider:
-   - News volume (article count in 3 months)
-   - Outlet tier distribution (tier 1 = WSJ/NYT = high credibility)
-   - Average sentiment (-1 to 1 scale)
-   - Sentiment trend (positive/neutral/negative)
+   - News volume (0-100 articles is typical 3-month range)
+   - Outlet tier distribution (tier 1 = Industry Authority/Financial Authority)
+   - Average sentiment (-1.0 to +1.0 scale, most are -0.2 to +0.3)
+   - Sentiment trend (improving/stable/deteriorating)
 
-4. Provide:
+4. Scoring guidelines:
+   - If news_count = 0: Score 0-10
+   - If news_count 1-10 and tier1_count = 0: Score 10-25
+   - If news_count 10-30 and tier1_count < 3: Score 25-45
+   - If news_count 30-80 or tier1_count >= 3: Score 45-70
+   - Reserve 70-100 for exceptional media saturation (PEAK hype signal)
+
+5. Provide:
    - narrative_score: 0-100 score
    - reasoning: 2-3 sentences explaining the score
    - confidence: "high", "medium", or "low"
 
-Be objective and data-driven. Higher article counts with tier-1 outlets and positive sentiment indicate higher narrative strength.
+Be objective and data-driven. Most technologies will score 5-40. Scores above 60 indicate PEAK hype.
 
-NOTE: Very high scores (>80) often indicate market peak/hype saturation (contrarian signal).
+NOTE: Very high scores (>70) often indicate market peak/hype saturation (contrarian signal).
 
 Technology: {tech_id}
 

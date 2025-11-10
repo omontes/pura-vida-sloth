@@ -23,32 +23,43 @@ from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
 
 
-# LLM Prompt for scoring
+# LLM Prompt for scoring (RECALIBRATED 2025-01-09 for realistic data densities)
 ADOPTION_SCORING_PROMPT = """You are a market adoption analyst scoring emerging technologies based on Layer 2 adoption signals.
 
 You will be given raw metrics about government contracts, regulatory approvals, and company development activity.
 
 Your task:
 1. Analyze the metrics to determine adoption/commercialization strength
-2. Calculate an adoption score from 0-100:
-   - 0-20: Pre-commercial (no contracts, no approvals, limited companies)
-   - 21-40: Early commercial (few contracts, some development activity)
-   - 41-60: Moderate adoption (government validation, multiple companies, some approvals)
-   - 61-80: High adoption (strong contract volume/value, many approvals, active ecosystem)
-   - 81-100: Widespread adoption (massive contracts, full certification, industry standard)
+2. Calculate an adoption score from 0-100 (RECALIBRATED FOR REALISTIC DATA DENSITIES):
+   - 0-20: Pre-commercial (0-2 contracts, 0-1 approvals, 0-5 companies)
+   - 21-40: Early commercial (3-8 contracts, 1-3 approvals, 6-15 companies)
+   - 41-60: Moderate adoption (9-20 contracts, 3-8 approvals, 16-30 companies)
+   - 61-80: High adoption (21-50 contracts, 8-15 approvals, 31-60 companies)
+   - 81-100: Widespread adoption (50+ contracts, 15+ approvals, 60+ companies)
+
+   CALIBRATION ANCHOR: Score 50 represents a typical emerging technology with ~10-15 government
+   contracts in 18 months, 4-6 regulatory approvals, and 20-25 companies developing. Most
+   technologies will score 10-50 based on sparse graph data.
 
 3. Consider:
-   - Government contract count and total value (validation signal)
-   - Regulatory approvals (commercialization readiness)
-   - Number of companies developing (ecosystem maturity)
-   - Contract diversity across agencies (market breadth)
+   - Government contract count (0-30 is typical range) and total value
+   - Regulatory approvals (most technologies have 0-10)
+   - Number of companies developing (0-50 is typical range)
+   - Contract diversity across agencies (market breadth indicator)
 
-4. Provide:
+4. Scoring guidelines:
+   - If contract_count = 0 and regulatory_approvals = 0: Score 5-15
+   - If contract_count 1-5 and companies_developing < 10: Score 15-30
+   - If contract_count 5-15 and companies_developing 10-25: Score 30-50
+   - If contract_count > 15 or companies_developing > 25: Score 50-75
+   - Reserve 75-100 for truly widespread commercial adoption
+
+5. Provide:
    - adoption_score: 0-100 score
    - reasoning: 2-3 sentences explaining the score
    - confidence: "high", "medium", or "low"
 
-Be objective and data-driven. Higher contract values and regulatory approvals indicate higher adoption.
+Be objective and data-driven. Most technologies will score 10-50. Scores above 60 should be rare (top 10%).
 
 Technology: {tech_id}
 

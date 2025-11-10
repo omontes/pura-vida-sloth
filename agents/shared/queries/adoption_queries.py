@@ -59,7 +59,7 @@ async def get_gov_contracts_1yr(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'procured'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, coalesce(d.award_amount, 0.0) AS award_amount
     RETURN
       count(d) AS count,
@@ -121,7 +121,7 @@ async def get_top_contracts_by_value(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'government_contract'
       AND m.role = 'procured'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, m, coalesce(d.award_amount, 0.0) AS award_amount
     RETURN
       d.doc_id AS doc_id,
@@ -199,7 +199,7 @@ async def get_regulatory_approvals(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'regulated'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, m
     RETURN
       count(d) AS count,
@@ -280,7 +280,7 @@ async def get_revenue_mentions_by_company(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND (m.evidence_text CONTAINS 'revenue' OR m.evidence_text CONTAINS 'sales')
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       c.name AS company,
       c.ticker AS ticker,
@@ -401,7 +401,7 @@ async def get_adoption_temporal_trend(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type IN ['government_contract', 'regulation']
       AND m.role IN ['procured', 'regulated']
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d,
          date(datetime(d.published_at)) AS pub_date,
          date() - duration({months: $window_months}) AS cutoff_date

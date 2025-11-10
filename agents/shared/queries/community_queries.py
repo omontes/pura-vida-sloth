@@ -580,7 +580,8 @@ async def get_all_communities_for_version(
       c.member_count AS member_count,
       c.tech_count AS tech_count,
       c.company_count AS company_count,
-      c.top_technologies AS top_technologies
+      c.top_technologies AS top_technologies,
+      c.doc_type_distribution AS doc_type_distribution
     ORDER BY c.member_count DESC
     """
 
@@ -592,6 +593,9 @@ async def get_all_communities_for_version(
         )
         records = await result.values()
 
+        # Parse JSON string for doc_type_distribution
+        import json
+
         return [
             {
                 "id": record[0],
@@ -600,6 +604,7 @@ async def get_all_communities_for_version(
                 "tech_count": record[3],
                 "company_count": record[4],
                 "top_technologies": record[5],
+                "doc_type_distribution": json.loads(record[6]) if isinstance(record[6], str) else record[6],
             }
             for record in records
         ]

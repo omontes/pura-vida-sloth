@@ -54,7 +54,7 @@ async def get_patent_count_2yr(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'invented'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, coalesce(d.pagerank, 0.0) as pagerank
     RETURN
       count(d) AS patent_count,
@@ -126,7 +126,7 @@ async def get_top_patents_by_citations(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'patent'
       AND m.role = 'invented'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       d.doc_id AS doc_id,
       d.title AS title,
@@ -194,7 +194,7 @@ async def get_community_patents(
       AND d.doc_type = 'patent'
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN count(DISTINCT d) AS community_patent_count
     """
 
@@ -240,7 +240,7 @@ async def get_paper_count_2yr(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role IN ['invented', 'studied']
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       count(d) AS paper_count,
       sum(coalesce(d.citations_received, 0)) AS total_citations,
@@ -281,7 +281,7 @@ async def get_top_papers_by_citations(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'technical_paper'
       AND m.role IN ['invented', 'studied']
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       d.doc_id AS doc_id,
       d.title AS title,
@@ -344,7 +344,7 @@ async def get_github_repo_count(
     WHERE d.doc_type = 'github'
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       count(d) AS repo_count,
       sum(coalesce(d.stars, 0)) AS total_stars,
@@ -404,7 +404,7 @@ async def get_innovation_temporal_trend(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type IN ['patent', 'technical_paper', 'github']
       AND m.role IN ['invented', 'studied']
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d,
          date(datetime(d.published_at)) AS pub_date,
          date() - duration({months: $window_months}) AS cutoff_date

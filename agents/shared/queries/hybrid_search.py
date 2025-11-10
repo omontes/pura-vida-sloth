@@ -362,7 +362,7 @@ async def hybrid_search_tech_documents(
     # First get all documents related to this technology
     tech_doc_ids_query = """
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
-    WHERE d.quality_score >= 0.85
+    WHERE d.quality_score >= 0.75
     RETURN collect(d.doc_id) AS doc_ids
     """
 
@@ -425,7 +425,7 @@ async def hybrid_search_community_documents(
     community_doc_ids_query = """
     MATCH (c:Community {id: $community_id})<-[:BELONGS_TO_COMMUNITY]-(n)
     MATCH (n)-[:MENTIONED_IN]->(d:Document)
-    WHERE d.quality_score >= 0.85
+    WHERE d.quality_score >= 0.75
     RETURN collect(DISTINCT d.doc_id) AS doc_ids
     """
 

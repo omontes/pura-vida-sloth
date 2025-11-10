@@ -60,7 +60,7 @@ async def get_sec_risk_mentions_6mo(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH c, d, m
     RETURN
       count(DISTINCT d) AS count,
@@ -129,7 +129,7 @@ async def get_top_risk_mentions(
     MATCH (c)-[:RELATED_TO_TECH]->(t)-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'sec_filing'
       AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       c.ticker AS company,
       d.fiscal_period AS fiscal_period,
@@ -437,7 +437,7 @@ async def get_risk_temporal_trend(
     MATCH (c)-[:RELATED_TO_TECH]->(t)-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'sec_filing'
       AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d,
          date(datetime(d.published_at)) AS pub_date,
          date() - duration({months: $window_months}) AS cutoff_date

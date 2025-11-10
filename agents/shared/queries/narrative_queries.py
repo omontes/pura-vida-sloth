@@ -61,7 +61,7 @@ async def get_news_count_3mo(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'subject'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, coalesce(d.sentiment, 0.0) AS sentiment
     RETURN
       count(d) AS article_count,
@@ -142,7 +142,7 @@ async def get_outlet_tier_breakdown(
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
       AND m.role = 'subject'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, coalesce(d.outlet_tier, 'Other') AS tier
     RETURN tier, count(d) AS count
     ORDER BY count DESC
@@ -214,7 +214,7 @@ async def get_top_articles_by_prominence(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'news'
       AND m.role = 'subject'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d, m,
          CASE coalesce(d.outlet_tier, 'Other')
            WHEN 'Industry Authority' THEN 1
@@ -293,7 +293,7 @@ async def get_sentiment_temporal_trend(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'news'
       AND m.role = 'subject'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
       AND d.sentiment IS NOT NULL
     WITH d,
          date(datetime(d.published_at)) AS pub_date,
@@ -360,7 +360,7 @@ async def get_narrative_momentum(
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'news'
       AND m.role = 'subject'
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d,
          date(datetime(d.published_at)) AS pub_date,
          date() - duration({days: 30}) AS cutoff_30,

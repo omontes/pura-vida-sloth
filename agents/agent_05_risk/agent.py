@@ -7,26 +7,54 @@ from agents.shared.queries import risk_queries
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
 
-RISK_SCORING_PROMPT = """Score financial risk (0-100) based on:
-- SEC risk mentions (higher = more risk flagged)
-- Institutional holdings (lower = less confidence)
-- Insider trading (net selling = bearish)
+RISK_SCORING_PROMPT = """You are a financial risk analyst scoring emerging technologies based on Layer 3 financial signals.
 
-Score ranges:
-- 0-20: Low risk (few mentions, high institutional holdings, insider buying)
-- 21-40: Moderate-low risk
-- 41-60: Moderate risk
-- 61-80: High risk (many mentions, low holdings, insider selling)
-- 81-100: Extreme risk
+You will be given raw metrics about SEC risk disclosures, institutional holdings, and insider trading.
 
-Tech: {tech_id}
-SEC risk mentions (6mo): {sec_mentions}
-Institutional holdings: {inst_holdings:.1f}%
-Insider buys: {insider_buys}
-Insider sells: {insider_sells}
-Insider position: {insider_position}
+Your task:
+1. Analyze the metrics to determine financial risk level
+2. Calculate a risk score from 0-100 (RECALIBRATED FOR REALISTIC DATA DENSITIES):
+   - 0-20: Low risk (0-3 SEC mentions, high holdings >40%, net insider buying)
+   - 21-40: Moderate-low risk (4-10 mentions, holdings 20-40%, balanced insider activity)
+   - 41-60: Moderate risk (11-25 mentions, holdings 10-20%, mixed insider signals)
+   - 61-80: High risk (26-50 mentions, holdings <10%, net insider selling)
+   - 81-100: Extreme risk (50+ mentions, minimal holdings, heavy insider selling)
 
-Provide score and reasoning."""
+   CALIBRATION ANCHOR: Score 50 represents moderate financial uncertainty with ~15-20 SEC
+   risk mentions in 6 months, ~15% institutional holdings, and neutral insider activity.
+   Most technologies will score 10-40 based on sparse SEC filing data.
+
+3. Consider:
+   - SEC risk mentions (0-30 is typical 6-month range for emerging tech)
+   - Institutional holdings (most emerging tech has 0-30% holdings)
+   - Insider trading balance (buy vs sell ratio)
+   - Net insider position (bullish/neutral/bearish signal)
+
+4. Scoring guidelines:
+   - If sec_mentions = 0 and inst_holdings < 5%: Score 10-25 (data scarcity, not confidence)
+   - If sec_mentions 1-10 and insider_position = "buying": Score 15-35
+   - If sec_mentions 10-25 and insider_position = "neutral": Score 35-55
+   - If sec_mentions > 25 or insider_position = "selling": Score 55-75
+   - Reserve 75-100 for severe financial distress signals
+
+5. Provide:
+   - risk_score: 0-100 score
+   - reasoning: 2-3 sentences explaining the score
+   - confidence: "high", "medium", or "low"
+
+Be objective and data-driven. Most technologies will score 10-40. Absence of data ≠ low risk.
+
+Technology: {tech_id}
+
+Metrics:
+- SEC risk mentions (6mo): {sec_mentions}
+- Institutional holdings: {inst_holdings:.1f}%
+- Insider buys: {insider_buys}
+- Insider sells: {insider_sells}
+- Insider net position: {insider_position}
+
+Provide your score and reasoning.
+"""
 
 async def get_risk_metrics(driver: AsyncDriver, tech_id: str, start_date: str, end_date: str) -> RiskMetrics:
     sec_data = await risk_queries.get_sec_risk_mentions_6mo(driver, tech_id, start_date, end_date)

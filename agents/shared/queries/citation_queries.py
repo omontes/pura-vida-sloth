@@ -77,7 +77,7 @@ async def get_layer_citations(
       AND m.role IN $roles
       AND date(datetime(d.published_at)) >= date($start_date)
       {end_date_filter}
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
       AND m.evidence_confidence >= 0.75
     RETURN
       d.doc_id AS doc_id,
@@ -265,7 +265,7 @@ async def get_evidence_distribution_by_doc_type(
     query = """
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE datetime(d.published_at) >= datetime() - duration({days: $days_back})
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH d.doc_type AS doc_type,
          collect({
            doc_id: d.doc_id,
@@ -347,7 +347,7 @@ async def get_co_mentioned_technologies(
     MATCH (t:Technology {id: $tech_id})-[m1:MENTIONED_IN]->(d:Document)<-[m2:MENTIONED_IN]-(other:Technology)
     WHERE other.id <> t.id
       AND datetime(d.published_at) >= datetime() - duration({days: $days_back})
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     WITH other, d, m1, m2
     WITH other,
          count(DISTINCT d) AS shared_doc_count,
@@ -430,7 +430,7 @@ async def get_company_tech_document_provenance(
     query = """
     MATCH (c:Company)-[r:RELATED_TO_TECH]->(t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE datetime(d.published_at) >= datetime() - duration({days: $days_back})
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
     RETURN
       c.name AS company,
       c.ticker AS ticker,
@@ -511,7 +511,7 @@ async def get_evidence_triplets_for_llm(
     query = """
     MATCH (t:Technology {id: $tech_id})-[m:MENTIONED_IN]->(d:Document)
     WHERE datetime(d.published_at) >= datetime() - duration({days: $days_back})
-      AND d.quality_score >= 0.85
+      AND d.quality_score >= 0.75
       AND m.evidence_confidence >= 0.75
     RETURN
       t.name AS subject,
