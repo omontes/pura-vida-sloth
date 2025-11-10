@@ -261,7 +261,7 @@ async def innovation_scorer_agent(
         # Document counts for evidence
         "patent_count": metrics.patent_count_2yr,
         "paper_count": metrics.paper_count_2yr,
-        "github_count": metrics.github_repo_count,
+        "github_count": 0,  # GitHub not implemented yet
     }
 
 
