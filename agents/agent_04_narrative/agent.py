@@ -19,6 +19,10 @@ from agents.agent_04_narrative.schemas import (
     NarrativeMetrics,
     ArticleSummary,
 )
+from agents.agent_04_narrative.tavily_search import (
+    get_recent_news_tavily,
+    calculate_freshness_score,
+)
 from agents.shared.queries import narrative_queries
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
@@ -39,36 +43,49 @@ Your task:
    - 81-100: Media saturation (120+ articles, dominant tier-1, overwhelmingly positive)
 
 3. Consider:
-   - News volume (article count in 3-month window)
+   - News volume (article count in 3-month window from graph)
+   - Real-time coverage (last 30 days from web search)
+   - Freshness score (narrative acceleration indicator)
    - Outlet tier distribution (tier 1 = Industry Authority/Financial Authority)
    - Average sentiment (-1.0 to +1.0 scale)
-   - Sentiment trend (improving/stable/deteriorating)
 
-4. Scoring guidelines - use the full scale based on data:
+4. Freshness Score Interpretation (KEY METRIC):
+   - <0.5: Coverage declining (interest waning) → LOWER score
+   - 0.5-1.5: Stable coverage (normal pattern) → Use base metrics
+   - 1.5-3.0: Accelerating coverage (growing buzz) → INCREASE score +10-20 points
+   - >3.0: Spiking coverage (PEAK hype signal) → INCREASE score +20-40 points (PEAK indicator)
+
+5. Scoring guidelines - use the full scale based on data:
    - If news_count = 0: Score 0-10
    - If news_count 1-10 and tier1_count = 0: Score 10-25
    - If news_count 10-30 and tier1_count < 3: Score 25-45
    - If news_count 30-80 or tier1_count >= 3: Score 45-70
    - If news_count > 80 or tier1_count >= 6: Score 70-95
+   - Then ADJUST based on freshness score (see #4 above)
 
-5. Provide:
-   - narrative_score: 0-100 score
-   - reasoning: 2-3 sentences explaining the score
+6. Provide:
+   - narrative_score: 0-100 score (adjusted for freshness)
+   - reasoning: 2-3 sentences explaining the score (mention freshness if significant)
    - confidence: "high", "medium", or "low"
 
 Be objective and data-driven. Use the full 0-100 scale based on the actual metrics.
 
-NOTE: Very high scores (>70) often indicate market peak/hype saturation (contrarian signal).
+NOTE: Very high scores (>70) + high freshness (>3.0) = PEAK hype saturation (contrarian signal).
 
 Technology: {tech_id}
 
-Metrics:
-- News articles (3mo): {news_count}
+Metrics (Historical - Graph):
+- News articles (6mo): {news_count}
 - Tier 1 outlets: {tier1_count}
 - Tier 2 outlets: {tier2_count}
 - Tier 3 outlets: {tier3_count}
 - Avg sentiment: {avg_sentiment:.2f}
 - Sentiment trend: {sentiment_trend}
+
+Metrics (Real-Time - Tavily):
+- Recent news (30d): {tavily_count}
+- Freshness score: {freshness:.2f}x (recent vs historical rate)
+- Top headlines: {tavily_headlines}
 
 Provide your score and reasoning.
 """
@@ -100,6 +117,8 @@ async def get_narrative_metrics(
     if start_date is None:
         # Look back 6 months for narrative signals
         start_date = (datetime.now() - timedelta(days=180)).strftime("%Y-%m-%d")
+
+    print(f"[NARRATIVE] Query date range for {tech_id}: {start_date} to {end_date}")
 
     # Query 1: News count (3 months)
     news_data = await narrative_queries.get_news_count_3mo(
@@ -150,6 +169,30 @@ async def get_narrative_metrics(
         for a in top_articles_data[:5]
     ]
 
+    # Query 5: Tavily real-time search (supplement graph data)
+    # Get tech_name from state if available, otherwise use tech_id
+    tech_name = tech_id.replace("_", " ").title()  # Default: convert ID to name
+
+    tavily_results = await get_recent_news_tavily(
+        tech_id=tech_id,
+        tech_name=tech_name,
+        days=30,
+        max_results=20
+    )
+
+    tavily_count = tavily_results.get("article_count", 0)
+    tavily_headlines = tavily_results.get("headlines", [])
+
+    # Calculate freshness score (narrative acceleration indicator)
+    freshness = calculate_freshness_score(
+        graph_count=news_count,
+        tavily_count=tavily_count,
+        days_tavily=30,
+        days_graph=180  # 6 months
+    )
+
+    print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_count} articles, Freshness: {freshness:.2f}x")
+
     return NarrativeMetrics(
         news_count_3mo=news_count,
         tier1_count=tier1_count,
@@ -158,6 +201,9 @@ async def get_narrative_metrics(
         avg_sentiment=avg_sentiment,
         sentiment_trend=sentiment_trend,
         top_articles=article_summaries,
+        news_count_recent_30d=tavily_count,
+        freshness_score=freshness,
+        tavily_headlines=tavily_headlines,
     )
 
 
@@ -209,6 +255,9 @@ async def narrative_scorer_agent(
         tier3_count=metrics.tier3_count,
         avg_sentiment=metrics.avg_sentiment,
         sentiment_trend=metrics.sentiment_trend,
+        tavily_count=metrics.news_count_recent_30d,
+        freshness=metrics.freshness_score,
+        tavily_headlines=", ".join(metrics.tavily_headlines[:3]) if metrics.tavily_headlines else "None",
     )
 
     # Get structured LLM with temperature from constants

@@ -20,8 +20,8 @@ from neo4j import AsyncDriver
 async def get_news_count_3mo(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = None,
+    end_date: str = None
 ) -> Dict[str, Any]:
     """
     Get news coverage in last 3-6 months.
@@ -96,8 +96,8 @@ async def get_news_count_3mo(
 async def get_outlet_tier_breakdown(
     driver: AsyncDriver,
     tech_id: str,
-    start_date: str = "2024-07-01",
-    end_date: str = "2025-01-01"
+    start_date: str = None,
+    end_date: str = None
 ) -> Dict[str, int]:
     """
     Get news coverage breakdown by outlet tier (prominence).

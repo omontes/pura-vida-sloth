@@ -27,12 +27,12 @@ class NarrativeInput(BaseModel):
         description="Technology ID to score"
     )
     start_date: Optional[str] = Field(
-        default="2024-07-01",
-        description="Start date for temporal window (YYYY-MM-DD)"
+        default=None,
+        description="Start date for temporal window (YYYY-MM-DD), defaults to 6 months ago"
     )
     end_date: Optional[str] = Field(
-        default="2025-01-01",
-        description="End date for temporal window (YYYY-MM-DD)"
+        default=None,
+        description="End date for temporal window (YYYY-MM-DD), defaults to today"
     )
 
 
@@ -75,6 +75,20 @@ class NarrativeMetrics(BaseModel):
     top_articles: List[ArticleSummary] = Field(
         default_factory=list,
         description="Top 5 articles by prominence"
+    )
+
+    # Tavily real-time search metrics (supplemental)
+    news_count_recent_30d: int = Field(
+        default=0,
+        description="Recent news count from Tavily (last 30 days)"
+    )
+    freshness_score: float = Field(
+        default=0.0,
+        description="Narrative freshness/acceleration score (recent vs historical)"
+    )
+    tavily_headlines: List[str] = Field(
+        default_factory=list,
+        description="Top headlines from Tavily real-time search"
     )
 
 
