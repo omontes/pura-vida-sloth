@@ -71,9 +71,9 @@ async def test_single_technology():
 
 
 async def test_multiple_technologies():
-    """Test pipeline with 100 technologies."""
+    """Test pipeline with 50 technologies."""
     print("\n" + "="*80)
-    print("TEST 2: Multiple Technologies Analysis (100 technologies)")
+    print("TEST 2: Multiple Technologies Analysis (50 technologies)")
     print("="*80)
 
     client = Neo4jClient()
@@ -82,7 +82,7 @@ async def test_multiple_technologies():
     try:
         chart = await generate_hype_cycle_chart(
             driver=client.driver,
-            limit=100
+            limit=50
         )
 
         print(f"\n[RESULT] Generated chart with {len(chart['technologies'])} technologies")
@@ -114,7 +114,7 @@ async def test_multiple_technologies():
             normalized_chart = normalize_chart(
                 input_file=output_file,
                 output_file="hype_cycle_chart_normalized.json",
-                top_n=10
+                top_n=5
             )
             if normalized_chart:
                 print(f"[OK] Normalized chart saved to hype_cycle_chart_normalized.json")
@@ -146,7 +146,7 @@ async def main():
 
     tests = [
         #("Single Technology Analysis", test_single_technology),
-        ("Multiple Technologies (100)", test_multiple_technologies),
+        ("Multiple Technologies (500)", test_multiple_technologies),
     ]
 
     results = []
