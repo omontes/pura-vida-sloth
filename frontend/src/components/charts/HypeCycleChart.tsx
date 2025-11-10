@@ -162,8 +162,8 @@ export default function HypeCycleChart({
       .append('line')
       .attr('x1', 80)
       .attr('x2', width - 80)
-      .attr('y1', height - 130)
-      .attr('y2', height - 130)
+      .attr('y1', height - 90)
+      .attr('y2', height - 90)
       .attr('stroke', theme.colors.chart.separator)
       .attr('stroke-width', 2)
       .attr('opacity', 0.4);
@@ -310,9 +310,9 @@ export default function HypeCycleChart({
         'y',
         d3
           .forceY<LabelNode>((d) => d.preferredY)
-          .strength(0.18) // Increased from 0.12 for stronger vertical anchoring at peak
+          .strength(0.12) // Weak preference allows natural vertical spread at peak
       )
-      .force('clamp', forceClamp(120, height - 140)) // Aligned with chartBounds for consistent margins
+      .force('clamp', forceClamp(50, height - 140)) // Allow labels to use top space (down to y=50)
       .alphaDecay(0.05) // Faster convergence (default: 0.028)
       .stop();
 
