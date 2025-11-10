@@ -27,6 +27,8 @@ import {
   calculateSmartPreferredPosition,
   forceCurveRepulsion,
   calculateLabelAnchor,
+  wrapText,
+  calculateWrappedTextDimensions,
 } from '@/utils/labelPositioning';
 import type { Technology } from '@/types/hypeCycle';
 
@@ -76,12 +78,6 @@ export default function HypeCycleChart({
     // Cleanup
     return () => window.removeEventListener('resize', handleResize);
   }, [propWidth, propHeight]);
-
-  // Helper function to truncate long technology names
-  const truncateName = (name: string, maxLength: number = 24): string => {
-    if (name.length <= maxLength) return name;
-    return name.substring(0, maxLength - 3) + '...';
-  };
 
   useEffect(() => {
     if (!svgRef.current || !technologies.length) return;
@@ -227,30 +223,28 @@ export default function HypeCycleChart({
     // OPTIMIZATION: Create distance cache once (10px sampling vs 5px)
     const curveCache = new CurveDistanceCache(pathElement, 10);
 
-    // Create temporary labels to measure dimensions
-    const tempLabels = svg
-      .selectAll('.temp-label')
-      .data(technologies)
-      .enter()
-      .append('text')
-      .attr('class', 'temp-label')
-      .style('font-size', '10px')
-      .style('font-weight', '700')
-      .style('opacity', 0)
-      .text((d) => truncateName(d.name));
+    // Pre-compute wrapped lines for all technologies (multi-line text wrapping)
+    const wrappedLines = technologies.map((tech) => wrapText(tech.name, 13));
 
     // Measure label dimensions and calculate smart positions using radial sampling
     const labelNodes: LabelNode[] = [];
     const chartBounds = { minY: 70, maxY: height - 150 };
 
-    tempLabels.each(function (d) {
-      const bbox = (this as SVGTextElement).getBBox();
+    technologies.forEach((d, i) => {
+      // Calculate dimensions from wrapped lines (no need for temporary rendering)
+      const lines = wrappedLines[i];
+      const { width: labelWidth, height: labelHeight } = calculateWrappedTextDimensions(
+        lines,
+        10,   // fontSize
+        700,  // fontWeight
+        6.2,  // charWidth
+        1.3   // lineHeight
+      );
+
       // Validate: ensure chart_x matches phase boundaries
       const validatedX = validateChartPosition(d.phase, d.chart_x, d.phase_position);
       const nodeX = xScale(validatedX);
       const nodeY = getYForX(validatedX);
-      const labelWidth = bbox.width + 1;
-      const labelHeight = bbox.height + 2;
 
       // OPTIMIZATION: Use cached distance calculation
       const smartPosition = calculateSmartPreferredPosition(
@@ -282,9 +276,6 @@ export default function HypeCycleChart({
       });
     });
 
-    // Remove temporary labels
-    tempLabels.remove();
-
     // Custom clamp force to keep labels within chart bounds
     const forceClamp = (minY: number, maxY: number) => {
       let nodes: LabelNode[];
@@ -303,23 +294,23 @@ export default function HypeCycleChart({
       return force;
     };
 
-    // OPTIMIZED: Run force simulation with tighter collision parameters
+    // OPTIMIZED: Run force simulation optimized for narrower multi-line labels
     const simulation = d3
       .forceSimulation(labelNodes)
       .force(
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 6)
-          .strength(0.8) // Stronger repulsion for better spacing
-          .iterations(3) // More accurate collision detection
+          .radius((d) => Math.max(d.width, d.height) / 2 + 4) // Reduced from 6 (narrower labels need less padding)
+          .strength(0.6) // Reduced from 0.8 (weaker repulsion for compact multi-line text)
+          .iterations(2) // Reduced from 3 (faster convergence with less collision)
       )
       .force('curve-repulsion', forceCurveRepulsion(pathElement, 18))
       .force(
         'y',
         d3
           .forceY<LabelNode>((d) => d.preferredY)
-          .strength(0.1)
+          .strength(0.12) // Slightly increased from 0.1 (maintain vertical positioning)
       )
       .force('clamp', forceClamp(50, height - 150))
       .alphaDecay(0.05) // Faster convergence (default: 0.028)
@@ -378,7 +369,7 @@ export default function HypeCycleChart({
       .attr('opacity', 0.9)
       .style('pointer-events', 'none');
 
-    // Render smart-positioned labels (no background boxes)
+    // Render smart-positioned labels with multi-line support
     svg
       .selectAll('.tech-label')
       .data(labelNodes)
@@ -392,7 +383,22 @@ export default function HypeCycleChart({
       .style('font-size', '10px')
       .style('font-weight', '700')
       .style('pointer-events', 'none')
-      .text((d) => truncateName(d.name));
+      .each(function (d, i) {
+        const lines = wrappedLines[i];
+        const textElement = d3.select(this);
+
+        // Add first line as main text content
+        textElement.text(lines[0] || '');
+
+        // Add remaining lines as tspan elements
+        lines.slice(1).forEach((line) => {
+          textElement
+            .append('tspan')
+            .attr('x', d.x || 0) // Re-center each line
+            .attr('dy', '13px') // Line height: 1.3 × 10px font size
+            .text(line);
+        });
+      });
 
     // Tooltips
     nodeGroups

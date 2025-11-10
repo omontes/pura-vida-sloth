@@ -405,3 +405,82 @@ export function calculateLabelAnchor(label: LabelNode): { x: number; y: number }
 
   return { x: anchorX, y: anchorY };
 }
+
+/**
+ * Wrap text to multiple lines at word boundaries
+ * Ensures labels are narrower by stacking text vertically
+ *
+ * @param text - Text to wrap
+ * @param charsPerLine - Target characters per line (default: 13)
+ * @returns Array of wrapped lines
+ */
+export function wrapText(text: string, charsPerLine: number = 13): string[] {
+  const words = text.split(' ');
+  const lines: string[] = [];
+  let currentLine = '';
+
+  for (const word of words) {
+    // Check if adding this word exceeds limit
+    const testLine = currentLine ? `${currentLine} ${word}` : word;
+
+    if (testLine.length <= charsPerLine) {
+      currentLine = testLine;
+    } else {
+      // Word itself is longer than limit - truncate with ellipsis
+      if (word.length > charsPerLine) {
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+        lines.push(word.substring(0, charsPerLine - 3) + '...');
+        currentLine = '';
+      } else {
+        // Start new line
+        if (currentLine) {
+          lines.push(currentLine);
+        }
+        currentLine = word;
+      }
+    }
+  }
+
+  // Add remaining text
+  if (currentLine) {
+    lines.push(currentLine);
+  }
+
+  return lines;
+}
+
+/**
+ * Calculate dimensions of wrapped text (before rendering)
+ * Used by force simulation to understand label space requirements
+ *
+ * @param lines - Array of text lines from wrapText()
+ * @param fontSize - Font size in pixels (default: 10)
+ * @param fontWeight - Font weight (default: 700)
+ * @param charWidth - Average character width at given font size (default: 6.2px for 10px bold)
+ * @param lineHeight - Line height multiplier (default: 1.3)
+ * @returns {width, height} dimensions in pixels
+ */
+export function calculateWrappedTextDimensions(
+  lines: string[],
+  fontSize: number = 10,
+  fontWeight: number = 700,
+  charWidth: number = 6.2, // Empirically measured for 10px bold
+  lineHeight: number = 1.3 // 13px line height for 10px font
+): { width: number; height: number } {
+  if (lines.length === 0) {
+    return { width: 0, height: 0 };
+  }
+
+  // Find longest line
+  const maxChars = Math.max(...lines.map((line) => line.length));
+
+  // Width: longest line + small margin
+  const width = maxChars * charWidth + 2; // +2 for anti-alias padding
+
+  // Height: line count × line height + margin
+  const height = lines.length * (fontSize * lineHeight) + 2;
+
+  return { width: Math.ceil(width), height: Math.ceil(height) };
+}
