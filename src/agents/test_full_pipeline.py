@@ -16,7 +16,8 @@ import sys
 import os
 import argparse
 
-sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+# Add project root to path (parent of src/) to enable 'from src.X' imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from src.graph.neo4j_client import Neo4jClient
 from src.agents.langgraph_orchestrator import (

@@ -10,8 +10,8 @@ import sys
 import os
 from typing import List, Dict, Any
 
-# Add project root to path
-sys.path.insert(0, os.path.abspath(os.path.dirname(__file__)))
+# Add project root to path (parent of src/) to enable 'from src.X' imports
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '../..')))
 
 from src.graph.neo4j_client import Neo4jClient
 
