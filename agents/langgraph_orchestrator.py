@@ -189,6 +189,7 @@ async def analyze_single_technology(
     initial_state = {
         "tech_id": tech_id,
         "tech_name": tech_name or tech_id.replace("_", " ").title(),
+        "enable_tavily": True,  # Enable Tavily real-time search (now that timeouts are fixed)
     }
 
     result = await graph.ainvoke(initial_state)
