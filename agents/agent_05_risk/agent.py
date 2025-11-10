@@ -99,6 +99,9 @@ async def risk_scorer_agent(state: Dict[str, Any], driver: AsyncDriver) -> Dict[
         "risk_reasoning": result.reasoning,
         "risk_metrics": metrics.model_dump(),
         "risk_confidence": result.confidence,
+        # Document counts for evidence (set to 0 - not implemented yet)
+        "sec_filing_count": 0,
+        "insider_transaction_count": 0,
     }
 
 async def score_risk(driver: AsyncDriver, tech_id: str, start_date: str = None, end_date: str = None) -> RiskOutput:
