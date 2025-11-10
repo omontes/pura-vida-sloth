@@ -9,6 +9,24 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <title>Canopy Intelligence - Strategic Technology Market Intelligence</title>
+    <!-- Force light mode - runs before React loads -->
+    <script>
+      // Remove dark class immediately
+      document.documentElement.classList.remove('dark');
+      // Clear any stored theme preferences
+      localStorage.removeItem('theme');
+      localStorage.removeItem('darkMode');
+      sessionStorage.removeItem('theme');
+      sessionStorage.removeItem('darkMode');
+      // Prevent dark mode from being added
+      const originalAdd = document.documentElement.classList.add;
+      document.documentElement.classList.add = function(...tokens) {
+        const filtered = tokens.filter(t => t !== 'dark');
+        if (filtered.length > 0) {
+          originalAdd.apply(this, filtered);
+        }
+      };
+    </script>
   </head>
   <body>
     <div id="root"></div>

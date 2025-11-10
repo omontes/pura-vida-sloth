@@ -22,51 +22,22 @@ interface ThemeProviderProps {
 }
 
 export function ThemeProvider({ children }: ThemeProviderProps) {
-  // Auto-detect system preference and listen for changes
-  const [themeMode, setThemeModeState] = useState<ThemeMode>(() => {
-    // Detect system preference on startup
-    if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
-      return 'dark';
-    }
-    return 'light';
-  });
+  // Force light mode always (professional presentation standard)
+  const [themeMode, setThemeModeState] = useState<ThemeMode>('light');
 
-  const [theme, setTheme] = useState<Theme>(() => getTheme(themeMode));
+  const [theme, setTheme] = useState<Theme>(() => getTheme('light'));
 
   useEffect(() => {
-    // Listen for system theme changes
-    const mediaQuery = window.matchMedia('(prefers-color-scheme: dark)');
-
-    const handleChange = (e: MediaQueryListEvent) => {
-      setThemeModeState(e.matches ? 'dark' : 'light');
-    };
-
-    // Modern browsers
-    mediaQuery.addEventListener('change', handleChange);
-
-    return () => {
-      mediaQuery.removeEventListener('change', handleChange);
-    };
+    // Ensure light mode always (remove any dark class)
+    document.documentElement.classList.remove('dark');
   }, []);
 
-  useEffect(() => {
-    // Update theme object when mode changes
-    setTheme(getTheme(themeMode));
-
-    // Update document class for Tailwind dark mode
-    if (themeMode === 'dark') {
-      document.documentElement.classList.add('dark');
-    } else {
-      document.documentElement.classList.remove('dark');
-    }
-  }, [themeMode]);
-
   const toggleTheme = () => {
-    // No-op: theme follows system preference automatically
+    // No-op: light mode forced (professional presentation standard)
   };
 
   const setThemeMode = (mode: ThemeMode) => {
-    // No-op: theme follows system preference automatically
+    // No-op: light mode forced (professional presentation standard)
   };
 
   return (

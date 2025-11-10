@@ -4,7 +4,7 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
-  darkMode: 'media', // Use system preference
+  darkMode: ['selector', '[data-theme="dark"]'], // Disable dark mode - only activates if data-theme="dark" exists (which we never set)
   theme: {
     extend: {
       fontFamily: {
