@@ -242,7 +242,7 @@ async def narrative_scorer_agent(
         "narrative_metrics": metrics.model_dump(),
         "narrative_confidence": output.confidence,
         # Document counts for evidence
-        "news_count": metrics.news_article_count,
+        "news_count": metrics.news_count_3mo,
     }
 
 
