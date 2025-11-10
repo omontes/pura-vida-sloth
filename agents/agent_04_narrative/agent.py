@@ -22,6 +22,7 @@ from agents.agent_04_narrative.schemas import (
 from agents.agent_04_narrative.tavily_search import (
     get_recent_news_tavily,
     calculate_freshness_score,
+    filter_relevant_articles_with_llm,
 )
 from agents.shared.queries import narrative_queries
 from agents.shared.openai_client import get_structured_llm
@@ -83,9 +84,13 @@ Metrics (Historical - Graph):
 - Sentiment trend: {sentiment_trend}
 
 Metrics (Real-Time - Tavily):
-- Recent news (30d): {tavily_count}
-- Freshness score: {freshness:.2f}x (recent vs historical rate)
+- Articles found: {tavily_total} (raw search results)
+- Relevant articles: {tavily_relevant} ({tavily_ratio:.0%} relevance)
+- Relevance note: {tavily_reasoning}
+- Freshness score: {freshness:.2f}x (recent relevant vs historical rate)
 - Top headlines: {tavily_headlines}
+
+IMPORTANT: Use the RELEVANT article count ({tavily_relevant}), not the raw count ({tavily_total}), when evaluating recent coverage. Many search results are tangentially related or false positives.
 
 Provide your score and reasoning.
 """
@@ -176,6 +181,10 @@ async def get_narrative_metrics(
     tavily_count = 0
     tavily_headlines = []
     freshness = 0.0
+    tavily_total_found = 0
+    tavily_relevant_count = 0
+    tavily_relevance_ratio = 0.0
+    tavily_relevance_reasoning = ""
 
     if enable_tavily:
         tech_name = tech_id.replace("_", " ").title()  # Default: convert ID to name
@@ -187,18 +196,35 @@ async def get_narrative_metrics(
             max_results=20
         )
 
-        tavily_count = tavily_results.get("article_count", 0)
+        tavily_total_found = tavily_results.get("article_count", 0)
         tavily_headlines = tavily_results.get("headlines", [])
 
-        # Calculate freshness score (narrative acceleration indicator)
+        # Filter for relevance using LLM
+        if tavily_total_found > 0:
+            relevance_filter = await filter_relevant_articles_with_llm(
+                tech_name=tech_name,
+                tavily_results=tavily_results.get("full_results", []),
+                total_found=tavily_total_found
+            )
+
+            tavily_relevant_count = relevance_filter["relevant_count"]
+            tavily_relevance_ratio = relevance_filter["relevance_ratio"]
+            tavily_relevance_reasoning = relevance_filter["reasoning"]
+
+            # Use RELEVANT count for downstream metrics
+            tavily_count = tavily_relevant_count
+        else:
+            tavily_count = 0
+
+        # Calculate freshness score using RELEVANT count (not total)
         freshness = calculate_freshness_score(
             graph_count=news_count,
-            tavily_count=tavily_count,
+            tavily_count=tavily_count,  # Uses relevant_count now
             days_tavily=30,
             days_graph=180  # 6 months
         )
 
-        print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_count} articles, Freshness: {freshness:.2f}x")
+        print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_relevant_count}/{tavily_total_found} relevant ({tavily_relevance_ratio:.0%}), Freshness: {freshness:.2f}x")
     else:
         print(f"[NARRATIVE] Graph: {news_count} articles (Tavily disabled for performance)")
 
@@ -210,9 +236,13 @@ async def get_narrative_metrics(
         avg_sentiment=avg_sentiment,
         sentiment_trend=sentiment_trend,
         top_articles=article_summaries,
-        news_count_recent_30d=tavily_count,
+        news_count_recent_30d=tavily_count,  # Now uses relevant_count
         freshness_score=freshness,
         tavily_headlines=tavily_headlines,
+        tavily_total_found=tavily_total_found,
+        tavily_relevant_count=tavily_relevant_count,
+        tavily_relevance_ratio=tavily_relevance_ratio,
+        tavily_relevance_reasoning=tavily_relevance_reasoning,
     )
 
 
@@ -268,7 +298,10 @@ async def narrative_scorer_agent(
         tier3_count=metrics.tier3_count,
         avg_sentiment=metrics.avg_sentiment,
         sentiment_trend=metrics.sentiment_trend,
-        tavily_count=metrics.news_count_recent_30d,
+        tavily_total=metrics.tavily_total_found,
+        tavily_relevant=metrics.tavily_relevant_count,
+        tavily_ratio=metrics.tavily_relevance_ratio,
+        tavily_reasoning=metrics.tavily_relevance_reasoning,
         freshness=metrics.freshness_score,
         tavily_headlines=", ".join(metrics.tavily_headlines[:3]) if metrics.tavily_headlines else "None",
     )

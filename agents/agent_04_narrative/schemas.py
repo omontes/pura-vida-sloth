@@ -91,6 +91,24 @@ class NarrativeMetrics(BaseModel):
         description="Top headlines from Tavily real-time search"
     )
 
+    # Tavily relevance filtering (LLM-based)
+    tavily_total_found: int = Field(
+        default=0,
+        description="Total articles found by Tavily (before relevance filtering)"
+    )
+    tavily_relevant_count: int = Field(
+        default=0,
+        description="Number of relevant articles (after LLM filtering)"
+    )
+    tavily_relevance_ratio: float = Field(
+        default=0.0,
+        description="Ratio of relevant articles (0.0-1.0)"
+    )
+    tavily_relevance_reasoning: str = Field(
+        default="",
+        description="LLM explanation of relevance filtering"
+    )
+
 
 class NarrativeOutput(BaseModel):
     """

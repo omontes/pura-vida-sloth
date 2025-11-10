@@ -13,6 +13,8 @@ Strategy:
 from typing import List, Dict, Any
 import os
 from langchain_community.tools.tavily_search import TavilySearchResults
+from pydantic import BaseModel, Field
+from agents.shared.openai_client import get_structured_llm
 
 
 async def get_recent_news_tavily(
@@ -64,6 +66,7 @@ async def get_recent_news_tavily(
             "article_count": 0,
             "headlines": [],
             "sources": [],
+            "full_results": [],
             "freshness_score": 0.0,
             "search_query": "",
             "time_range_days": days,
@@ -103,23 +106,34 @@ async def get_recent_news_tavily(
         # Parse results
         headlines = []
         sources = []
+        full_results = []  # Store full result objects for relevance filtering
 
         if isinstance(results, list):
-            for result in results[:5]:  # Top 5 for evidence
+            for result in results:
                 if isinstance(result, dict):
                     title = result.get("title", result.get("content", "")[:100])
                     url = result.get("url", "")
+                    content = result.get("content", "")
 
-                    headlines.append(title)
+                    # Store for top 5 display
+                    if len(headlines) < 5:
+                        headlines.append(title)
 
                     # Extract domain from URL as source
-                    if url:
+                    if url and len(sources) < 5:
                         try:
                             from urllib.parse import urlparse
                             domain = urlparse(url).netloc.replace("www.", "")
                             sources.append(domain)
                         except:
                             sources.append("Unknown")
+
+                    # Store full result for relevance filtering
+                    full_results.append({
+                        "title": title,
+                        "content": content[:300],  # First 300 chars for LLM analysis
+                        "url": url
+                    })
 
             article_count = len(results)
         else:
@@ -131,6 +145,7 @@ async def get_recent_news_tavily(
             "article_count": article_count,
             "headlines": headlines[:5],
             "sources": sources[:5],
+            "full_results": full_results,  # For relevance filtering
             "freshness_score": 0.0,  # Will be calculated separately
             "search_query": search_query,
             "time_range_days": days
@@ -142,10 +157,141 @@ async def get_recent_news_tavily(
             "article_count": 0,
             "headlines": [],
             "sources": [],
+            "full_results": [],
             "freshness_score": 0.0,
             "search_query": search_query,
             "time_range_days": days,
             "error": str(e)
+        }
+
+
+class RelevanceFilterOutput(BaseModel):
+    """LLM output for relevance filtering."""
+    relevant_count: int = Field(description="Number of articles truly about the technology")
+    relevance_ratio: float = Field(description="Ratio of relevant articles (0.0-1.0)")
+    reasoning: str = Field(description="Explanation of filtering decision")
+
+
+async def filter_relevant_articles_with_llm(
+    tech_name: str,
+    tavily_results: List[Dict[str, Any]],
+    total_found: int
+) -> Dict[str, Any]:
+    """
+    Use LLM to filter Tavily results for relevance.
+
+    Problem: Tavily finds 13-19 articles for almost everything (even obscure components),
+    but many are tangentially related or false positives. This function uses an LLM to
+    count only articles truly about the technology.
+
+    Args:
+        tech_name: Technology name (e.g., "eVTOL", "Independent Rotor Blade Control")
+        tavily_results: List of article dicts with title, content, url
+        total_found: Total articles from Tavily
+
+    Returns:
+        {
+            "total_found": int,
+            "relevant_count": int,
+            "relevance_ratio": float,
+            "reasoning": str,
+            "relevant_headlines": List[str]
+        }
+
+    Example:
+        >>> filter_relevant_articles_with_llm(
+        ...     "Independent Rotor Blade Control",
+        ...     tavily_results,
+        ...     19
+        ... )
+        {
+            "total_found": 19,
+            "relevant_count": 2,
+            "relevance_ratio": 0.11,
+            "reasoning": "Only 2 of 19 articles directly discuss Independent Rotor Blade Control...",
+            "relevant_headlines": [...]
+        }
+    """
+    if not tavily_results or total_found == 0:
+        return {
+            "total_found": 0,
+            "relevant_count": 0,
+            "relevance_ratio": 0.0,
+            "reasoning": "No articles found",
+            "relevant_headlines": []
+        }
+
+    # Build prompt with article summaries
+    articles_text = "\n\n".join([
+        f"{i+1}. Title: {r['title']}\n   Snippet: {r['content'][:200]}"
+        for i, r in enumerate(tavily_results[:20])  # Analyze up to 20 articles
+    ])
+
+    prompt = f"""You are analyzing web search results to determine relevance.
+
+Technology: {tech_name}
+
+Total articles found: {total_found}
+
+Articles (title + snippet):
+{articles_text}
+
+Task: Count how many of these articles are SPECIFICALLY about "{tech_name}" (not just tangentially related).
+
+Criteria for RELEVANT:
+- Primary focus is the technology itself
+- Discusses developments, trends, applications, or challenges
+- Technology is prominently featured (in headline or first paragraph)
+- Provides substantive information about the technology
+
+Criteria for NOT RELEVANT:
+- Only mentions technology in passing
+- About broader industry/topic (technology is secondary)
+- False match on search terms (different technology with similar name)
+- Generic article that barely mentions the technology
+
+Provide:
+1. relevant_count: Number of relevant articles (0-{total_found})
+2. relevance_ratio: Ratio of relevant/total (0.0-1.0)
+3. reasoning: 1-2 sentences explaining your count
+
+Be conservative - only count articles truly about the technology."""
+
+    try:
+        # Use gpt-4o-mini for cost efficiency (~$0.0001-0.0002 per call)
+        llm = get_structured_llm(
+            output_schema=RelevanceFilterOutput,
+            model="gpt-4o-mini",
+            temperature=0.0  # Deterministic for consistency
+        )
+
+        result = await llm.ainvoke(prompt)
+
+        # Extract relevant headlines
+        relevant_headlines = []
+        if result.relevant_count > 0:
+            # Take first N headlines as proxy (LLM doesn't specify which ones)
+            relevant_headlines = [r['title'] for r in tavily_results[:min(result.relevant_count, 5)]]
+
+        print(f"[TAVILY-FILTER] {result.relevant_count}/{total_found} articles relevant ({result.relevance_ratio:.0%})")
+
+        return {
+            "total_found": total_found,
+            "relevant_count": result.relevant_count,
+            "relevance_ratio": result.relevance_ratio,
+            "reasoning": result.reasoning,
+            "relevant_headlines": relevant_headlines
+        }
+
+    except Exception as e:
+        print(f"[TAVILY-FILTER] Error during relevance filtering: {e}")
+        # Fallback: assume all articles are relevant (conservative)
+        return {
+            "total_found": total_found,
+            "relevant_count": total_found,
+            "relevance_ratio": 1.0,
+            "reasoning": f"Relevance filtering failed: {str(e)}. Assuming all articles are relevant.",
+            "relevant_headlines": [r['title'] for r in tavily_results[:5]]
         }
 
 
