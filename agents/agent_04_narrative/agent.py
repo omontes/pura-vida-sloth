@@ -27,6 +27,7 @@ from agents.agent_04_narrative.tavily_search import (
 from agents.shared.queries import narrative_queries
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
+from agents.shared.logger import AgentLogger, LogLevel
 
 
 # LLM Prompt for scoring (RECALIBRATED 2025-01-10 - removed conservative anchoring)
@@ -101,7 +102,8 @@ async def get_narrative_metrics(
     tech_id: str,
     start_date: str = None,
     end_date: str = None,
-    enable_tavily: bool = False
+    enable_tavily: bool = False,
+    logger: AgentLogger = None
 ) -> NarrativeMetrics:
     """
     Fetch all narrative metrics for a technology.
@@ -114,10 +116,14 @@ async def get_narrative_metrics(
         start_date: Start of temporal window
         end_date: End of temporal window
         enable_tavily: Enable Tavily real-time search (default: False, slow but accurate)
+        logger: Optional logger for debug output
 
     Returns:
         NarrativeMetrics with all raw data
     """
+    if logger is None:
+        logger = AgentLogger(level=LogLevel.SILENT)
+
     # Calculate dynamic dates if not provided
     if end_date is None:
         end_date = datetime.now().strftime("%Y-%m-%d")
@@ -125,7 +131,8 @@ async def get_narrative_metrics(
         # Look back 6 months for narrative signals
         start_date = (datetime.now() - timedelta(days=180)).strftime("%Y-%m-%d")
 
-    print(f"[NARRATIVE] Query date range for {tech_id}: {start_date} to {end_date}")
+    if logger.level.value >= LogLevel.DEBUG.value:
+        print(f"[NARRATIVE] Query date range for {tech_id}: {start_date} to {end_date}")
 
     # Query 1: News count (3 months)
     news_data = await narrative_queries.get_news_count_3mo(
@@ -224,9 +231,11 @@ async def get_narrative_metrics(
             days_graph=180  # 6 months
         )
 
-        print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_relevant_count}/{tavily_total_found} relevant ({tavily_relevance_ratio:.0%}), Freshness: {freshness:.2f}x")
+        if logger.level.value >= LogLevel.DEBUG.value:
+            print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_relevant_count}/{tavily_total_found} relevant ({tavily_relevance_ratio:.0%}), Freshness: {freshness:.2f}x")
     else:
-        print(f"[NARRATIVE] Graph: {news_count} articles (Tavily disabled for performance)")
+        if logger.level.value >= LogLevel.DEBUG.value:
+            print(f"[NARRATIVE] Graph: {news_count} articles (Tavily disabled for performance)")
 
     return NarrativeMetrics(
         news_count_3mo=news_count,
@@ -277,6 +286,9 @@ async def narrative_scorer_agent(
     # Parse input
     input_data = NarrativeInput(**state)
 
+    # Get logger from state
+    logger = state.get("_logger", AgentLogger(LogLevel.SILENT))
+
     # Check if Tavily should be enabled (default: False to avoid timeouts)
     enable_tavily = state.get("enable_tavily", False)
 
@@ -287,6 +299,7 @@ async def narrative_scorer_agent(
         start_date=input_data.start_date,
         end_date=input_data.end_date,
         enable_tavily=enable_tavily,
+        logger=logger,
     )
 
     # Build prompt
@@ -315,6 +328,15 @@ async def narrative_scorer_agent(
 
     # Score with LLM
     result = await llm.ainvoke(prompt)
+
+    # Log LLM call in debug mode
+    logger.log_llm_call(
+        agent_name="narrative_scorer",
+        prompt=prompt,
+        response=result,
+        model="gpt-4o-mini",
+        tech_id=input_data.tech_id
+    )
 
     # Validate output
     output = NarrativeOutput(

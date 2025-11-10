@@ -2597,6 +2597,410 @@ ORDER BY m.strength DESC
 
 ---
 
+## Testing Instructions
+
+### Overview
+
+The multi-agent system includes comprehensive verbose logging for testing and debugging. Use `agents/test_full_pipeline.py` with CLI arguments to control verbosity, technology count, and configuration options.
+
+### CLI Arguments Reference
+
+```bash
+python agents/test_full_pipeline.py [OPTIONS]
+
+Options:
+  -v, --verbose         Increase verbosity (count mode)
+                        No flag: NORMAL (final results only)
+                        -v: VERBOSE (agent I/O)
+                        -vv: DEBUG (LLM prompts + graph queries)
+
+  --tech-count N        Number of technologies to analyze (default: 50)
+
+  --community VERSION   Community version for tech discovery (default: v1)
+                        Choices: v0, v1, v2
+
+  --no-tavily          Disable Tavily real-time search (default: enabled)
+                        Use this for faster testing
+
+  --min-docs N         Minimum document count per technology (default: 5)
+
+  --log-file PATH      Path to save structured JSON logs
+                        (default: pipeline_logs.json)
+
+  --single-tech        Run single technology test (solid_state_battery)
+```
+
+### Verbosity Levels
+
+#### Normal Mode (Default)
+**Output**: Final results, phase distribution, timing statistics
+
+```bash
+python agents/test_full_pipeline.py --tech-count 50
+```
+
+**What you'll see**:
+- Configuration summary
+- Technology completion tables (scores + phase)
+- Executive summaries
+- Phase distribution
+- Total runtime statistics
+
+**Use case**: Production runs, final validation
+
+---
+
+#### Verbose Mode (`-v`)
+**Output**: Agent starts/completions, key output fields
+
+```bash
+python agents/test_full_pipeline.py -v --tech-count 10
+```
+
+**What you'll see** (in addition to Normal):
+- `→ agent_name | tech_id` (agent start)
+- `✓ agent_name | tech_id` (agent completion)
+- Key output fields per agent:
+  - **innovation_scorer**: `innovation_score`, `innovation_reasoning`
+  - **adoption_scorer**: `adoption_score`, `adoption_reasoning`
+  - **narrative_scorer**: `narrative_score`, `narrative_reasoning`, `freshness_score`
+  - **risk_scorer**: `risk_score`, `risk_reasoning`
+  - **hype_scorer**: `hype_score`, `layer_divergence`
+  - **phase_detector**: `hype_cycle_phase`, `phase_confidence`
+  - **llm_analyst**: `executive_summary`, `key_insight`
+  - **ensemble**: `chart_x`, `chart_y`, `weighted_score`
+  - **validator**: `validation_status`, `validation_errors`
+
+**Use case**: Debugging agent logic, verifying score calculations
+
+---
+
+#### Debug Mode (`-vv`)
+**Output**: Full LLM prompts, responses, graph query details
+
+```bash
+python agents/test_full_pipeline.py -vv --single-tech
+```
+
+**What you'll see** (in addition to Verbose):
+- Full LLM prompts (truncated to 800 chars for readability)
+- LLM responses with structured output
+- Graph query date ranges
+- Tavily search results (if enabled)
+- Freshness score calculations
+- Temporal window calculations
+
+**Use case**:
+- LLM prompt engineering
+- Investigating unexpected scores
+- Validating data retrieval logic
+- Reproducing scoring behavior
+
+---
+
+### Testing Scenarios
+
+#### Quick Validation Test (Single Technology)
+**Purpose**: Verify pipeline works end-to-end
+
+```bash
+python agents/test_full_pipeline.py --single-tech -v --no-tavily
+```
+
+**Expected runtime**: ~15-30 seconds
+**What it tests**: All 12 agents, sequential flow, state management
+
+---
+
+#### Development Testing (10 Technologies)
+**Purpose**: Test with realistic dataset, verify phase distribution
+
+```bash
+python agents/test_full_pipeline.py --tech-count 10 -v --no-tavily
+```
+
+**Expected runtime**: ~3-5 minutes
+**What it tests**: Parallel execution, concurrency handling, phase classification
+
+---
+
+#### Full Production Run (50 Technologies)
+**Purpose**: Generate production-grade hype cycle chart
+
+```bash
+python agents/test_full_pipeline.py --tech-count 50
+```
+
+**Expected runtime**: ~15-25 minutes (with Tavily)
+**Output files**:
+- `hype_cycle_chart.json` (full chart with 50 technologies)
+- `pipeline_logs.json` (structured logs for UI)
+
+---
+
+#### Tavily Real-Time Search Test
+**Purpose**: Test narrative scoring with live web search
+
+```bash
+python agents/test_full_pipeline.py -vv --tech-count 5
+```
+
+**Expected runtime**: ~8-12 minutes (Tavily adds 15-30s per technology)
+**What it tests**:
+- Tavily API integration
+- Freshness score calculation
+- Relevance filtering with LLM
+- Neo4j connection timeout handling
+
+**Warning**: Slow! Use `--no-tavily` for faster testing.
+
+---
+
+#### Community Version Comparison
+**Purpose**: Compare tech discovery across community versions
+
+```bash
+# Test with v0 communities (broader clustering)
+python agents/test_full_pipeline.py --community v0 --tech-count 20 -v
+
+# Test with v1 communities (balanced, default)
+python agents/test_full_pipeline.py --community v1 --tech-count 20 -v
+
+# Test with v2 communities (finer clustering)
+python agents/test_full_pipeline.py --community v2 --tech-count 20 -v
+```
+
+**Expected runtime**: ~5-8 minutes each
+**What it tests**: Community-based stratified sampling, tech diversity
+
+---
+
+#### Document Threshold Testing
+**Purpose**: Test with different minimum document requirements
+
+```bash
+# Permissive (more technologies, potentially noisier)
+python agents/test_full_pipeline.py --min-docs 3 --tech-count 30 -v
+
+# Strict (fewer technologies, higher quality)
+python agents/test_full_pipeline.py --min-docs 10 --tech-count 30 -v
+```
+
+**What it tests**: Data quality vs quantity trade-off
+
+---
+
+### Interpreting Output
+
+#### Agent Output Format (Verbose Mode)
+
+```
+→ innovation_scorer | solid_state_battery
+  innovation_score: 72.5
+  innovation_reasoning: High patent activity (42 filings in 2yr) with strong citation...
+✓ innovation_scorer | solid_state_battery
+
+→ adoption_scorer | solid_state_battery
+  adoption_score: 45.3
+  adoption_reasoning: Growing government interest (8 contracts, $12M total)...
+✓ adoption_scorer | solid_state_battery
+```
+
+#### Technology Completion Table (Normal Mode)
+
+```
+═══════════════════════════════════════════════════════════════
+                  Solid State Battery - Analysis Complete
+═══════════════════════════════════════════════════════════════
+Metric              Value
+────────────────────────────────────────────────────────────────
+Phase               Innovation Trigger
+Innovation          72.5/100
+Adoption            45.3/100
+Narrative           32.1/100
+Risk                28.4/100
+Hype                41.2/100
+Chart X             0.450
+────────────────────────────────────────────────────────────────
+
+This technology shows strong early innovation signals with 42 recent
+patents and growing government validation through $12M in contracts...
+```
+
+#### Phase Distribution Summary
+
+```
+[PHASE DISTRIBUTION]
+  Innovation Trigger: 12 technologies
+  Peak of Inflated Expectations: 8 technologies
+  Trough of Disillusionment: 5 technologies
+  Slope of Enlightenment: 18 technologies
+  Plateau of Productivity: 7 technologies
+```
+
+#### LLM Prompt Example (Debug Mode)
+
+```
+═══════════════════════════════════════════════════════════════
+     innovation_scorer - LLM Prompt (gpt-4o-mini)
+═══════════════════════════════════════════════════════════════
+You are an innovation analyst scoring emerging technologies...
+
+Technology: solid_state_battery
+
+Metrics:
+- Patents (2yr): 42
+- Citations: 156
+- Papers (2yr): 28
+- GitHub repos: 5
+
+Calculate innovation score (0-100) and provide reasoning.
+═══════════════════════════════════════════════════════════════
+
+═══════════════════════════════════════════════════════════════
+        innovation_scorer - LLM Response
+═══════════════════════════════════════════════════════════════
+{
+  "innovation_score": 72.5,
+  "reasoning": "High patent activity indicates strong R&D momentum...",
+  "confidence": "high"
+}
+═══════════════════════════════════════════════════════════════
+```
+
+---
+
+### Testing Best Practices
+
+#### 1. Start Small
+Always test with 1 technology before running full datasets:
+```bash
+python agents/test_full_pipeline.py --single-tech -v
+```
+
+#### 2. Use --no-tavily for Speed
+Tavily adds 15-30s per technology. Disable during development:
+```bash
+python agents/test_full_pipeline.py --tech-count 10 -v --no-tavily
+```
+
+#### 3. Enable Debug Mode for Investigation
+When scores don't make sense, use debug mode to see prompts:
+```bash
+python agents/test_full_pipeline.py -vv --single-tech
+```
+
+#### 4. Save Logs for Analysis
+Always save structured logs for later review:
+```bash
+python agents/test_full_pipeline.py --tech-count 50 --log-file run_2025_01_10.json
+```
+
+#### 5. Verify Determinism
+Run the same command twice, compare outputs:
+```bash
+python agents/test_full_pipeline.py --tech-count 5 --no-tavily
+python agents/test_full_pipeline.py --tech-count 5 --no-tavily
+diff hype_cycle_chart.json hype_cycle_chart.json.backup
+```
+
+**Expected result**: Identical files (same input → same output)
+
+#### 6. Test Phase Detection Edge Cases
+Focus on technologies near phase boundaries:
+```bash
+# Technologies with mixed signals (should classify consistently)
+python agents/test_full_pipeline.py -vv --single-tech
+```
+
+#### 7. Monitor Neo4j Connection Pool
+For large runs (100+ technologies), watch for timeout errors:
+```bash
+# Default max_concurrent=20, adjust if needed
+python agents/test_full_pipeline.py --tech-count 100
+```
+
+---
+
+### Common Issues and Solutions
+
+#### Issue: "Neo4j connection timeout"
+**Cause**: Tavily searches taking too long
+**Solution**: Disable Tavily or reduce tech count
+```bash
+python agents/test_full_pipeline.py --no-tavily --tech-count 20
+```
+
+#### Issue: "Validation failed: chart_x out of range"
+**Cause**: Bug in chart generation or ensemble agent
+**Solution**: Run with debug mode to see exact scores
+```bash
+python agents/test_full_pipeline.py -vv --single-tech
+```
+
+#### Issue: "No technologies found"
+**Cause**: min_document_count threshold too strict
+**Solution**: Lower threshold
+```bash
+python agents/test_full_pipeline.py --min-docs 3
+```
+
+#### Issue: "Non-deterministic output"
+**Cause**: Tavily enabled (real-time search = different results)
+**Solution**: Use `--no-tavily` for reproducibility tests
+```bash
+python agents/test_full_pipeline.py --tech-count 5 --no-tavily
+```
+
+---
+
+### Structured Log Format
+
+The `--log-file` option saves JSON logs with this structure:
+
+```json
+[
+  {
+    "timestamp": "2025-01-10T15:30:45.123456",
+    "event": "pipeline_start",
+    "tech_count": 50,
+    "enable_tavily": true,
+    "community_version": "v1",
+    "min_document_count": 5
+  },
+  {
+    "timestamp": "2025-01-10T15:30:46.234567",
+    "event": "agent_start",
+    "agent": "innovation_scorer",
+    "tech_id": "solid_state_battery"
+  },
+  {
+    "timestamp": "2025-01-10T15:30:48.345678",
+    "event": "llm_call",
+    "agent": "innovation_scorer",
+    "tech_id": "solid_state_battery",
+    "model": "gpt-4o-mini",
+    "prompt": "You are an innovation analyst...",
+    "response": "{\"innovation_score\": 72.5, ...}"
+  },
+  {
+    "timestamp": "2025-01-10T15:30:48.456789",
+    "event": "agent_complete",
+    "agent": "innovation_scorer",
+    "tech_id": "solid_state_battery",
+    "outputs": {
+      "innovation_score": 72.5,
+      "innovation_reasoning": "...",
+      "innovation_metrics": {...}
+    }
+  }
+]
+```
+
+**Use case**: FastAPI UI can consume these logs for real-time progress updates.
+
+---
+
 ## Summary
 
 This document provides all essential information to implement the 12-agent first run system:

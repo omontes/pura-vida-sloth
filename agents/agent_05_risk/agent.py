@@ -7,6 +7,7 @@ from agents.agent_05_risk.schemas import RiskInput, RiskOutput, RiskMetrics
 from agents.shared.queries import risk_queries
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
+from agents.shared.logger import AgentLogger, LogLevel
 
 RISK_SCORING_PROMPT = """You are a financial risk analyst scoring emerging technologies based on Layer 3 financial signals.
 
@@ -79,6 +80,10 @@ async def get_risk_metrics(driver: AsyncDriver, tech_id: str, start_date: str = 
 
 async def risk_scorer_agent(state: Dict[str, Any], driver: AsyncDriver) -> Dict[str, Any]:
     input_data = RiskInput(**state)
+
+    # Get logger from state
+    logger = state.get("_logger", AgentLogger(LogLevel.SILENT))
+
     metrics = await get_risk_metrics(driver, input_data.tech_id, input_data.start_date, input_data.end_date)
 
     prompt = RISK_SCORING_PROMPT.format(
@@ -92,6 +97,15 @@ async def risk_scorer_agent(state: Dict[str, Any], driver: AsyncDriver) -> Dict[
 
     llm = get_structured_llm(output_schema=RiskOutput, model="gpt-4o-mini", temperature=AGENT_TEMPERATURES["agent_05_risk"])
     result = await llm.ainvoke(prompt)
+
+    # Log LLM call in debug mode
+    logger.log_llm_call(
+        agent_name="risk_scorer",
+        prompt=prompt,
+        response=result,
+        model="gpt-4o-mini",
+        tech_id=input_data.tech_id
+    )
 
     return {
         "tech_id": input_data.tech_id,

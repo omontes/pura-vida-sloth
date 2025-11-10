@@ -4,6 +4,7 @@ from typing import Dict, Any
 from pydantic import BaseModel, Field
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
+from agents.shared.logger import AgentLogger, LogLevel
 
 class AnalystOutput(BaseModel):
     tech_id: str
@@ -34,6 +35,9 @@ Provide:
 Be direct and actionable. Focus on the "so what" for executives."""
 
 async def llm_analyst_agent(state: Dict[str, Any]) -> Dict[str, Any]:
+    # Get logger from state
+    logger = state.get("_logger", AgentLogger(LogLevel.SILENT))
+
     prompt = ANALYST_PROMPT.format(
         tech_id=state["tech_id"],
         innovation=state.get("innovation_score", 50),
@@ -52,6 +56,15 @@ async def llm_analyst_agent(state: Dict[str, Any]) -> Dict[str, Any]:
     )
 
     result = await llm.ainvoke(prompt)
+
+    # Log LLM call in debug mode
+    logger.log_llm_call(
+        agent_name="llm_analyst",
+        prompt=prompt,
+        response=result,
+        model="gpt-4o-mini",
+        tech_id=state["tech_id"]
+    )
 
     return {
         "tech_id": state["tech_id"],

@@ -2,13 +2,19 @@
 Test Full Pipeline - End-to-end test of 12-agent hype cycle system.
 
 Usage:
-    python agents/test_full_pipeline.py
+    python agents/test_full_pipeline.py                      # Default: 50 techs, normal logging
+    python agents/test_full_pipeline.py -v                   # Verbose mode (agent I/O)
+    python agents/test_full_pipeline.py -vv                  # Debug mode (LLM prompts)
+    python agents/test_full_pipeline.py --tech-count 100     # Analyze 100 technologies
+    python agents/test_full_pipeline.py --community v2       # Use v2 communities
+    python agents/test_full_pipeline.py --no-tavily          # Disable Tavily search
 """
 
 import asyncio
 import json
 import sys
 import os
+import argparse
 
 sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
@@ -18,9 +24,10 @@ from agents.langgraph_orchestrator import (
     generate_hype_cycle_chart,
 )
 from agents.chart_normalization_ranked import normalize_chart
+from agents.shared.logger import AgentLogger, LogLevel
 
 
-async def test_single_technology():
+async def test_single_technology(logger: AgentLogger, enable_tavily: bool = True):
     """Test pipeline with single technology."""
     print("\n" + "="*80)
     print("TEST 1: Single Technology Analysis (solid_state_battery)")
@@ -33,7 +40,9 @@ async def test_single_technology():
         result = await analyze_single_technology(
             driver=client.driver,
             tech_id="solid_state_battery",
-            tech_name="Solid-State Battery"
+            tech_name="Solid-State Battery",
+            logger=logger,
+            enable_tavily=enable_tavily
         )
 
         print(f"\n[RESULT] Technology: {result['tech_id']}")
@@ -70,10 +79,16 @@ async def test_single_technology():
         await client.close()
 
 
-async def test_multiple_technologies():
-    """Test pipeline with 50 technologies."""
+async def test_multiple_technologies(
+    logger: AgentLogger,
+    tech_count: int = 50,
+    community_version: str = "v1",
+    enable_tavily: bool = True,
+    min_docs: int = 5
+):
+    """Test pipeline with multiple technologies."""
     print("\n" + "="*80)
-    print("TEST 2: Multiple Technologies Analysis (50 technologies)")
+    print(f"TEST 2: Multiple Technologies Analysis ({tech_count} technologies)")
     print("="*80)
 
     client = Neo4jClient()
@@ -82,7 +97,11 @@ async def test_multiple_technologies():
     try:
         chart = await generate_hype_cycle_chart(
             driver=client.driver,
-            limit=50
+            limit=tech_count,
+            logger=logger,
+            enable_tavily=enable_tavily,
+            community_version=community_version,
+            min_document_count=min_docs
         )
 
         print(f"\n[RESULT] Generated chart with {len(chart['technologies'])} technologies")
@@ -138,16 +157,119 @@ async def test_multiple_technologies():
         await client.close()
 
 
+def parse_args():
+    """Parse CLI arguments for pipeline configuration."""
+    parser = argparse.ArgumentParser(
+        description="Test full hype cycle analysis pipeline with configurable parameters",
+        formatter_class=argparse.RawDescriptionHelpFormatter,
+        epilog="""
+Examples:
+  python agents/test_full_pipeline.py                      # Default: 50 techs, normal logging
+  python agents/test_full_pipeline.py -v                   # Verbose mode (agent I/O)
+  python agents/test_full_pipeline.py -vv                  # Debug mode (LLM prompts)
+  python agents/test_full_pipeline.py --tech-count 100     # Analyze 100 technologies
+  python agents/test_full_pipeline.py --community v2       # Use v2 communities
+  python agents/test_full_pipeline.py --no-tavily          # Disable Tavily search
+        """
+    )
+
+    # Verbosity control
+    parser.add_argument(
+        "-v", "--verbose",
+        action="count",
+        default=0,
+        help="Increase verbosity: -v for agent I/O, -vv for LLM prompts (default: normal)"
+    )
+
+    # Pipeline configuration
+    parser.add_argument(
+        "--tech-count",
+        type=int,
+        default=50,
+        help="Number of technologies to analyze (default: 50)"
+    )
+
+    parser.add_argument(
+        "--community",
+        type=str,
+        choices=["v0", "v1", "v2"],
+        default="v1",
+        help="Community version for tech discovery (default: v1)"
+    )
+
+    parser.add_argument(
+        "--no-tavily",
+        action="store_true",
+        help="Disable Tavily real-time search (default: enabled)"
+    )
+
+    parser.add_argument(
+        "--min-docs",
+        type=int,
+        default=5,
+        help="Minimum document count per technology (default: 5)"
+    )
+
+    # Logging output
+    parser.add_argument(
+        "--log-file",
+        type=str,
+        default="pipeline_logs.json",
+        help="Path to save structured JSON logs (default: pipeline_logs.json)"
+    )
+
+    # Test selection
+    parser.add_argument(
+        "--single-tech",
+        action="store_true",
+        help="Run single technology test (solid_state_battery)"
+    )
+
+    return parser.parse_args()
+
+
 async def main():
     """Run all pipeline tests."""
+    args = parse_args()
+
+    # Map verbosity to LogLevel
+    if args.verbose == 0:
+        log_level = LogLevel.NORMAL
+    elif args.verbose == 1:
+        log_level = LogLevel.VERBOSE
+    else:  # args.verbose >= 2
+        log_level = LogLevel.DEBUG
+
+    # Initialize logger
+    logger = AgentLogger(level=log_level, log_file=args.log_file)
+
     print("\n" + "="*80)
     print("FULL PIPELINE TEST - 12-Agent Hype Cycle System")
     print("="*80)
+    print(f"\nConfiguration:")
+    print(f"  Tech Count: {args.tech_count}")
+    print(f"  Community Version: {args.community}")
+    print(f"  Tavily Search: {'disabled' if args.no_tavily else 'enabled'}")
+    print(f"  Min Documents: {args.min_docs}")
+    print(f"  Verbosity: {log_level.name}")
+    print(f"  Log File: {args.log_file}")
 
-    tests = [
-        #("Single Technology Analysis", test_single_technology),
-        ("Multiple Technologies (500)", test_multiple_technologies),
-    ]
+    enable_tavily = not args.no_tavily
+
+    # Build test suite based on arguments
+    tests = []
+    if args.single_tech:
+        tests.append(("Single Technology Analysis",
+                     lambda: test_single_technology(logger, enable_tavily)))
+    else:
+        tests.append(("Multiple Technologies",
+                     lambda: test_multiple_technologies(
+                         logger,
+                         args.tech_count,
+                         args.community,
+                         enable_tavily,
+                         args.min_docs
+                     )))
 
     results = []
     for test_name, test_func in tests:

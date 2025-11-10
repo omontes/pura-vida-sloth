@@ -23,6 +23,7 @@ from agents.agent_02_innovation.schemas import (
 from agents.shared.queries import innovation_queries
 from agents.shared.openai_client import get_structured_llm
 from agents.shared.constants import AGENT_TEMPERATURES
+from agents.shared.logger import AgentLogger, LogLevel
 
 
 # LLM Prompt for scoring (RECALIBRATED 2025-01-10 - removed conservative anchoring)
@@ -203,6 +204,9 @@ async def innovation_scorer_agent(
     # Parse input
     input_data = InnovationInput(**state)
 
+    # Get logger from state
+    logger = state.get("_logger", AgentLogger(LogLevel.SILENT))
+
     # Fetch metrics
     metrics = await get_innovation_metrics(
         driver=driver,
@@ -238,6 +242,15 @@ async def innovation_scorer_agent(
 
     # Score with LLM
     result = await llm.ainvoke(prompt)
+
+    # Log LLM call in debug mode
+    logger.log_llm_call(
+        agent_name="innovation_scorer",
+        prompt=prompt,
+        response=result,
+        model="gpt-4o-mini",
+        tech_id=input_data.tech_id
+    )
 
     # Validate output
     output = InnovationOutput(
