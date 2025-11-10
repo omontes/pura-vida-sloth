@@ -206,10 +206,8 @@ def classify_communities_by_maturity(
             print(f"  Patents: {patents}, News: {news}, Contracts: {contracts}")
             debug_first = False
 
-        # Skip communities with no documents
-        if patents == 0 and news == 0:
-            skipped_count += 1
-            continue
+        # Allow all communities (even without patent/news data)
+        # Removed skip condition - communities with contracts-only are valid
 
         # Calculate total docs and ratios
         total_docs = patents + news + contracts
