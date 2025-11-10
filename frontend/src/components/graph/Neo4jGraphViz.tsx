@@ -196,7 +196,7 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {/* Legend (top-right) - Hierarchical */}
       {allNodeTypes.length > 0 && (
         <div className="absolute top-4 right-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-xs max-h-96 overflow-y-auto">
-          <h3 className="text-sm font-bold text-teal-700 dark:text-teal-400 mb-3">Node Types</h3>
+          <div className="text-base font-bold text-teal-700 dark:text-teal-400 mb-3">Node Types</div>
 
           {/* Technology (Primary nodes) */}
           {primaryNodes.map((type) => (
@@ -269,9 +269,9 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {selectedNode && (
         <div className="absolute bottom-20 left-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-md max-h-96 overflow-y-auto">
           <div className="flex items-center justify-between mb-2">
-            <h3 className="text-sm font-bold text-blue-600 dark:text-blue-400">
+            <div className="text-base font-bold text-blue-600 dark:text-blue-400">
               {selectedNode.group}: {selectedNode.label}
-            </h3>
+            </div>
             <button
               onClick={() => setSelectedNode(null)}
               className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"

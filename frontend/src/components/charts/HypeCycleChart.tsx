@@ -406,7 +406,7 @@ export default function HypeCycleChart({
   return (
     <Card elevation="raised" padding="spacious" className="w-full">
       <CardHeader>
-        <CardTitle as="h2">Technology Hype Cycle for Emerging Tech, 2025</CardTitle>
+        <CardTitle as="h2" className="text-4xl">Technology Hype Cycle for Emerging Tech, 2025</CardTitle>
         <CardDescription>
           Multi-source intelligence positioning across the adoption lifecycle
         </CardDescription>

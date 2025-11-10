@@ -41,7 +41,7 @@ function App() {
             <svg className="w-16 h-16 mx-auto mb-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
             </svg>
-            <p className="text-2xl font-bold mb-3">Error Loading Data</p>
+            <h2 className="text-2xl font-bold mb-3">Error Loading Data</h2>
             <p className="text-base text-gray-600 dark:text-gray-400">{error.message}</p>
           </div>
         </Card>
@@ -94,7 +94,7 @@ function App() {
                 {/* Technology Summary */}
                 <div className="mb-8">
                   <div className="bg-gray-50 dark:bg-gray-900 rounded-lg p-6 border border-gray-200 dark:border-gray-800">
-                    <p className="text-base text-gray-700 dark:text-gray-300 leading-relaxed mb-4">
+                    <p className="text-base text-gray-700 dark:text-gray-300 leading-[1.7] mb-4">
                       {data.technologies.find(t => t.id === selectedTechId)?.summary}
                     </p>
                     <div className="flex items-center gap-8 mt-6 pt-4 border-t border-gray-200 dark:border-gray-700">
@@ -116,9 +116,9 @@ function App() {
 
                 {/* Neo4j Graph Visualization */}
                 <div className="mb-8">
-                  <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
+                  <h2 className="text-xl font-semibold text-gray-900 dark:text-white mb-4">
                     Knowledge Graph
-                  </h3>
+                  </h2>
                   <Neo4jGraphViz technologyId={selectedTechId} />
                 </div>
 

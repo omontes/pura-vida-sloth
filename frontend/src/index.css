@@ -26,6 +26,34 @@ body {
   min-height: 100vh;
 }
 
+/*
+ * Typography System Guidelines
+ *
+ * Headers (DM Serif Display):
+ * - Use for semantic content headers (h1-h6)
+ * - Minimum size: 18px (smaller sizes lose serif elegance)
+ * - Recommended sizes: h1 (32-36px), h2 (24-28px), h3 (20-24px), h4 (18px)
+ * - Purpose: Executive authority, professional branding
+ *
+ * Body Text (Inter):
+ * - Use for all body content, UI elements, labels
+ * - Excellent readability at 12-20px
+ * - For small text (<18px), prefer Inter over DM Serif Display
+ *
+ * Small UI Labels (<18px):
+ * - Use div/span with Inter, NOT semantic headers
+ * - Apply .uppercase with letter-spacing for better readability
+ */
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: 'DM Serif Display', Georgia, Cambria, 'Times New Roman', serif;
+}
+
+/* Enhanced letter spacing for uppercase text (improves readability) */
+.uppercase {
+  letter-spacing: 0.05em;
+}
+
 /* Custom scrollbar styling */
 ::-webkit-scrollbar {
   width: 10px;

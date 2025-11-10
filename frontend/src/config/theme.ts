@@ -84,7 +84,7 @@ export const lightTheme: Theme = {
       curve: '#0f766e',         // Teal accent (matches brand identity)
       curveShadow: 'rgba(15, 118, 110, 0.15)',
       separator: '#94a3b8',     // More visible separators
-      axisText: '#0a0a0a',      // Near black for axes
+      axisText: '#111827',      // Matches header text-gray-900 for consistency
       nodeStroke: '#ffffff',
       labelBackground: 'rgba(255, 255, 255, 0.98)',  // More opaque
       labelBorder: 'rgba(0, 0, 0, 0.15)',           // More visible border
@@ -126,7 +126,7 @@ export const darkTheme: Theme = {
       curve: '#60a5fa',         // Lighter blue for dark mode
       curveShadow: 'rgba(96, 165, 250, 0.2)',
       separator: '#9ca3af',     // Lighter gray for visibility in dark mode
-      axisText: '#fafafa',      // Near white for axes
+      axisText: '#ffffff',      // Matches header text-white for consistency
       nodeStroke: '#1a1a1a',
       labelBackground: 'rgba(26, 26, 26, 0.95)',
       labelBorder: 'rgba(255, 255, 255, 0.1)',

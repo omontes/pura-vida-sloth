@@ -29,10 +29,10 @@ export default function Header({ industry, onExport }: HeaderProps) {
 
               {/* Brand Name and Tagline */}
               <div>
-                <h1 className="text-xl sm:text-2xl lg:text-3xl font-bold text-gray-900 dark:text-white tracking-tight">
+                <h1 className="text-2xl lg:text-[1.95rem] lg:leading-tight font-bold text-gray-900 dark:text-white tracking-tight">
                   Canopy Intelligence
                 </h1>
-                <p className="hidden sm:block text-base text-gray-600 dark:text-gray-400 mt-0.5">
+                <p className="hidden sm:block text-[0.615rem] lg:text-[0.8rem] sm:leading-tight lg:leading-tight text-gray-600 dark:text-gray-400 mt-0.5">
                   Strategic Technology Market Intelligence
                 </p>
               </div>
@@ -44,7 +44,7 @@ export default function Header({ industry, onExport }: HeaderProps) {
               {industry && (
                 <div className="hidden lg:flex px-4 py-2.5 bg-gray-100 dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700">
                   <span className="text-sm text-gray-600 dark:text-gray-400 mr-2">Industry:</span>
-                  <span className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide">
+                  <span className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
                     {industry}
                   </span>
                 </div>
@@ -74,7 +74,7 @@ export default function Header({ industry, onExport }: HeaderProps) {
           <div className="max-w-7xl mx-auto px-4 sm:px-6 py-2.5">
             <div className="flex items-center justify-center gap-2">
               <span className="text-sm text-gray-600 dark:text-gray-400">Industry:</span>
-              <span className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wide">
+              <span className="text-sm font-semibold text-gray-900 dark:text-white uppercase tracking-wider">
                 {industry}
               </span>
             </div>

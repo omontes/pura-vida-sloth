@@ -9,6 +9,7 @@ export default {
     extend: {
       fontFamily: {
         sans: ['Inter', 'system-ui', 'Avenir', 'Helvetica', 'Arial', 'sans-serif'],
+        serif: ['DM Serif Display', 'Georgia', 'Cambria', 'Times New Roman', 'serif'],
         mono: ['Menlo', 'Monaco', 'Consolas', 'Courier New', 'monospace'],
       },
       fontSize: {
