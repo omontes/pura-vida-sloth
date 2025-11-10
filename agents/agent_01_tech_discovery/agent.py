@@ -400,7 +400,7 @@ async def discover_technologies_with_community_sampling(
     """
     Discover technologies using ADAPTIVE community-based stratified sampling.
 
-    ADAPTIVE STRATEGY (2025-01-09):
+    ADAPTIVE STRATEGY:
     - Instead of requesting fixed counts (20/40/20/20), we now sample ALL available
       technologies from each community type up to a per-stratum max
     - If total < target, we fill remaining slots from ALL communities by PageRank

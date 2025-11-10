@@ -82,7 +82,7 @@ async def test_multiple_technologies():
     try:
         chart = await generate_hype_cycle_chart(
             driver=client.driver,
-            limit=50
+            limit=100
         )
 
         print(f"\n[RESULT] Generated chart with {len(chart['technologies'])} technologies")
