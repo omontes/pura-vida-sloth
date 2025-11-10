@@ -339,10 +339,10 @@ Open browser to `http://localhost:5173` to see interactive visualization.
 ```
 pura-vida-sloth/
 ├── src/
-│   ├── downloaders/              # Phase 1: 14 data source collectors
+│   ├── downloaders/              # Phase 1: 14 Data Sources
 │   │   ├── sec_filings.py
-│   │   ├── research_papers.py
-│   │   ├── patents.py
+│   │   ├── lens_patents.py
+│   │   ├── lens_scholarly.py
 │   │   ├── github_metrics.py
 │   │   └── ...
 │   ├── parsers/               # Phase 2: Document processing
@@ -378,6 +378,7 @@ pura-vida-sloth/
 │   ├── utils/                    # Utilities
 │   ├── core/                     # Core logic
 │   └── cli/                      # CLI commands
+│   └── scripts/                  # Scripts
 ├── frontend/                     # Phase 6: React UI
 │   ├── src/
 │   │   ├── components/
