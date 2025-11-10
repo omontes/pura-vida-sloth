@@ -95,7 +95,8 @@ async def get_narrative_metrics(
     driver: AsyncDriver,
     tech_id: str,
     start_date: str = None,
-    end_date: str = None
+    end_date: str = None,
+    enable_tavily: bool = False
 ) -> NarrativeMetrics:
     """
     Fetch all narrative metrics for a technology.
@@ -107,6 +108,7 @@ async def get_narrative_metrics(
         tech_id: Technology ID to score
         start_date: Start of temporal window
         end_date: End of temporal window
+        enable_tavily: Enable Tavily real-time search (default: False, slow but accurate)
 
     Returns:
         NarrativeMetrics with all raw data
@@ -170,28 +172,35 @@ async def get_narrative_metrics(
     ]
 
     # Query 5: Tavily real-time search (supplement graph data)
-    # Get tech_name from state if available, otherwise use tech_id
-    tech_name = tech_id.replace("_", " ").title()  # Default: convert ID to name
+    # OPTIONAL: Only if enable_tavily=True (slow, can cause Neo4j timeouts at scale)
+    tavily_count = 0
+    tavily_headlines = []
+    freshness = 0.0
 
-    tavily_results = await get_recent_news_tavily(
-        tech_id=tech_id,
-        tech_name=tech_name,
-        days=30,
-        max_results=20
-    )
+    if enable_tavily:
+        tech_name = tech_id.replace("_", " ").title()  # Default: convert ID to name
 
-    tavily_count = tavily_results.get("article_count", 0)
-    tavily_headlines = tavily_results.get("headlines", [])
+        tavily_results = await get_recent_news_tavily(
+            tech_id=tech_id,
+            tech_name=tech_name,
+            days=30,
+            max_results=20
+        )
 
-    # Calculate freshness score (narrative acceleration indicator)
-    freshness = calculate_freshness_score(
-        graph_count=news_count,
-        tavily_count=tavily_count,
-        days_tavily=30,
-        days_graph=180  # 6 months
-    )
+        tavily_count = tavily_results.get("article_count", 0)
+        tavily_headlines = tavily_results.get("headlines", [])
 
-    print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_count} articles, Freshness: {freshness:.2f}x")
+        # Calculate freshness score (narrative acceleration indicator)
+        freshness = calculate_freshness_score(
+            graph_count=news_count,
+            tavily_count=tavily_count,
+            days_tavily=30,
+            days_graph=180  # 6 months
+        )
+
+        print(f"[NARRATIVE] Graph: {news_count} articles, Tavily: {tavily_count} articles, Freshness: {freshness:.2f}x")
+    else:
+        print(f"[NARRATIVE] Graph: {news_count} articles (Tavily disabled for performance)")
 
     return NarrativeMetrics(
         news_count_3mo=news_count,
@@ -238,12 +247,16 @@ async def narrative_scorer_agent(
     # Parse input
     input_data = NarrativeInput(**state)
 
+    # Check if Tavily should be enabled (default: False to avoid timeouts)
+    enable_tavily = state.get("enable_tavily", False)
+
     # Fetch metrics
     metrics = await get_narrative_metrics(
         driver=driver,
         tech_id=input_data.tech_id,
         start_date=input_data.start_date,
         end_date=input_data.end_date,
+        enable_tavily=enable_tavily,
     )
 
     # Build prompt

@@ -69,10 +69,15 @@ class Neo4jClient:
             self.driver = AsyncGraphDatabase.driver(
                 self.uri,
                 auth=(self.username, self.password),
+                max_connection_lifetime=600,  # 10 minutes (for slow Tavily searches)
+                max_connection_pool_size=50,  # Increase pool size for parallel processing
+                connection_timeout=300,  # 5 minutes for initial connection
+                max_transaction_retry_time=300,  # 5 minutes for transaction retries
+                connection_acquisition_timeout=300,  # 5 minutes to acquire connection from pool
             )
             # Verify connectivity
             await self.driver.verify_connectivity()
-            logger.info(f"Connected to Neo4j at {self.uri}")
+            logger.info(f"Connected to Neo4j at {self.uri} (timeouts: 300s)")
 
     async def close(self) -> None:
         """Close Neo4j connection."""

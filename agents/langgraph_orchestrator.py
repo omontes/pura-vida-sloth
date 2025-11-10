@@ -39,6 +39,9 @@ class HypeCycleState(TypedDict, total=False):
     tech_id: str
     tech_name: str
 
+    # Configuration options
+    enable_tavily: bool  # Enable Tavily real-time search (default: False, slow)
+
     # Layer scores (Agents 2-5)
     innovation_score: float
     innovation_reasoning: str
