@@ -249,16 +249,19 @@ class CommunitySummarizer:
         cypher = f"""
         MATCH (n)
         WHERE n.community_v{version} = $community_id
-        WITH n, labels(n) AS node_labels
+        WITH collect(n) AS all_nodes
+        UNWIND all_nodes AS n
+        OPTIONAL MATCH (n)-[:MENTIONED_IN]->(d:Document)
+        WITH all_nodes, collect(DISTINCT d) AS all_docs
         RETURN
-            count(n) AS member_count,
-            collect(DISTINCT CASE WHEN 'Technology' IN node_labels THEN n.name END) AS all_technologies,
-            collect(DISTINCT CASE WHEN 'Company' IN node_labels THEN n.name END) AS all_companies,
-            collect(DISTINCT CASE WHEN 'Document' IN node_labels THEN n.doc_type END) AS all_doc_types,
-            collect(DISTINCT CASE WHEN 'Document' IN node_labels THEN n.title END)[0..5] AS sample_doc_titles,
-            sum(CASE WHEN 'Technology' IN node_labels THEN 1 ELSE 0 END) AS tech_count,
-            sum(CASE WHEN 'Company' IN node_labels THEN 1 ELSE 0 END) AS company_count,
-            sum(CASE WHEN 'Document' IN node_labels THEN 1 ELSE 0 END) AS doc_count
+            size(all_nodes) AS member_count,
+            [node IN all_nodes WHERE 'Technology' IN labels(node) | node.name] AS all_technologies,
+            [node IN all_nodes WHERE 'Company' IN labels(node) | node.name] AS all_companies,
+            [doc IN all_docs WHERE doc IS NOT NULL | doc.doc_type] AS all_doc_types,
+            [doc IN all_docs WHERE doc IS NOT NULL | doc.title][0..5] AS sample_doc_titles,
+            size([node IN all_nodes WHERE 'Technology' IN labels(node)]) AS tech_count,
+            size([node IN all_nodes WHERE 'Company' IN labels(node)]) AS company_count,
+            size([doc IN all_docs WHERE doc IS NOT NULL]) AS doc_count
         """
 
         with self.driver.session(database=self.database) as session:
@@ -699,7 +702,7 @@ def batch_process_communities(
         print("\n[INDEXES] Creating Community indexes...")
         index_created = create_community_indexes()
         if index_created:
-            print(f"  ✓ Community index created successfully")
+            print(f"  [OK] Community index created successfully")
         else:
             print(f"  [WARN]  Index creation failed (may already exist)")
 
@@ -931,14 +934,14 @@ def batch_process_communities(
 
     print(f"\n  Total processed: {total_processed}")
     print(f"  Errors: {total_errors}")
-    print(f"  ✓ Saved all results: {output_file}")
+    print(f"  [OK] Saved all results: {output_file}")
 
     # Save errors
     if error_communities:
         error_file = "graph/prerequisites_configuration/batch_processing/processing_errors.json"
         with open(error_file, "w", encoding="utf-8") as f:
             json.dump(error_communities, f, indent=2, ensure_ascii=False)
-        print(f"  ✓ Saved error log: {error_file}")
+        print(f"  [OK] Saved error log: {error_file}")
 
     # Summary by variant
     variant_stats = {}

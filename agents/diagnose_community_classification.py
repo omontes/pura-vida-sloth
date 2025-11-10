@@ -25,14 +25,27 @@ async def diagnose_classification():
     await client.connect()
 
     try:
-        # Get all communities
-        communities = await community_queries.get_all_communities_for_version(
+        # Get all communities (try both v0 and v1)
+        communities_v0 = await community_queries.get_all_communities_for_version(
+            client.driver,
+            version=0,
+            min_member_count=5
+        )
+        communities_v1 = await community_queries.get_all_communities_for_version(
             client.driver,
             version=1,
-            min_member_count=3
+            min_member_count=5
         )
 
-        print(f"\n[INFO] Found {len(communities)} communities (version=v1, min_members=3)")
+        # Use whichever version has communities
+        if len(communities_v1) > 0:
+            communities = communities_v1
+            version_used = 1
+        else:
+            communities = communities_v0
+            version_used = 0
+
+        print(f"\n[INFO] Found {len(communities)} communities (version=v{version_used}, min_members=5)")
 
         # Classify with current thresholds
         print("\n" + "-"*80)
