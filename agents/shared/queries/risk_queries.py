@@ -59,18 +59,18 @@ async def get_sec_risk_mentions_6mo(
     WHERE d.doc_type = 'sec_filing'
       AND date(datetime(d.published_at)) >= date($start_date)
       AND date(datetime(d.published_at)) < date($end_date)
-      AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
+      AND (d.risk_factor_mentioned = true OR m.evidence_text CONTAINS 'risk')
       AND d.quality_score >= 0.75
     WITH c, d, m
     RETURN
       count(DISTINCT d) AS count,
       collect(DISTINCT c.name)[0..10] AS companies,
-      collect(DISTINCT d.risk_category)[0..10] AS categories,
+      [] AS categories,
       collect({
         company: c.name,
-        fiscal_period: d.fiscal_period,
+        fiscal_year: d.fiscal_year,
+        fiscal_quarter: d.fiscal_quarter,
         date: d.published_at,
-        risk_category: d.risk_category,
         evidence: m.evidence_text,
         strength: m.strength
       })[0..10] AS top_mentions
@@ -128,13 +128,13 @@ async def get_top_risk_mentions(
     MATCH (c:Company)-[r:RELATED_TO_TECH]->(t:Technology {id: $tech_id})
     MATCH (c)-[:RELATED_TO_TECH]->(t)-[m:MENTIONED_IN]->(d:Document)
     WHERE d.doc_type = 'sec_filing'
-      AND (d.section = 'risk_factors' OR m.evidence_text CONTAINS 'risk')
+      AND (d.risk_factor_mentioned = true OR m.evidence_text CONTAINS 'risk')
       AND d.quality_score >= 0.75
     RETURN
       c.name AS company,
-      d.fiscal_period AS fiscal_period,
+      d.fiscal_year AS fiscal_year,
+      d.fiscal_quarter AS fiscal_quarter,
       d.published_at AS date,
-      d.risk_category AS risk_category,
       m.evidence_text AS evidence,
       m.strength AS strength
     ORDER BY d.published_at DESC, m.strength DESC, d.doc_id ASC
