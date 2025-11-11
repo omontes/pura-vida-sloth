@@ -41,6 +41,13 @@ frontend/
 │   │   ├── graph/
 │   │   │   └── Neo4jGraphViz.tsx            # vis-network graph
 │   │   │
+│   │   ├── pipeline/
+│   │   │   ├── PipelineRunner.tsx           # Main pipeline modal
+│   │   │   ├── RunHistory.tsx               # Run history dropdown
+│   │   │   ├── LogViewer.tsx                # Console-style log viewer
+│   │   │   ├── ProgressTracker.tsx          # Progress bar + agent checklist
+│   │   │   └── ConfigForm.tsx               # Pipeline configuration form
+│   │   │
 │   │   ├── technology/
 │   │   │   ├── TechnologyDetail.tsx         # Modal drill-down
 │   │   │   ├── EvidenceSection.tsx          # Layer-grouped evidence
@@ -57,10 +64,13 @@ frontend/
 │   │
 │   ├── hooks/
 │   │   ├── useHypeCycleData.ts              # Fetch chart data
-│   │   └── useEvidenceData.ts               # Fetch evidence
+│   │   ├── useEvidenceData.ts               # Fetch evidence
+│   │   ├── usePipelineWebSocket.ts          # WebSocket connection lifecycle
+│   │   └── useRunHistory.ts                 # Run history management
 │   │
 │   ├── types/
-│   │   └── hypeCycle.ts                     # TypeScript interfaces
+│   │   ├── hypeCycle.ts                     # TypeScript interfaces
+│   │   └── pipeline.ts                      # Pipeline event types
 │   │
 │   └── App.tsx                              # Main router
 │
@@ -362,18 +372,36 @@ State Management (React Query)
 Visualization Rendering
 ```
 
-### Production (Phase 4/5 Integration)
+### Production (Phase 5 Integration)
 
 ```
-Phase 4/5 Multi-Agent System
-  └── Outputs JSON files
+User Initiates Pipeline
        ↓
-FastAPI Backend
-  └── GET /api/hype-cycle/{industry}
-  └── POST /api/neo4j/query
+PipelineRunner Component
+  └── usePipelineWebSocket hook
        ↓
-React Frontend
-  └── Fetch + Render
+WebSocket Connection (ws://localhost/api/pipeline/ws/run)
+       ↓
+FastAPI Backend (pipeline_service.py)
+  └── Executes 12-agent LangGraph workflow
+  └── Streams real-time events
+       ↓
+Frontend receives events:
+  - pipeline_start
+  - agent_start / agent_complete (x12)
+  - tech_complete (x tech_count)
+  - pipeline_log
+  - pipeline_complete (with chart data)
+       ↓
+RunHistoryService saves:
+  └── src/agents/run_history/{run_id}/
+      ├── hype_cycle_chart.json
+      ├── hype_cycle_chart_full.json
+      └── metadata.json
+       ↓
+React Query invalidates cache
+       ↓
+Chart auto-updates with new data
 ```
 
 ## Mock Data Format
@@ -406,6 +434,292 @@ React Frontend
   ]
 }
 ```
+
+## Pipeline Hooks
+
+### usePipelineWebSocket
+
+**Purpose**: Custom hook managing WebSocket connection lifecycle and event streaming.
+
+**Return Interface**:
+```typescript
+interface UsePipelineWebSocketReturn {
+  state: PipelineRunnerState
+  connectionState: 'disconnected' | 'connecting' | 'connected' | 'error'
+  connect: (config: PipelineConfig) => void
+  disconnect: () => void
+  reset: () => void
+  error: string | null
+}
+```
+
+**Key Functions**:
+
+1. **connect(config)**: Establishes WebSocket connection and sends config
+   - URL: `ws://localhost:PORT/api/pipeline/ws/run` (auto-detects wss for HTTPS)
+   - Immediate UI feedback (transitions to "running" before server response)
+   - Sends config JSON on connection open
+
+2. **handleEvent(event)**: Processes incoming WebSocket events
+   - `pipeline_start`: Initialize agents, clear logs
+   - `agent_start`: Update current agent, mark as active
+   - `agent_complete`: Mark agent as completed with end time
+   - `tech_complete`: Update technology progress, recalculate percentage
+   - `pipeline_progress`: General progress updates
+   - `pipeline_complete`: Set stage to completed, store chart data
+   - `pipeline_error`: Set error stage
+   - `pipeline_log`: Append to log array
+
+3. **disconnect()**: Gracefully close connection (code 1000)
+
+4. **reset()**: Reset to initial config stage (called when modal reopens)
+
+**Usage Example**:
+```typescript
+import { usePipelineWebSocket } from '@/hooks/usePipelineWebSocket';
+
+function CustomPipelineUI() {
+  const { state, connectionState, connect, disconnect, reset } = usePipelineWebSocket();
+
+  const handleStart = () => {
+    connect({
+      tech_count: 50,
+      community_version: 'v1',
+      enable_tavily: true,
+      min_docs: 5,
+      verbosity: 'normal'
+    });
+  };
+
+  return (
+    <div>
+      <button onClick={handleStart}>Start Pipeline</button>
+      <div>Stage: {state.stage}</div>
+      <div>Progress: {state.progress}%</div>
+      <div>Logs: {state.logs.length}</div>
+    </div>
+  );
+}
+```
+
+### useRunHistory
+
+**Purpose**: Hook for managing pipeline run history with React Query caching.
+
+**Return Interface**:
+```typescript
+{
+  // Run list
+  runs: RunMetadata[]
+  runCount: number
+  isLoadingRuns: boolean
+  runsError: Error | null
+
+  // Selected run
+  selectedRunId: string | null
+  selectedRun: RunData | null
+  isLoadingRun: boolean
+  runError: Error | null
+
+  // Actions
+  selectRun: (runId: string) => void
+  deleteRun: (runId: string) => void
+  isDeleting: boolean
+  refreshRuns: () => void
+}
+```
+
+**Key Features**:
+- Uses React Query for automatic caching and invalidation
+- Fetches run list on mount (`queryKey: ['pipelineRuns']`)
+- Fetches specific run when selected (`queryKey: ['pipelineRun', runId]`)
+- Delete mutation automatically refreshes list
+- Clears selection if deleted run was active
+
+**Usage Example**:
+```typescript
+import { useRunHistory } from '@/hooks/useRunHistory';
+
+function RunSelector() {
+  const { runs, selectRun, deleteRun, isDeleting } = useRunHistory();
+
+  return (
+    <div>
+      {runs.map(run => (
+        <div key={run.run_id}>
+          <button onClick={() => selectRun(run.run_id)}>
+            {run.created_at} - {run.tech_count} techs
+          </button>
+          <button
+            onClick={() => deleteRun(run.run_id)}
+            disabled={isDeleting}
+          >
+            Delete
+          </button>
+        </div>
+      ))}
+    </div>
+  );
+}
+```
+
+## Pipeline API Endpoints
+
+### WebSocket Endpoint
+
+**URL**: `ws://localhost:PORT/api/pipeline/ws/run`
+
+**Protocol**:
+1. Client connects
+2. Client sends `PipelineConfig` as JSON
+3. Server validates config
+4. Server streams events (`pipeline_start`, `agent_start`, etc.)
+5. Server sends `pipeline_complete` with full chart
+6. Connection closes
+
+**Config Schema**:
+```json
+{
+  "tech_count": 50,
+  "community_version": "v1",
+  "enable_tavily": true,
+  "min_docs": 5,
+  "verbosity": "normal"
+}
+```
+
+**Event Types**:
+- `pipeline_start`: Pipeline begins
+- `agent_start`: Agent starts processing tech
+- `agent_complete`: Agent finishes
+- `tech_complete`: Technology completes all agents
+- `pipeline_progress`: General progress update
+- `pipeline_log`: Log message (info/debug/warning/error)
+- `pipeline_complete`: Pipeline finishes successfully
+- `pipeline_error`: Error occurred
+
+**Example Event**:
+```json
+{
+  "type": "tech_complete",
+  "timestamp": "2025-01-10T20:30:45.123Z",
+  "tech_id": "evtol",
+  "tech_name": "eVTOL",
+  "progress": 5,
+  "total": 50,
+  "phase": "Peak of Inflated Expectations"
+}
+```
+
+### REST Endpoints
+
+#### GET /api/pipeline/runs
+List all pipeline runs (newest first).
+
+**Query Params**:
+- `limit` (optional): Max runs to return (default: 20)
+
+**Response**:
+```json
+{
+  "runs": [
+    {
+      "run_id": "2025-01-10_14-30-45_50tech_v1",
+      "created_at": "2025-01-10T20:30:45.123Z",
+      "config": { "tech_count": 50, "community_version": "v1", ... },
+      "duration_seconds": 135.5,
+      "tech_count": 50,
+      "phases": ["Innovation Trigger", "Peak of Inflated Expectations", ...]
+    }
+  ],
+  "count": 1
+}
+```
+
+#### GET /api/pipeline/runs/{run_id}
+Get complete data for specific run.
+
+**Response**:
+```json
+{
+  "run_id": "2025-01-10_14-30-45_50tech_v1",
+  "chart_data": { "technologies": [...] },     // Normalized chart (top 5 per phase)
+  "metadata": { "config": {...}, "duration_seconds": 135.5, ... },
+  "original_chart": { "technologies": [...] }  // Full chart (all techs)
+}
+```
+
+**Error**: `404 Not Found` if run doesn't exist
+
+#### DELETE /api/pipeline/runs/{run_id}
+Delete a pipeline run and all files.
+
+**Response**:
+```json
+{
+  "message": "Run '2025-01-10_14-30-45_50tech_v1' deleted successfully"
+}
+```
+
+**Errors**:
+- `404 Not Found`: Run doesn't exist
+- `500 Internal Server Error`: Delete failed
+
+#### GET /api/pipeline/status
+Get current pipeline execution status.
+
+**Response**:
+```json
+{
+  "is_running": true,
+  "current_tech_count": 50,
+  "started_at": "2025-01-10T20:30:45.123Z"
+}
+```
+
+## Run History Storage
+
+**Directory Structure**:
+```
+src/agents/run_history/
+  ├── 2025-01-10_14-30-45_50tech_v1/
+  │   ├── hype_cycle_chart.json           # Normalized (top 5/phase)
+  │   ├── hype_cycle_chart_full.json      # Original (all techs)
+  │   └── metadata.json                   # Run metadata
+  └── 2025-01-10_15-45-30_20tech_v2/
+      └── ...
+```
+
+**Run ID Format**: `YYYY-MM-DD_HH-MM-SS_{count}tech_{version}`
+
+Example: `2025-01-10_14-30-45_50tech_v1`
+
+**Metadata Schema**:
+```json
+{
+  "run_id": "2025-01-10_14-30-45_50tech_v1",
+  "created_at": "2025-01-10T20:30:45.123Z",
+  "config": {
+    "tech_count": 50,
+    "community_version": "v1",
+    "enable_tavily": true,
+    "min_docs": 5,
+    "verbosity": "normal"
+  },
+  "duration_seconds": 135.5,
+  "tech_count": 50,
+  "phases": ["Innovation Trigger", "Peak of Inflated Expectations", ...]
+}
+```
+
+**Features**:
+- Each run saved to unique timestamped directory
+- Normalized chart (top 5 techs per phase) for display
+- Full chart preserved for analysis
+- Metadata includes config, duration, tech count, phases
+- Frontend fetches via `/api/pipeline/runs`
+- Users can switch between runs to view historical charts
+- Delete functionality removes entire run directory
 
 ## Development Guidelines
 
@@ -504,37 +818,144 @@ export default defineConfig({
 });
 ```
 
-## Integration with Phase 4/5
+## Integration with Phase 5 Multi-Agent System
 
-When Phase 4/5 multi-agent system is ready:
+The frontend is fully integrated with the FastAPI backend for real-time pipeline execution.
 
-1. **Replace mock data fetching**:
+### Backend Architecture
+
+**FastAPI Backend** (`src/api/`):
+- `pipeline_routes.py`: WebSocket and REST endpoints
+- `pipeline_service.py`: Executes LangGraph orchestrator, streams events
+- `run_history_service.py`: Manages run persistence and retrieval
+- `pipeline_schemas.py`: Pydantic validation for events and config
+
+**Multi-Agent System** (`src/agents/`):
+- `langgraph_orchestrator.py`: 12-agent LangGraph state machine
+- Agents: Tech Discovery, 5 Scorers, Phase Detector, LLM Analyst, Ensemble, Chart Generator, Evidence Compiler, Validator
+
+### Real-Time Communication Flow
+
 ```typescript
-// Before (mock)
-const data = await fetch('/mock-data/hype_cycle_chart.json');
+// 1. User clicks "Run Multi-Agent" button
+<PipelineRunner isOpen={true} onClose={...} onComplete={...} />
 
-// After (production)
-const data = await fetch('/api/hype-cycle/evtol');
+// 2. PipelineRunner uses usePipelineWebSocket hook
+const { connect } = usePipelineWebSocket()
+connect({
+  tech_count: 50,
+  community_version: 'v1',
+  enable_tavily: true,
+  min_docs: 5,
+  verbosity: 'normal'
+})
+
+// 3. WebSocket connects to FastAPI
+// ws://localhost:8000/api/pipeline/ws/run
+
+// 4. Backend executes LangGraph workflow
+// - Discovers technologies from Neo4j communities
+// - Runs 12 agents sequentially for each tech
+// - Streams events to frontend in real-time
+
+// 5. Frontend receives and processes events
+// - pipeline_start: Initialize UI
+// - agent_start: Update current agent (12x)
+// - tech_complete: Update progress (tech_count times)
+// - pipeline_log: Append to log viewer
+// - pipeline_complete: Show results, save run
+
+// 6. RunHistoryService saves complete run
+// src/agents/run_history/{run_id}/
+//   ├── hype_cycle_chart.json
+//   ├── hype_cycle_chart_full.json
+//   └── metadata.json
+
+// 7. React Query invalidates cache
+queryClient.invalidateQueries({ queryKey: ['hypeCycleData'] })
+
+// 8. Chart auto-updates with new data
 ```
 
-2. **Add WebSocket for real-time agent progress**:
-```typescript
-const ws = new WebSocket('/ws/agents');
-ws.onmessage = (event) => {
-  const { agent, status } = JSON.parse(event.data);
-  updateProgress(agent, status);
-};
-```
+### Complete Integration Example
 
-3. **Neo4j subgraph queries**:
 ```typescript
-// POST /api/neo4j/query
-await fetch('/api/neo4j/query', {
-  method: 'POST',
-  body: JSON.stringify({
-    cypher: `MATCH (t:Technology {id: $techId})-[r]-(n) RETURN t, r, n`
+import { useState } from 'react'
+import { PipelineRunner } from '@/components/pipeline/PipelineRunner'
+import { RunHistory } from '@/components/pipeline/RunHistory'
+import { useRunHistory } from '@/hooks/useRunHistory'
+import { HypeCycleChart } from '@/components/charts/HypeCycleChart'
+import { useQuery, useQueryClient } from '@tanstack/react-query'
+
+function App() {
+  const [showPipeline, setShowPipeline] = useState(false)
+  const { selectedRunId, selectedRun, selectRun, refreshRuns } = useRunHistory()
+  const queryClient = useQueryClient()
+
+  // Fetch chart data (latest or selected run)
+  const { data: chartData } = useQuery({
+    queryKey: ['hypeCycleData', selectedRunId],
+    queryFn: async () => {
+      if (selectedRunId && selectedRun) {
+        return selectedRun.chart_data
+      }
+      // Fetch latest from frontend/public/data/hype_cycle_chart.json
+      const response = await fetch('/data/hype_cycle_chart.json')
+      return response.json()
+    }
   })
-});
+
+  const handlePipelineComplete = (techCount?: number) => {
+    console.log(`Pipeline completed with ${techCount} technologies`)
+    selectRun(null)  // Clear selection to show latest
+    refreshRuns()    // Refresh run history dropdown
+    // Chart auto-updates via React Query invalidation
+  }
+
+  return (
+    <div>
+      {/* Header with run controls */}
+      <Header>
+        <button onClick={() => setShowPipeline(true)}>
+          Run Multi-Agent Pipeline
+        </button>
+        <RunHistory onRunSelect={selectRun} />
+      </Header>
+
+      {/* Main chart */}
+      <HypeCycleChart
+        technologies={chartData?.technologies || []}
+        onTechnologyClick={(techId) => console.log(techId)}
+      />
+
+      {/* Pipeline runner modal */}
+      <PipelineRunner
+        isOpen={showPipeline}
+        onClose={() => setShowPipeline(false)}
+        onComplete={handlePipelineComplete}
+      />
+    </div>
+  )
+}
+```
+
+### Backend Configuration
+
+**Start FastAPI Server**:
+```bash
+cd backend
+uvicorn src.api.main:app --reload --port 8000
+```
+
+**WebSocket URL**: Auto-detected by frontend
+- Development: `ws://localhost:8000/api/pipeline/ws/run`
+- Production: `wss://api.puravidasloth.com/api/pipeline/ws/run`
+
+**Neo4j Configuration** (`.env`):
+```bash
+NEO4J_URI=neo4j+s://your-instance.databases.neo4j.io
+NEO4J_USER=neo4j
+NEO4J_PASSWORD=your-password
 ```
 
 ## Troubleshooting
@@ -565,6 +986,76 @@ const y = getYForX(d.chart_x);
 ```bash
 npm install --save-dev @types/vis-network
 ```
+
+### Issue: WebSocket connection fails
+
+**Solution**: Ensure FastAPI backend is running:
+```bash
+cd backend
+uvicorn src.api.main:app --reload --port 8000
+```
+
+Check browser console for connection errors. WebSocket URL auto-detects from `window.location`.
+
+### Issue: Pipeline modal shows old completion state
+
+**Solution**: This should be automatically handled by the `reset()` function in `usePipelineWebSocket`. If persisting, clear React state:
+```typescript
+// The reset() function is called automatically when modal opens
+useEffect(() => {
+  if (isOpen) {
+    reset()
+  }
+}, [isOpen, reset])
+```
+
+### Issue: Chart not updating after pipeline completion
+
+**Solution**: Ensure React Query cache is being invalidated:
+```typescript
+import { useQueryClient } from '@tanstack/react-query'
+
+const queryClient = useQueryClient()
+
+const handlePipelineComplete = () => {
+  queryClient.invalidateQueries({ queryKey: ['hypeCycleData'] })
+}
+```
+
+### Issue: Run history not loading
+
+**Solution**: Check that run history files exist:
+```bash
+ls src/agents/run_history/
+# Should show directories like: 2025-01-10_14-30-45_50tech_v1/
+```
+
+Verify FastAPI endpoint is accessible:
+```bash
+curl http://localhost:8000/api/pipeline/runs
+```
+
+### Issue: Logs not showing in LogViewer
+
+**Solution**: Ensure backend is emitting `pipeline_log` events:
+```python
+# In pipeline_service.py
+logger = StreamingLogger(event_callback)
+logger.info("Starting pipeline...")  # Will emit pipeline_log event
+```
+
+### Issue: Agent status icons not updating
+
+**Solution**: Check that `agent_start` and `agent_complete` events include correct `agent_name`:
+```json
+{
+  "type": "agent_start",
+  "agent_name": "scorer_innovation",
+  "tech_id": "evtol"
+}
+```
+
+Agent names must match keys in `getInitialAgentStatuses()` in `usePipelineWebSocket.ts`.
 
 ## The 4-Layer Intelligence Framework
 
@@ -612,13 +1103,19 @@ Understanding the data sources behind each score:
 
 ### Pure GraphRAG
 - Neo4j contains ZERO derived scores (only raw data + relationships)
-- All scores calculated on-demand by Phase 4/5 agents using graph as RAG
+- All scores calculated on-demand by Phase 5 agents using graph as RAG
 - Same graph input → Same chart output (reproducibility for evaluations)
 
 ### Phase Separation
-- Phase 6 (UI) receives JSON files from Phase 4/5
+- Phase 5 UI receives chart data from multi-agent pipeline
 - NO direct Neo4j access from frontend (backend proxy for security)
-- Clean interface contracts defined in `src/types/hypeCycle.ts`
+- Clean interface contracts defined in `src/types/hypeCycle.ts` and `src/types/pipeline.ts`
+
+### Real-Time Communication
+- WebSocket-based streaming for immediate feedback
+- FastAPI backend orchestrates LangGraph multi-agent system
+- Frontend displays progress, logs, and agent status in real-time
+- Run history preserved for comparison and analysis
 
 ## License
 
