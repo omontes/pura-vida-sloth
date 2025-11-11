@@ -545,12 +545,12 @@ The system tracks reproducibility and accuracy:
 ### Core Documentation
 - **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Complete system architecture
 
-### Implementation Guides
-- **Phase 1**: [Data Collection Guide](docs/phase1_collection.md)
-- **Phase 2**: [Document Processing Guide](docs/phase2_processing.md)
-- **Phase 3**: [Graph Ingestion Guide](docs/phase3_ingestion.md)
-- **Phase 4**: [Multi-Agent System Guide](docs/phase4_agents.md)
-- **Phase 5**: [Frontend Visualization Guide](docs/phase5_frontend.md)
+### Documentation Guides
+- **Phase 1**: [Data Collection Guide](src/downloaders/README.md)
+- **Phase 2**: [Document Processing Guide](src/parsers/README.md)
+- **Phase 3**: [Graph Ingestion Guide](src/ingestion/README.md)
+- **Phase 4**: [Multi-Agent System Guide](src/agents/README.md)
+- **Phase 5**: [Frontend Visualization Guide](Frontend/README.md)
 
 ### Reference Documentation
 - **[Neo4j Schema v1.1](src/graph/schema/Schema_v1.1_Complete.md)** - Graph schema specification
