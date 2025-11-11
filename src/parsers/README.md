@@ -1,4 +1,4 @@
-# Phase 2: Knowledge Graph Extraction & Entity Resolution
+# Phase 2: Document Processing
 
 **Purpose**: Transform raw harvested documents into structured knowledge graphs using dual-track processing: Landing AI's Advanced Document Extraction (ADE) for high-fidelity PDF parsing and specialized LLM parsers for knowledge graph triplet extraction.
 
