@@ -51,44 +51,44 @@ This is the **core analytical insight** that makes Pura Vida Sloth unique. Each 
 
 ```
 ┌─────────────────────────────────────────────────────────────────────┐
-│                    TEMPORAL INTELLIGENCE LAYERS                      │
+│                    TEMPORAL INTELLIGENCE LAYERS                     │
 ├─────────────────────────────────────────────────────────────────────┤
-│                                                                      │
+│                                                                     │
 │  Layer 1: INNOVATION SIGNALS                    18-24 months ahead  │
 │  ═══════════════════════════                                        │
 │  Patents │ Research Papers │ GitHub Activity │ Academic Citations   │
-│                                                                      │
+│                                                                     │
 │  Predicts: Technology emergence before commercialization            │
 │  Insight: Patent surges happen 18 months before products ship       │
-│                                                                      │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
 │  Layer 2: MARKET FORMATION                      12-18 months ahead  │
 │  ══════════════════════════                                         │
 │  Gov Contracts │ Regulatory Filings │ Job Postings                  │
-│                                                                      │
+│                                                                     │
 │  Predicts: When commercialization begins                            │
 │  Insight: Government validation precedes market entry by 12+ months │
-│                                                                      │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  Layer 3: FINANCIAL REALITY                     0-6 months (real-time)│
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Layer 3: FINANCIAL REALITY                   0-6 months (real-time)│
 │  ═══════════════════════                                            │
 │  SEC Filings │ Earnings │ Insider Trading │ Holdings │ Stock Prices │
-│                                                                      │
+│                                                                     │
 │  Measures: Current valuation vs actual performance                  │
 │  Insight: Insider selling at peaks signals executive exits          │
-│                                                                      │
-├──────────────────────────────────────────────────────────────────────┤
-│                                                                      │
-│  Layer 4: NARRATIVE                             Lagging indicator    │
-│  ═══════════════                                                     │
+│                                                                     │
+├─────────────────────────────────────────────────────────────────────┤
+│                                                                     │
+│  Layer 4: NARRATIVE                             Lagging indicator   │
+│  ═══════════════                                                    │
 │  News Sentiment │ Press Releases                                    │
-│                                                                      │
+│                                                                     │
 │  Detects: Media saturation peaks (contrarian indicator)             │
 │  Insight: News volume peaks typically coincide with valuation peaks │
-│                                                                      │
-└──────────────────────────────────────────────────────────────────────┘
+│                                                                     │
+└─────────────────────────────────────────────────────────────────────┘
 ```
 
 ### Source-to-Layer Mapping
