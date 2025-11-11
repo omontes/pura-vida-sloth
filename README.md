@@ -1,10 +1,31 @@
-# Pura Vida Sloth
 
-**Multi-Source Intelligence Platform for Technology Market Research**
+<h1 align="center">🌳 Canopy Intelligence</h1>
 
-An advanced Python-based system for strategic analysis of emerging technology markets through multi-layer intelligence triangulation. Combines 14+ independent data sources across 4 temporal layers to determine technology maturity positioning and market timing indicators.
+<p align="center">
+  <b>LLM-powered financial intelligence with Hype Cycles and Graph-RAG.</b>
+</p>
 
-Built for the **LandingAI Financial AI Hackathon 2025** - Strategic Investment Timing Track.
+<div align="center">
+
+![Canopy Intelligence](https://img.shields.io/badge/Status-Production%20Ready-green)
+![Python](https://img.shields.io/badge/Python-3.13-blue)
+![Neo4j](https://img.shields.io/badge/Neo4j-Aura-brightgreen)
+![LangGraph](https://img.shields.io/badge/Multi--Agent-LangGraph-purple)
+![React](https://img.shields.io/badge/Frontend-React%2018-blue)
+
+**🦥 Built by Team Pura Vida Sloth (Costa Rica)**
+
+*For the LandingAI Financial AI Hackathon 2025*
+
+</div>
+
+
+
+**Strategic market intelligence from above the ecosystem**
+
+Multi-source intelligence platform for strategic analysis of emerging technology markets through 4-layer temporal intelligence triangulation. Combines 14 independent data sources to determine technology maturity positioning and market timing indicators 12-24 months ahead of market consensus.
+
+**Built by Team Pura Vida Sloth (Costa Rica)** for the **LandingAI Financial AI Hackathon 2025** - Strategic Investment Timing Track.
 
 ---
 
@@ -12,18 +33,20 @@ Built for the **LandingAI Financial AI Hackathon 2025** - Strategic Investment T
 
 ### The Core Problem
 
-Between 2010-2023, corporations and investors deployed capital into emerging technologies at suboptimal times, resulting in significant value destruction:
-- **3D Printing (2013)**: High market enthusiasm followed by 80% valuation decline
-- **Blockchain (2017)**: Peak adoption narrative coincided with 85% market correction
+Between 2010-2024, corporations and investors deployed billions into emerging technologies at suboptimal times, resulting in significant value destruction:
+
+- **3D Printing (2013)**: Peak media enthusiasm followed by 80% valuation decline
+- **Blockchain (2017)**: Extreme narrative coincided with 85% market correction
 - **Metaverse (2021)**: Maximum media coverage preceded 70% downturn
+- **SPACs (2021)**: Government validation absent despite hype, -65% decline
 
-**Root Cause**: Single-source analytical bias (relying solely on media coverage, or only financial metrics, or only innovation signals).
+**Root Cause**: Single-source analytical bias. Relying solely on media coverage, financial metrics, or innovation signals misses the cross-layer contradictions that reveal true market positioning.
 
-### Our Approach: Multi-Layer Intelligence Triangulation
+### Multi-Layer Intelligence Triangulation
 
-This system processes 14+ independent data sources across **4 temporal intelligence layers** to reveal technology maturity positioning 12-24 months ahead of market consensus.
+This system processes 14 independent data sources across **4 temporal intelligence layers** to reveal technology maturity positioning 12-24 months ahead of market consensus.
 
-**Key Insight**: When data layers contradict each other, that reveals actionable strategic signals about market positioning and timing.
+**Key Insight**: When data layers contradict each other, that reveals actionable strategic signals about market positioning and timing. Traditional analysis (Bloomberg, CB Insights, media aggregators) uses single-layer data and misses these contradictions.
 
 ---
 
@@ -32,32 +55,44 @@ This system processes 14+ independent data sources across **4 temporal intellige
 Our system operates as a strategic intelligence radar with four independent layers, each examining different time horizons:
 
 ### Layer 1: Innovation Signals (Leading 18-24 months)
-**Data Sources**: Patents, Research Papers, GitHub Activity, Academic Citations
+
+**Data Sources**: Patents (Lens.org, PatentsView), Research Papers (CORE, arXiv, OpenAlex), GitHub Activity
 
 **Purpose**: Predict which technologies will emerge before commercialization
 
-**Strategic Value**: Patent surge patterns occur 18 months before product launches. Research paper volume validates technical feasibility 2 years ahead of market adoption.
+**Strategic Value**: Patent filing velocity spikes 18 months before product launches. Research paper volume validates technical feasibility 2 years ahead of market adoption. GitHub activity shows developer mindshare and technical momentum.
+
+**Example**: eVTOL patent filings surged 2019-2020 → Joby/Archer IPOs Q2 2021 (18-month lead confirmed).
 
 ### Layer 2: Market Formation (Leading 12-18 months)
-**Data Sources**: Government Contracts, Regulatory Filings, Job Postings
+
+**Data Sources**: Government Contracts (USASpending.gov), Regulatory Filings (FAA, FDA, Federal Register), Job Postings
 
 **Purpose**: Predict when commercial viability begins
 
-**Strategic Value**: Government validation (NASA, DoD contracts) signals institutional confidence. Regulatory activity precedes market entry by 12+ months.
+**Strategic Value**: Government validation (NASA, DoD contracts) signals institutional confidence. Regulatory approvals precede market entry by 12+ months. Engineering hiring velocity predicts scaling attempts.
+
+**Example**: DARPA quantum computing funding 2020 → IBM Quantum commercial launch 2021.
 
 ### Layer 3: Financial Reality (Coincident 0-6 months)
-**Data Sources**: SEC Filings, Earnings Reports, Stock Prices, Insider Trading, Institutional Holdings
+
+**Data Sources**: SEC Filings (10-K, 10-Q via LandingAI ADE), Insider Trading (Form 4), Institutional Holdings (13F), Stock Prices, Earnings Transcripts
 
 **Purpose**: Measure current valuation vs actual operational performance
 
-**Strategic Value**: SEC filings reveal verifiable operational metrics. Insider trading patterns at price extremes signal executive sentiment before public disclosure.
+**Strategic Value**: SEC filings reveal verifiable operational metrics (R&D spend, revenue, cash burn). Insider trading patterns at price extremes signal executive sentiment before public disclosure. Institutional ownership changes show smart money positioning.
 
-### Layer 4: Narrative Analysis (Lagging indicator)
-**Data Sources**: News Sentiment, Press Releases
+**Example**: Nikola insiders sold $100M stock Sep 2020 (narrative peak) → fraud revealed Nov 2020.
 
-**Purpose**: Detect media saturation peaks and contrarian indicators
+### Layer 4: Narrative (Lagging indicator)
 
-**Strategic Value**: News volume peaks typically coincide with valuation peaks. High media attention + weak fundamentals = risk indicator.
+**Data Sources**: News Articles (GDELT), Press Releases
+
+**Purpose**: Detect media saturation peaks (contrarian indicator)
+
+**Strategic Value**: News volume peaks typically coincide with valuation peaks. High media attention + weak fundamentals (L1-L3) = risk indicator. Minimal coverage + strong fundamentals = opportunity indicator.
+
+**Example**: "Metaverse" news peaked Q4 2021 → Meta stock crashed -64% in 2022.
 
 ---
 
@@ -65,43 +100,42 @@ Our system operates as a strategic intelligence radar with four independent laye
 
 The system's core analytical capability emerges when intelligence layers disagree:
 
-### Peak Phase Indicators
-- **L1-2**: Innovation slowing (GitHub repos inactive, patent filing decline)
-- **L3**: Insider selling activity, extended valuations
-- **L4**: Media coverage at maximum, positive sentiment
-- **Signal**: Potential market saturation → risk management phase
+### Peak Phase Indicators (High Risk)
 
-### Trough Phase Indicators
-- **L1-2**: Innovation recovering (patent filing increase, government contracts awarded)
-- **L3**: Insider accumulation, compressed valuations
-- **L4**: Media coverage minimal, negative sentiment
-- **Signal**: Potential value formation → strategic opportunity phase
+- **Layer 1-2**: Innovation slowing (GitHub inactive, patents declining), market formation moderate
+- **Layer 3**: Insiders selling, valuations stretched, risk signals elevated
+- **Layer 4**: Media coverage maximum, positive sentiment saturated
+- **Signal**: Potential market saturation → risk management phase, expect correction within 6-12 months
+
+### Trough Phase Indicators (High Opportunity)
+
+- **Layer 1-2**: Innovation recovering (patents +YoY, government contracts awarded), regulatory milestones
+- **Layer 3**: Insiders buying, valuations compressed, institutional accumulation
+- **Layer 4**: Media coverage minimal, negative sentiment dominant
+- **Signal**: Potential value formation → strategic opportunity phase, 12-18 months before market recognition
 
 ### Real Analysis Example: eVTOL (November 2024)
-- **L1**: GitHub activity 0% (innovation stalled)
-- **L2**: $274M DoD/NASA contracts (government validation)
-- **L3**: Insider selling at $16-18 (executive exits)
-- **L4**: 269 news articles (1.5/day - high coverage)
-- **Assessment**: Peak phase indicators → entering consolidation. Strategic re-evaluation window: 2026-2027
+
+- **L1 (Innovation)**: GitHub activity 0%, patents declining (innovation stalled)
+- **L2 (Market Formation)**: $274M DoD/NASA contracts (government validation present)
+- **L3 (Financial Reality)**: Insider selling at $16-18 (executive exits at peak)
+- **L4 (Narrative)**: 269 news articles, 1.5/day (high media coverage)
+- **Cross-Layer Assessment**: Peak phase indicators → ecosystem saturation. Strategic re-evaluation window: 2026-2027.
 
 ---
 
-## 🏗️ System Architecture: 6-Phase Pipeline
+## 🏗️ System Architecture: 5-Phase Pipeline
 
-```
-Phase 1: Data Collection
-    ↓ (400-1,600 documents)
-Phase 2: Document Processing
-    ↓ (structured JSON)
-Phase 3: Graph Ingestion
-    ↓ (Neo4j GraphRAG)
-Phase 4: Multi-Agent Intelligence System
-    ↓ (11-agent LangGraph state machine)
-Phase 5: Interactive Visualization
-    ↓ (React + D3.js)
+```mermaid
+flowchart LR
+    A[Phase 1<br/>Data Collection<br/>14 Sources] -->|400-1,600 docs| B[Phase 2<br/>LLM Processing<br/>GPT-4o-mini]
+    B -->|Structured JSON| C[Phase 3<br/>Neo4j Graph<br/>Pure Storage]
+    C -->|GraphRAG| D[Phase 4<br/>12 AI Agents<br/>LangGraph]
+    D -->|Chart + Evidence| E[Phase 5<br/>Real-Time UI<br/>WebSocket]
 ```
 
 ### Phase 1: Multi-Source Data Collection
+
 **Location**: `src/downloaders/`
 
 **14 Independent Data Sources**:
@@ -120,108 +154,153 @@ Phase 5: Interactive Visualization
 - Institutional holdings (SEC Form 13F via LandingAI ADE)
 - Stock prices (Alpha Vantage)
 
-**Output**: 400-1,600 documents per 90-day analysis window
+**Key Features**: Checkpoint/resume capability, rate limiting, exponential backoff retry logic, parallel downloads
 
-**Runtime**: 60-90 minutes with checkpoint/resume capability
+**Output**: 400-1,600 raw documents per analysis window → `data/{industry}/raw/`
+
+**Runtime**: ~45-75 minutes
 
 ### Phase 2: Document Processing
-**Location**: `src/parsers/`
 
-**Single-Purpose Processor**: Converts raw documents into structured JSON
+**Location**: `src/processors/`
+
+**Technology**: OpenAI GPT-4o-mini (cost-optimized LLM extraction) + LandingAI Agent Data Engine (SEC filings, mandatory hackathon requirement)
 
 **Key Capabilities**:
 - Multi-format parsing (PDF, HTML, TXT, JSON)
 - Named Entity Recognition (companies, technologies, dates, financials)
-- Document type-specific handlers (SEC filings, patents, research papers)
-- Metadata extraction and validation (Pydantic v2 schemas)
-- Content chunking for vector embeddings
+- Document type-specific handlers (7 types: patents, SEC, papers, news, regulatory, GitHub, gov contracts)
+- Pydantic v2 schema validation
+- Vector embeddings (768-dim, OpenAI text-embedding-3-small)
 
-**Output**: Structured documents ready for graph ingestion
+**Output**: Structured JSON → `data/processed/{industry}/`
 
-**Runtime**: 30-60 minutes (parallelized)
+**Cost**: ~$0.001 per document (~$1.00 for 1,000 documents)
+
+**Runtime**: ~30-45 minutes (parallelized)
 
 ### Phase 3: Graph Ingestion
+
 **Location**: `src/ingestion/`
 
-**Pure Storage Design**: Neo4j Aura contains ZERO derived scores, only raw data + relationships
+**Critical Design Principle**: **Pure GraphRAG Architecture** — Neo4j contains ZERO derived scores, only raw data + relationships. Graph serves as Retrieval-Augmented Generation for agents.
+
+**Why Pure Storage?**
+- Reproducibility: Same graph → Same chart (critical for evaluation)
+- Flexibility: Change scoring algorithms without re-ingestion
+- Debuggability: Trace exact data → score transformations
+- Evaluation: Test different strategies easily
 
 **Graph Schema**:
-- **Nodes**: Technology, Company, Document, Entity, Event
-- **Relationships**: MENTIONS, FILED_BY, CITES, FUNDS, REGULATES
-- **Indexes**: Vector embeddings for semantic search (768-dim)
+- **Nodes**: Technology, Company, Document, Entity
+- **Relationships**: MENTIONED_IN, RELATED_TECH, FILED_BY
+- **Indexes**: Vector embeddings (768-dim) for semantic search
 
-**Purpose**: Graph serves as **GraphRAG** (Retrieval-Augmented Generation) for multi-agent system
+**Entity Resolution**: V1.0 uses exact matching against curated catalogs (268 companies, 186 technologies). V2.0 (planned) adds fuzzy + embedding-based matching.
 
-**Runtime**: 15-30 minutes (batch writes, 1000 nodes/batch)
+**Output**: Populated Neo4j graph (2,000-8,000 nodes + relationships)
+
+**Runtime**: ~15-25 minutes (batch writes: 1000 nodes/batch)
 
 ### Phase 4: Multi-Agent Intelligence System
+
 **Location**: `src/agents/` (LangGraph implementation ONLY)
 
-**11-Agent LangGraph State Machine**:
+**12-Agent LangGraph State Machine**:
 
 ```
-┌──────────────────────────────────────────────────┐
-│         Multi-Agent Intelligence System          │
-│              (LangGraph Orchestrator)            │
-├──────────────────────────────────────────────────┤
-│ 1. Tech Discovery Agent      → Identify techs   │
-│ 2. Innovation Scorer Agent    → L1 metrics      │
-│ 3. Adoption Scorer Agent      → L2 metrics      │
-│ 4. Narrative Scorer Agent     → L4 metrics      │
-│ 5. Risk Scorer Agent          → L3 metrics      │
-│ 6. Hype Scorer Agent          → Cross-layer     │
-│ 7. Phase Detector Agent       → Lifecycle pos.  │
-│ 8. LLM Analyst Agent          → Reasoning       │
-│ 9. Ensemble Agent             → Weight combine  │
-│ 10. Chart Generator Agent     → Coordinates     │
-│ 11. Evidence Compiler Agent   → Citations       │
-└──────────────────────────────────────────────────┘
+┌─────────────────────────────────────────────────────┐
+│         Multi-Agent Intelligence System             │
+│              (LangGraph Orchestrator)               │
+├─────────────────────────────────────────────────────┤
+│  Agent 1:  Tech Discovery     → Sample technologies│
+│  Agent 2:  Innovation Scorer  → L1 (Patents/Papers)│
+│  Agent 3:  Adoption Scorer    → L2 (Gov/Regulatory)│
+│  Agent 4:  Narrative Scorer   → L4 (News/PR)       │
+│  Agent 5:  Risk Scorer        → L3 (SEC/Insiders)  │
+│  Agent 6:  Hype Scorer        → Cross-layer div.   │
+│  Agent 7:  Phase Detector     → Lifecycle position  │
+│  Agent 8:  LLM Analyst        → Executive synthesis │
+│  Agent 9:  Ensemble           → Weighted combo      │
+│  Agent 10: Chart Generator    → D3.js JSON format   │
+│  Agent 11: Evidence Compiler  → Citation trails     │
+│  Agent 12: Output Validator   → Schema compliance   │
+└─────────────────────────────────────────────────────┘
 ```
 
 **Key Design Principles**:
-- **GraphRAG-First**: All agents query Neo4j for evidence (Cypher + vector search)
-- **Reproducibility**: Same graph input → Same chart output (critical for evaluations)
-- **Pure Scoring**: NO scores stored in graph, computed on-demand
+- **GraphRAG-First**: All agents query Neo4j (Cypher + vector search)
+- **Reproducibility**: Deterministic outputs (same graph → same chart)
 - **Evidence-Based**: Every score backed by 5-15 source documents with citations
-- **LLM-Augmented**: GPT-4o-mini provides reasoning layer for 20% of analysis
+- **Cost-Optimized**: GPT-4o-mini ($0.15/$0.60 per M tokens)
 
-**State Machine Flow**:
-1. Discovery → Find all relevant technologies in graph
-2. Parallel Scoring → 5 agents score different dimensions (Innovation, Adoption, Narrative, Risk, Hype)
-3. Phase Detection → Determine lifecycle position (Innovation Trigger, Peak of Inflated Expectations, Trough of Disillusionment, Slope of Enlightenment, Plateau of Productivity)
-4. LLM Analysis → Synthesize reasoning and recommendations
-5. Ensemble → Weight-based score combination (learns optimal weights)
-6. Chart Generation → Calculate final X/Y coordinates
-7. Evidence Compilation → Attach source citations to every claim
+**Execution Flow**:
+1. **Discovery**: Sample 50 technologies using community-based stratified sampling
+2. **Parallel Layer Scoring** (Agents 2-5): Innovation, Adoption, Narrative, Risk
+3. **Hype Detection** (Agent 6): Calculate cross-layer divergence
+4. **Phase Classification** (Agent 7): Map to Gartner Hype Cycle (Trigger/Peak/Trough/Slope/Plateau)
+5. **LLM Synthesis** (Agent 8): Executive narrative + recommendations
+6. **Ensemble** (Agent 9): Weighted score combination (Innovation 30%, Adoption 35%, Narrative 15%, Risk 20%)
+7. **Parallel Output** (Agents 10-11): Chart JSON + Evidence compilation
+8. **Validation** (Agent 12): Schema compliance checks
 
-**Runtime**: 2-4 hours (GraphRAG queries + LLM calls)
+**Output**:
+- `hype_cycle_chart.json` (25 technologies, top 5 per phase)
+- `hype_cycle_chart_full.json` (all 50 analyzed technologies)
+- `evidence.json` (citation trails grouped by layer)
 
-**Cost**: $0.91 per technology (OpenAI GPT-4o-mini @ $0.150/$0.600 per M tokens)
+**Cost**: ~$0.0016 per technology (~$1.60 for 1,000 technologies)
 
-### Phase 6: Interactive Visualization
-**Location**: `frontend/`
+**Runtime**: ~5-7 minutes for 50 technologies (parallel execution)
 
-**Technology**: React + D3.js
+### Phase 5: Real-Time API + Interactive Frontend
 
-**Visualization Components**:
-- Technology maturity curve (2D scatter plot)
-- Timeline slider (show evolution over 90-day window)
-- Evidence panel (click technology → see source documents)
-- Layer breakdown (show L1/L2/L3/L4 metrics for each tech)
-- Comparative analysis (overlay multiple industries)
+**Location**: `src/api/` + `frontend/`
 
-**Features**:
-- Export to PNG/PDF for reporting
-- Drill-down to source documents
-- Interactive filtering (by company, technology, date range)
-- Historical comparison (overlay previous analyses)
+**Backend**: FastAPI with WebSocket streaming + REST API
+
+**WebSocket Pipeline Execution**:
+```
+ws://localhost:8000/api/pipeline/ws/run
+
+Events streamed in real-time:
+├─ pipeline_start      → Execution begins
+├─ agent_start         → Agent X processing tech Y
+├─ agent_complete      → Agent X finished (score, reasoning)
+├─ tech_complete       → All agents finished tech Y (progress update)
+├─ pipeline_log        → Console-style log messages
+├─ pipeline_complete   → Final results + chart JSON
+└─ pipeline_error      → Error occurred (traceback)
+```
+
+**REST API**:
+- `GET /health` → API health check
+- `GET /health/neo4j` → Neo4j connection status
+- `GET /api/pipeline/runs` → List all historical runs
+- `GET /api/pipeline/runs/{run_id}` → Get specific run data
+- `DELETE /api/pipeline/runs/{run_id}` → Delete run
+- `GET /api/pipeline/status` → Current execution status
+
+**Frontend**: React 18 + TypeScript + D3.js v7
+
+**Key Components**:
+- **Hype Cycle Chart**: Custom D3.js rendering with Bezier curve (technologies positioned ON curve)
+- **Pipeline Runner**: 4-stage modal (config → execution → progress → results)
+- **Run History**: Historical run selector with React Query caching
+- **Technology Detail**: Drill-down modal with layer-by-layer evidence
+- **Neo4j Graph Viz**: Interactive graph exploration (vis-network)
+
+**Real-Time Features**:
+- Live progress tracking (0-100%), agent status checklist, technology counter, duration timer, auto-scrolling logs
+
+**Run History Storage**: `src/agents/run_history/{run_id}/` contains chart JSON, evidence JSON, metadata
 
 ---
 
 ## 🛠️ Technology Stack
 
 ### Core Infrastructure
-- **Language**: Python 3.11+
+- **Language**: Python 3.13
 - **Graph Database**: Neo4j Aura (cloud-hosted, vector-enabled)
 - **LLM**: OpenAI GPT-4o-mini (cost-optimized)
 - **Multi-Agent Framework**: LangGraph (state machine orchestration)
@@ -234,45 +313,43 @@ Phase 5: Interactive Visualization
 - **Patents**: PatentsView, Lens.org
 - **News**: GDELT API
 - **GitHub**: GitHub REST API
-- **Web Scraping**: BeautifulSoup, Selenium (fallback)
 
 ### Frontend
-- **UI Framework**: React 18+
+- **UI Framework**: React 18
 - **Visualization**: D3.js v7
-- **Styling**: Tailwind CSS
-- **State Management**: Zustand
+- **State Management**: React Query
 - **Build Tool**: Vite
+- **Styling**: Tailwind CSS
 
 ### Development Tools
 - **Testing**: pytest, pytest-asyncio
 - **Linting**: ruff (fast Python linter)
 - **Type Checking**: mypy
-- **API Testing**: httpx, responses
-- **Documentation**: MkDocs
+- **API**: FastAPI (WebSocket + REST)
 
 ---
 
 ## 🚀 Quick Start
 
 ### Prerequisites
-- Python 3.11+
+- Python 3.13+ (3.11+ works, 3.13 recommended)
 - Node.js 18+ (for frontend)
-- Neo4j Aura account (free tier available)
-- OpenAI API key
-- LandingAI API key (for SEC data)
+- Neo4j Aura account (free tier: [neo4j.com/cloud/aura](https://neo4j.com/cloud/aura))
+- OpenAI API key ([platform.openai.com](https://platform.openai.com))
+- LandingAI API key (for SEC data: [landing.ai](https://landing.ai))
 
 ### 1. Clone and Install
 
 ```bash
 # Clone repository
-git clone https://github.com/yourusername/pura-vida-sloth.git
+git clone https://github.com/omontes/pura-vida-sloth.git
 cd pura-vida-sloth
 
 # Install Python dependencies
 pip install -r requirements.txt
 pip install -e .
 
-# Install frontend dependencies (optional)
+# Install frontend dependencies (optional, for UI)
 cd frontend
 npm install
 cd ..
@@ -288,45 +365,60 @@ cp .env.template .env
 nano .env
 ```
 
-**Required API Keys**:
+**Required Environment Variables**:
 ```bash
-OPENAI_API_KEY=sk-...                    # OpenAI GPT-4o-mini
-NEO4J_URI=neo4j+s://...                  # Neo4j Aura endpoint
+OPENAI_API_KEY=sk-proj-...              # OpenAI (GPT-4o-mini + embeddings)
+NEO4J_URI=neo4j+s://xxxxx.databases.neo4j.io
 NEO4J_USER=neo4j
 NEO4J_PASSWORD=...
-LANDINGAI_API_KEY=...                    # SEC data (hackathon)
+LANDINGAI_API_KEY=...                   # LandingAI Agent Data Engine (SEC data)
 ```
 
 **Optional API Keys** (improves data coverage):
 ```bash
-CORE_API_KEY=...                         # Research papers (free, 10k/day)
-GITHUB_TOKEN=...                         # GitHub data (5k requests/hour)
-FMP_API_KEY=...                          # Earnings transcripts ($14/month)
-ALPHA_VANTAGE_KEY=...                    # Stock prices (500 calls/day free)
+CORE_API_KEY=...                        # Research papers (free tier: 10k/day)
+GITHUB_TOKEN=...                        # GitHub data (5k requests/hour)
+FMP_API_KEY=...                         # Earnings transcripts ($14/month)
+ALPHA_VANTAGE_KEY=...                   # Stock prices (500 calls/day free)
 ```
 
-See [docs/API_SETUP_GUIDE.md](docs/API_SETUP_GUIDE.md) for detailed registration instructions.
 
 ### 3. Run End-to-End Pipeline
 
+**Option 1: Complete Pipeline (First Run)**
+
 ```bash
-# Phase 1: Data Collection (90-day window)
+# Phase 1: Data Collection (~45-75 min)
 python -m src.cli.harvest --config configs/evtol_config.json
 
-# Phase 2: Document Processing
+# Phase 2: Document Processing (~30-45 min)
 python -m src.cli.process --config configs/evtol_config.json
 
-# Phase 3: Graph Ingestion
+# Phase 3: Graph Ingestion (~15-25 min)
 python -m src.cli.ingest --config configs/evtol_config.json
 
-# Phases 4+5: Multi-Agent Analysis
+# Phase 4: Multi-Agent Analysis (~5-7 min for 50 techs)
 python -m src.cli.analyze --config configs/evtol_config.json
 
-# Phase 6: Start UI
+# Phase 5: Start Frontend UI
 cd frontend && npm run dev
 ```
 
-**Total Runtime**: 4-7 hours for full pipeline
+**Total Runtime**: ~90-120 minutes for first run (subsequent runs faster with cached data)
+
+**Option 2: Analysis Only (Existing Data)**
+
+If you already have a populated Neo4j graph:
+
+```bash
+# Just run multi-agent analysis
+python -m src.cli.analyze --config configs/evtol_config.json
+
+# Start frontend
+cd frontend && npm run dev
+```
+
+**Runtime**: ~5-7 minutes (agents only)
 
 ### 4. View Results
 
@@ -344,65 +436,166 @@ pura-vida-sloth/
 │   │   ├── lens_patents.py
 │   │   ├── lens_scholarly.py
 │   │   ├── github_metrics.py
-│   │   └── ...
-│   ├── parsers/                  # Phase 2: Document processing
-│   │   ├── ade_parser.py
-│   │   ├── patents/
-│   │   ├── scholarly/
-│   │   ├── sec/
-│   │   ├── news/
-│   │   ├── regulatory/
-│   │   ├── github_activity/
-│   │   └── gov_contracts/
+│   │   ├── gdelt_news.py
+│   │   ├── usaspending_contracts.py
+│   │   ├── federal_register.py
+│   │   ├── alpha_vantage_stocks.py
+│   │   ├── fmp_earnings.py
+│   │   ├── job_postings.py
+│   │   ├── press_releases.py
+│   │   └── README.md
+│   ├── processors/               # Phase 2: Document processing
+│   │   ├── document_processor.py
+│   │   ├── doc_type_handlers/
+│   │   │   ├── patents/
+│   │   │   │   └── patent_parser.py
+│   │   │   ├── scholarly/
+│   │   │   │   └── paper_parser.py
+│   │   │   ├── sec/
+│   │   │   │   └── ade_parser.py
+│   │   │   ├── news/
+│   │   │   │   └── news_parser.py
+│   │   │   ├── regulatory/
+│   │   │   │   └── regulatory_parser.py
+│   │   │   ├── github_activity/
+│   │   │   │   └── github_parser.py
+│   │   │   └── gov_contracts/
+│   │   │       └── contract_parser.py
+│   │   └── README.md
 │   ├── ingestion/                # Phase 3: Graph ingestion
 │   │   ├── graph_ingestor.py
 │   │   ├── batch_writer.py
-│   │   ├── entity_resolution/
-│   │   └── prerequisites_configuration/
-│   ├── agents/                   # Phases 4: Multi-agent system
+│   │   ├── entity_resolver.py
+│   │   ├── node_writer.py
+│   │   ├── relationship_writer.py
+│   │   └── README.md
+│   ├── agents/                   # Phase 4: Multi-agent system
 │   │   ├── langgraph_orchestrator.py
 │   │   ├── agent_01_tech_discovery/
+│   │   │   └── discovery_agent.py
 │   │   ├── agent_02_innovation/
+│   │   │   └── innovation_scorer.py
 │   │   ├── agent_03_adoption/
+│   │   │   └── adoption_scorer.py
 │   │   ├── agent_04_narrative/
+│   │   │   └── narrative_scorer.py
 │   │   ├── agent_05_risk/
+│   │   │   └── risk_scorer.py
 │   │   ├── agent_06_hype/
+│   │   │   └── hype_scorer.py
 │   │   ├── agent_07_phase/
+│   │   │   └── phase_detector.py
 │   │   ├── agent_08_analyst/
+│   │   │   └── llm_analyst.py
 │   │   ├── agent_09_ensemble/
+│   │   │   └── ensemble_scorer.py
 │   │   ├── agent_10_chart/
+│   │   │   └── chart_generator.py
 │   │   ├── agent_11_evidence/
+│   │   │   └── evidence_compiler.py
 │   │   ├── agent_12_validator/
-│   │   └── shared/
+│   │   │   └── output_validator.py
+│   │   ├── shared/
+│   │   │   ├── queries/
+│   │   │   │   ├── innovation_queries.py
+│   │   │   │   ├── adoption_queries.py
+│   │   │   │   ├── narrative_queries.py
+│   │   │   │   ├── risk_queries.py
+│   │   │   │   ├── community_queries.py
+│   │   │   │   └── temporal_queries.py
+│   │   │   ├── logger.py
+│   │   │   ├── constants.py
+│   │   │   └── openai_client.py
+│   │   ├── run_history/          # Output from runs
+│   │   └── README.md
+│   ├── api/                      # Phase 5: FastAPI backend
+│   │   ├── main.py
+│   │   ├── config.py
+│   │   ├── dependencies.py
+│   │   ├── routes/
+│   │   │   ├── health.py
+│   │   │   ├── pipeline_routes.py
+│   │   │   └── neo4j_routes.py
+│   │   ├── services/
+│   │   │   ├── pipeline_service.py
+│   │   │   ├── run_history_service.py
+│   │   │   ├── neo4j_service.py
+│   │   │   └── vis_converter.py
+│   │   └── models/
+│   │       ├── pipeline_schemas.py
+│   │       └── schemas.py
 │   ├── graph/                    # Neo4j abstraction layer
 │   │   ├── neo4j_client.py
 │   │   ├── entity_resolver.py
-│   │   └── node_writer.py
+│   │   ├── node_writer.py
+│   │   └── README.md
 │   ├── schemas/                  # Pydantic models
+│   │   ├── documents.py
+│   │   ├── technologies.py
+│   │   └── companies.py
 │   ├── utils/                    # Utilities
 │   ├── core/                     # Core logic
 │   ├── cli/                      # CLI commands
-│   ├── scripts/                  # Utility scripts
-│   └── api/                      # FastAPI backend
-├── frontend/                     # Phase 6: React UI
+│   │   ├── harvest.py
+│   │   ├── process.py
+│   │   ├── ingest.py
+│   │   └── analyze.py
+│   └── scripts/                  # Utility scripts
+├── frontend/                     # Phase 5: React UI
 │   ├── src/
 │   │   ├── components/
-│   │   ├── visualizations/
+│   │   │   ├── pipeline/
+│   │   │   │   ├── PipelineRunner.tsx
+│   │   │   │   ├── RunHistory.tsx
+│   │   │   │   ├── LogViewer.tsx
+│   │   │   │   ├── ProgressTracker.tsx
+│   │   │   │   └── ConfigForm.tsx
+│   │   │   ├── visualization/
+│   │   │   │   ├── HypeCycleChart.tsx
+│   │   │   │   ├── TechnologyNode.tsx
+│   │   │   │   ├── PhaseLabels.tsx
+│   │   │   │   └── Neo4jGraphViz.tsx
+│   │   │   └── technology/
+│   │   │       ├── TechnologyDetail.tsx
+│   │   │       ├── EvidenceSection.tsx
+│   │   │       └── EvidenceCard.tsx
+│   │   ├── hooks/
+│   │   │   ├── usePipelineWebSocket.ts
+│   │   │   ├── useRunHistory.ts
+│   │   │   ├── useHypeCycleData.ts
+│   │   │   └── useEvidenceData.ts
+│   │   ├── types/
+│   │   │   ├── pipeline.ts
+│   │   │   ├── chart.ts
+│   │   │   └── evidence.ts
+│   │   ├── utils/
+│   │   │   ├── chartCalculations.ts
+│   │   │   └── formatters.ts
 │   │   └── App.tsx
 │   ├── package.json
 │   └── vite.config.ts
 ├── configs/                      # JSON configurations
 │   ├── evtol_config.json
 │   └── quantum_config.json
+├── data/                         # Downloaded data (gitignored)
+│   ├── catalog/                  # Entity catalogs
+│   │   ├── companies.json
+│   │   └── technologies.json
+│   └── {industry}/
+│       ├── raw/
+│       └── processed/
 ├── tests/                        # Test suite
 │   ├── test_downloaders/
+│   ├── test_processors/
+│   ├── test_ingestion/
 │   ├── test_agents/
 │   └── test_integration.py
 ├── docs/                         # Documentation
 │   ├── ARCHITECTURE.md
 │   ├── FOLDER_STRUCTURE.md
 │   └── API_SETUP_GUIDE.md
-├── data/                         # Downloaded data (gitignored)
+├── .claude/                      # Development guide
+│   └── CLAUDE.md
 ├── .env.template                 # Environment template
 ├── requirements.txt              # Python dependencies
 └── README.md                     # This file
@@ -412,7 +605,7 @@ pura-vida-sloth/
 
 ## 📊 Expected Output
 
-### Phase 1 Output: Raw Data (90-day window)
+### Phase 1: Raw Data (90-180 day window)
 
 | Data Source | Documents | Format | Size |
 |------------|-----------|--------|------|
@@ -425,46 +618,73 @@ pura-vida-sloth/
 | Earnings Transcripts | 10-30 | TXT | 5-15MB |
 | Government Contracts | 5-20 | JSON | 2-5MB |
 | Job Postings | 20-50 | HTML | 5-10MB |
-| **Total** | **475-1,700** | Mixed | **700MB-3GB** |
+| **Total** | **495-1,760** | Mixed | **700MB-3GB** |
 
-### Phase 3 Output: Neo4j Graph
+### Phase 3: Neo4j Graph
 
 | Element Type | Count | Purpose |
 |-------------|-------|---------|
-| Technology Nodes | 10-30 | Core technologies identified |
-| Company Nodes | 30-100 | Organizations in ecosystem |
-| Document Nodes | 475-1,700 | Source documents |
-| Entity Nodes | 500-2,000 | Extracted entities (people, products, events) |
-| Relationships | 2,000-8,000 | Connections between nodes |
-| Vector Embeddings | 475-1,700 | Semantic search capability |
+| Technology Nodes | 50-200 | Core technologies identified |
+| Company Nodes | 100-500 | Organizations in ecosystem |
+| Document Nodes | 495-1,760 | Source documents |
+| Relationships | 2,000-10,000 | Connections (MENTIONED_IN, RELATED_TECH) |
+| Vector Embeddings | 495-1,760 | Semantic search (768-dim) |
 
-### Phases 4 Output: Intelligence Report
+### Phase 4: Intelligence Report
 
-For each technology analyzed:
-- **Maturity Position**: X/Y coordinates on lifecycle curve
-- **Phase Classification**: One of 5 lifecycle phases
-- **Layer Breakdown**: L1/L2/L3/L4 individual scores
-- **Evidence Citations**: 5-15 source documents per dimension
-- **Confidence Intervals**: ±5-15 points depending on data quality
-- **Comparative Analysis**: Position vs 3-5 related technologies
-- **Strategic Timing Indicator**: Engagement phase recommendation
+For each technology analyzed (e.g., 50 technologies):
 
-**Example Output**:
+**Chart JSON** (`hype_cycle_chart.json`):
 ```json
 {
-  "technology": "eVTOL",
-  "position": {"x": 65, "y": 82},
-  "phase": "Peak of Inflated Expectations",
-  "confidence": 0.78,
-  "layer_scores": {
-    "innovation": 45,
-    "adoption": 62,
-    "narrative": 89,
-    "risk": 71
+  "metadata": {
+    "generated_at": "2025-01-10T15:30:00Z",
+    "total_analyzed": 50,
+    "displayed": 25,
+    "industry": "evtol"
   },
-  "evidence_count": 12,
-  "strategic_signal": "Risk management phase - potential consolidation ahead",
-  "comparable_example": "Tesla 2018 (pre-Model 3 ramp)"
+  "technologies": [
+    {
+      "id": "evtol",
+      "name": "Electric VTOL",
+      "phase": "PEAK",
+      "chart_x": 1.5,
+      "chart_y": 68.7,
+      "scores": {
+        "innovation": 78.5,
+        "adoption": 62.3,
+        "narrative": 91.2,
+        "risk": 73.4,
+        "hype": 67.8,
+        "ensemble": 68.7
+      },
+      "executive_summary": "eVTOL exhibits classic peak-hype characteristics...",
+      "key_insight": "Insider selling ($47M) at narrative peak indicates...",
+      "recommendation": "AVOID",
+      "confidence": 0.87
+    }
+  ]
+}
+```
+
+**Evidence JSON** (5-15 citations per layer):
+```json
+{
+  "technology_id": "evtol",
+  "evidence_by_layer": {
+    "innovation": [
+      {
+        "doc_id": "patent_US1234567",
+        "title": "Electric propulsion system for vertical takeoff aircraft",
+        "date": "2024-03-15",
+        "relevance_score": 0.94,
+        "summary": "Novel battery architecture enabling 100-mile range..."
+      }
+    ],
+    "adoption": [ /* 10 gov contracts/regulations */ ],
+    "narrative": [ /* 15 news articles */ ],
+    "risk": [ /* 8 SEC filings */ ]
+  }
 }
 ```
 
@@ -473,17 +693,16 @@ For each technology analyzed:
 ## 🎨 Key Features
 
 ### 1. Industry-Agnostic Design
-**The entire value proposition is analytical flexibility.**
 
 Switch from eVTOL to quantum computing, biotech, or AI by changing a JSON config file. Zero code changes required.
 
-**Supported Use Cases**:
-- Emerging technologies (eVTOL, quantum computing, fusion energy)
+**Supported Markets**:
+- Emerging technologies (eVTOL, quantum, fusion, space)
 - Regulated industries (biotech, fintech, cannabis)
 - Platform shifts (Web3, AI, metaverse)
 - Industrial automation (robotics, IoT, smart manufacturing)
 
-**Example Configuration** (configs/quantum_config.json):
+**Example Configuration** (`configs/quantum_config.json`):
 ```json
 {
   "industry": "quantum_computing",
@@ -496,127 +715,101 @@ Switch from eVTOL to quantum computing, biotech, or AI by changing a JSON config
   "keywords": ["quantum computing", "qubit", "quantum annealing"],
   "date_range": {
     "start": "2024-08-01",
-    "end": "2024-10-31"
+    "end": "2025-01-01"
   }
 }
 ```
 
 ### 2. Multi-Source Reliability
-No single API failure breaks the system. Primary sources fail gracefully to backups:
-- **Earnings**: FMP API → Alpha Vantage → Web scraping
+
+No single API failure breaks the system. Graceful degradation with fallbacks:
+- **Earnings**: FMP → Alpha Vantage → Web scraping
 - **Research**: CORE → arXiv → Lens.org
-- **Patents**: PatentsView → Lens.org → Google Patents
+- **Patents**: PatentsView → Lens.org → Manual fallback
 
 ### 3. Evidence-Based Analysis
+
 Every analytical claim backed by source documents:
 - 5-15 citations per score dimension
 - Clickable references to original documents
 - Data provenance tracking for audit trails
-- Reproducible analysis (same input → same output)
+- Reproducible analysis (same input → same output, 100% deterministic)
 
 ### 4. Production-Ready Architecture
-- **Checkpoint/Resume**: Automatically resume interrupted pipelines
+
+- **Checkpoint/Resume**: Automatic recovery from interruptions
 - **Retry Logic**: Exponential backoff with rate limit detection
-- **Progress Tracking**: Real-time progress bars for all phases
-- **Comprehensive Logging**: Debug, info, warning, error levels
-- **Error Handling**: Graceful degradation, never crashes entire pipeline
-- **Metadata Generation**: JSON metadata for all artifacts
+- **Real-Time Streaming**: WebSocket progress updates (<100ms latency)
+- **Comprehensive Logging**: 4 levels (SILENT/NORMAL/VERBOSE/DEBUG)
+- **Error Handling**: Graceful degradation, never crashes pipeline
+- **Run History**: Persistent storage with metadata
 
 ### 5. Cost-Optimized LLM Usage
-- **GPT-4o-mini**: $0.91 per technology (vs $4.20 with GPT-4)
-- **Selective LLM Calls**: Only 20% of analysis uses LLM (rule-based for 80%)
-- **Cached Embeddings**: Reuse vector embeddings across analyses
-- **Batch Processing**: Reduce API call overhead
 
----
+- **GPT-4o-mini**: ~$0.0016 per technology (vs ~$0.032 with GPT-4o)
+- **Strategic LLM usage**: Only 4 of 12 agents use LLM (33% vs 100%)
+- **Cached embeddings**: Reuse vectors across analyses
+- **Batch processing**: Reduce API overhead
 
-### Evaluation Metrics
-The system tracks reproducibility and accuracy:
-- **Reproducibility Score**: Same graph → same chart (target: 100%)
-- **Data Coverage**: % of sources successfully collected (target: >90%)
-- **Evidence Quality**: Citations per score dimension (target: 5-15)
-- **Confidence Intervals**: ±10 points average (tighter = better)
-- **Phase Classification Accuracy**: Validated against historical examples
+**Total Cost** (1,000 technologies analyzed):
+- Phase 2 (Document Processing): ~$1.00
+- Phase 4 (Multi-Agent): ~$1.60
+- **Total**: ~$2.60
 
 ---
 
 ## 📖 Documentation
 
-### Core Documentation
-- **[ARCHITECTURE.md](docs/ARCHITECTURE.md)** - Complete system architecture
+### Core Architecture
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Complete system architecture (2,900+ lines, production-ready)
 
-### Documentation Guides
-- **Phase 1**: [Data Collection Guide](src/downloaders/README.md)
-- **Phase 2**: [Document Processing Guide](src/parsers/README.md)
-- **Phase 3**: [Graph Ingestion Guide](src/ingestion/README.md)
-- **Phase 4**: [Multi-Agent System Guide](src/agents/README.md)
-- **Phase 5**: [Frontend Visualization Guide](Frontend/README.md)
+### Phase-Specific Guides
+- **[Phase 1: Data Collection](src/downloaders/README.md)** - 14 data source collectors
+- **[Phase 2: Document Processing](src/processors/README.md)** - LLM extraction pipeline
+- **[Phase 3: Graph Ingestion](src/ingestion/README.md)** - Neo4j pure storage
+- **[Phase 4: Multi-Agent System](src/agents/README.md)** - 12-agent LangGraph (2,000+ lines)
+- **[Phase 5: Frontend Visualization](Frontend/README.md)** - React + D3.js + WebSocket
 
 ### Reference Documentation
-- **[Neo4j Schema v1.1](src/graph/schema/Schema_v1.1_Complete.md)** - Graph schema specification
-- **[LangGraph State Machine](docs/langgraph_implementation.md)** - Agent workflow details
-- **[Scoring Algorithms](docs/scoring_methodology.md)** - Mathematical basis for scores
+- **[Neo4j Schema](NEO4J_SCHEMA.md)** - Graph schema specification
 
----
-
-## 🔧 Development Status
-
-### Completed ✅
-- **Phase 1**: 14 data source collectors (fully operational)
-- **Project Structure**: Professional package architecture
-- **Neo4j Schema v1.1**: Graph database design
-- **LangGraph Design**: 11-agent state machine specification
-- **Documentation**: 2,000+ lines of technical docs
-
-### In Progress 🔧
-- **Phase 2**: Document processor implementation
-- **Phase 3**: Graph ingestion batch writer
-- **Phase 4**: Muli=Agent with LangGraph (11 agents)
-- **Phase 5**: React frontend (D3.js visualization)
-- **Testing**: Integration test suite
-
-### Hackathon Priorities (3 days remaining)
-1. **Day 1**: Complete Phase 2 + Phase 3 (graph ingestion)
-2. **Day 2**: Implement 3-4 core agents (discovery, scorers, chart generator)
-3. **Day 3**: Build minimal frontend + end-to-end demo
-
-**MVP Scope**: Single industry (eVTOL), simplified 4-agent system, static chart output
 
 ---
 
 ## 🎯 Unique Value Propositions
 
 ### vs. Traditional Financial Analysis Tools
-- **Traditional**: Backward-looking (last quarter's earnings)
-- **This System**: Forward-looking 12-24 months (patent trends, GitHub activity)
+- **Traditional**: Backward-looking (last quarter's earnings), single-layer analysis
+- **Canopy Intelligence**: Forward-looking 12-24 months, 4-layer triangulation catches contradictions
 
-### vs. News/Media Aggregators
-- **Media Tools**: Lag reality, amplify narratives
-- **This System**: Uses news as contrarian indicator (high coverage = potential saturation)
-
-### vs. Single-Source Platforms (Bloomberg, CB Insights)
-- **Bloomberg/Morningstar**: Financial data only (Layer 3)
+### vs. Bloomberg/CB Insights
+- **Bloomberg**: Financial data only (Layer 3), subscription required ($2,000+/mo)
 - **CB Insights**: Venture capital focus, limited technical depth
-- **This System**: 4 independent layers catch contradictions traditional tools miss
+- **Canopy Intelligence**: All 4 layers (innovation, market, financials, narrative), open-source + API costs ($2.60 per 1,000 techs)
 
-### vs. Manual Research (Analysts)
-- **Manual Analysis**: Sample 20-50 documents, weeks of work, subjective
-- **This System**: Process 1,600 documents in hours, reproducible, evidence-based
+### vs. Manual Analyst Research
+- **Manual Analysis**: Sample 20-50 documents, weeks of work, subjective interpretation, single analyst bias
+- **Canopy Intelligence**: Process 1,600 documents, 90-120 minutes automated, evidence-based reproducible, multi-agent system (12 agents)
 
 ---
 
 ## ⚠️ Important Notes
 
 ### Scope and Purpose
+
 This system is designed for **strategic market research and technology maturity analysis**. It provides intelligence about technology lifecycle positioning to inform strategic planning decisions.
 
+**This is NOT**: A stock trading system, financial advice, real-time market data, or a replacement for professional due diligence.
+
 ### Data Limitations
-- **90-day analysis window**: Not suitable for real-time decision-making
-- **Emerging technologies focus**: Most effective for markets with <5 years commercialization
-- **English-language bias**: Primary sources are English-language documents
-- **Public data only**: No proprietary datasets or insider information
+
+- **Analysis Window**: 90-180 days (not suitable for day trading)
+- **Emerging Tech Focus**: Most effective for markets with <10 years commercialization
+- **English-Language Bias**: Primary sources are English-language documents
+- **Public Data Only**: No proprietary datasets or insider information
 
 ### Recommended Use Cases
+
 - Strategic planning for corporate R&D programs
 - Market timing analysis for technology sectors
 - Competitive intelligence and positioning assessment
@@ -627,34 +820,35 @@ This system is designed for **strategic market research and technology maturity 
 
 ## 🤝 Contributing
 
-This is a hackathon project (LandingAI Financial AI Hackathon 2025). After the hackathon, we welcome contributions:
+This project is **production-ready** post-hackathon. We welcome contributions:
 
-1. Fork the repository
-2. Create feature branch (`git checkout -b feature/amazing-feature`)
-3. Commit changes (`git commit -m 'Add amazing feature'`)
-4. Push to branch (`git push origin feature/amazing-feature`)
-5. Open Pull Request
+1. **Fork** the repository
+2. **Create feature branch** (`git checkout -b feature/amazing-feature`)
+3. **Commit changes** (`git commit -m 'Add feature'`)
+4. **Push to branch** (`git push origin feature/amazing-feature`)
+5. **Open Pull Request**
 
-**Priority areas for contribution**:
-- Additional data source collectors (Phase 1)
-- New industry configurations (quantum, biotech, etc.)
-- Agent improvements (Phase 4)
-- Frontend visualization enhancements (Phase 6)
-- Evaluation frameworks and test suites
+**Priority Contribution Areas**:
+- Phase 1: Additional data sources (Twitter/X, Crunchbase)
+- Phase 2: New document type handlers (podcasts, videos)
+- Phase 4: New agent types (sentiment analysis, network effects)
+- Phase 5: Mobile-responsive design, accessibility
+- Configs: New industry configurations (space, biotech, quantum)
+- Evaluation: Historical validation framework (backtest 2010-2024)
 
 ---
 
 ## 📧 Contact & Support
 
-- **Documentation**: See [docs/](docs/) directory
-- **Issues**: GitHub Issues (after hackathon)
-- **Logs**: Check `data/{source}/{source}.log` for debugging
+- **Documentation**: See [`docs/`](docs/) directory
+- **Issues**: [GitHub Issues](https://github.com/omontes/pura-vida-sloth/issues)
+- **Team**: Team Pura Vida Sloth (Costa Rica)
 
 ---
 
 ## 📝 License
 
-See [LICENSE](LICENSE) file for details.
+[MIT License](LICENSE) - See LICENSE file for details.
 
 ---
 
@@ -662,17 +856,18 @@ See [LICENSE](LICENSE) file for details.
 
 **Event**: LandingAI Financial AI Hackathon 2025
 **Track**: Strategic Investment Timing
-**Team**: Pura Vida Sloth
-**Submission Deadline**: [Date]
+**Team**: Pura Vida Sloth (Costa Rica) 🦥
+**Submission**: Canopy Intelligence - Strategic market intelligence from above the ecosystem
 
-**Mandatory Requirements**:
-- ✅ LandingAI Agent Data Engine (ADE) for SEC data extraction
-- ✅ Multi-source intelligence (14 sources)
-- ✅ Reproducible analysis pipeline
-- ✅ Executive-grade output visualization
+### Mandatory Requirements ✅
+
+- ✅ **LandingAI Agent Data Engine (ADE)** - SEC filings extraction (Phase 2)
+- ✅ **Multi-source intelligence** - 14 independent data sources (Phase 1)
+- ✅ **Reproducible pipeline** - Same input → Same output (Pure GraphRAG architecture)
+- ✅ **Executive visualization** - Interactive D3.js Hype Cycle chart with real-time WebSocket streaming (Phase 5)
 
 ---
 
-**Built with:** Python 3.11, Neo4j Aura, OpenAI GPT-4o-mini, LangGraph, React, D3.js
+**Built with**: Python 3.13, Neo4j Aura, OpenAI GPT-4o-mini, LangGraph, FastAPI, React 18, D3.js v7
 
 **Disclaimer**: This system provides multi-source intelligence for market research purposes only. All analysis is based on publicly available data and does not constitute financial, legal, or professional advice. Users should conduct independent research and consult qualified professionals for specific guidance.
