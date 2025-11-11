@@ -49,7 +49,6 @@ Between 2010-2024, corporations and investors deployed billions into emerging te
 
 - **3D Printing (2013)**: Peak media enthusiasm followed by 80% valuation decline
 - **Blockchain (2017)**: Extreme narrative coincided with 85% market correction
-- **Metaverse (2021)**: Maximum media coverage preceded 70% downturn
 - **SPACs (2021)**: Government validation absent despite hype, -65% decline
 
 **Root Cause**: Single-source analytical bias. Relying solely on media coverage, financial metrics, or innovation signals misses the cross-layer contradictions that reveal true market positioning.
@@ -140,7 +139,7 @@ The system's core analytical capability emerges when intelligence layers disagre
 
 ```mermaid
 flowchart LR
-    A[Phase 1<br/>Data Collection<br/>14 Sources] -->|400-1,600 docs| B[Phase 2<br/>LLM Processing<br/>GPT-4o-mini]
+    A[Phase 1<br/>Data Collection<br/>14 Sources] -->|2,000+ docs| B[Phase 2<br/>LLM Processing<br/>GPT-4o-mini]
     B -->|Structured JSON| C[Phase 3<br/>Neo4j Graph<br/>Pure Storage]
     C -->|GraphRAG| D[Phase 4<br/>12 AI Agents<br/>LangGraph]
     D -->|Chart + Evidence| E[Phase 5<br/>Real-Time UI<br/>WebSocket]
@@ -264,6 +263,75 @@ flowchart LR
 **Cost**: ~$0.0016 per technology (~$1.60 for 1,000 technologies)
 
 **Runtime**: ~5-7 minutes for 50 technologies (parallel execution)
+
+
+## Architecture Overview
+
+### System Data Flow
+
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                    1. Tech Discovery Agent                      │
+│              (Enumerate all technologies from graph)            │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│              PARALLEL EXECUTION: Core Scoring Agents            │
+│  ┌──────────────┬──────────────┬──────────────┬──────────────┐  │
+│  │ 2. Innovation│ 3. Adoption  │ 4. Narrative │  5. Risk     │  │
+│  │    Scorer    │    Scorer    │    Scorer    │   Scorer     │  │
+│  │   (Layer 1)  │  (Layer 2)   │  (Layer 4)   │ (Layer 3)    │  │
+│  └──────────────┴──────────────┴──────────────┴──────────────┘  │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │   6. Hype Scorer     │
+                  │  (Cross-Layer        │
+                  │   Contradiction)     │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │ 7. Phase Detector    │
+                  │  (Gartner Lifecycle  │
+                  │   Classification)    │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │  8. LLM Analyst      │
+                  │  (GPT-4o-mini        │
+                  │   Synthesis)         │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │  9. Ensemble Agent   │
+                  │  (Weighted Score     │
+                  │   Combination)       │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+┌─────────────────────────────────────────────────────────────────┐
+│         PARALLEL EXECUTION: Output Generation Agents            │
+│  ┌──────────────────────────────┬──────────────────────────┐    │
+│  │  10. Chart Generator         │ 11. Evidence Compiler    │    │
+│  │  (X/Y Coordinates)           │ (Source Citations)       │    │
+│  └──────────────────────────────┴──────────────────────────┘    │
+└────────────────────────────┬────────────────────────────────────┘
+                             │
+                             ▼
+                  ┌──────────────────────┐
+                  │ 12. Output Validator │
+                  │  (Quality Gate)      │
+                  └──────────┬───────────┘
+                             │
+                             ▼
+                   [hype_cycle_chart.json]
+```
+
 
 ### Phase 5: Real-Time API + Interactive Frontend
 
@@ -831,7 +899,6 @@ This system is designed for **strategic market research and technology maturity 
 ---
 
 
-
 ## 📝 License
 
 [MIT License](LICENSE) - See LICENSE file for details.
@@ -845,14 +912,6 @@ This system is designed for **strategic market research and technology maturity 
 **Team**: Pura Vida Sloth (Costa Rica) 🦥
 **Submission**: Canopy Intelligence - Strategic market intelligence from above the ecosystem
 
-### Mandatory Requirements ✅
-
-- ✅ **LandingAI Agent Data Engine (ADE)** - SEC filings extraction (Phase 2)
-- ✅ **Multi-source intelligence** - 14 independent data sources (Phase 1)
-- ✅ **Reproducible pipeline** - Same input → Same output (Pure GraphRAG architecture)
-- ✅ **Executive visualization** - Interactive D3.js Hype Cycle chart with real-time WebSocket streaming (Phase 5)
-
----
 
 **Built with**: Python 3.13, Neo4j Aura, OpenAI GPT-4o-mini, LangGraph, FastAPI, React 18, D3.js v7
 
