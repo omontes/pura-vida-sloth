@@ -234,7 +234,7 @@ function App() {
                 <CardDescription>
                   {selectedTechId
                     ? 'Relationships and connections for this technology'
-                    : 'All technologies and their interconnections'}
+                    : 'All technologies and their interconnections (limit 500 nodes)'}
                 </CardDescription>
               </CardHeader>
               <Neo4jGraphViz technologyId={selectedTechId} />
