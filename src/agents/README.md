@@ -54,28 +54,50 @@ Phase 4 is a **12-agent LangGraph state machine** that analyzes technology lifec
 
 ### Pipeline Flow
 
-```
-Input: Neo4j Graph (2,099 docs, 1,798 techs)
-  ↓
-Agent 1: Tech Discovery → Select 50-100 representative technologies
-  ↓
-Agents 2-5: Layer Scoring → Score Innovation, Adoption, Narrative, Risk (parallel per tech)
-  ↓
-Agent 6: Hype Scorer → Calculate hype from layer divergence
-  ↓
-Agent 7: Phase Detector → Map to Gartner Hype Cycle phase
-  ↓
-Agent 8: LLM Analyst → Generate executive summary
-  ↓
-Agent 9: Ensemble → Calculate final X/Y chart positioning
-  ↓
-Agent 10: Chart Generator → Format for D3.js visualization
-  ↓
-Agent 11: Evidence Compiler → Collect supporting citations
-  ↓
-Agent 12: Output Validator → Verify schema compliance
-  ↓
-Output: hype_cycle_chart.json (ready for UI rendering)
+```mermaid
+graph TB
+    subgraph Input
+        Neo4j[("Neo4j Graph<br/>2,099 docs<br/>1,798 techs")]
+    end
+
+    Neo4j --> A1[Agent 1: Tech Discovery<br/>Select 50-100 technologies]
+
+    subgraph "Parallel Layer Scoring"
+        A2[Agent 2: Innovation<br/>Patents, Papers, GitHub]
+        A3[Agent 3: Adoption<br/>Contracts, Regulations]
+        A4[Agent 4: Narrative<br/>News, Sentiment]
+        A5[Agent 5: Risk<br/>SEC, Insider Trading]
+    end
+
+    A1 --> A2 & A3 & A4 & A5
+
+    A2 & A3 & A4 & A5 --> A6[Agent 6: Hype Scorer<br/>Cross-layer contradiction]
+    A6 --> A7[Agent 7: Phase Detector<br/>Gartner classification]
+    A7 --> A8[Agent 8: LLM Analyst<br/>Executive summary]
+    A8 --> A9[Agent 9: Ensemble<br/>Weighted positioning]
+
+    subgraph "Parallel Output Generation"
+        A10[Agent 10: Chart Generator<br/>D3.js formatting]
+        A11[Agent 11: Evidence Compiler<br/>Citation trail]
+    end
+
+    A9 --> A10 & A11
+    A10 & A11 --> A12[Agent 12: Output Validator<br/>Quality gate]
+
+    subgraph Output
+        JSON[("hype_cycle_chart.json<br/>Ready for UI")]
+    end
+
+    A12 --> JSON
+
+    style A2 fill:#e1f5ff
+    style A3 fill:#e1f5ff
+    style A4 fill:#e1f5ff
+    style A5 fill:#e1f5ff
+    style A10 fill:#e1f5ff
+    style A11 fill:#e1f5ff
+    style Neo4j fill:#fff4e6
+    style JSON fill:#e8f5e9
 ```
 
 ### The 4-Layer Intelligence Framework
@@ -121,6 +143,37 @@ This is the **CORE analytical insight** that makes multi-source triangulation wo
 - L3: Insiders buying, valuations compressed
 - L4: Media coverage minimal
 → **Signal**: Strategic opportunity phase
+
+#### Visual: Intelligence Layer Timeline
+
+```mermaid
+timeline
+    title 4-Layer Intelligence Framework (Temporal Sequencing)
+    section Leading Indicators
+        2 Years Back : Layer 1 - Innovation
+                     : Patents surge
+                     : Research papers
+                     : GitHub activity
+                     : Predicts tech emergence
+        18 Months Back : Layer 2 - Adoption
+                       : Gov contracts
+                       : Regulatory approvals
+                       : Job postings
+                       : Predicts commercialization
+    section Coincident & Lagging
+        6 Months Back : Layer 3 - Risk
+                      : SEC filings
+                      : Insider trading
+                      : Stock prices
+                      : Current valuation reality
+        6 Months Back : Layer 4 - Narrative
+                      : News sentiment
+                      : Media coverage peaks
+                      : Press releases
+                      : Lagging indicator (contrarian)
+```
+
+**Key Insight**: Layer disagreements reveal lifecycle position. When Innovation/Adoption lag behind Narrative, that's **Peak** saturation. When Narrative is low but Innovation/Adoption recover, that's **Trough** opportunity.
 
 ---
 
@@ -209,55 +262,98 @@ class HypeCycleState(TypedDict, total=False):
 
 ### Agent Categorization
 
-#### LLM-Based Agents (5 agents)
+```mermaid
+graph LR
+    subgraph "LLM-Based Agents (5 total)"
+        direction TB
+        L2["Agent 2: Innovation<br/>temp=0.2<br/>~$0.0003/tech"]
+        L3["Agent 3: Adoption<br/>temp=0.2<br/>~$0.0003/tech"]
+        L4["Agent 4: Narrative<br/>temp=0.3<br/>~$0.0003/tech"]
+        L5["Agent 5: Risk<br/>temp=0.2<br/>~$0.0003/tech"]
+        L8["Agent 8: Analyst<br/>temp=0.4<br/>~$0.0004/tech"]
+    end
 
-These agents use OpenAI GPT-4o-mini with structured output for reasoning:
+    subgraph "Logic-Based Agents (7 total)"
+        direction TB
+        P1["Agent 1: Discovery<br/>GraphQL<br/>$0.00"]
+        P6["Agent 6: Hype<br/>Rules<br/>$0.00"]
+        P7["Agent 7: Phase<br/>Decision Tree<br/>$0.00"]
+        P9["Agent 9: Ensemble<br/>Weighted Avg<br/>$0.00"]
+        P10["Agent 10: Chart<br/>Coordinates<br/>$0.00"]
+        P11["Agent 11: Evidence<br/>Citations<br/>$0.00"]
+        P12["Agent 12: Validator<br/>Schema Check<br/>$0.00"]
+    end
 
-- **Agent 2: Innovation Scorer** (temperature: 0.2)
-- **Agent 3: Adoption Scorer** (temperature: 0.2)
-- **Agent 4: Narrative Scorer** (temperature: 0.3)
-- **Agent 5: Risk Scorer** (temperature: 0.2)
-- **Agent 8: LLM Analyst** (temperature: 0.4)
+    style L2 fill:#ffe6e6
+    style L3 fill:#ffe6e6
+    style L4 fill:#ffe6e6
+    style L5 fill:#ffe6e6
+    style L8 fill:#ffe6e6
+    style P1 fill:#e6f3ff
+    style P6 fill:#e6f3ff
+    style P7 fill:#e6f3ff
+    style P9 fill:#e6f3ff
+    style P10 fill:#e6f3ff
+    style P11 fill:#e6f3ff
+    style P12 fill:#e6f3ff
+```
 
-#### Logic-Based Agents (7 agents)
-
-These agents use pure Python logic (no LLM calls):
-
-- **Agent 1: Tech Discovery** - GraphQL aggregation
-- **Agent 6: Hype Scorer** - Rule-based contradiction detection
-- **Agent 7: Phase Detector** - Decision tree classification
-- **Agent 9: Ensemble** - Weighted averaging
-- **Agent 10: Chart Generator** - Coordinate calculation
-- **Agent 11: Evidence Compiler** - Citation aggregation
-- **Agent 12: Output Validator** - Schema validation
+**Cost Summary**: LLM agents cost ~$0.0016 per technology. Logic agents are free. Total pipeline: ~$0.0016/tech or ~$1.60 per 1,000 technologies.
 
 ### Sequential Pipeline Architecture
 
 ```mermaid
-graph TD
-    Start[Neo4j Graph] --> A1[Agent 1: Tech Discovery]
-    A1 --> A2[Agent 2: Innovation Scorer]
-    A2 --> A3[Agent 3: Adoption Scorer]
-    A3 --> A4[Agent 4: Narrative Scorer]
-    A4 --> A5[Agent 5: Risk Scorer]
-    A5 --> A6[Agent 6: Hype Scorer]
-    A6 --> A7[Agent 7: Phase Detector]
-    A7 --> A8[Agent 8: LLM Analyst]
-    A8 --> A9[Agent 9: Ensemble]
-    A9 --> A10[Agent 10: Chart Generator]
-    A10 --> A11[Agent 11: Evidence Compiler]
-    A11 --> A12[Agent 12: Output Validator]
-    A12 --> End[Chart JSON]
+graph TB
+    Start[("Neo4j Graph<br/>Pure Storage")] --> A1["Agent 1<br/>Tech Discovery<br/>━━━━━━━━<br/>State: tech_id, tech_name"]
+
+    A1 --> ParallelLayers{"Parallel<br/>Layer<br/>Scoring"}
+
+    ParallelLayers --> A2["Agent 2<br/>Innovation<br/>━━━━━━━━<br/>+innovation_score"]
+    ParallelLayers --> A3["Agent 3<br/>Adoption<br/>━━━━━━━━<br/>+adoption_score"]
+    ParallelLayers --> A4["Agent 4<br/>Narrative<br/>━━━━━━━━<br/>+narrative_score"]
+    ParallelLayers --> A5["Agent 5<br/>Risk<br/>━━━━━━━━<br/>+risk_score"]
+
+    A2 --> Merge1{"Merge<br/>Layer<br/>Scores"}
+    A3 --> Merge1
+    A4 --> Merge1
+    A5 --> Merge1
+
+    Merge1 --> A6["Agent 6<br/>Hype Scorer<br/>━━━━━━━━<br/>+hype_score<br/>+layer_divergence"]
+    A6 --> A7["Agent 7<br/>Phase Detector<br/>━━━━━━━━<br/>+hype_cycle_phase<br/>+phase_confidence"]
+    A7 --> A8["Agent 8<br/>LLM Analyst<br/>━━━━━━━━<br/>+executive_summary<br/>+key_insight"]
+    A8 --> A9["Agent 9<br/>Ensemble<br/>━━━━━━━━<br/>+chart_x, chart_y<br/>+weighted_score"]
+
+    A9 --> ParallelOutput{"Parallel<br/>Output<br/>Generation"}
+
+    ParallelOutput --> A10["Agent 10<br/>Chart Generator<br/>━━━━━━━━<br/>+chart_data"]
+    ParallelOutput --> A11["Agent 11<br/>Evidence Compiler<br/>━━━━━━━━<br/>+evidence"]
+
+    A10 --> Merge2{"Merge<br/>Outputs"}
+    A11 --> Merge2
+
+    Merge2 --> A12["Agent 12<br/>Output Validator<br/>━━━━━━━━<br/>+validation_status"]
+    A12 --> End[("hype_cycle_chart.json<br/>D3.js Ready")]
+
+    style A2 fill:#e1f5ff
+    style A3 fill:#e1f5ff
+    style A4 fill:#e1f5ff
+    style A5 fill:#e1f5ff
+    style A10 fill:#ffebee
+    style A11 fill:#ffebee
+    style Start fill:#fff4e6
+    style End fill:#e8f5e9
+    style ParallelLayers fill:#f3e5f5
+    style ParallelOutput fill:#f3e5f5
+    style Merge1 fill:#fce4ec
+    style Merge2 fill:#fce4ec
 ```
 
-**Why Sequential?**
-
-- Each agent depends on previous agents' outputs
-- Enables reproducibility (same input → same output)
-- Simplifies debugging (linear trace through pipeline)
-- Allows per-agent performance profiling
-
-**Concurrency**: Multiple technologies analyzed in parallel (max 20 concurrent to prevent Neo4j pool exhaustion)
+**Key Architectural Features**:
+- **Parallel Execution**: Agents 2-5 run concurrently (Layer Scoring), Agents 10-11 run concurrently (Output Generation)
+- **State Accumulation**: Each agent adds fields to HypeCycleState (shown as +field_name)
+- **Sequential Dependencies**: Agent 6 waits for all layer scores, Agent 12 waits for all outputs
+- **Reproducibility**: Same input → Same output (critical for evaluations)
+- **Concurrency**: Max 20 technologies analyzed simultaneously to prevent Neo4j pool exhaustion
 
 ---
 
@@ -824,6 +920,28 @@ def detect_phase(
 ```
 
 #### Phase Definitions
+
+```mermaid
+graph LR
+    subgraph "Gartner Hype Cycle - 5 Phases"
+        direction LR
+        T["TRIGGER<br/>Innovation Trigger<br/>X: 0.0-1.0<br/>Y: 0-30<br/>━━━━━━━━<br/>High innovation<br/>Pre-commercial<br/>Minimal hype"]
+        P["PEAK<br/>Peak of Inflated<br/>Expectations<br/>X: 1.0-2.0<br/>Y: 70-100<br/>━━━━━━━━<br/>Media saturation<br/>High hype<br/>Risk building"]
+        TR["TROUGH<br/>Trough of<br/>Disillusionment<br/>X: 2.0-3.0<br/>Y: 10-40<br/>━━━━━━━━<br/>Failed expectations<br/>Low narrative<br/>High risk"]
+        S["SLOPE<br/>Slope of<br/>Enlightenment<br/>X: 3.0-4.0<br/>Y: 30-70<br/>━━━━━━━━<br/>Realistic expectations<br/>Growing adoption"]
+        PL["PLATEAU<br/>Plateau of<br/>Productivity<br/>X: 4.0-5.0<br/>Y: 40-80<br/>━━━━━━━━<br/>Mature technology<br/>Proven commercial"]
+
+        T --> P --> TR --> S --> PL
+    end
+
+    style T fill:#e3f2fd
+    style P fill:#ffebee
+    style TR fill:#fff3e0
+    style S fill:#e8f5e9
+    style PL fill:#f3e5f5
+```
+
+**Visualization**: Technologies flow left-to-right through phases. X-axis = time to plateau (0-5 years), Y-axis = market expectations (0-100).
 
 | Phase | Code | X Range | Y Range | Characteristics |
 |-------|------|---------|---------|-----------------|
@@ -1662,73 +1780,37 @@ result = await llm.ainvoke(prompt)
 
 ### Per-Technology Flow (Sequential)
 
+See [Sequential Pipeline Architecture](#sequential-pipeline-architecture) diagram for visual representation.
+
+**Example: Solid-State Battery**
+
 ```
-1. STATE INITIALIZATION
-   Input: {"tech_id": "solid_state_battery", "tech_name": "Solid-State Battery"}
-   ↓
-2. AGENT 2: Innovation Scorer
-   - Query: Patents (2yr), Papers (2yr), Citations
-   - LLM: Calculate innovation_score (0-100)
-   - Output: innovation_score=72.5, reasoning="Strong patent activity...", metrics={...}
-   State: {"tech_id": "...", "innovation_score": 72.5, "innovation_reasoning": "...", ...}
-   ↓
-3. AGENT 3: Adoption Scorer
-   - Query: Contracts (18mo), Regulations, Revenue companies
-   - LLM: Calculate adoption_score (0-100)
-   - Output: adoption_score=38.0, reasoning="Limited commercial activity...", metrics={...}
-   State: {"...", "adoption_score": 38.0, "adoption_reasoning": "...", ...}
-   ↓
-4. AGENT 4: Narrative Scorer
-   - Query: News (6mo), Sentiment, Prominence
-   - LLM: Calculate narrative_score (0-100)
-   - Output: narrative_score=82.0, reasoning="Heavy media coverage...", metrics={...}
-   State: {"...", "narrative_score": 82.0, "narrative_reasoning": "...", ...}
-   ↓
-5. AGENT 5: Risk Scorer
-   - Query: SEC filings (6mo), Insider trading, Risk mentions
-   - LLM: Calculate risk_score (0-100)
-   - Output: risk_score=65.0, reasoning="High risk mentions, insider selling...", metrics={...}
-   State: {"...", "risk_score": 65.0, "risk_reasoning": "...", ...}
-   ↓
-6. AGENT 6: Hype Scorer
-   - Logic: Calculate stdev([72.5, 38.0, 82.0, 65.0]) = 24.3
-   - Rule: narrative (82) >> innovation (72.5) AND adoption (38) → High hype
-   - Output: hype_score=78.5, layer_divergence=24.3
-   State: {"...", "hype_score": 78.5, "layer_divergence": 24.3, ...}
-   ↓
-7. AGENT 7: Phase Detector
-   - Logic: narrative > 70 AND hype > 60 → PEAK phase
-   - Output: hype_cycle_phase="PEAK", phase_confidence=0.90
-   State: {"...", "hype_cycle_phase": "PEAK", "phase_confidence": 0.90, ...}
-   ↓
-8. AGENT 8: LLM Analyst
-   - LLM: Synthesize executive summary from all scores
-   - Output: executive_summary="...", key_insight="...", recommendation="Monitor: ..."
-   State: {"...", "executive_summary": "...", "key_insight": "...", ...}
-   ↓
-9. AGENT 9: Ensemble
-   - Logic: weighted_score = 0.30*72.5 + 0.35*38.0 + 0.15*82.0 + 0.20*65.0 = 58.3
-   - Logic: PEAK + weighted_score=58.3 → chart_x=1.35, chart_y=85.2
-   - Output: chart_x=1.35, chart_y=85.2, phase_position="mid"
-   State: {"...", "chart_x": 1.35, "chart_y": 85.2, ...}
-   ↓
-10. AGENT 10: Chart Generator
-    - Logic: Format state into D3.js-compatible JSON
-    - Output: chart_data={id, name, phase, chart_x, chart_y, scores, ...}
-    State: {"...", "chart_data": {...}, ...}
-    ↓
-11. AGENT 11: Evidence Compiler
-    - Logic: Extract top documents from metrics (patents, contracts, news, SEC)
-    - Output: evidence={innovation_evidence: [...], adoption_evidence: [...], ...}
-    State: {"...", "evidence": {...}, ...}
-    ↓
-12. AGENT 12: Output Validator
-    - Logic: Verify required fields, score ranges, phase validity
-    - Output: validation_status="valid", validation_errors=[]
-    State: {"...", "validation_status": "valid", "validation_errors": [], ...}
-    ↓
-FINAL STATE: Complete HypeCycleState with all 50+ fields populated
+INPUT → Neo4j Graph
+  ↓
+Agent 1 → tech_id="solid_state_battery", tech_name="Solid-State Battery"
+  ↓
+Agents 2-5 (PARALLEL) → Layer Scores
+  • Innovation: 72.5 (45 patents, strong activity)
+  • Adoption: 38.0 (limited commercialization)
+  • Narrative: 82.0 (high media coverage)
+  • Risk: 65.0 (insider selling, high risk mentions)
+  ↓
+Agent 6 → Hype: 78.5 (narrative >> fundamentals, divergence=24.3)
+  ↓
+Agent 7 → Phase: PEAK (narrative > 70, hype > 60, confidence=0.90)
+  ↓
+Agent 8 → Executive Summary: "Technology is over-hyped relative to commercial readiness..."
+  ↓
+Agent 9 → Positioning: X=1.35, Y=85.2 (mid-Peak position)
+  ↓
+Agents 10-11 (PARALLEL) → Chart Data + Evidence Citations
+  ↓
+Agent 12 → Validation: VALID ✓
+  ↓
+OUTPUT → hype_cycle_chart.json (D3.js ready)
 ```
+
+**Key Insight**: State accumulates through pipeline (50+ fields by end). Each agent adds specific fields without modifying previous agent outputs (append-only pattern).
 
 ### Multi-Technology Flow (Parallel)
 
