@@ -64,7 +64,7 @@ export function RunHistory({ onRunSelect }: RunHistoryProps) {
     return (
       <div className="p-3 text-sm text-gray-500">
         <div className="flex items-center gap-2">
-          <div className="w-4 h-4 border-2 border-gray-300 border-t-blue-600 rounded-full animate-spin" />
+          <div className="w-4 h-4 border-2 border-gray-300 border-t-[#0f766e] rounded-full animate-spin" />
           Loading run history...
         </div>
       </div>
@@ -98,7 +98,7 @@ export function RunHistory({ onRunSelect }: RunHistoryProps) {
               px-4 py-3 border-b border-gray-100 cursor-pointer transition-colors
               ${
                 selectedRunId === run.run_id
-                  ? 'bg-blue-50 border-l-4 border-l-blue-600'
+                  ? 'bg-teal-50 border-l-4 border-l-[#0f766e]'
                   : 'hover:bg-gray-50'
               }
             `}
@@ -112,7 +112,7 @@ export function RunHistory({ onRunSelect }: RunHistoryProps) {
                     {formatDate(run.created_at)}
                   </div>
                   {selectedRunId === run.run_id && (
-                    <div className="px-2 py-0.5 text-xs font-medium text-blue-700 bg-blue-100 rounded">
+                    <div className="px-2 py-0.5 text-xs font-medium text-teal-700 bg-teal-100 rounded">
                       Active
                     </div>
                   )}

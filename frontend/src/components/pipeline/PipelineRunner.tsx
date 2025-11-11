@@ -132,10 +132,10 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
             {/* Configuration Stage */}
             {state.stage === 'config' && (
               <div className="max-w-2xl mx-auto">
-                <div className="mb-6 p-4 bg-blue-50 border border-blue-200 rounded-lg">
+                <div className="mb-6 p-4 bg-teal-50 border border-teal-200 rounded-lg">
                   <div className="flex items-start gap-3">
                     <svg
-                      className="w-5 h-5 text-blue-600 mt-0.5 shrink-0"
+                      className="w-5 h-5 text-[#0f766e] mt-0.5 shrink-0"
                       fill="none"
                       stroke="currentColor"
                       viewBox="0 0 24 24"
@@ -147,9 +147,9 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
                         d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"
                       />
                     </svg>
-                    <div className="flex-1 text-sm text-blue-900">
+                    <div className="flex-1 text-sm text-teal-900">
                       <p className="font-medium mb-1">About This Pipeline</p>
-                      <p className="text-blue-800">
+                      <p className="text-teal-800">
                         The multi-agent system will analyze technologies through 12 specialized
                         agents, scoring each across 4 intelligence layers (Innovation, Adoption,
                         Narrative, Risk) to determine precise hype cycle positioning.
@@ -213,7 +213,7 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
                     Analysis Completed Successfully
                   </h3>
                   <p className="text-green-800 mb-4">
-                    Analyzed {state.chart_data?.technologies.length || 0} technologies in{' '}
+                    Analyzed {state.config?.tech_count || 0} technologies in{' '}
                     {state.duration_seconds
                       ? `${Math.round(state.duration_seconds)}s`
                       : 'unknown time'}
@@ -227,7 +227,7 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
                 {state.chart_data && (
                   <div className="grid grid-cols-2 gap-4">
                     <div className="p-4 bg-gray-50 rounded-lg border border-gray-200">
-                      <div className="text-sm text-gray-600 mb-1">Total Technologies</div>
+                      <div className="text-sm text-gray-600 mb-1">Total Technologies (Top 10 / Phase)</div>
                       <div className="text-2xl font-semibold text-gray-900">
                         {state.chart_data.technologies.length}
                       </div>
@@ -304,7 +304,7 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
                   onClose()
                   // The chart should already be updated via React Query invalidation
                 }}
-                className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors"
+                className="px-5 py-2.5 text-sm font-medium text-white bg-[#0f766e] rounded-lg hover:bg-[#0d9488] focus:outline-none focus:ring-2 focus:ring-[#0f766e] transition-colors"
               >
                 View Updated Chart
               </button>
