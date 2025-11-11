@@ -3,7 +3,7 @@
 # Pura Vida Sloth - Backend Startup Script
 # Usage: ./start_backend.sh
 
-echo "🦥 Pura Vida Sloth - Starting Backend..."
+echo "Canopy Intelligence - Starting Backend..."
 echo ""
 
 # Check if .env exists
