@@ -43,6 +43,13 @@ function App() {
     enabled: selectedRunId ? !!selectedRun : true,
   })
 
+  const totalPhaseCount = data?.metadata?.phases
+    ? Object.values(data.metadata.phases).reduce((sum, value) => {
+        const numericValue = typeof value === 'number' ? value : Number(value)
+        return sum + (Number.isFinite(numericValue) ? numericValue : 0)
+      }, 0)
+    : 0
+
   // Handle pipeline completion (memoized to prevent re-renders)
   // MUST be before early returns to follow Rules of Hooks
   const handlePipelineComplete = useCallback((techCount?: number) => {
@@ -207,15 +214,7 @@ function App() {
                     'Chart loaded from last pipeline run'
                   )}
                 </p>
-                <button
-                  onClick={() => setShowPipelineRunner(true)}
-                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1.5 transition-colors"
-                >
-                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
-                  </svg>
-                  Generate New Chart
-                </button>
+          
               </div>
 
               <HypeCycleChart
@@ -225,7 +224,7 @@ function App() {
             </div>
 
             {/* Knowledge Graph - Always visible */}
-            {/* <Card elevation="raised" padding="spacious">
+            <Card elevation="raised" padding="spacious">
               <CardHeader>
                 <CardTitle as="h2">
                   {selectedTechId
@@ -239,7 +238,7 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <Neo4jGraphViz technologyId={selectedTechId} />
-            </Card> */}
+            </Card>
 
             {/* Selected Technology Detail */}
             {selectedTechId && (
@@ -321,38 +320,36 @@ function App() {
                   <p className="text-sm text-teal-600">Across 6 source types</p>
                 </div>
 
-                {/* Temporal Coverage */}
+                {/* Knowledge Graph Nodes */}
                 <div className="bg-gradient-to-br from-blue-50 to-white border border-blue-100 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <svg className="w-6 h-6 text-blue-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
-                    <p className="text-sm font-semibold text-blue-900 uppercase tracking-wide">Temporal Coverage</p>
+                    <p className="text-sm font-semibold text-blue-900 uppercase tracking-wide">Nodes</p>
                   </div>
                   <p className="text-5xl font-bold text-blue-700 mb-1">
-                    {data.metadata?.date_from && data.metadata?.date_to
-                      ? `${Math.floor((new Date(data.metadata.date_to).getTime() - new Date(data.metadata.date_from).getTime()) / (365.25 * 24 * 60 * 60 * 1000))}+ yrs`
-                      : 'N/A'}
+                    {(data.metadata?.graph_data?.documents?.total || 0) + (data.metadata?.graph_data?.companies?.total || 0) + (data.metadata?.graph_data?.technologies?.total || 0) }
                   </p>
                   <p className="text-sm text-blue-600">
-                    {data.metadata?.date_from ? new Date(data.metadata.date_from).getFullYear() : 'N/A'} - {data.metadata?.date_to ? new Date(data.metadata.date_to).getFullYear() : 'N/A'}
+                    Relationships ({data.metadata?.graph_data?.companies?.total || 0} companies, {data.metadata?.graph_data?.technologies?.total?.toLocaleString() || 0} tech entities)
                   </p>
                 </div>
 
-                {/* Knowledge Graph Scale */}
+                {/* Knowledge Graph Relations */}
                 <div className="bg-gradient-to-br from-purple-50 to-white border border-purple-100 rounded-xl p-6">
                   <div className="flex items-center gap-3 mb-2">
                     <svg className="w-6 h-6 text-purple-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M21 12a9 9 0 01-9 9m9-9a9 9 0 00-9-9m9 9H3m9 9a9 9 0 01-9-9m9 9c1.657 0 3-4.03 3-9s-1.343-9-3-9m0 18c-1.657 0-3-4.03-3-9s1.343-9 3-9m-9 9a9 9 0 019-9" />
                     </svg>
-                    <p className="text-sm font-semibold text-purple-900 uppercase tracking-wide">Knowledge Graph</p>
+                    <p className="text-sm font-semibold text-purple-900 uppercase tracking-wide">Relationships</p>
                   </div>
                   <p className="text-5xl font-bold text-purple-700 mb-1">
                     {data.metadata?.graph_data?.relationships?.total?.toLocaleString() || 'N/A'}
                   </p>
-                  <p className="text-sm text-purple-600">
+                  {/* <p className="text-sm text-purple-600">
                     Relationships ({data.metadata?.graph_data?.companies?.total || 0} companies, {data.metadata?.graph_data?.technologies?.total?.toLocaleString() || 0} tech entities)
-                  </p>
+                  </p> */}
                 </div>
               </div>
 
@@ -435,7 +432,9 @@ function App() {
                         plateau: '#9370DB'
                       };
                       const countNum = (count as number) || 0;
-                      const percentage = (countNum / (data.metadata?.total_count || 1) * 100).toFixed(0);
+                      const percentage = totalPhaseCount
+                        ? ((countNum / totalPhaseCount) * 100).toFixed(0)
+                        : '0';
                       return (
                         <div key={phase} className="flex items-center gap-3">
                           <div
@@ -459,8 +458,8 @@ function App() {
                         Filtered from {data.metadata.normalization_config.original_count} candidates (top {data.metadata.normalization_config.top_n_per_phase} per phase)
                       </div>
                     )}
-                  </div>
-                  */}
+                  </div> */}
+                 
                 </div>
               </div>
 

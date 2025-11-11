@@ -127,6 +127,32 @@ def get_node_label(node: Any) -> str:
     )
 
 
+def clean_properties(props: dict[str, Any]) -> dict[str, Any]:
+    """
+    Clean properties dict to ensure JSON serializability.
+
+    Removes embedding and search_corpus fields, converts non-serializable types to strings.
+    """
+    clean_props = {}
+    for k, v in props.items():
+        # Skip embeddings and search corpus
+        if "embedding" in k.lower() or "search_corpus" in k.lower():
+            continue
+
+        # Convert non-JSON-serializable types to strings
+        if isinstance(v, (str, int, float, bool)) or v is None:
+            clean_props[k] = v
+        elif isinstance(v, (list, tuple)):
+            clean_props[k] = [str(item) if not isinstance(item, (str, int, float, bool)) else item for item in v]
+        elif isinstance(v, dict):
+            clean_props[k] = {str(key): str(val) for key, val in v.items()}
+        else:
+            # Convert datetime, other complex types to string
+            clean_props[k] = str(v)
+
+    return clean_props
+
+
 def create_tooltip(node: Any) -> str:
     """Create HTML tooltip for node"""
     labels = list(node.labels)
@@ -192,6 +218,7 @@ def neo4j_to_vis(neo4j_records: list[dict]) -> dict:
                 "group": get_node_group(tech_labels, tech_props),
                 "title": create_tooltip(tech_node),
                 "size": 40,  # Technology node is larger
+                "properties": clean_properties(tech_props),
             })
             seen_nodes.add(tech_node.element_id)
 
@@ -206,6 +233,7 @@ def neo4j_to_vis(neo4j_records: list[dict]) -> dict:
                 "group": get_node_group(related_labels, related_props),
                 "title": create_tooltip(related_node),
                 "size": 30,  # Related nodes are smaller
+                "properties": clean_properties(related_props),
             })
             seen_nodes.add(related_node.element_id)
 

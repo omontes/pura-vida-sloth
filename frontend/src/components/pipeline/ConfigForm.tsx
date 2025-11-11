@@ -92,7 +92,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
               setConfig({ ...config, tech_count: parseInt(e.target.value) })
             }
             disabled={disabled}
-            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-blue-600"
+            className="flex-1 h-2 bg-gray-200 rounded-lg appearance-none cursor-pointer accent-[#0f766e]"
           />
 
           {/* Numeric input */}
@@ -105,7 +105,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
               setConfig({ ...config, tech_count: parseInt(e.target.value) || 1 })
             }
             disabled={disabled}
-            className="w-20 px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+            className="w-20 px-3 py-2 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:border-transparent"
           />
         </div>
 
@@ -123,7 +123,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
               key={version}
               className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-colors ${
                 config.community_version === version
-                  ? 'bg-blue-50 border-blue-300'
+                  ? 'bg-teal-50 border-teal-300'
                   : 'bg-gray-50 border-gray-300 hover:border-gray-400'
               }`}
             >
@@ -136,7 +136,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
                   setConfig({ ...config, community_version: e.target.value as CommunityVersion })
                 }
                 disabled={disabled}
-                className="mt-0.5 accent-blue-600"
+                className="mt-0.5 accent-[#0f766e]"
               />
               <div className="flex-1">
                 <div className="text-sm font-medium text-gray-900">{version}</div>
@@ -157,7 +157,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
           checked={config.enable_tavily}
           onChange={(e) => setConfig({ ...config, enable_tavily: e.target.checked })}
           disabled={disabled}
-          className="mt-0.5 accent-blue-600"
+          className="mt-0.5 accent-[#0f766e]"
         />
         <div className="flex-1">
           <label htmlFor="enable-tavily" className="text-sm font-medium text-gray-700 cursor-pointer">
@@ -184,7 +184,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
             setConfig({ ...config, min_docs: parseInt(e.target.value) || 1 })
           }
           disabled={disabled}
-          className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:border-transparent"
+          className="w-full px-4 py-2.5 bg-white border border-gray-300 rounded-lg text-sm text-gray-900 focus:outline-none focus:ring-2 focus:ring-[#0f766e] focus:border-transparent"
         />
         <p className="text-xs text-gray-600">
           Technologies with fewer documents will be excluded from analysis
@@ -207,7 +207,7 @@ export function ConfigForm({ onSubmit, onCancel, disabled = false }: ConfigFormP
         <button
           type="submit"
           disabled={disabled}
-          className="px-5 py-2.5 text-sm font-medium text-white bg-blue-600 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
+          className="px-5 py-2.5 text-sm font-medium text-white bg-[#0f766e] rounded-lg hover:bg-[#0d9488] focus:outline-none focus:ring-2 focus:ring-[#0f766e] transition-colors disabled:opacity-50 disabled:cursor-not-allowed"
         >
           Start Analysis
         </button>

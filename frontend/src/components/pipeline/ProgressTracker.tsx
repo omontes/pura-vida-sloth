@@ -72,7 +72,7 @@ export function ProgressTracker({
       case 'completed':
         return 'text-green-600'
       case 'active':
-        return 'text-blue-600 animate-spin'
+        return 'text-[#0f766e] animate-spin'
       case 'error':
         return 'text-red-600'
       case 'pending':
@@ -91,7 +91,7 @@ export function ProgressTracker({
         </div>
         <div className="h-2.5 w-full bg-gray-200 rounded-full overflow-hidden">
           <div
-            className="h-full bg-gradient-to-r from-blue-500 to-blue-600 transition-all duration-500 ease-out"
+            className="h-full bg-gradient-to-r from-teal-500 to-[#0f766e] transition-all duration-500 ease-out"
             style={{ width: `${progress}%` }}
           />
         </div>
@@ -128,8 +128,8 @@ export function ProgressTracker({
 
       {/* Current technology */}
       {currentTech && (
-        <div className="py-2 px-4 bg-blue-50 rounded-lg border border-blue-200">
-          <div className="text-xs text-blue-600 mb-1">Processing</div>
+        <div className="py-2 px-4 bg-teal-50 rounded-lg border border-teal-200">
+          <div className="text-xs text-[#0f766e] mb-1">Processing</div>
           <div className="text-sm text-gray-900 font-medium">
             {currentTech.replace(/_/g, ' ').replace(/\b\w/g, (c) => c.toUpperCase())}
           </div>
@@ -152,7 +152,7 @@ export function ProgressTracker({
                 key={agent.name}
                 className={`flex items-center gap-3 py-2 px-3 rounded-lg transition-all ${
                   isActive
-                    ? 'bg-blue-50 border border-blue-200'
+                    ? 'bg-teal-50 border border-teal-200'
                     : 'bg-gray-50 border border-transparent'
                 }`}
               >
@@ -164,7 +164,7 @@ export function ProgressTracker({
                 {/* Agent name */}
                 <span
                   className={`flex-1 text-sm ${
-                    isActive ? 'text-blue-700 font-medium' : 'text-gray-600'
+                    isActive ? 'text-teal-700 font-medium' : 'text-gray-600'
                   }`}
                 >
                   {agent.display_name}

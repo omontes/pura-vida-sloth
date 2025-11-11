@@ -20,7 +20,11 @@ interface LogViewerProps {
  * Convert UTC timestamp to UTC-6 (Central Standard Time)
  */
 function formatTimestampUTC6(isoTimestamp: string): string {
-  const date = new Date(isoTimestamp)
+  // Backend timestamps are emitted without timezone info, treat them as UTC.
+  const normalizedTimestamp = /([zZ]|[+-]\d{2}:\d{2})$/.test(isoTimestamp)
+    ? isoTimestamp
+    : `${isoTimestamp}Z`
+  const date = new Date(normalizedTimestamp)
 
   // Convert to UTC-6 (subtract 6 hours)
   const utc6Date = new Date(date.getTime() - 6 * 60 * 60 * 1000)
@@ -97,7 +101,7 @@ export function LogViewer({ logs, maxHeight = 400 }: LogViewerProps) {
         return 'bg-gray-100 text-gray-600 border-gray-300'
       case 'info':
       default:
-        return 'bg-blue-100 text-blue-700 border-blue-300'
+        return 'bg-teal-100 text-teal-700 border-teal-300'
     }
   }
 
@@ -137,7 +141,7 @@ export function LogViewer({ logs, maxHeight = 400 }: LogViewerProps) {
           {/* Export button */}
           <button
             onClick={handleExportLogs}
-            className="text-xs text-blue-600 hover:text-blue-700 transition-colors"
+            className="text-xs text-[#0f766e] hover:text-teal-700 transition-colors"
             title="Export logs to file"
           >
             ⬇️ Export

@@ -2,6 +2,7 @@
 Pydantic Models for API Requests and Responses
 """
 
+from typing import Any
 from pydantic import BaseModel, Field
 
 
@@ -35,6 +36,13 @@ class VisNode(BaseModel):
     group: str
     title: str
     size: int = 30
+    properties: dict[str, Any] = Field(default_factory=dict)
+
+    class Config:
+        json_encoders = {
+            # Handle any type serialization
+            object: str
+        }
 
 
 class VisEdge(BaseModel):
