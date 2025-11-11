@@ -39,7 +39,7 @@ Phase 2 transforms **400-1,600 raw documents** from Phase 1 (Data Collection) in
 - **Success Rate**: 84.78% (39/46 regulatory PDFs successfully parsed)
 - **Quality**: Preserves tables, formatting, structure, and document hierarchy
 
-**Track 2: Specialized LLM Parsers**
+**Track 2: Specialized LLM Parsers Using Langchain + Few Shot Examples**
 - **Purpose**: Extract entity mentions and relationships for knowledge graph construction
 - **Technology**: OpenAI GPT-4o-mini with few-shot prompting (temperature: 0.0)
 - **Coverage**: 7 specialized parsers for each intelligence layer
@@ -60,13 +60,13 @@ Phase 2 transforms **400-1,600 raw documents** from Phase 1 (Data Collection) in
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────────┐
-│                   PHASE 2: DUAL-TRACK KNOWLEDGE EXTRACTION                   │
+│                   PHASE 2: DUAL-TRACK KNOWLEDGE EXTRACTION                  │
 └─────────────────────────────────────────────────────────────────────────────┘
 
 INPUT (Phase 1)                                               OUTPUT (Phase 3)
 ┌──────────────────┐                                         ┌─────────────────┐
 │ Raw Documents    │                                         │ Structured JSON │
-│ • PDFs           │ ────────────────────────────────────▶  │ • Markdown      │
+│ • PDFs           │ ────────────────────────────────────▶   │ • Markdown      │
 │ • JSON (APIs)    │                                         │ • Neo4j Triplets│
 │ • HTML/TXT       │                                         │ • Metadata      │
 └──────────────────┘                                         └─────────────────┘
@@ -74,17 +74,17 @@ INPUT (Phase 1)                                               OUTPUT (Phase 3)
          ├─────────────────────────────────────────────────────────┐
          │                                                           │
          ▼                                                           ▼
-┌──────────────────────────────────────┐    ┌──────────────────────────────────┐
-│ TRACK 1: ADE PARSER (Landing AI)     │    │ TRACK 2: LLM PARSERS (OpenAI)    │
-│ ════════════════════════════════════ │    │ ════════════════════════════════ │
-│                                       │    │                                   │
-│ High-Fidelity PDF Extraction          │    │ Knowledge Graph Triplets          │
-│ ───────────────────────────────────  │    │ ───────────────────────────────  │
-│ Model: dpt-2-latest (Landing AI)      │    │ Model: GPT-4o-mini (temp=0.0)    │
-│ Volume: 45+ PDFs                      │    │ Coverage: 7 specialized parsers   │
-│ Success: 84.78% (39/46 regulatory)    │    │ Design: Config-driven             │
-│                                       │    │                                   │
-│ Features:                             │    │ Intelligence Layers:              │
+┌───────────────────────────────────────┐    ┌─────────────────────────────────┐
+│ TRACK 1: ADE PARSER (Landing AI)      │    │ TRACK 2: LLM PARSERS (OpenAI)   │
+│ ════════════════════════════════════  │    │ ═══════════════════════════════ │
+│                                       │    │                                 │
+│ High-Fidelity PDF Extraction          │    │ Knowledge Graph Triplets        │
+│ ──────────────────────────────────    │    │ ──────────────────────────────  │
+│ Model: dpt-2-latest (Landing AI)      │    │ Model: GPT-4o-mini (temp=0.0)   │
+│ Processed: 45+ PDFs                   │    │ Coverage: 7 specialized parsers │
+│ Success: 84.78% (39/46 regulatory)    │    │ Design: Config-driven           │
+│                                       │    │                                 │
+│ Features:                             │    │ Intelligence Layers:            │
 │ • Async concurrent (5 PDFs at once)   │    │ ┌────────────────────────────┐  │
 │ • Checkpoint system (resume capable)  │    │ │ L1: Innovation Signals     │  │
 │ • PDF validation (magic bytes check)  │    │ │  • Patents                 │  │
@@ -102,18 +102,18 @@ INPUT (Phase 1)                                               OUTPUT (Phase 3)
 │                                       │    │ └────────────────────────────┘  │
 │ Code: src/parsers/ade_parser.py       │    │ ┌────────────────────────────┐  │
 │                                       │    │ │ L4: Narrative              │  │
-│                                       │    │ │  • News Articles           │  │
-│                                       │    │ └────────────────────────────┘  │
-│                                       │    │                                   │
-│                                       │    │ Features:                         │
-│                                       │    │ • Entity extraction (companies,   │
-│                                       │    │   technologies, concepts)         │
-│                                       │    │ • Relationship mapping            │
-│                                       │    │ • Evidence + confidence scores    │
-│                                       │    │ • Batch processing (4 workers)    │
-│                                       │    │ • Checkpoint system               │
-│                                       │    │                                   │
-└──────────────────────────────────────┘    └──────────────────────────────────┘
+│ Limit by credits:                     │    │ │  • News Articles           │  │
+│   Pending PDFs:                       │    │ └────────────────────────────┘  │
+│  • Scientific Papers: +200            │    │                                 │
+│  • Patent PDFs: +250                  │    │ Features:                       │
+│              |                        │    │ • Entity extraction (companies, │
+│              |                        │    │   technologies, concepts)       │
+│              ▼                        │    │ • Relationship mapping          │
+│          LLM Parser                   │    │ • Evidence + confidence scores  │
+│                                       │    │ • Batch processing (4 workers)  │
+│                                       │    │ • Checkpoint system             │
+│                                       │    │ • Industry Relevance            │
+└───────────────────────────────────────┘    └─────────────────────────────────┘
          │                                                   │
          └───────────────────┬───────────────────────────────┘
                              │
@@ -128,7 +128,7 @@ INPUT (Phase 1)                                               OUTPUT (Phase 3)
 
 1. **Phase 1 Harvesting** → Raw documents collected from 14 sources
 2. **Phase 2 Extraction** → Dual-track processing:
-   - **Track 1 (ADE)**: PDFs → Structured Markdown + JSON
+   - **Track 1 (ADE)**: PDFs → Structured Markdown + JSON → LLM Parser
    - **Track 2 (LLM)**: All formats → Neo4j triplets
 3. **Phase 3 Ingestion** → Structured data → Neo4j graph database
 4. **Phases 4-5 Analysis** → Multi-agent system queries graph for insights
@@ -329,7 +329,7 @@ ADE Parser (Track 1)
     ↓
 Markdown + JSON
     ↓
-Specialized Parser (Track 2)
+Specialized LLM Parser (Track 2)
     ↓
 Neo4j Triplets
 ```
@@ -454,85 +454,85 @@ Every specialized parser follows this pattern:
 │ STEP 2A: ADE EXTRACTION       │   │ STEP 2B: LLM EXTRACTION          │
 │ (Track 1: PDF Processing)     │   │ (Track 2: Knowledge Graph)       │
 │ ───────────────────────────── │   │ ──────────────────────────────── │
-│                                │   │                                   │
-│  PDF Document                  │   │  JSON/Markdown Document           │
-│       ↓                        │   │       ↓                           │
-│  Landing AI API                │   │  Config Relations                 │
-│  (dpt-2-latest)                │   │  (eVTOL_graph_relations.json)     │
-│       ↓                        │   │       ↓                           │
-│  Markdown + JSON               │   │  GPT-4o-mini (temp=0.0)          │
-│  • Tables preserved            │   │  • Few-shot prompting             │
-│  • Formatting maintained       │   │  • Domain-specific examples       │
-│  • Structure retained          │   │       ↓                           │
-│                                │   │  Structured JSON                  │
-│                                │   │  {                                │
-│                                │   │    tech_mentions: [...],          │
-│                                │   │    company_mentions: [...],       │
-│                                │   │    relations: [...]               │
-│                                │   │  }                                │
-└────────────────┬───────────────┘   └───────────────┬──────────────────┘
+│                               │   │                                  │
+│  PDF Document                 │   │  JSON/Markdown Document          │
+│       ↓                       │   │       ↓                          │
+│  Landing AI API               │   │  Config Relations                │
+│  (dpt-2-latest)               │   │  (eVTOL_graph_relations.json)    │
+│       ↓                       │   │       ↓                          │
+│  Markdown + JSON              │   │  GPT-4o-mini (temp=0.0)          │
+│  • Tables preserved           │   │  • Few-shot prompting            │
+│  • Formatting maintained      │   │  • Domain-specific examples      │
+│  • Structure retained         │   │       ↓                          │
+│                               │   │  Structured JSON                 │
+│                               │   │  {                               │
+│                               │   │    tech_mentions: [...],         │
+│                               │   │    company_mentions: [...],      │
+│                               │   │    relations: [...]              │
+│                               │   │  }                               │
+└────────────────┬──────────────┘   └───────────────┬──────────────────┘
                  │                                   │
                  └───────────────┬───────────────────┘
                                  ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ STEP 3: POST-PROCESSING                                                  │
+│ STEP 3: POST-PROCESSING LLM PARSER WITH FEW SHOT                        │
 │ ─────────────────────────────────────────────────────────────────────── │
-│                                                                           │
-│  • Add doc_ref to all relations (document provenance)                    │
-│  • Generate quality_score (LLM confidence assessment)                    │
-│  • Filter placeholder entities (e.g., "Unknown Company")                 │
+│                                                                         │
+│  • Add doc_ref to all relations (document provenance)                   │
+│  • Generate quality_score (LLM confidence assessment)                   │
+│  • Filter placeholder entities (e.g., "Unknown Company")                │
 │  • Normalize entity names (e.g., "Joby Aero" → "Joby Aero Inc")         │
-│  • Validate relation types against config enums                          │
-│  • Calculate confidence scores based on evidence                         │
-│                                                                           │
+│  • Validate relation types against config enums                         │
+│  • Calculate confidence scores based on evidence                        │
+│                                                                         │
 └───────────────────────────────────┬─────────────────────────────────────┘
                                     ▼
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ STEP 4: NEO4J-READY OUTPUT                                               │
+│ STEP 4: NEO4J-READY OUTPUT                                              │
 │ ─────────────────────────────────────────────────────────────────────── │
-│                                                                           │
-│  {                                                                        │
-│    "document": {                                                          │
-│      "doc_id": "003-712-519-476-908",                                    │
-│      "doc_type": "patent",                                               │
-│      "title": "ROTOR ASSEMBLY DEPLOYMENT MECHANISM",                     │
-│      "quality_score": 0.95,                                              │
-│      ...                                                                  │
-│    },                                                                     │
-│    "tech_mentions": [                                                     │
-│      {                                                                    │
-│        "name": "Rotor Assembly Deployment Mechanism",                    │
-│        "role": "subject",                                                │
-│        "strength": 0.95,                                                 │
-│        "evidence_confidence": 0.98,                                      │
+│                                                                         │
+│  {                                                                      │
+│    "document": {                                                        │
+│      "doc_id": "003-712-519-476-908",                                   │
+│      "doc_type": "patent",                                              │
+│      "title": "ROTOR ASSEMBLY DEPLOYMENT MECHANISM",                    │
+│      "quality_score": 0.95,                                             │
+│      ...                                                                │
+│    },                                                                   │
+│    "tech_mentions": [                                                   │
+│      {                                                                  │
+│        "name": "Rotor Assembly Deployment Mechanism",                   │
+│        "role": "subject",                                               │
+│        "strength": 0.95,                                                │
+│        "evidence_confidence": 0.98,                                     │
 │        "evidence_text": "Primary invention..."                          │
-│      }                                                                    │
-│    ],                                                                     │
-│    "company_tech_relations": [                                            │
-│      {                                                                    │
-│        "company_name": "Joby Aero Inc",                                  │
-│        "technology_name": "Rotor Assembly Deployment Mechanism",         │
-│        "relation_type": "owns_ip",                                       │
-│        "evidence_confidence": 1.0,                                       │
-│        "doc_ref": "003-712-519-476-908"                                  │
-│      }                                                                    │
-│    ],                                                                     │
-│    "tech_tech_relations": [                                               │
-│      {                                                                    │
-│        "from_tech_name": "Rotor Assembly Deployment Mechanism",          │
-│        "to_tech_name": "Torsion Box Construction",                       │
-│        "relation_type": "supports",                                      │
-│        "evidence_confidence": 0.95,                                      │
-│        "doc_ref": "003-712-519-476-908"                                  │
-│      }                                                                    │
-│    ]                                                                      │
-│  }                                                                        │
-│                                                                           │
+│      }                                                                  │
+│    ],                                                                   │
+│    "company_tech_relations": [                                          │
+│      {                                                                  │
+│        "company_name": "Joby Aero Inc",                                 │
+│        "technology_name": "Rotor Assembly Deployment Mechanism",        │
+│        "relation_type": "owns_ip",                                      │
+│        "evidence_confidence": 1.0,                                      │
+│        "doc_ref": "003-712-519-476-908"                                 │
+│      }                                                                  │
+│    ],                                                                   │
+│    "tech_tech_relations": [                                             │
+│      {                                                                  │
+│        "from_tech_name": "Rotor Assembly Deployment Mechanism",         │
+│        "to_tech_name": "Torsion Box Construction",                      │
+│        "relation_type": "supports",                                     │
+│        "evidence_confidence": 0.95,                                     │
+│        "doc_ref": "003-712-519-476-908"                                 │
+│      }                                                                  │
+│    ]                                                                    │
+│  }                                                                      │
+│                                                                         │
 └───────────────────────────────────┬─────────────────────────────────────┘
                                     ▼
                         ┌──────────────────────────┐
-                        │  PHASE 3: NEO4J INGESTION │
-                        │  (Graph Database)         │
+                        │  PHASE 3: NEO4J INGESTION│
+                        │  (Graph Database)        │
                         └──────────────────────────┘
 ```
 
@@ -555,15 +555,15 @@ PDF Document (Regulatory/SEC Filing)
   Markdown + JSON Output
   (High-Fidelity, Tables Preserved)
          │
-         ├──► Regulatory Parser ──────────┐
+         ├──► Regulatory LLM Parser ───────┐
          │    (Extract entities from FAA,  │
          │     EPA, DoD docs)              │
          │                                 │
-         └──► SEC Parser ─────────────────┤
-              (Extract 10-K sections,     │
-               MD&A, risk factors)        │
-                                          │
-                                          ▼
+         └──► SEC LLM Parser ──────────────┤
+              (Extract 10-K sections,      │
+               MD&A, risk factors)         │
+                                           │
+                                           ▼
                          ┌────────────────────────────┐
                          │  Knowledge Graph Triplets  │
                          │  (Neo4j-Ready)             │
@@ -1461,45 +1461,6 @@ python batch_process.py --start 1000 --limit 1000
 # Increase timeout in parser class
 # self.llm = ChatOpenAI(..., timeout=600.0)
 ```
-
-### Debugging Checklist
-
-Before reporting issues, verify:
-
-- [ ] API keys loaded from `.env`
-- [ ] Internet connection stable
-- [ ] Input files exist and are valid
-- [ ] Output directories have write permissions
-- [ ] Checkpoint files not corrupted
-- [ ] Config file JSON is valid
-- [ ] Dependencies installed (`pip install -r requirements.txt`)
-- [ ] Python version 3.13+ (check with `python --version`)
-
-### Getting Help
-
-**1. Check Logs**:
-```bash
-# ADE Parser
-cat data/eVTOL/regulatory_docs/ade_parsed_results/ade_parser.log
-
-# LLM Parsers
-cat batch_processing.log
-```
-
-**2. Enable Debug Mode**:
-```python
-# Add to parser initialization
-import logging
-logging.basicConfig(level=logging.DEBUG)
-```
-
-**3. Test in Isolation**:
-```bash
-# Test single item to isolate issue
-python test_single_{type}.py
-```
-
----
 
 ## Key Achievements
 
