@@ -1,13 +1,15 @@
-# Pura Vida Sloth - Phase 6 Frontend
+# Pura Vida Sloth - Phase 5 Frontend
 
-**Executive-grade Hype Cycle visualization for strategic technology market research**
+**Executive-grade Hype Cycle visualization + Multi-Agentic Pipeline for strategic technology market research**
 
 ## Overview
 
 React + TypeScript frontend featuring:
+- **Multi-Agent Pipeline Execution** (WebSocket-based real-time streaming)
 - **Gartner-style Hype Cycle chart** (D3.js custom curve)
 - **Interactive Neo4j graph visualization** (vis.js force-directed layout)
 - **Technology drill-down** with evidence cards grouped by intelligence layer
+- **Run History Management** (save, view, switch between pipeline runs)
 - **Professional C-level design** optimized for executive presentations
 
 ## Tech Stack
@@ -92,6 +94,67 @@ npm run build
 npm run preview
 ```
 
+## Pipeline Execution
+
+### Overview
+
+The frontend provides a complete interface for executing the multi-agent pipeline and managing run history.
+
+### 4-Stage Workflow
+
+#### 1. Configuration Stage
+- Select technology count (1-200)
+- Choose community version (v0, v1, v2)
+- Enable/disable Tavily search
+- Set minimum documents per source (1-20)
+- View estimated duration
+
+#### 2. Running Stage
+- Real-time WebSocket streaming
+- Progress bar (0-100%)
+- Agent status tracking (12 agents with icons)
+- Live log viewer with auto-scroll
+- Technology counter (e.g., "5 / 50")
+- Duration timer (MM:SS format)
+- Current technology display
+
+#### 3. Completed Stage
+- Success message with summary
+- Total techs and phases covered
+- Full execution duration
+- Collapsible log viewer
+- "View Updated Chart" button
+- Chart auto-updates via React Query
+
+#### 4. Error Handling
+- Error message displayed
+- Full logs shown for debugging
+- Graceful disconnect handling (pipeline continues server-side)
+- Retry capability
+
+### Running the Pipeline
+
+```typescript
+// Click "Run Multi-Agent" button in UI
+// Configure settings:
+// - Tech count: 50
+// - Community version: v1 (recommended)
+// - Enable Tavily: Yes (for enhanced web search)
+// - Min docs: 5
+
+// Pipeline executes 12 agents:
+// 1. Tech Discovery → 2. Innovation Scorer → 3. Adoption Scorer
+// 4. Narrative Scorer → 5. Risk Scorer → 6. Hype Scorer
+// 7. Phase Detector → 8. LLM Analyst → 9. Ensemble
+// 10. Chart Generator → 11. Evidence Compiler → 12. Validator
+
+// Results automatically saved to:
+// src/agents/run_history/{run_id}/
+//   ├── hype_cycle_chart.json (normalized, top 5 per phase)
+//   ├── hype_cycle_chart_full.json (all technologies)
+//   └── metadata.json (config, duration, tech count)
+```
+
 ## Key Features
 
 ### Hype Cycle Chart
@@ -152,6 +215,136 @@ export const getVisNetworkOptions = (isDarkMode: boolean) => ({
     shadow: { enabled: true, size: 8 }
   }
 });
+```
+
+### Pipeline Components
+
+#### PipelineRunner
+**Purpose**: Main modal component orchestrating the complete pipeline execution workflow.
+
+**Key Features**:
+- Four-stage workflow: Config → Running → Completed → Error
+- Real-time progress tracking via WebSocket
+- Live log streaming with auto-scroll
+- Professional C-level UI with smooth animations
+- Automatic chart updates on completion
+- Handles disconnections gracefully (pipeline continues server-side)
+
+**Code Example**:
+```tsx
+import { PipelineRunner } from '@/components/pipeline/PipelineRunner';
+
+<PipelineRunner
+  isOpen={showPipeline}
+  onClose={() => setShowPipeline(false)}
+  onComplete={(techCount) => {
+    console.log(`Pipeline completed with ${techCount} technologies`);
+    // Chart auto-updates via React Query
+  }}
+/>
+```
+
+#### RunHistory
+**Purpose**: Dropdown selector for viewing and managing past pipeline runs.
+
+**Key Features**:
+- Lists runs newest-first with metadata
+- Shows: timestamp (UTC-6), tech count, duration, community version
+- Visual indicator for currently active run
+- Delete functionality with confirmation
+- Formatted timestamps (`Jan 10, 2:30 PM`)
+- Formatted durations (`2m 15s`)
+
+**Code Example**:
+```tsx
+import { RunHistory } from '@/components/pipeline/RunHistory';
+
+<RunHistory
+  onRunSelect={(runId) => {
+    console.log(`Switched to run: ${runId}`);
+    // Chart updates to show historical data
+  }}
+/>
+```
+
+#### LogViewer
+**Purpose**: Console-style log viewer for pipeline execution.
+
+**Key Features**:
+- Color-coded by log level (debug/info/warning/error)
+- Auto-scroll with lock/unlock toggle
+- Export logs to `.txt` file
+- Monospace font for readability
+- UTC-6 timezone display for timestamps
+- Scroll lock detection (disables auto-scroll when user scrolls up)
+
+**Code Example**:
+```tsx
+import { LogViewer } from '@/components/pipeline/LogViewer';
+
+<LogViewer
+  logs={pipelineLogs}
+  maxHeight={400}  // Optional, default 400px
+/>
+```
+
+**Log Levels**:
+- `debug`: Gray (for LLM calls, detailed traces)
+- `info`: Blue (general progress)
+- `warning`: Yellow (recoverable issues)
+- `error`: Red (failures)
+
+#### ProgressTracker
+**Purpose**: Visual progress indicator with agent status checklist.
+
+**Key Features**:
+- Overall progress bar (0-100%)
+- Current agent display with friendly names
+- Technology counter (`5 / 50`)
+- Live duration timer (MM:SS format)
+- Agent checklist with status icons (○ pending, ⟳ active, ✓ completed, ✗ error)
+- Per-agent duration display
+- Current technology display with formatting
+
+**Code Example**:
+```tsx
+import { ProgressTracker } from '@/components/pipeline/ProgressTracker';
+
+<ProgressTracker
+  progress={45}
+  currentAgent="scorer_innovation"
+  currentTech="evtol"
+  techCount={5}
+  totalTechs={50}
+  agents={agentStatuses}
+  startTime={Date.now()}
+/>
+```
+
+#### ConfigForm
+**Purpose**: Configuration form for pipeline execution.
+
+**Key Features**:
+- Technology count slider (10-100) + numeric input (1-200)
+- Community version selector (v0/v1/v2) with radio buttons
+- Tavily search toggle with description
+- Minimum documents input (1-20)
+- Validation with error messages
+- Estimated duration display (`~5m`)
+- Helpful tip text at bottom
+
+**Code Example**:
+```tsx
+import { ConfigForm } from '@/components/pipeline/ConfigForm';
+
+<ConfigForm
+  onSubmit={(config) => {
+    console.log('Starting pipeline with config:', config);
+    // Config includes: tech_count, community_version, enable_tavily, min_docs
+  }}
+  onCancel={() => console.log('User cancelled')}
+  disabled={isRunning}
+/>
 ```
 
 ## Data Flow
