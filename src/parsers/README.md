@@ -36,7 +36,6 @@ Phase 2 transforms **400-1,600 raw documents** from Phase 1 (Data Collection) in
 - **Purpose**: Extract high-fidelity structured content from PDF documents
 - **Technology**: Landing AI's Advanced Document Extraction API (dpt-2-latest model)
 - **Volume**: 45+ PDFs processed (regulatory filings, patent documents)
-- **Success Rate**: 84.78% (39/46 regulatory PDFs successfully parsed)
 - **Quality**: Preserves tables, formatting, structure, and document hierarchy
 
 **Track 2: Specialized LLM Parsers Using Langchain + Few Shot Examples**
@@ -82,7 +81,7 @@ INPUT (Phase 1)                                               OUTPUT (Phase 3)
 │ ──────────────────────────────────    │    │ ──────────────────────────────  │
 │ Model: dpt-2-latest (Landing AI)      │    │ Model: GPT-4o-mini (temp=0.0)   │
 │ Processed: 45+ PDFs                   │    │ Coverage: 7 specialized parsers │
-│ Success: 84.78% (39/46 regulatory)    │    │ Design: Config-driven           │
+│                                       │    │ Design: Config-driven           │
 │                                       │    │                                 │
 │ Features:                             │    │ Intelligence Layers:            │
 │ • Async concurrent (5 PDFs at once)   │    │ ┌────────────────────────────┐  │
