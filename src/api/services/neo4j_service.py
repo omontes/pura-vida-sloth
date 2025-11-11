@@ -60,7 +60,7 @@ async def get_technology_subgraph(tech_id: str | None, driver: AsyncDriver) -> l
                 OPTIONAL MATCH (t)-[r]-(n)
                 WHERE n IS NULL OR NOT n:Community
                 RETURN t, r, n
-                LIMIT 1000
+                LIMIT 500
             """
             result = await session.run(query)
 
