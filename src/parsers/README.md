@@ -66,7 +66,7 @@ Phase 2 transforms **400-1,600 raw documents** from Phase 1 (Data Collection) in
 INPUT (Phase 1)                                               OUTPUT (Phase 3)
 ┌──────────────────┐                                         ┌─────────────────┐
 │ Raw Documents    │                                         │ Structured JSON │
-│ • PDFs           │ ────────────────────────────────────▶   │ • Markdown      │
+│ • PDFs           │ ─────────────────────────────────▶     │  • Markdown     │
 │ • JSON (APIs)    │                                         │ • Neo4j Triplets│
 │ • HTML/TXT       │                                         │ • Metadata      │
 └──────────────────┘                                         └─────────────────┘
@@ -441,11 +441,11 @@ Every specialized parser follows this pattern:
 
 ```
 ┌─────────────────────────────────────────────────────────────────────────┐
-│ STEP 1: INPUT VALIDATION                                                 │
-│ ─────────────────────────────────────────────────────────────────────── │
-│                                                                           │
-│  Raw Document ──▶ Format Check ──▶ Schema Validation ──▶ Preprocessed   │
-│                                                                           │
+│ STEP 1: INPUT VALIDATION                                                │
+│ ────────────────────────────────────────────────────────────────────────│
+│                                                                         │
+│  Raw Document ──▶ Format Check ──▶ Schema Validation ──▶ Preprocessed │
+│                                                                         │
 └───────────────────────────────────┬─────────────────────────────────────┘
                                     │
                     ┌───────────────┴───────────────┐
