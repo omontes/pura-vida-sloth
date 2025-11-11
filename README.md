@@ -830,33 +830,7 @@ This system is designed for **strategic market research and technology maturity 
 
 ---
 
-## 🤝 Contributing
 
-This project is **production-ready** post-hackathon. We welcome contributions:
-
-1. **Fork** the repository
-2. **Create feature branch** (`git checkout -b feature/amazing-feature`)
-3. **Commit changes** (`git commit -m 'Add feature'`)
-4. **Push to branch** (`git push origin feature/amazing-feature`)
-5. **Open Pull Request**
-
-**Priority Contribution Areas**:
-- Phase 1: Additional data sources (Twitter/X, Crunchbase)
-- Phase 2: New document type handlers (podcasts, videos)
-- Phase 4: New agent types (sentiment analysis, network effects)
-- Phase 5: Mobile-responsive design, accessibility
-- Configs: New industry configurations (space, biotech, quantum)
-- Evaluation: Historical validation framework (backtest 2010-2024)
-
----
-
-## 📧 Contact & Support
-
-- **Documentation**: See [`docs/`](docs/) directory
-- **Issues**: [GitHub Issues](https://github.com/omontes/pura-vida-sloth/issues)
-- **Team**: Team Pura Vida Sloth (Costa Rica)
-
----
 
 ## 📝 License
 
