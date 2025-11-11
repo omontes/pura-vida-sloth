@@ -361,6 +361,53 @@ graph TB
 - 269 multi-member clusters (2-9 variants)
 - 1,570 singleton clusters (unique techs)
 
+**Detailed Architecture**:
+```mermaid
+graph LR
+    subgraph Input
+        M["2,108 Unmatched<br/>Mentions"]
+    end
+
+    subgraph "Embedding Generation"
+        E1["OpenAI API<br/>text-embedding-3-small"]
+        E2["768-dim Vectors<br/>(22 batches)"]
+    end
+
+    subgraph "Similarity Calculation"
+        BM25["BM25 Scoring<br/>(Keyword Match)<br/>Weight: 40%"]
+        SEM["Cosine Similarity<br/>(Semantic Match)<br/>Weight: 60%"]
+        FUSION["Hybrid Score<br/>= 0.4×BM25 + 0.6×Semantic<br/>Threshold ≥ 0.75"]
+    end
+
+    subgraph "Graph Construction"
+        G["Similarity Graph<br/>(NetworkX)<br/>Nodes = Mentions<br/>Edges = High Similarity"]
+    end
+
+    subgraph "Community Detection"
+        L["Louvain Algorithm<br/>(Modularity Optimization)<br/>Resolution: 1.0"]
+    end
+
+    subgraph Output
+        C["1,839 Clusters<br/>269 multi-member<br/>1,570 singletons"]
+    end
+
+    M --> E1
+    E1 --> E2
+    E2 --> BM25
+    E2 --> SEM
+    BM25 --> FUSION
+    SEM --> FUSION
+    FUSION --> G
+    G --> L
+    L --> C
+
+    style M fill:#4caf50
+    style E1 fill:#ff9800
+    style FUSION fill:#9c27b0
+    style L fill:#2196f3
+    style C fill:#4caf50
+```
+
 ##### Phase 3: LLM Canonicalization ⭐
 **Input**: 1,839 clusters
 **LLM**: GPT-4o-mini (temperature 0.0, deterministic)
@@ -399,6 +446,75 @@ graph TB
 - `05_merge_audit.json` (29 auto-merged pairs)
 - `05_merge_review_queue.json` (265 borderline pairs)
 
+**Quality Gates Architecture**:
+```mermaid
+graph TB
+    Start["Input: 1,852 Canonical<br/>Technologies"]
+
+    Cluster["Hybrid Clustering<br/>(30% BM25 + 70% Semantic)<br/>Threshold ≥ 0.75"]
+
+    Pairs["Candidate Pairs<br/>(Similarity 0.75-1.0)"]
+
+    Decision{{"Similarity<br/>Score?"}}
+
+    AutoMerge["AUTO-MERGE<br/>✅ High Confidence<br/>(≥0.85 similarity)"]
+
+    GateCheck{{"Quality Gates<br/>Check"}}
+
+    Gate1{{"Gate 1:<br/>Domain<br/>Compatible?"}}
+    Gate2{{"Gate 2:<br/>Variant<br/>Overlap?"}}
+    Gate3{{"Gate 3:<br/>Similarity<br/>Tier?"}}
+
+    AllPass["All Gates PASS<br/>+ Similarity ≥0.80"]
+    OneFail["1 Gate FAIL<br/>+ Similarity ≥0.80"]
+    MultiF fail["≥2 Gates FAIL<br/>OR Similarity <0.80"]
+
+    Merge1["AUTO-MERGE<br/>✅ All gates passed"]
+    Review["REVIEW QUEUE<br/>⚠️ Manual review needed<br/>(265 pairs)"]
+    Skip["SKIP<br/>❌ Too dissimilar"]
+
+    Output1["1,823 Technologies<br/>(29 auto-merged)"]
+    Output2["Review Queue<br/>(265 borderline pairs)"]
+
+    Start --> Cluster
+    Cluster --> Pairs
+    Pairs --> Decision
+
+    Decision -->|"≥0.85"| AutoMerge
+    Decision -->|"0.80-0.84"| GateCheck
+    Decision -->|"<0.80"| Skip
+
+    GateCheck --> Gate1
+    Gate1 -->|"Yes"| Gate2
+    Gate2 -->|"Yes"| Gate3
+    Gate3 -->|"Yes"| AllPass
+
+    Gate1 -->|"No"| OneFail
+    Gate2 -->|"No"| OneFail
+    Gate3 -->|"No"| OneFail
+
+    AllPass --> Merge1
+    OneFail --> Review
+
+    Gate1 -->|"Multiple No"| MultiFail
+    Gate2 -->|"Multiple No"| MultiFail
+    Gate3 -->|"Multiple No"| MultiFail
+    MultiFail --> Skip
+
+    AutoMerge --> Output1
+    Merge1 --> Output1
+    Review --> Output2
+    Skip --> Output1
+
+    style Start fill:#4caf50
+    style AutoMerge fill:#2196f3
+    style Merge1 fill:#2196f3
+    style Review fill:#ff9800
+    style Skip fill:#f44336
+    style Output1 fill:#4caf50
+    style Output2 fill:#ff9800
+```
+
 ##### Phase 5.5B: Manual Review Processing ⭐
 **Input**: 265 borderline pairs from review queue
 **Filter**: ≥0.85 similarity OR (≥0.80 + only 1 gate failed)
@@ -412,6 +528,57 @@ graph TB
 **Input**: 1,798 canonical technologies
 **Process**: Create persistent ChromaDB collection with embeddings
 **Output**: `chromadb/` (vector database for lookup)
+
+**Indexing Architecture**:
+```mermaid
+graph TB
+    Input["1,798 Canonical<br/>Technologies"]
+
+    subgraph "Data Preparation"
+        P1["Extract metadata:<br/>- name<br/>- domain<br/>- description<br/>- variants list"]
+        P2["Create search text:<br/>name + domain + variants"]
+    end
+
+    subgraph "Embedding Generation"
+        E1["OpenAI API<br/>text-embedding-3-small"]
+        E2["768-dim vectors<br/>(batch of 100)"]
+    end
+
+    subgraph "ChromaDB Storage"
+        C1["Create Collection:<br/>'technology_catalog'"]
+        C2["Configure:<br/>- Distance: Cosine<br/>- Embedding function<br/>- Metadata schema"]
+        C3["Upsert documents:<br/>- IDs<br/>- Embeddings<br/>- Metadata<br/>- Search text"]
+    end
+
+    subgraph "Index Configuration"
+        I1["Primary Index:<br/>Embedding vectors<br/>(HNSW algorithm)"]
+        I2["Metadata Index:<br/>Domain filter<br/>Occurrence count"]
+        I3["BM25 Index:<br/>Full-text search<br/>on search_text"]
+    end
+
+    subgraph Output
+        DB["Persistent ChromaDB<br/>✅ 1,798 technologies<br/>✅ Vector search<br/>✅ Hybrid search (BM25+Semantic)<br/>✅ Metadata filtering"]
+    end
+
+    Input --> P1
+    P1 --> P2
+    P2 --> E1
+    E1 --> E2
+    E2 --> C1
+    C1 --> C2
+    C2 --> C3
+    C3 --> I1
+    C3 --> I2
+    C3 --> I3
+    I1 --> DB
+    I2 --> DB
+    I3 --> DB
+
+    style Input fill:#4caf50
+    style E1 fill:#ff9800
+    style C3 fill:#2196f3
+    style DB fill:#4caf50
+```
 
 ##### Phase 7: Classification API
 **Purpose**: Lookup/classify any mention → canonical name
@@ -533,6 +700,36 @@ graph TB
     style S6 fill:#4caf50
 ```
 
+**Detailed Timeline & Dependencies**:
+```mermaid
+gantt
+    title Prerequisites Configuration Timeline (25-40 minutes total)
+    dateFormat  mm
+    axisFormat  %M min
+
+    section Free Operations
+    Script 1: Create Indexes                    :s1, 00, 2m
+    Script 3: Create Full-Text Index            :s3, 12, 2m
+    Script 4: Create Vector Index               :s4, 14, 3m
+
+    section Expensive Operations
+    Script 2: Generate Embeddings ($0.20-1.00)  :crit, s2, 02, 12m
+    Script 5: Compute Communities (6 variants)  :crit, s5, 17, 8m
+    Script 5.5: Community Summaries ($0.01-0.05):crit, s55, 25, 4m
+    Script 6: Graph Algorithms                  :crit, s6, 29, 8m
+
+    section Validation
+    Script 7: Validate Prerequisites            :s7, 37, 1m
+
+    section Milestones
+    Indexes Ready                               :milestone, m1, 02, 0m
+    Embeddings Complete                         :milestone, m2, 14, 0m
+    Search Indexes Ready                        :milestone, m3, 17, 0m
+    Communities Complete                        :milestone, m4, 29, 0m
+    Algorithms Complete                         :milestone, m5, 37, 0m
+    Graph Optimized                             :milestone, m6, 38, 0m
+```
+
 #### Script Breakdown
 
 ##### Script 1: Create Indexes (01_create_indexes.py)
@@ -632,6 +829,72 @@ Multi-run consensus: Each agent run randomly selects a community version for dif
 **Cost**: Free
 **Random Seed**: 42 (reproducibility)
 
+**Community Detection Architecture**:
+```mermaid
+graph TB
+    Start["Neo4j Graph<br/>4,134 nodes<br/>21,516 relationships"]
+
+    subgraph "Algorithm 1: Louvain"
+        L08["Louvain v0<br/>Resolution: 0.8<br/>Seed: 42"]
+        L10["Louvain v1<br/>Resolution: 1.0<br/>Seed: 42"]
+        L12["Louvain v2<br/>Resolution: 1.2<br/>Seed: 42"]
+    end
+
+    subgraph "Algorithm 2: Leiden"
+        LE08["Leiden v3<br/>Resolution: 0.8<br/>Seed: 42"]
+        LE10["Leiden v4<br/>Resolution: 1.0<br/>Seed: 42"]
+        LE12["Leiden v5<br/>Resolution: 1.2<br/>Seed: 42"]
+    end
+
+    subgraph "Community Characteristics"
+        Broad["Broader Communities<br/>(0.8 resolution)<br/>~500-600 communities"]
+        Balanced["Balanced Communities<br/>(1.0 resolution)<br/>~600-700 communities"]
+        Fine["Finer Communities<br/>(1.2 resolution)<br/>~700-800 communities"]
+    end
+
+    subgraph Output
+        Props["Node Properties<br/>community_v0 ... community_v5<br/>96.2% coverage (3,976/4,134 nodes)"]
+    end
+
+    Start --> L08
+    Start --> L10
+    Start --> L12
+    Start --> LE08
+    Start --> LE10
+    Start --> LE12
+
+    L08 --> Broad
+    LE08 --> Broad
+    L10 --> Balanced
+    LE10 --> Balanced
+    L12 --> Fine
+    LE12 --> Fine
+
+    Broad --> Props
+    Balanced --> Props
+    Fine --> Props
+
+    style Start fill:#ff9800
+    style L08 fill:#2196f3
+    style L10 fill:#2196f3
+    style L12 fill:#2196f3
+    style LE08 fill:#9c27b0
+    style LE10 fill:#9c27b0
+    style LE12 fill:#9c27b0
+    style Props fill:#4caf50
+```
+
+**Algorithm Comparison**:
+
+| Algorithm | Resolution | Community Count | Quality Metric | Use Case |
+|-----------|-----------|-----------------|----------------|----------|
+| **Louvain v0** | 0.8 | ~671 | Fast, broader clusters | General grouping |
+| **Louvain v1** | 1.0 | ~599 | Balanced | Default analysis |
+| **Louvain v2** | 1.2 | ~609 | Finer granularity | Detailed clustering |
+| **Leiden v3** | 0.8 | Higher quality | Well-connected | Robust grouping |
+| **Leiden v4** | 1.0 | Higher quality | Well-connected | Robust analysis |
+| **Leiden v5** | 1.2 | Higher quality | Well-connected | Robust detailed |
+
 ##### Script 5.5: Generate Community Summaries (05_5_generate_community_summaries.py)
 **Purpose**: Create semantic descriptions for communities using LLM
 
@@ -645,6 +908,61 @@ Multi-run consensus: Each agent run randomly selects a community version for dif
 **Models**:
 - GPT-4o-mini: $0.000150 per 1k input, $0.000600 per 1k output
 - text-embedding-3-small: $0.00002 per 1k tokens (768-dim)
+
+**Workflow Architecture**:
+```mermaid
+graph LR
+    subgraph "Input: Community Properties"
+        C1["Community v0<br/>(Louvain 0.8)<br/>671 communities"]
+        C2["Community v1<br/>(Louvain 1.0)<br/>599 communities"]
+        C3["Community v2<br/>(Louvain 1.2)<br/>609 communities"]
+    end
+
+    subgraph "Filtering (min_members ≥ 5)"
+        F["1,879 total<br/>→ 158 qualified"]
+    end
+
+    subgraph "Metadata Extraction"
+        M["Query Neo4j:<br/>- Top 10 technologies<br/>- Top 10 companies<br/>- Document counts<br/>- Doc type distribution"]
+    end
+
+    subgraph "LLM Summary Generation"
+        P["Prompt Engineering:<br/>Context + top entities<br/>+ doc distribution"]
+        GPT["GPT-4o-mini<br/>(temp=0.0, async)<br/>4 workers parallel"]
+        S["1-2 sentence summary<br/>(semantic description)"]
+    end
+
+    subgraph "Embedding Generation"
+        E["OpenAI Embeddings<br/>text-embedding-3-small<br/>768-dimensional vectors"]
+    end
+
+    subgraph "Neo4j Write"
+        N["CREATE (c:Community)<br/>SET properties + embedding<br/>CREATE relationships"]
+    end
+
+    subgraph "Output"
+        OUT["158 Community Nodes<br/>✅ Summaries<br/>✅ Embeddings<br/>✅ Relationships"]
+    end
+
+    C1 --> F
+    C2 --> F
+    C3 --> F
+    F --> M
+    M --> P
+    P --> GPT
+    GPT --> S
+    S --> E
+    E --> N
+    N --> OUT
+
+    style C1 fill:#2196f3
+    style C2 fill:#2196f3
+    style C3 fill:#2196f3
+    style F fill:#ff9800
+    style GPT fill:#f44336
+    style E fill:#ff9800
+    style OUT fill:#4caf50
+```
 
 **Community Node Schema**:
 ```cypher
@@ -715,6 +1033,53 @@ python src/ingestion/prerequisites_configuration/05_5_generate_community_summari
 
 **Runtime**: 5-10 minutes
 **Cost**: Free
+
+**Algorithm Workflow**:
+```mermaid
+graph TB
+    Start["Neo4j Graph<br/>4,134 nodes<br/>21,516 relationships"]
+
+    subgraph "1. PageRank Computation"
+        PR1["Project Graph<br/>(in-memory)"]
+        PR2["Run PageRank<br/>MaxIter: 20<br/>Damping: 0.85"]
+        PR3["Write scores<br/>to node.pagerank"]
+    end
+
+    subgraph "2. Degree Centrality"
+        DC1["Count Connections<br/>(incoming + outgoing)"]
+        DC2["Normalize by<br/>total possible edges"]
+        DC3["Write scores<br/>to node.degree_centrality"]
+    end
+
+    subgraph "3. Betweenness Centrality"
+        BC1["Calculate shortest paths<br/>(all pairs)"]
+        BC2["Count paths through<br/>each node"]
+        BC3["Normalize scores"]
+        BC4["Write scores<br/>to node.betweenness_centrality"]
+    end
+
+    subgraph Output
+        OUT["Node Properties Set<br/>✅ PageRank (importance)<br/>✅ Degree (activity)<br/>✅ Betweenness (bridging)<br/>Coverage: ~96%"]
+    end
+
+    Start --> PR1
+    PR1 --> PR2
+    PR2 --> PR3
+    PR3 --> DC1
+    DC1 --> DC2
+    DC2 --> DC3
+    DC3 --> BC1
+    BC1 --> BC2
+    BC2 --> BC3
+    BC3 --> BC4
+    BC4 --> OUT
+
+    style Start fill:#ff9800
+    style PR2 fill:#2196f3
+    style DC2 fill:#2196f3
+    style BC2 fill:#2196f3
+    style OUT fill:#4caf50
+```
 
 **Multi-Agent Use Cases**:
 
