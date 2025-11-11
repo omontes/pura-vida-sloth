@@ -13,7 +13,7 @@ from contextlib import asynccontextmanager
 
 from .config import get_settings
 from .dependencies import close_neo4j_driver
-from .routes import health, neo4j_routes
+from .routes import health, neo4j_routes, pipeline_routes
 
 
 @asynccontextmanager
@@ -53,6 +53,7 @@ app.add_middleware(
 # Include routers
 app.include_router(health.router)
 app.include_router(neo4j_routes.router)
+app.include_router(pipeline_routes.router)
 
 
 @app.get("/")
@@ -64,6 +65,11 @@ async def root():
         "docs": "/docs",
         "health": "/health",
         "neo4j_health": "/health/neo4j",
+        "pipeline": {
+            "websocket": "/api/pipeline/ws/run",
+            "status": "/api/pipeline/status",
+            "last_chart": "/api/pipeline/last-chart",
+        },
     }
 
 

@@ -1,0 +1,20 @@
+{
+  "run_id": "2025-11-10_18-24-06_10tech_v1",
+  "created_at": "2025-11-10T18:24:31.353741",
+  "config": {
+    "tech_count": 10,
+    "community_version": "v1",
+    "enable_tavily": false,
+    "min_docs": 5,
+    "verbosity": "normal"
+  },
+  "duration_seconds": 25.156970262527466,
+  "tech_count": 7,
+  "phases": [
+    "innovation_trigger",
+    "peak",
+    "trough",
+    "slope",
+    "plateau"
+  ]
+}

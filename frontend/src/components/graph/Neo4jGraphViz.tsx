@@ -13,7 +13,7 @@
  */
 
 import { useEffect, useState, useRef } from 'react';
-import Graph from 'vis-network-react';
+import { Graph } from 'vis-network-react';
 import {
   getVisNetworkOptions,
   getNodeColor,

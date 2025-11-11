@@ -48,7 +48,7 @@ const LIGHT_THEME: ThemeColors = {
 export function getVisNetworkOptions(isDarkMode: boolean, useHierarchical: boolean = false): Options {
   const theme = isDarkMode ? DARK_THEME : LIGHT_THEME;
 
-  return {
+  const baseOptions = {
     nodes: {
       shape: 'dot',
       borderWidth: 2,
@@ -177,19 +177,6 @@ export function getVisNetworkOptions(isDarkMode: boolean, useHierarchical: boole
         align: 'horizontal',
       },
     },
-    layout: useHierarchical ? {
-      hierarchical: {
-        enabled: true,
-        direction: 'UD',           // Top-down tree layout
-        sortMethod: 'directed',    // Use edge direction for layout
-        nodeSpacing: 150,          // Horizontal spacing between nodes
-        levelSeparation: 200,      // Vertical spacing between levels
-        treeSpacing: 250,          // Spacing between disconnected trees
-        blockShifting: true,       // Optimize layout by shifting blocks
-        edgeMinimization: true,    // Minimize edge crossings
-        parentCentralization: true // Center parent nodes over children
-      }
-    } : undefined,
     physics: {
       enabled: !useHierarchical,
       stabilization: {
@@ -217,7 +204,29 @@ export function getVisNetworkOptions(isDarkMode: boolean, useHierarchical: boole
       hideEdgesOnDrag: false,
       hideEdgesOnZoom: false,
     },
-  };
+  } as Options;
+
+  // Only add layout configuration if using hierarchical layout
+  if (useHierarchical) {
+    return {
+      ...baseOptions,
+      layout: {
+        hierarchical: {
+          enabled: true,
+          direction: 'UD',           // Top-down tree layout
+          sortMethod: 'directed',    // Use edge direction for layout
+          nodeSpacing: 150,          // Horizontal spacing between nodes
+          levelSeparation: 200,      // Vertical spacing between levels
+          treeSpacing: 250,          // Spacing between disconnected trees
+          blockShifting: true,       // Optimize layout by shifting blocks
+          edgeMinimization: true,    // Minimize edge crossings
+          parentCentralization: true // Center parent nodes over children
+        }
+      }
+    };
+  }
+
+  return baseOptions;
 }
 
 /**

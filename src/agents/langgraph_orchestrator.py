@@ -360,7 +360,11 @@ async def generate_hype_cycle_chart(
     )
 
     # Step 1: Discover technologies using ADAPTIVE community-based stratified sampling
-    from agents.agent_01_tech_discovery.agent import discover_technologies_with_community_sampling
+    from src.agents.agent_01_tech_discovery.agent import discover_technologies_with_community_sampling
+
+    # Log tech discovery start
+    logger.log_info("Starting technology discovery agent...")
+    logger.log_agent_start("tech_discovery", "all_technologies", None)
 
     tech_discovery = await discover_technologies_with_community_sampling(
         driver=driver,
@@ -374,6 +378,10 @@ async def generate_hype_cycle_chart(
     )
 
     tech_ids = [t.id for t in tech_discovery.technologies]
+
+    # Log tech discovery completion
+    logger.log_info(f"Technology discovery complete: found {len(tech_ids)} technologies")
+    logger.log_agent_output("tech_discovery", "all_technologies", {"tech_count": len(tech_ids)})
 
     if logger.level.value >= LogLevel.NORMAL.value:
         print(f"Analyzing {len(tech_ids)} technologies...")
@@ -389,7 +397,7 @@ async def generate_hype_cycle_chart(
     duration = time.time() - start_time
 
     # Step 3: Generate chart JSON
-    from agents.agent_10_chart.agent import generate_full_chart
+    from src.agents.agent_10_chart.agent import generate_full_chart
 
     chart_data_list = [r.get("chart_data", {}) for r in results if r.get("validation_status") == "valid"]
 

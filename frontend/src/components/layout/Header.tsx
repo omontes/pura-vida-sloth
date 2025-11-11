@@ -2,16 +2,16 @@
  * Header Component
  *
  * Professional two-tier header for Canopy Intelligence
- * Features: Logo, branding, industry context bar (mobile), export functionality
+ * Features: Logo, branding, industry context bar (mobile), pipeline runner
  * Pattern: Main header + sub-bar (mobile/tablet) for clean hierarchy
  */
 
 interface HeaderProps {
   industry?: string;
-  onExport?: () => void;
+  onRunPipeline?: () => void;
 }
 
-export default function Header({ industry, onExport }: HeaderProps) {
+export default function Header({ industry, onRunPipeline }: HeaderProps) {
   return (
     <>
       {/* Main Header */}
@@ -50,17 +50,17 @@ export default function Header({ industry, onExport }: HeaderProps) {
                 </div>
               )}
 
-              {/* Export Button - Matched height with badge (Desktop only) */}
-              {onExport && (
+              {/* Run Multi-Agent Button - Matched height with badge (Desktop only) */}
+              {onRunPipeline && (
                 <button
-                  onClick={onExport}
+                  onClick={onRunPipeline}
                   className="hidden lg:flex px-3 py-2.5 sm:px-6 sm:py-2.5 bg-accent hover:bg-accent-hover dark:bg-accent-dark dark:hover:bg-accent-dark-hover text-white rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] items-center gap-2 border border-transparent hover:border-accent-hover dark:hover:border-accent-dark-hover"
-                  title="Print or save as PDF"
+                  title="Run multi-agent hype cycle analysis"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 10v6m0 0l-3-3m3 3l3-3m2 8H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  <span className="hidden xl:inline">Export Report</span>
+                  <span className="hidden xl:inline">Run Multi-Agent</span>
                 </button>
               )}
             </div>

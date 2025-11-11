@@ -52,7 +52,8 @@ class AgentLogger:
         self.logs: List[Dict[str, Any]] = []  # In-memory structured logs for UI
 
         if RICH_AVAILABLE:
-            self.console = Console()
+            # Force UTF-8 encoding and disable legacy Windows rendering to avoid Unicode errors
+            self.console = Console(force_terminal=True, legacy_windows=False)
         else:
             self.console = None
 
@@ -60,7 +61,7 @@ class AgentLogger:
         """Log pipeline initialization."""
         if self.level.value >= LogLevel.NORMAL.value:
             if self.console:
-                self.console.print(f"\n[bold cyan]═══ Pipeline Started ═══[/bold cyan]")
+                self.console.print(f"\n[bold cyan]=== Pipeline Started ===[/bold cyan]")
                 self.console.print(f"Technologies to analyze: [bold]{tech_count}[/bold]")
                 self.console.print(f"Tavily real-time search: [bold]{'enabled' if enable_tavily else 'disabled'}[/bold]")
 
@@ -240,7 +241,7 @@ class AgentLogger:
         """Log pipeline completion."""
         if self.level.value >= LogLevel.NORMAL.value:
             if self.console:
-                self.console.print(f"\n[bold green]═══ Pipeline Complete ═══[/bold green]")
+                self.console.print(f"\n[bold green]=== Pipeline Complete ===[/bold green]")
                 self.console.print(f"Analyzed [bold]{tech_count}[/bold] technologies in [bold]{duration_seconds:.1f}s[/bold]")
                 if tech_count > 0:
                     self.console.print(f"Average: [bold]{duration_seconds/tech_count:.2f}s[/bold] per technology")

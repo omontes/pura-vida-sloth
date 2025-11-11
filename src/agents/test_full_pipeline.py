@@ -28,6 +28,13 @@ from src.agents.chart_normalization_ranked import normalize_chart
 from src.agents.shared.logger import AgentLogger, LogLevel
 
 
+def ensure_output_directory():
+    """Ensure the output directory exists."""
+    output_dir = "src/agents/outputs"
+    os.makedirs(output_dir, exist_ok=True)
+    return output_dir
+
+
 async def test_single_technology(logger: AgentLogger, enable_tavily: bool = True):
     """Test pipeline with single technology."""
     print("\n" + "="*80)
@@ -67,6 +74,17 @@ async def test_single_technology(logger: AgentLogger, enable_tavily: bool = True
         if result.get('validation_errors'):
             print(f"  Errors: {result['validation_errors']}")
 
+        # Save to file (remove non-serializable objects like logger)
+        output_dir = ensure_output_directory()
+        output_file = os.path.join(output_dir, "hype_cycle_chart_single.json")
+
+        # Create a clean copy without the logger
+        result_clean = {k: v for k, v in result.items() if k != 'logger' and not k.startswith('_')}
+
+        with open(output_file, "w") as f:
+            json.dump(result_clean, f, indent=2)
+
+        print(f"\n[OUTPUT] Saved to {output_file}")
         print("\n[PASS] Single technology analysis completed")
         return True
 
@@ -122,7 +140,10 @@ async def test_multiple_technologies(
             print(f"  {phase}: {count}")
 
         # Save to file
-        output_file = "hype_cycle_chart.json"
+        output_dir = ensure_output_directory()
+        output_file = os.path.join(output_dir, "hype_cycle_chart.json")
+        normalized_output_file = os.path.join(output_dir, "hype_cycle_chart_normalized.json")
+
         with open(output_file, "w") as f:
             json.dump(chart, f, indent=2)
 
@@ -131,20 +152,20 @@ async def test_multiple_technologies(
         # Generate normalized chart
         print(f"\n[NORMALIZATION] Generating normalized chart...")
         try:
-            normalized_chart = normalize_chart(
+            normalized_chart = await normalize_chart(
                 input_file=output_file,
-                output_file="hype_cycle_chart_normalized.json",
-                top_n=5
+                output_file=normalized_output_file,
+                top_n=10
             )
             if normalized_chart:
-                print(f"[OK] Normalized chart saved to hype_cycle_chart_normalized.json")
+                print(f"[OK] Normalized chart saved to {normalized_output_file}")
         except Exception as e:
             print(f"[WARN] Normalization failed: {e}")
             # Continue anyway - original chart is still valid
 
         print(f"\n[OUTPUT] Charts generated:")
         print(f"  - Original: {output_file} ({len(chart['technologies'])} technologies)")
-        print(f"  - Normalized: hype_cycle_chart_normalized.json (top 10 per phase)")
+        print(f"  - Normalized: {normalized_output_file} (top 5 per phase)")
         print("\n[PASS] Multiple technology analysis completed")
         return True
 

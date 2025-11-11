@@ -1,28 +1,72 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect, useCallback } from 'react'
 import { useQuery } from '@tanstack/react-query'
 import Header from './components/layout/Header'
 import HypeCycleChart from './components/charts/HypeCycleChart'
 import Neo4jGraphViz from './components/graph/Neo4jGraphViz'
+import { PipelineRunner } from './components/pipeline/PipelineRunner'
+import { RunHistory } from './components/pipeline/RunHistory'
 import Card, { CardHeader, CardTitle, CardDescription } from './components/ui/Card'
 import Button from './components/ui/Button'
 import type { HypeCycleChartData } from './types/hypeCycle'
+import { useRunHistory } from './hooks/useRunHistory'
 import './styles/print.css'
 
 function App() {
   const [selectedTechId, setSelectedTechId] = useState<string | null>(null)
   const [showGraph, setShowGraph] = useState(false)
+  const [showPipelineRunner, setShowPipelineRunner] = useState(false)
+  const [showSuccessNotification, setShowSuccessNotification] = useState(false)
+  const [completedTechCount, setCompletedTechCount] = useState<number>(0)
+  const [chartHighlight, setChartHighlight] = useState(false)
+  const chartRef = useRef<HTMLDivElement>(null)
 
-  // Fetch hype cycle data JSON
+  // Run history management
+  const { selectedRunId, selectedRun, selectRun, refreshRuns } = useRunHistory()
+
+  // Fetch hype cycle data JSON (from selected run or default file)
   const { data, isLoading, error } = useQuery<HypeCycleChartData>({
-    queryKey: ['hypeCycleData'],
+    queryKey: ['hypeCycleData', selectedRunId],
     queryFn: async () => {
+      // If a run is selected, fetch from run data
+      if (selectedRunId && selectedRun) {
+        return selectedRun.chart_data
+      }
+
+      // Otherwise, fetch from default file
       const response = await fetch('/data/hype_cycle_chart.json')
       if (!response.ok) {
         throw new Error('Failed to fetch hype cycle data')
       }
       return response.json()
     },
+    // Use selectedRun data when available
+    enabled: selectedRunId ? !!selectedRun : true,
   })
+
+  // Handle pipeline completion (memoized to prevent re-renders)
+  // MUST be before early returns to follow Rules of Hooks
+  const handlePipelineComplete = useCallback((techCount?: number) => {
+    setCompletedTechCount(techCount || 0)
+    setShowSuccessNotification(true)
+    setChartHighlight(true)
+
+    // Clear selected run to show latest chart
+    selectRun(null)
+
+    // Refresh run history list
+    refreshRuns()
+
+    // Auto-scroll to chart with smooth animation
+    if (chartRef.current) {
+      chartRef.current.scrollIntoView({ behavior: 'smooth', block: 'center' })
+    }
+
+    // Remove highlight after animation
+    setTimeout(() => setChartHighlight(false), 2000)
+
+    // Hide notification after 8 seconds
+    setTimeout(() => setShowSuccessNotification(false), 8000)
+  }, [selectRun, refreshRuns])
 
   if (isLoading) {
     return (
@@ -51,27 +95,137 @@ function App() {
     )
   }
 
-  const handleExport = () => {
-    window.print();
-  };
-
   return (
     <div className="min-h-screen bg-white dark:bg-[#0a0a0a]">
       {/* Header */}
-      <Header industry={data?.industry} onExport={handleExport} />
+      <Header
+        industry={data?.industry}
+        onRunPipeline={() => {
+          setShowPipelineRunner(true)
+          setShowSuccessNotification(false) // Clear any existing notification
+        }}
+      />
+
+      {/* Enhanced Success Notification */}
+      {showSuccessNotification && (
+        <div className="fixed inset-0 z-50 flex items-start justify-center pt-20 pointer-events-none">
+          <div className="bg-white border border-green-300 rounded-xl shadow-2xl px-8 py-6 max-w-md w-full pointer-events-auto animate-in slide-in-from-top-5 fade-in duration-500">
+            <div className="flex items-start gap-4">
+              {/* Animated checkmark */}
+              <div className="shrink-0 w-12 h-12 bg-green-100 rounded-full flex items-center justify-center animate-in zoom-in duration-500">
+                <svg className="w-7 h-7 text-green-600" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <h3 className="text-xl font-bold text-gray-900 mb-1">
+                  Analysis Complete!
+                </h3>
+                <p className="text-sm text-gray-700 mb-2">
+                  Chart has been updated with{' '}
+                  <span className="font-semibold text-green-700">{completedTechCount} technologies</span>
+                </p>
+                <p className="text-xs text-gray-600">
+                  Multi-agent intelligence pipeline completed successfully
+                </p>
+              </div>
+
+              <button
+                onClick={() => setShowSuccessNotification(false)}
+                className="shrink-0 text-gray-400 hover:text-gray-600 transition-colors p-1"
+                aria-label="Close notification"
+              >
+                <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                </svg>
+              </button>
+            </div>
+
+            {/* Progress bar animation */}
+            <div className="mt-4 h-1 bg-gray-200 rounded-full overflow-hidden">
+              <div
+                className="h-full bg-green-600 animate-[shrink_8s_linear]"
+                style={{ width: '100%' }}
+              />
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Pipeline Runner Modal */}
+      <PipelineRunner
+        isOpen={showPipelineRunner}
+        onClose={() => {
+          setShowPipelineRunner(false)
+          // Ensure success notification is hidden when modal closes
+          setShowSuccessNotification(false)
+        }}
+        onComplete={handlePipelineComplete}
+      />
 
       {/* Main Content */}
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-6 sm:py-12">
         {data && (
           <div className="space-y-6 sm:space-y-12">
+            {/* Run History Selector */}
+            <div className="mb-6">
+              <RunHistory
+                onRunSelect={(runId) => {
+                  selectRun(runId)
+                  // Clear selected tech when switching runs
+                  setSelectedTechId(null)
+                }}
+              />
+            </div>
+
             {/* Hype Cycle Chart */}
-            <HypeCycleChart
-              technologies={data.technologies}
-              onTechnologyClick={(techId) => setSelectedTechId(techId)}
-            />
+            <div
+              ref={chartRef}
+              className={`space-y-3 transition-all duration-1000 ${
+                chartHighlight ? 'ring-4 ring-green-400 ring-opacity-50 rounded-lg' : ''
+              }`}
+            >
+              {/* Chart Subtitle */}
+              <div className="flex items-center justify-between">
+                <p className="text-sm text-gray-600 dark:text-gray-400">
+                  {selectedRunId ? (
+                    <>
+                      Viewing run: <span className="font-semibold">{selectedRunId}</span>
+                    </>
+                  ) : data.generated_at ? (
+                    <>
+                      Last generated: {new Date(data.generated_at).toLocaleDateString('en-US', {
+                        year: 'numeric',
+                        month: 'long',
+                        day: 'numeric',
+                        hour: '2-digit',
+                        minute: '2-digit'
+                      })}
+                    </>
+                  ) : (
+                    'Chart loaded from last pipeline run'
+                  )}
+                </p>
+                <button
+                  onClick={() => setShowPipelineRunner(true)}
+                  className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-700 dark:hover:text-blue-300 font-medium flex items-center gap-1.5 transition-colors"
+                >
+                  <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
+                  </svg>
+                  Generate New Chart
+                </button>
+              </div>
+
+              <HypeCycleChart
+                technologies={data.technologies}
+                onTechnologyClick={(techId) => setSelectedTechId(techId)}
+              />
+            </div>
 
             {/* Knowledge Graph - Always visible */}
-            <Card elevation="raised" padding="spacious">
+            {/* <Card elevation="raised" padding="spacious">
               <CardHeader>
                 <CardTitle as="h2">
                   {selectedTechId
@@ -85,7 +239,7 @@ function App() {
                 </CardDescription>
               </CardHeader>
               <Neo4jGraphViz technologyId={selectedTechId} />
-            </Card>
+            </Card> */}
 
             {/* Selected Technology Detail */}
             {selectedTechId && (

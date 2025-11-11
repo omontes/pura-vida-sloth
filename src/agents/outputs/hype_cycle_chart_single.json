@@ -1,0 +1,198 @@
+{
+  "tech_id": "solid_state_battery",
+  "tech_name": "Solid-State Battery",
+  "enable_tavily": true,
+  "innovation_score": 0.0,
+  "innovation_reasoning": "The technology has no patents or research papers filed in the last two years, indicating a complete lack of innovation activity. With zero citations and a stable temporal trend, it suggests that there is currently no momentum or development in this area.",
+  "innovation_metrics": {
+    "patent_count_2yr": 0,
+    "patent_citations": 0,
+    "patent_pagerank_weighted": 0.0,
+    "avg_patent_pagerank": 0.0,
+    "paper_count_2yr": 0,
+    "paper_citations": 0,
+    "community_id": 3624,
+    "community_patent_count": 7,
+    "community_paper_count": 4,
+    "temporal_trend": "stable",
+    "top_patents": []
+  },
+  "innovation_confidence": "high",
+  "patent_count": 0,
+  "paper_count": 0,
+  "github_count": 0,
+  "adoption_score": 10.0,
+  "adoption_reasoning": "The technology currently shows no government contracts or regulatory approvals, indicating a lack of market validation. With only 2 companies developing this technology, it is still in the very early stages of commercialization, justifying a low adoption score.",
+  "adoption_metrics": {
+    "gov_contract_count_1yr": 0,
+    "gov_contract_total_value": 0.0,
+    "gov_contract_avg_value": 0.0,
+    "regulatory_approval_count": 0,
+    "companies_developing": 2,
+    "top_companies": [
+      "Amprius Technologies",
+      "Amprius Technologies"
+    ],
+    "top_contracts": []
+  },
+  "adoption_confidence": "high",
+  "narrative_score": 45.0,
+  "narrative_reasoning": "The solid-state battery technology has seen moderate coverage with 12 relevant articles in the last 30 days, but lacks tier-1 outlet presence and has a neutral sentiment. The freshness score of 1.00 indicates stable interest, suggesting that while there is some buzz, it is not accelerating significantly, leading to a narrative score of 45.",
+  "narrative_metrics": {
+    "news_count_3mo": 0,
+    "tier1_count": 0,
+    "tier2_count": 0,
+    "tier3_count": 0,
+    "avg_sentiment": 0.0,
+    "sentiment_trend": "neutral",
+    "top_articles": [],
+    "news_count_recent_30d": 12,
+    "freshness_score": 1.0,
+    "tavily_headlines": [
+      "Solid-state battery tech: 2024 energy storage advancements | Monolith",
+      "Solid-State Batteries 2026-2036: Technology, Forecasts, Players",
+      "Chery announces breakthrough in solid-state battery development",
+      "Researchers' Discovery Could Boost Solid-State Battery Performance",
+      "Solid State Battery Technology | QuantumScape"
+    ],
+    "tavily_total_found": 15,
+    "tavily_relevant_count": 12,
+    "tavily_relevance_ratio": 0.8,
+    "tavily_relevance_reasoning": "Out of the 15 articles, 12 are primarily focused on solid-state battery technology, discussing its developments, applications, and advancements. The remaining 3 articles either mention the technology in passing or are not centered on solid-state batteries."
+  },
+  "narrative_confidence": "medium",
+  "news_count": 0,
+  "risk_score": 25.0,
+  "risk_reasoning": "The technology has only 1 SEC risk mention in the last 6 months and 0% institutional holdings, indicating a lack of investor confidence and potential data scarcity. With no insider buying or selling activity, the neutral insider position suggests uncertainty, leading to a score that reflects low confidence in the financial stability of this emerging technology.",
+  "risk_metrics": {
+    "sec_risk_mentions_6mo": 1,
+    "institutional_holdings_pct": 0.0,
+    "insider_buy_count": 0,
+    "insider_sell_count": 0,
+    "insider_net_position": "neutral"
+  },
+  "risk_confidence": "medium",
+  "sec_filing_count": 0,
+  "insider_transaction_count": 0,
+  "hype_score": 56.868350311176826,
+  "hype_reasoning": "Moderate hype: Mixed signals across layers (divergence=19.6)",
+  "layer_divergence": 19.578900207451216,
+  "hype_confidence": "high",
+  "hype_cycle_phase": "slope",
+  "phase_reasoning": "Mixed signals across layers (innov=0, adopt=10, narr=45)",
+  "phase_confidence": 0.85,
+  "executive_summary": "Solid-state battery technology is currently in a developmental phase with limited adoption and innovation, as evidenced by a low patent activity score and minimal revenue generation. Despite a moderate level of media coverage, the overall market sentiment indicates a cautious optimism, reflected in a hype score of 57. Financial signals suggest a moderate risk environment, highlighting the need for careful evaluation before significant investment. The divergence in hype indicates a gap between expectations and actual progress, necessitating a strategic approach to engagement with this technology.",
+  "key_insight": "The solid-state battery market is still emerging, with significant barriers to adoption and innovation that could delay widespread commercialization.",
+  "recommendation": "Monitor the solid-state battery technology closely, as it has potential for future growth but currently lacks the necessary traction and financial backing to warrant investment. Keeping an eye on advancements and partnerships in this space will allow for timely strategic decisions as the market evolves.",
+  "chart_x": 3.075,
+  "chart_y": 29.25,
+  "phase_position": "early",
+  "hype_cycle_phase_display": "Slope of Enlightenment",
+  "weighted_score": 25.25,
+  "chart_data": {
+    "id": "solid_state_battery",
+    "name": "Solid-State Battery",
+    "domain": "Technology",
+    "phase": "Slope of Enlightenment",
+    "phase_position": "early",
+    "phase_confidence": 0.85,
+    "chart_x": 3.075,
+    "scores": {
+      "innovation": 0.0,
+      "adoption": 10.0,
+      "narrative": 45.0,
+      "risk": 25.0,
+      "hype": 56.868350311176826
+    },
+    "summary": "Solid-state battery technology is currently in a developmental phase with limited adoption and innovation, as evidenced by a low patent activity score and minimal revenue generation. Despite a moderate level of media coverage, the overall market sentiment indicates a cautious optimism, reflected in a hype score of 57. Financial signals suggest a moderate risk environment, highlighting the need for careful evaluation before significant investment. The divergence in hype indicates a gap between expectations and actual progress, necessitating a strategic approach to engagement with this technology.",
+    "insight": "The solid-state battery market is still emerging, with significant barriers to adoption and innovation that could delay widespread commercialization.",
+    "evidence_counts": {
+      "patents": 0,
+      "papers": 0,
+      "github": 0,
+      "news": 0,
+      "sec_filings": 0,
+      "insider_transactions": 0
+    }
+  },
+  "evidence": {
+    "tech_id": "solid_state_battery",
+    "innovation_evidence": {
+      "metrics": {
+        "patent_count_2yr": 0,
+        "patent_citations": 0,
+        "patent_pagerank_weighted": 0.0,
+        "avg_patent_pagerank": 0.0,
+        "paper_count_2yr": 0,
+        "paper_citations": 0,
+        "community_id": 3624,
+        "community_patent_count": 7,
+        "community_paper_count": 4,
+        "temporal_trend": "stable",
+        "top_patents": []
+      },
+      "reasoning": "The technology has no patents or research papers filed in the last two years, indicating a complete lack of innovation activity. With zero citations and a stable temporal trend, it suggests that there is currently no momentum or development in this area."
+    },
+    "adoption_evidence": {
+      "metrics": {
+        "gov_contract_count_1yr": 0,
+        "gov_contract_total_value": 0.0,
+        "gov_contract_avg_value": 0.0,
+        "regulatory_approval_count": 0,
+        "companies_developing": 2,
+        "top_companies": [
+          "Amprius Technologies",
+          "Amprius Technologies"
+        ],
+        "top_contracts": []
+      },
+      "reasoning": "The technology currently shows no government contracts or regulatory approvals, indicating a lack of market validation. With only 2 companies developing this technology, it is still in the very early stages of commercialization, justifying a low adoption score."
+    },
+    "narrative_evidence": {
+      "metrics": {
+        "news_count_3mo": 0,
+        "tier1_count": 0,
+        "tier2_count": 0,
+        "tier3_count": 0,
+        "avg_sentiment": 0.0,
+        "sentiment_trend": "neutral",
+        "top_articles": [],
+        "news_count_recent_30d": 12,
+        "freshness_score": 1.0,
+        "tavily_headlines": [
+          "Solid-state battery tech: 2024 energy storage advancements | Monolith",
+          "Solid-State Batteries 2026-2036: Technology, Forecasts, Players",
+          "Chery announces breakthrough in solid-state battery development",
+          "Researchers' Discovery Could Boost Solid-State Battery Performance",
+          "Solid State Battery Technology | QuantumScape"
+        ],
+        "tavily_total_found": 15,
+        "tavily_relevant_count": 12,
+        "tavily_relevance_ratio": 0.8,
+        "tavily_relevance_reasoning": "Out of the 15 articles, 12 are primarily focused on solid-state battery technology, discussing its developments, applications, and advancements. The remaining 3 articles either mention the technology in passing or are not centered on solid-state batteries."
+      },
+      "reasoning": "The solid-state battery technology has seen moderate coverage with 12 relevant articles in the last 30 days, but lacks tier-1 outlet presence and has a neutral sentiment. The freshness score of 1.00 indicates stable interest, suggesting that while there is some buzz, it is not accelerating significantly, leading to a narrative score of 45."
+    },
+    "risk_evidence": {
+      "metrics": {
+        "sec_risk_mentions_6mo": 1,
+        "institutional_holdings_pct": 0.0,
+        "insider_buy_count": 0,
+        "insider_sell_count": 0,
+        "insider_net_position": "neutral"
+      },
+      "reasoning": "The technology has only 1 SEC risk mention in the last 6 months and 0% institutional holdings, indicating a lack of investor confidence and potential data scarcity. With no insider buying or selling activity, the neutral insider position suggests uncertainty, leading to a score that reflects low confidence in the financial stability of this emerging technology."
+    },
+    "hype_analysis": {
+      "score": 56.868350311176826,
+      "reasoning": "Moderate hype: Mixed signals across layers (divergence=19.6)",
+      "divergence": 19.578900207451216
+    },
+    "phase_analysis": {
+      "phase": "slope",
+      "reasoning": "Mixed signals across layers (innov=0, adopt=10, narr=45)"
+    }
+  },
+  "validation_status": "valid",
+  "validation_errors": []
+}

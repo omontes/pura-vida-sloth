@@ -16,7 +16,11 @@ export default defineConfig({
       '/api': {
         target: 'http://localhost:8000',
         changeOrigin: true,
+        ws: true, // Enable WebSocket proxying
       },
+    },
+    hmr: {
+      overlay: true, // Show errors in browser overlay
     },
   },
   build: {
