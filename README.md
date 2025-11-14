@@ -7,7 +7,7 @@
 
 <div align="center">
 
-![Canopy Intelligence](https://img.shields.io/badge/Status-Production%20Ready-green)
+![Canopy Intelligence](https://img.shields.io/badge/Status-Prototype%20Complete-orange)
 ![Python](https://img.shields.io/badge/Python-3.13-blue)
 ![Neo4j](https://img.shields.io/badge/Neo4j-Aura-brightgreen)
 ![LangGraph](https://img.shields.io/badge/Multi--Agent-LangGraph-purple)
@@ -93,7 +93,7 @@ Our system operates as a strategic intelligence radar with four independent laye
 
 **Strategic Value**: SEC filings reveal verifiable operational metrics (R&D spend, revenue, cash burn). Insider trading patterns at price extremes signal executive sentiment before public disclosure. Institutional ownership changes show smart money positioning.
 
-**Example**: Nikola insiders sold $100M stock Sep 2020 (narrative peak) → fraud revealed Nov 2020.
+**Example**: Nikola insiders sold $100M stock May-June 2020 (narrative peak) → fraud revealed Sep 2020.
 
 ### Layer 4: Narrative (Lagging indicator)
 
@@ -167,7 +167,7 @@ flowchart LR
 
 **Key Features**: Checkpoint/resume capability, rate limiting, exponential backoff retry logic, parallel downloads
 
-**Output**: 400-1,600 raw documents per analysis window → `data/{industry}/raw/`
+**Output**: 400-2,000 raw documents per analysis window → `data/{industry}/raw/`
 
 **Runtime**: ~45-75 minutes
 
@@ -189,6 +189,15 @@ flowchart LR
 **Cost**: ~$0.001 per document (~$1.00 for 1,000 documents)
 
 **Runtime**: ~30-45 minutes (parallelized)
+
+**LandingAI ADE Production Statistics** (High-Fidelity PDF Processing):
+- **Documents Processed**: 52 PDFs (46 regulatory, 6 patents, 10+ SEC filings)
+- **Success Rate**: 86.54% (45/52 successful extractions)
+- **Intelligence Layers**: Powers 3 of 4 layers (L1: Innovation, L2: Adoption, L3: Financial)
+- **Processing Features**: Async concurrent processing (5x speedup), checkpoint/resume system, 745-line production-grade implementation
+- **ADE Cost**: ~$6.20 for 52 PDFs (~$0.10 per document)
+- **Neo4j Impact**: 10,000+ relationships extracted from ADE-processed documents
+- **Dual-Track Architecture**: ADE markdown feeds 3 specialized LLM parsers (regulatory, SEC, patents)
 
 ### Phase 3: Graph Ingestion
 
@@ -831,10 +840,10 @@ Every analytical claim backed by source documents:
 - **Cached embeddings**: Reuse vectors across analyses
 - **Batch processing**: Reduce API overhead
 
-**Total Cost** (1,000 technologies analyzed):
+<!-- **Total Cost** (1,000 technologies analyzed):
 - Phase 2 (Document Processing): ~$1.00
 - Phase 4 (Multi-Agent): ~$1.60
-- **Total**: ~$2.60
+- **Total**: ~$2.60 -->
 
 ---
 
@@ -845,10 +854,10 @@ Every analytical claim backed by source documents:
 
 ### Phase-Specific Guides
 - **[Phase 1: Data Collection](src/downloaders/README.md)** - 14 data source collectors
-- **[Phase 2: Document Processing](src/processors/README.md)** - LLM extraction pipeline
+- **[Phase 2: Document Processing](src/parsers/README.md)** - LLM extraction pipeline
 - **[Phase 3: Graph Ingestion](src/ingestion/README.md)** - Neo4j pure storage
 - **[Phase 4: Multi-Agent System](src/agents/README.md)** - 12-agent LangGraph (2,000+ lines)
-- **[Phase 5: Frontend Visualization](Frontend/README.md)** - React + D3.js + WebSocket
+- **[Phase 5: Frontend Visualization](frontend/README.md)** - React + D3.js + WebSocket
 
 ### Reference Documentation
 - **[Neo4j Schema](NEO4J_SCHEMA.md)** - Graph schema specification
@@ -863,13 +872,13 @@ Every analytical claim backed by source documents:
 - **Canopy Intelligence**: Forward-looking 12-24 months, 4-layer triangulation catches contradictions
 
 ### vs. Bloomberg/CB Insights
-- **Bloomberg**: Financial data only (Layer 3), subscription required ($2,000+/mo)
+- **Bloomberg**: Financial focus (Layer 3)
 - **CB Insights**: Venture capital focus, limited technical depth
-- **Canopy Intelligence**: All 4 layers (innovation, market, financials, narrative), open-source + API costs ($2.60 per 1,000 techs)
+- **Canopy Intelligence**: All 4 layers (innovation, market, financials, narrative), open-source 
 
 ### vs. Manual Analyst Research
 - **Manual Analysis**: Sample 20-50 documents, weeks of work, subjective interpretation, single analyst bias
-- **Canopy Intelligence**: Process 1,600 documents, 90-120 minutes automated, evidence-based reproducible, multi-agent system (12 agents)
+- **Canopy Intelligence**: Process +2,000 documents, 90-120 minutes automated, evidence-based reproducible, multi-agent system (12 agents)
 
 ---
 
@@ -914,5 +923,25 @@ This system is designed for **strategic market research and technology maturity 
 
 
 **Built with**: Python 3.13, Neo4j Aura, OpenAI GPT-4o-mini, LangGraph, FastAPI, React 18, D3.js v7
+
+---
+
+## 🙏 Acknowledgments
+
+### Data Providers
+
+**Lens.org - Patent & Scholarly Data**
+
+This project was enabled by [The Lens](https://www.lens.org/), who generously provided trial API access for patent and scholarly research data collection. The Lens is a free, open, and secure platform that makes the global patent and scholarly knowledge accessible and reusable for the public good.
+
+**Data Sources from The Lens:**
+- **Patents**: Patent families, claims, classifications, and citation data across multiple jurisdictions
+- **Scholarly Works**: Academic papers, citations, research metadata, and cross-disciplinary knowledge graphs
+
+We acknowledge The Lens for their critical role in democratizing access to patent and scholarly information, which enabled **Layer 1 (Innovation Signals)** analysis in this multi-source intelligence platform. Without their open API infrastructure, tracking innovation velocity at scale (18-24 months ahead) would not have been feasible.
+
+**Attribution:** Data sourced from [The Lens](https://www.lens.org/) • [About The Lens](https://about.lens.org/) • [Attribution Policy](https://about.lens.org/policies/#attribution)
+
+---
 
 **Disclaimer**: This system provides multi-source intelligence for market research purposes only. All analysis is based on publicly available data and does not constitute financial, legal, or professional advice. Users should conduct independent research and consult qualified professionals for specific guidance.

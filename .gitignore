@@ -54,10 +54,11 @@ sources_summary_backup_original.md
 sources_summary.md
 #env
 .env
-.claude/*
-!.claude/Claude.md
-.claude/commands/
-.claude/sessions/
+.claude
+
+
+pitch/
+
 
 #data - Keep structure, ignore downloaded content
 data/*
@@ -106,6 +107,7 @@ target/
 # IPython
 profile_default/
 ipython_config.py
+
 
 
 # pyenv
@@ -235,6 +237,10 @@ __marimo__/
 
 ##docs
 docs/
+
+#Agents
+src/agents/run_history
+src/agents/outputs
 
 # Frontend (React + TypeScript + Vite)
 frontend/node_modules/

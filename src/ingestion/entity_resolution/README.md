@@ -1007,16 +1007,3 @@ Reasoning: "More general than 'pack', encompasses modules and cells,
 - **ChromaDB**: https://docs.trychroma.com/
 
 ---
-
-## Authors & Acknowledgments
-
-**Pipeline Design**: Pura Vida Sloth Team
-**Industry**: eVTOL (Electric Vertical Takeoff and Landing)
-**Version**: 2.0
-**Last Updated**: January 2025
-
----
-
-## License
-
-Proprietary - Pura Vida Sloth Intelligence Platform

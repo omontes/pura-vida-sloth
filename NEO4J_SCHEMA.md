@@ -1,5 +1,4 @@
-# KNOWLEDGE GRAPH SCHEMA v2.0
-**Last updated:** 2025-11-07
+# KNOWLEDGE GRAPH SCHEMA
 **Status:** COMPLETE AND OPTIMIZED ✅
 **Architecture:** Pure GraphRAG Storage (Zero Computed Fields)
 
@@ -1023,34 +1022,14 @@ RETURN count(r) as relations_without_doc_ref  // Should be 0
 
 ### Config File Reference
 
-See [configs/eVTOL_graph_relations.json](../configs/eVTOL_graph_relations.json) for:
+See [configs/eVTOL_graph_relations.json](configs/eVTOL_graph_relations.json) for:
 - Complete relation type definitions
 - Layer mappings (which relations belong to which layer)
 - Data source mappings (which sources provide which relations)
 - Extraction notes and validation rules
 
-### Architecture Reference
 
-See [README.md](../README.md) for:
-- 6-phase pipeline architecture
-- 11-agent LangGraph system design
-- Multi-layer intelligence framework (L1-L4)
-- GraphRAG principles and usage
+**END OF SCHEMA  DOCUMENTATION**
 
 ---
 
-**END OF SCHEMA v2.0 DOCUMENTATION**
-
----
-
-## VALIDATION CHECKLIST
-
-After implementing this schema, verify:
-
-- ✅ **No scoring fields** in any node (Technology, Company, Document)
-- ✅ **No aggregation fields** in any relationship (MENTIONED_IN, RELATED_TO_TECH, etc.)
-- ✅ **All relationships use `role` field** (not `tech_role` or `company_role`)
-- ✅ **All relations have `doc_ref`** linking back to source document
-- ✅ **Query examples show agent computation** (not stored field queries)
-- ✅ **"Pure storage" principle** clearly stated at top of document
-- ✅ **Document size reduced** from 1,200 lines → ~800 lines

@@ -589,7 +589,7 @@ export default function HypeCycleChart({
   return (
     <Card elevation="raised" padding="spacious" className="w-full">
       <CardHeader>
-        <CardTitle as="h2" className="text-4xl">Technology Hype Cycle for Emerging Tech, 2025</CardTitle>
+        <CardTitle as="h2" className="text-4xl">Technology Hype Cycle for EVTOL & Advanced Air Mobility, 2025</CardTitle>
         <CardDescription>
           Multi-source intelligence positioning across the adoption lifecycle. Labels shown for highest confidence technologies (hover any node to reveal name).
         </CardDescription>

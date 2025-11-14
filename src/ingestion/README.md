@@ -1222,7 +1222,7 @@ graph TB
     end
 
     subgraph "Phase 4+5"
-        Agents["Multi-Agent System<br/>(11 agents, LangGraph)"]
+        Agents["Multi-Agent System<br/>(12 agents, LangGraph)"]
     end
 
     JSON --> Load
@@ -2038,9 +2038,9 @@ python src/ingestion/prerequisites_configuration/run_all_prerequisites.py --auto
 python src/ingestion/prerequisites_configuration/07_validate_prerequisites.py
 ```
 
-**Total Time**: 85-120 minutes
-**Total Cost**: ~$0.86-1.70
-**Result**: Production-ready Neo4j graph for multi-agent analysis 🚀
+<!-- **Total Time**: 85-120 minutes
+**Total Cost**: ~$0.86-1.70 -->
+<!-- **Result**: Production-ready Neo4j graph for multi-agent analysis 🚀 -->
 
 ---
 

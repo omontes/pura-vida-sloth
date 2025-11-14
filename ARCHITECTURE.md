@@ -491,8 +491,8 @@ data/{industry}/raw/
 **Core Technology**: OpenAI GPT-4o-mini (cost-optimized)
 - **Input Pricing**: $0.15 per 1M tokens
 - **Output Pricing**: $0.60 per 1M tokens
-- **Avg Cost per Document**: ~$0.001
-- **Total Cost for 1000 docs**: ~$1.00
+<!-- - **Avg Cost per Document**: ~$0.001
+- **Total Cost for 1000 docs**: ~$1.00 -->
 
 **Why GPT-4o-mini?**
 - 82% of GPT-4o quality at 20% of cost

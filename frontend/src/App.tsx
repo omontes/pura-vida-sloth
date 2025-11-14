@@ -332,7 +332,7 @@ function App() {
                     {(data.metadata?.graph_data?.documents?.total || 0) + (data.metadata?.graph_data?.companies?.total || 0) + (data.metadata?.graph_data?.technologies?.total || 0) }
                   </p>
                   <p className="text-sm text-blue-600">
-                    Relationships ({data.metadata?.graph_data?.companies?.total || 0} companies, {data.metadata?.graph_data?.technologies?.total?.toLocaleString() || 0} tech entities)
+                     ({data.metadata?.graph_data?.companies?.total || 0} companies, {data.metadata?.graph_data?.technologies?.total?.toLocaleString() || 0} tech entities)
                   </p>
                 </div>
 

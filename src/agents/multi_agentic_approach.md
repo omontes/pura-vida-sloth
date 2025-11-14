@@ -611,7 +611,7 @@ has_pagerank: true
 
 ---
 
-## 3. Agent Specifications (11 Agents)
+## 3. Agent Specifications (12 Agents)
 
 ### 3.1 Tech Discovery Agent
 
@@ -2785,7 +2785,7 @@ class TechnologyState(TypedDict):
 from langgraph.graph import StateGraph, END
 from typing import Literal
 
-# 11 Agent Functions
+# 12 Agent Functions
 def tech_discovery_agent(state: TechnologyState) -> TechnologyState:
     """Agent 1: Tech Discovery"""
     # Implementation from section 3.1
@@ -4310,7 +4310,7 @@ graph TB
             G2[DuckDB Client<br/>src/graph/duckdb_client.py]
         end
 
-        subgraph "11 Agents (src/agents/)"
+        subgraph "12 Agents (src/agents/)"
             A1[1. Tech Discovery]
             A2[2. Innovation Scorer]
             A3[3. Adoption Scorer]
@@ -4382,7 +4382,7 @@ graph TB
 | **Graph Database** | Neo4j Aura | 5.x | Store documents, entities, relationships |
 | **Analytical DB** | DuckDB | 0.9.x | Query scholarly papers, SEC filings |
 | **LLM** | OpenAI GPT-4o-mini | Latest | Generate reasoning, summaries |
-| **State Machine** | LangGraph | 0.0.x | Orchestrate 11 agents |
+| **State Machine** | LangGraph | 0.0.x | Orchestrate 12 agents |
 | **Schema Validation** | Pydantic | 2.x | Validate state objects |
 | **Async I/O** | asyncio | 3.13+ | Parallel agent execution |
 | **CLI** | argparse | 3.13+ | Command-line interface |
@@ -4451,7 +4451,7 @@ pydantic>=2.5.0
 ```
 pura-vida-sloth/
 ├── src/
-│   ├── agents/                  # 11 agent implementations
+│   ├── agents/                  # 12 agent implementations
 │   │   ├── __init__.py
 │   │   ├── tech_discovery.py    # Agent 1
 │   │   ├── innovation_scorer.py # Agent 2
@@ -4463,7 +4463,8 @@ pura-vida-sloth/
 │   │   ├── llm_analyst.py       # Agent 8
 │   │   ├── ensemble.py          # Agent 9
 │   │   ├── chart_generator.py   # Agent 10
-│   │   └── evidence_compiler.py # Agent 11
+│   │   ├── evidence_compiler.py # Agent 11
+|   |   └── validator_agent.py   # Agent 12 
 │   ├── graph/                   # Database clients
 │   │   ├── __init__.py
 │   │   ├── neo4j_client.py
