@@ -223,17 +223,28 @@ export interface VisNode {
   properties: Record<string, any>;
 }
 
+export interface EdgeProperties {
+  relationship_type: string;
+  role?: string;
+  relation_type?: string;
+  strength?: string | number;
+  evidence_text?: string;
+  evidence_confidence?: number;
+  doc_ref?: string;
+}
+
 export interface VisEdge {
+  id?: string;  // vis.js adds this
   from: string;
   to: string;
   label: string;
   arrows: string | { to: boolean };
-  color: {
+  color?: {
     color: string;
     highlight: string;
     hover?: string;
   };
-  width: number;
+  width?: number;
   font?: {
     size: number;
     color: string;
@@ -241,7 +252,7 @@ export interface VisEdge {
     strokeWidth: number;
     align?: string;
   };
-  properties?: Record<string, any>;
+  properties?: EdgeProperties;
 }
 
 export interface VisGraphData {

@@ -51,8 +51,8 @@ class VisEdge(BaseModel):
     from_: str = Field(..., alias="from")
     to: str
     label: str
-    title: str
     arrows: str = "to"
+    properties: dict[str, Any] = Field(default_factory=dict)
 
     class Config:
         populate_by_name = True

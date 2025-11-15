@@ -35,6 +35,14 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const [error, setError] = useState<string | null>(null);
   const networkRef = useRef<any>(null);
 
+  // Edge tooltip state
+  const [hoveredEdge, setHoveredEdge] = useState<VisEdge | null>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{ x: number; y: number } | null>(null);
+  const [expandedEvidence, setExpandedEvidence] = useState(false);
+
+  // Node panel state
+  const [expandedDescription, setExpandedDescription] = useState(false);
+
   // Use theme context for dark/light mode
   const { themeMode } = useTheme();
   const isDarkMode = themeMode === 'dark';
@@ -80,8 +88,41 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       });
   }, [technologyId]);
 
-  // Click events disabled to prevent navigation issues
-  const events = {};
+  // Event handlers for edges and nodes
+  const events = {
+    // Edge hover tooltips
+    hoverEdge: (event: any) => {
+      const edgeId = event.edge;
+      const edge = graphData.edges.find((e) => e.id === edgeId);
+
+      if (edge && event.pointer && event.pointer.DOM) {
+        setHoveredEdge(edge);
+        setTooltipPosition({ x: event.pointer.DOM.x, y: event.pointer.DOM.y });
+        setExpandedEvidence(false); // Reset expansion when hovering new edge
+      }
+    },
+    blurEdge: () => {
+      setHoveredEdge(null);
+      setTooltipPosition(null);
+      setExpandedEvidence(false);
+    },
+
+    // Node click handler
+    click: (event: any) => {
+      if (event.nodes.length > 0) {
+        const nodeId = event.nodes[0];
+        const node = graphData.nodes.find((n) => n.id === nodeId);
+
+        if (node) {
+          setSelectedNode(node);
+          setExpandedDescription(false);
+        }
+      } else {
+        // Clicked on empty space - clear selection
+        setSelectedNode(null);
+      }
+    },
+  };
 
   const handleResetView = () => {
     if (networkRef.current) {
@@ -259,44 +300,236 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
 
       {/* Node info panel (bottom-left, appears on click) */}
       {selectedNode && (
-        <div className="absolute bottom-20 left-4 bg-white/95 dark:bg-gray-800/95 backdrop-blur border border-gray-300 dark:border-gray-700 rounded-lg p-4 max-w-md max-h-96 overflow-y-auto">
-          <div className="flex items-center justify-between mb-2">
-            <div className="text-base font-bold text-blue-600 dark:text-blue-400">
-              {selectedNode.group}: {selectedNode.label}
+        <div className="absolute bottom-20 left-4 bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg max-w-md max-h-[500px] overflow-hidden flex flex-col">
+          {/* Header: doc_type/group (PROMINENT) + close button */}
+          <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-start justify-between flex-shrink-0">
+            <div className="flex-1 min-w-0">
+              {/* doc_type - LARGE and BOLD */}
+              <div className="text-lg font-bold text-gray-900 dark:text-gray-100 mb-1">
+                {selectedNode.properties.doc_type || selectedNode.group}
+              </div>
+              {/* Node label - subtitle */}
+              <div className="text-xs text-gray-500 dark:text-gray-400 break-words max-w-full">
+                {selectedNode.label}
+              </div>
+              {/* View Document button */}
+              {selectedNode.properties.url && (
+                <a
+                  href={selectedNode.properties.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-2 inline-block text-xs px-3 py-1.5 rounded bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white font-medium transition"
+                >
+                  View Document →
+                </a>
+              )}
             </div>
             <button
-              onClick={() => setSelectedNode(null)}
-              className="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white"
+              onClick={() => {
+                setSelectedNode(null);
+                setExpandedDescription(false);
+              }}
+              className="ml-3 text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white text-lg leading-none flex-shrink-0"
             >
               ✕
             </button>
           </div>
-          <table className="w-full text-xs">
-            <tbody>
+
+          {/* Scrollable content */}
+          <div className="overflow-y-auto flex-1">
+            {/* Summary - For documents */}
+            {selectedNode.properties.summary && (
+              <div className="px-4 pt-4 pb-3">
+                <div className="text-xs font-semibold text-gray-600 dark:text-gray-400 mb-1">
+                  Summary
+                </div>
+                <div
+                  className="text-sm leading-relaxed text-gray-700 dark:text-gray-300"
+                  style={{
+                    wordBreak: 'break-word',
+                    overflowWrap: 'anywhere',
+                    hyphens: 'auto'
+                  }}
+                >
+                  {selectedNode.properties.summary}
+                </div>
+              </div>
+            )}
+
+            {/* Description - Main Content */}
+            {selectedNode.properties.description && (
+              <div className="px-4 pb-4">
+                <div
+                  className="text-sm leading-relaxed text-gray-700 dark:text-gray-300"
+                  style={{
+                    wordBreak: 'break-word',
+                    overflowWrap: 'anywhere',
+                    hyphens: 'auto'
+                  }}
+                >
+                  {expandedDescription || String(selectedNode.properties.description).length <= 200
+                    ? selectedNode.properties.description
+                    : `${String(selectedNode.properties.description).substring(0, 200)}...`}
+                  {String(selectedNode.properties.description).length > 200 && (
+                    <button
+                      onClick={() => setExpandedDescription(!expandedDescription)}
+                      className="block mt-2 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 underline"
+                    >
+                      {expandedDescription ? 'Show less' : 'Show more'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Metadata - Filtered, Sorted, and Formatted */}
+            <div className="px-4 pb-3 pt-2 space-y-1 border-t border-gray-200 dark:border-gray-700">
               {Object.entries(selectedNode.properties)
                 .filter(([key]) => {
-                  // Exclude embedding properties
+                  // Exclude technical and already-shown fields
                   return (
                     !key.toLowerCase().includes('embedding') &&
-                    !key.toLowerCase().includes('search_corpus')
+                    !key.toLowerCase().includes('search_corpus') &&
+                    key !== 'description' &&
+                    key !== 'summary' &&  // Exclude summary (shown above)
+                    key !== 'doc_type' &&
+                    key !== 'url' &&
+                    !key.startsWith('community_')
                   );
                 })
-                .map(([key, value]) => (
-                  <tr key={key} className="border-b border-gray-300 dark:border-gray-700 last:border-0">
-                    <th className="text-left pr-4 py-2 text-gray-600 dark:text-gray-400 font-medium">
-                      {key}
-                    </th>
-                    <td className="py-2 text-gray-900 dark:text-gray-200">
-                      {String(value).length > 100
-                        ? String(value).substring(0, 97) + '...'
-                        : String(value)}
-                    </td>
-                  </tr>
-                ))}
-            </tbody>
-          </table>
+                .sort(([keyA], [keyB]) => {
+                  // Priority order for important fields
+                  const priority: Record<string, number> = {
+                    'citation_count': 1,
+                    'quality_score': 2,
+                    'degree_centrality': 3,
+                    'aliases': 4,
+                  };
+                  const priorityA = priority[keyA] || 999;
+                  const priorityB = priority[keyB] || 999;
+                  return priorityA - priorityB;
+                })
+                .map(([key, value]) => {
+                  // Format key for display
+                  const displayKey = key
+                    .split('_')
+                    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+                    .join(' ');
+
+                  // Format value
+                  let displayValue = value;
+                  if (Array.isArray(value)) {
+                    displayValue = value.join(', ');
+                  } else if (typeof value === 'number') {
+                    displayValue = value.toFixed(2);
+                  }
+
+                  return (
+                    <div key={key} className="flex justify-between items-start gap-4 text-xs">
+                      <span className="text-gray-500 dark:text-gray-400 flex-shrink-0">{displayKey}:</span>
+                      <span
+                        className="text-gray-700 dark:text-gray-300 text-right"
+                        style={{
+                          wordBreak: 'break-word',
+                          overflowWrap: 'anywhere'
+                        }}
+                      >
+                        {String(displayValue).length > 100
+                          ? String(displayValue).substring(0, 97) + '...'
+                          : String(displayValue)}
+                      </span>
+                    </div>
+                  );
+                })}
+            </div>
+          </div>
         </div>
       )}
+
+      {/* Edge Tooltip (appears on hover) */}
+      {hoveredEdge && hoveredEdge.properties && tooltipPosition && (
+        <div
+          className="fixed z-50 pointer-events-auto"
+          style={{
+            left: `${tooltipPosition.x + 8}px`,
+            top: `${tooltipPosition.y + 8}px`,
+            minWidth: '320px',
+            maxWidth: '420px',
+          }}
+        >
+          <div className="bg-white dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-lg shadow-lg overflow-hidden">
+            {/* Simple Header: relation_type + confidence */}
+            <div className="px-4 py-3 border-b border-gray-200 dark:border-gray-700 flex items-center justify-between">
+              <span className="text-base font-bold text-gray-900 dark:text-gray-100">
+                {hoveredEdge.properties.relation_type || hoveredEdge.label}
+              </span>
+              {hoveredEdge.properties.evidence_confidence !== undefined &&
+                hoveredEdge.properties.evidence_confidence !== null && (
+                  <span className="text-xs px-2 py-1 rounded bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300">
+                    {(hoveredEdge.properties.evidence_confidence * 100).toFixed(0)}%
+                  </span>
+                )}
+            </div>
+
+            {/* Evidence Text - Main Content */}
+            {hoveredEdge.properties.evidence_text && (
+              <div className="px-4 py-4">
+                <div
+                  className="text-sm leading-relaxed text-gray-700 dark:text-gray-300"
+                  style={{
+                    wordBreak: 'break-word',
+                    overflowWrap: 'anywhere',
+                    hyphens: 'auto'
+                  }}
+                >
+                  {expandedEvidence || hoveredEdge.properties.evidence_text.length <= 200
+                    ? hoveredEdge.properties.evidence_text
+                    : `${hoveredEdge.properties.evidence_text.substring(0, 200)}...`}
+                  {hoveredEdge.properties.evidence_text.length > 200 && (
+                    <button
+                      onClick={() => setExpandedEvidence(!expandedEvidence)}
+                      className="block mt-2 text-xs text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-200 underline"
+                    >
+                      {expandedEvidence ? 'Show less' : 'Show more'}
+                    </button>
+                  )}
+                </div>
+              </div>
+            )}
+
+            {/* Compact Metadata */}
+            {(hoveredEdge.properties.role || hoveredEdge.properties.strength || hoveredEdge.properties.doc_ref) && (
+              <div className="px-4 pb-3 pt-2 space-y-1 border-t border-gray-200 dark:border-gray-700">
+                {hoveredEdge.properties.role && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-500 dark:text-gray-400">Role:</span>
+                    <span className="text-gray-700 dark:text-gray-300">{hoveredEdge.properties.role}</span>
+                  </div>
+                )}
+                {hoveredEdge.properties.strength && (
+                  <div className="flex justify-between items-center text-xs">
+                    <span className="text-gray-500 dark:text-gray-400">Strength:</span>
+                    <span className="text-gray-700 dark:text-gray-300">
+                      {typeof hoveredEdge.properties.strength === 'number'
+                        ? hoveredEdge.properties.strength.toFixed(2)
+                        : hoveredEdge.properties.strength}
+                    </span>
+                  </div>
+                )}
+                {hoveredEdge.properties.doc_ref && (
+                  <div className="flex justify-between items-center gap-2 text-xs">
+                    <span className="text-gray-500 dark:text-gray-400 flex-shrink-0">Source:</span>
+                    <span className="font-mono text-gray-600 dark:text-gray-400 overflow-hidden text-ellipsis whitespace-nowrap">
+                      {hoveredEdge.properties.doc_ref}
+                    </span>
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

@@ -240,21 +240,29 @@ def neo4j_to_vis(neo4j_records: list[dict]) -> dict:
         # Process relationship
         if relationship and tech_node and related_node:
             rel_props = dict(relationship)
+
+            # Extract all relationship properties for rich tooltips
             role = rel_props.get("role", "")
             strength = rel_props.get("strength", "")
-
-            tooltip_parts = [relationship.type]
-            if role:
-                tooltip_parts.append(f"Role: {role}")
-            if strength:
-                tooltip_parts.append(f"Strength: {strength}")
+            evidence_text = rel_props.get("evidence_text", "")
+            evidence_confidence = rel_props.get("evidence_confidence", None)
+            relation_type = rel_props.get("relation_type", "")
+            doc_ref = rel_props.get("doc_ref", "")
 
             edges.append({
                 "from": str(tech_node.element_id),
                 "to": str(related_node.element_id),
                 "label": get_edge_label(relationship.type, rel_props),
-                "title": " | ".join(tooltip_parts),
                 "arrows": "to",
+                "properties": {  # Custom React tooltips display all data
+                    "relationship_type": relationship.type,
+                    "role": role,
+                    "relation_type": relation_type,
+                    "strength": strength,
+                    "evidence_text": evidence_text,
+                    "evidence_confidence": evidence_confidence,
+                    "doc_ref": doc_ref,
+                },
             })
 
     return {"nodes": nodes, "edges": edges}
