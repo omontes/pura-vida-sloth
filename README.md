@@ -31,7 +31,7 @@ Multi-source intelligence platform for strategic analysis of emerging technology
 
 ## 🎬 Demo
 
-[![Watch Demo](https://img.shields.io/badge/▶️-Watch%20Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/9g3f8udjWU0)
+[![Watch Demo](https://img.shields.io/badge/▶️-Watch%20Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/65Us0ph-_lk)
 
 Note: Demo video includes all features as of November 10, 2025
 
