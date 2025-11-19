@@ -32,8 +32,10 @@ Multi-source intelligence platform for strategic analysis of emerging technology
 ## 🎬 Demo
 
 [![Watch Demo](https://img.shields.io/badge/▶️-Watch%20Demo-red?style=for-the-badge&logo=youtube)](https://youtu.be/65Us0ph-_lk)
+[![Live Demo](https://img.shields.io/badge/🚀-Live%20Demo-00d4aa?style=for-the-badge&logo=vercel&logoColor=white)](https://canopy-intelligence.vercel.app)
 
-Note: Demo video includes all features as of November 10, 2025
+**Live Demo**: Explore the interactive hype cycle chart and Neo4j knowledge graph
+**Video Demo**: Full walkthrough of all features (as of November 10, 2025)
 
 
 <p align="center">
