@@ -24,12 +24,17 @@ class Settings(BaseSettings):
     neo4j_database: str = os.getenv("NEO4J_DATABASE", "neo4j")
 
     # API Settings
-    api_title: str = "Pura Vida Sloth API"
+    api_title: str = "Canopy Intelligence API"
     api_version: str = "1.0.0"
-    api_description: str = "Strategic Technology Market Research - Neo4j GraphRAG API"
+    api_description: str = "Multi-Source Intelligence Platform for Strategic Technology Market Research"
 
-    # CORS
-    cors_origins: list[str] = ["http://localhost:5173", "http://localhost:3000"]
+    # CORS - Allow frontend from development and production
+    cors_origins: list[str] = [
+        "http://localhost:5173",  # Vite dev server
+        "http://localhost:3000",  # Alternative dev port
+        "https://canopy-intelligence.vercel.app",  # Production Vercel
+        "https://*.vercel.app",  # Vercel preview deployments (wildcard doesn't work in list, handled in main.py)
+    ]
 
     class Config:
         env_file = ".env"

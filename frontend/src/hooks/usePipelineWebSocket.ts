@@ -188,9 +188,22 @@ export function usePipelineWebSocket(): UsePipelineWebSocketReturn {
       }))
 
       // Determine WebSocket URL
-      const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:'
-      const host = window.location.host
-      const wsUrl = `${protocol}//${host}/api/pipeline/ws/run`
+      // In development: use current host (Vite proxy handles routing)
+      // In production: use backend API URL from environment
+      const apiUrl = import.meta.env.VITE_API_URL;
+
+      let wsUrl: string;
+      if (apiUrl && apiUrl.startsWith('http')) {
+        // Production: convert HTTP(S) URL to WS(S) URL
+        const wsProtocol = apiUrl.startsWith('https') ? 'wss:' : 'ws:';
+        const apiHost = apiUrl.replace(/^https?:\/\//, '');
+        wsUrl = `${wsProtocol}//${apiHost}/api/pipeline/ws/run`;
+      } else {
+        // Development: use current host
+        const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+        const host = window.location.host;
+        wsUrl = `${protocol}//${host}/api/pipeline/ws/run`;
+      }
 
       try {
         const ws = new WebSocket(wsUrl)

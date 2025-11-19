@@ -1,0 +1,110 @@
+# Render.com Deployment Configuration
+# Canopy Intelligence Backend API
+#
+# This file configures automatic deployment of the FastAPI backend to Render's free tier.
+# No credit card required - truly free hosting with 750 hours/month.
+#
+# Deployment:
+# 1. Create account at render.com (sign up with GitHub)
+# 2. New Web Service → Connect this repository
+# 3. Render will auto-detect this file
+# 4. Add secret environment variables in Render dashboard:
+#    - NEO4J_URI
+#    - NEO4J_PASSWORD
+# 5. Deploy!
+#
+# Free Tier Limits:
+# - 750 hours/month runtime (enough for 24/7 operation)
+# - 512 MB RAM
+# - Sleeps after 15 min inactivity (30s cold start)
+# - 100 GB bandwidth/month
+
+services:
+  # FastAPI Backend Web Service
+  - type: web
+    name: canopy-intelligence-api
+    env: python
+    region: oregon  # Free tier available in all regions
+    plan: free  # Explicitly use free tier (no credit card needed)
+    branch: main  # Auto-deploy from main branch
+
+    # Build Configuration
+    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    startCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
+
+    # Health Check Configuration
+    healthCheckPath: /health
+
+    # Environment Variables
+    envVars:
+      # Feature Flags (PUBLIC)
+      - key: ENABLE_PIPELINE_EXECUTION
+        value: false  # Disable agent execution to avoid OpenAI costs
+
+      - key: ENVIRONMENT
+        value: production
+
+      - key: PYTHONUNBUFFERED
+        value: "1"  # Enable real-time logging
+
+      # Neo4j Configuration (SET THESE IN RENDER DASHBOARD - KEEP SECRET!)
+      # Instructions:
+      # 1. Go to Render Dashboard → Your Service → Environment
+      # 2. Add these as environment variables:
+      #    - NEO4J_URI: Your Neo4j Aura connection string (neo4j+s://...)
+      #    - NEO4J_USERNAME: neo4j
+      #    - NEO4J_PASSWORD: Your Neo4j password
+      #    - NEO4J_DATABASE: neo4j
+      #
+      # Example (DO NOT commit actual values):
+      # - key: NEO4J_URI
+      #   sync: false  # Mark as secret (not in git)
+      # - key: NEO4J_USERNAME
+      #   value: neo4j
+      # - key: NEO4J_PASSWORD
+      #   sync: false  # Mark as secret
+      # - key: NEO4J_DATABASE
+      #   value: neo4j
+
+      # Note: The following API keys are NOT needed when ENABLE_PIPELINE_EXECUTION=false
+      # Only set these if you want to enable agent execution in the future:
+      # - OPENAI_API_KEY (required for agents)
+      # - TAVILY_API_KEY (optional, for web search)
+      # - LENS_API_TOKEN (optional, for patents)
+      # - GITHUB_TOKEN (optional, for GitHub data)
+
+# Deployment Notes:
+# ==================
+#
+# After deployment, your API will be available at:
+# https://canopy-intelligence-api.onrender.com
+#
+# Auto-deploy on push:
+# - Every push to 'main' branch triggers automatic deployment
+# - Build takes ~2-3 minutes
+# - Service restarts automatically after successful build
+#
+# Cold Starts (Free Tier):
+# - Service sleeps after 15 minutes of inactivity
+# - First request after sleep takes ~30 seconds to wake up
+# - Subsequent requests are instant
+#
+# To prevent cold starts (optional):
+# - Use UptimeRobot.com (free) to ping /health every 5 minutes
+# - Or use GitHub Actions workflow (see .github/workflows/keep-alive.yml)
+#
+# Monitoring:
+# - View logs in Render Dashboard → Your Service → Logs
+# - Monitor metrics in Dashboard → Metrics tab
+# - Set up email alerts for downtime
+#
+# Scaling (if needed later):
+# - Free tier is sufficient for demo/portfolio use
+# - Can upgrade to $7/month for no sleep + more resources
+# - Can add custom domain for free
+#
+# Troubleshooting:
+# - If build fails, check logs for missing dependencies
+# - If app crashes, verify environment variables are set
+# - If Neo4j connection fails, check URI and password
+# - Test locally first: ./start_backend.sh

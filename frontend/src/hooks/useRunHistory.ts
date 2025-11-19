@@ -45,6 +45,9 @@ export function useRunHistory() {
   const queryClient = useQueryClient()
   const [selectedRunId, setSelectedRunId] = useState<string | null>(null)
 
+  // Get API URL from environment (supports both dev and production)
+  const API_URL = import.meta.env.VITE_API_URL || '';
+
   // Query: List all runs
   const {
     data: runList,
@@ -53,7 +56,7 @@ export function useRunHistory() {
   } = useQuery<RunListResponse>({
     queryKey: ['pipelineRuns'],
     queryFn: async () => {
-      const response = await fetch('/api/pipeline/runs?limit=20')
+      const response = await fetch(`${API_URL}/api/pipeline/runs?limit=20`)
       if (!response.ok) {
         throw new Error('Failed to fetch runs')
       }
@@ -73,7 +76,7 @@ export function useRunHistory() {
       if (!selectedRunId) {
         throw new Error('No run selected')
       }
-      const response = await fetch(`/api/pipeline/runs/${selectedRunId}`)
+      const response = await fetch(`${API_URL}/api/pipeline/runs/${selectedRunId}`)
       if (!response.ok) {
         throw new Error(`Failed to fetch run ${selectedRunId}`)
       }
@@ -86,7 +89,7 @@ export function useRunHistory() {
   // Mutation: Delete run
   const deleteRunMutation = useMutation({
     mutationFn: async (runId: string) => {
-      const response = await fetch(`/api/pipeline/runs/${runId}`, {
+      const response = await fetch(`${API_URL}/api/pipeline/runs/${runId}`, {
         method: 'DELETE',
       })
       if (!response.ok) {

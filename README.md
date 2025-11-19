@@ -515,6 +515,132 @@ Open browser to `http://localhost:5173` to see interactive visualization.
 
 ---
 
+## 🌐 Deployment (Optional)
+
+Want to share your analysis publicly? Deploy the frontend + backend for free!
+
+### Live Demo Mode
+
+The project supports a **read-only demo mode** that:
+- ✅ Displays pre-generated Hype Cycle charts
+- ✅ Allows interactive Neo4j graph exploration
+- ✅ Shows historical run data
+- ❌ Disables agent execution (zero OpenAI costs)
+
+Perfect for portfolio demos, hackathon presentations, or sharing with stakeholders.
+
+### Deployment Architecture
+
+```
+GitHub Repository
+    ↓
+[Vercel] Frontend (React + D3.js)
+    ↓ REST API calls
+[Render.com] Backend (FastAPI) - Read-only mode
+    ↓ Cypher queries
+[Neo4j Aura] Graph Database (your free instance)
+```
+
+**Monthly Cost**: $0 (100% free tier hosting)
+
+### Step 1: Deploy Backend to Render.com
+
+Render provides 750 hours/month of free hosting - perfect for demo apps!
+
+1. **Sign up at [render.com](https://render.com)** with your GitHub account (no credit card required)
+
+2. **Create new Web Service**:
+   - Click "New +" → "Web Service"
+   - Connect this repository
+   - Render will auto-detect `render.yaml` configuration
+
+3. **Add environment variables** in Render Dashboard:
+   - `NEO4J_URI`: Your Neo4j Aura connection string
+   - `NEO4J_PASSWORD`: Your Neo4j password
+   - (Other vars are pre-configured in `render.yaml`)
+
+4. **Deploy!** Render builds and deploys automatically. Your API will be at:
+   ```
+   https://canopy-intelligence-api.onrender.com
+   ```
+
+**Note**: Free tier services sleep after 15 min of inactivity. First request takes ~30 seconds to wake up. Use [UptimeRobot](https://uptimerobot.com) (free) to ping `/health` every 5 minutes to keep it warm.
+
+### Step 2: Deploy Frontend to Vercel
+
+Vercel offers unlimited bandwidth and instant deployments - perfect for React apps!
+
+1. **Sign up at [vercel.com](https://vercel.com)** with your GitHub account (no credit card required)
+
+2. **Import repository**:
+   - Click "Add New..." → "Project"
+   - Import `pura-vida-sloth` repository
+   - Vercel auto-detects Vite configuration
+
+3. **Configure build settings**:
+   - **Framework**: Vite
+   - **Root Directory**: `frontend`
+   - **Build Command**: `npm run build`
+   - **Output Directory**: `dist`
+
+4. **Add environment variables**:
+   - `VITE_API_URL`: `https://canopy-intelligence-api.onrender.com`
+   - `VITE_ENABLE_PIPELINE_EXECUTION`: `false`
+   - `VITE_ENV`: `production`
+
+5. **Deploy!** Your frontend will be live at:
+   ```
+   https://canopy-intelligence.vercel.app
+   ```
+
+### Step 3: Test Your Deployment
+
+1. **Backend health**: Visit `https://your-api.onrender.com/health`
+2. **Neo4j connection**: Visit `https://your-api.onrender.com/health/neo4j`
+3. **Frontend**: Open `https://your-app.vercel.app`
+4. **Click a technology** → Verify Neo4j graph loads correctly
+
+### Demo Mode Features
+
+When `ENABLE_PIPELINE_EXECUTION=false` (production default):
+
+✅ **What Works:**
+- Full Hype Cycle Chart visualization with D3.js
+- Interactive Neo4j graph (click any technology)
+- Technology details and phase positioning
+- Historical run data browser
+- All UI animations and interactions
+
+❌ **What's Disabled:**
+- "Run Pipeline" button (grayed out with tooltip)
+- Multi-agent execution (no OpenAI API costs)
+- New analysis generation
+
+**Banner displays**: "📊 Demo Mode - Viewing pre-generated analysis"
+
+### Enable Full Features Locally
+
+To run the complete multi-agent system on your machine:
+
+1. Set `ENABLE_PIPELINE_EXECUTION=true` in `.env`
+2. Add your OpenAI API key
+3. Restart backend: `./start_backend.sh`
+4. Click "Run Multi-Agent" button in UI
+
+### Deployment Costs
+
+| Service | Free Tier | Monthly Cost |
+|---------|-----------|--------------|
+| **Render** (Backend) | 750 hours, 512 MB RAM, 100 GB bandwidth | $0 |
+| **Vercel** (Frontend) | Unlimited bandwidth, 100 deployments/day | $0 |
+| **Neo4j Aura** (Database) | 1 GB storage, 8 GB RAM, always-on | $0 |
+| **UptimeRobot** (Optional) | 50 monitors, 5 min intervals | $0 |
+| **TOTAL** | | **$0/month** |
+
+**Guaranteed**: No credit card required for any service. No surprise charges.
+
+---
+
 ## 📁 Project Structure
 
 ```

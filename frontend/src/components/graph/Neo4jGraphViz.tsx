@@ -51,10 +51,14 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
     setIsLoading(true);
     setError(null);
 
+    // Get API URL from environment (supports both dev and production)
+    const API_URL = import.meta.env.VITE_API_URL || '';
+    const endpoint = `${API_URL}/api/neo4j/subgraph`;
+
     // Fetch subgraph from real Neo4j API
     // If technologyId is null, fetches full graph with all technologies
     // If technologyId is provided, fetches filtered subgraph for that technology
-    fetch('/api/neo4j/subgraph', {
+    fetch(endpoint, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

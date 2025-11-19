@@ -12,6 +12,9 @@ interface HeaderProps {
 }
 
 export default function Header({ industry, onRunPipeline }: HeaderProps) {
+  // Check if pipeline execution is enabled (from environment variables)
+  const isPipelineEnabled = import.meta.env.VITE_ENABLE_PIPELINE_EXECUTION === 'true';
+  const isProduction = import.meta.env.VITE_ENV === 'production';
   return (
     <>
       {/* Main Header */}
@@ -53,20 +56,58 @@ export default function Header({ industry, onRunPipeline }: HeaderProps) {
               {/* Run Multi-Agent Button - Matched height with badge (Desktop only) */}
               {onRunPipeline && (
                 <button
-                  onClick={onRunPipeline}
-                  className="hidden lg:flex px-3 py-2.5 sm:px-6 sm:py-2.5 bg-accent hover:bg-accent-hover dark:bg-accent-dark dark:hover:bg-accent-dark-hover text-white rounded-lg transition-all duration-200 font-medium shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] items-center gap-2 border border-transparent hover:border-accent-hover dark:hover:border-accent-dark-hover"
-                  title="Run multi-agent hype cycle analysis"
+                  onClick={isPipelineEnabled ? onRunPipeline : undefined}
+                  disabled={!isPipelineEnabled}
+                  className={`hidden lg:flex px-3 py-2.5 sm:px-6 sm:py-2.5 rounded-lg transition-all duration-200 font-medium items-center gap-2 border ${
+                    isPipelineEnabled
+                      ? 'bg-accent hover:bg-accent-hover dark:bg-accent-dark dark:hover:bg-accent-dark-hover text-white shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] border-transparent hover:border-accent-hover dark:hover:border-accent-dark-hover cursor-pointer'
+                      : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-gray-400 dark:border-gray-600 cursor-not-allowed opacity-60'
+                  }`}
+                  title={
+                    isPipelineEnabled
+                      ? 'Run multi-agent hype cycle analysis'
+                      : 'Demo Mode - Pipeline execution disabled. Clone repo to run locally.'
+                  }
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
-                  <span className="hidden xl:inline">Run Multi-Agent</span>
+                  <span className="hidden xl:inline">
+                    {isPipelineEnabled ? 'Run Multi-Agent' : 'Demo Mode'}
+                  </span>
                 </button>
               )}
             </div>
           </div>
         </div>
       </header>
+
+      {/* Demo Mode Banner - Show when pipeline execution is disabled */}
+      {!isPipelineEnabled && isProduction && (
+        <div className="bg-gradient-to-r from-blue-50 to-indigo-50 dark:from-blue-900/20 dark:to-indigo-900/20 border-b border-blue-200 dark:border-blue-800">
+          <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-12 py-2.5">
+            <div className="flex items-center justify-center gap-2 text-sm">
+              <svg className="w-4 h-4 text-blue-600 dark:text-blue-400" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+              <span className="text-blue-800 dark:text-blue-200 font-medium">
+                📊 Demo Mode
+              </span>
+              <span className="text-blue-600 dark:text-blue-300 hidden sm:inline">
+                — Viewing pre-generated analysis. Agent execution disabled.
+              </span>
+              <a
+                href="https://github.com/michaelv/pura-vida-sloth#readme"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 underline font-medium ml-1"
+              >
+                Run locally →
+              </a>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Industry Context Sub-Bar - Mobile/Tablet/iPad (below 1024px) */}
       {industry && (

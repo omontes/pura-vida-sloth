@@ -42,7 +42,7 @@ interface HypeCycleChartProps {
 
 // Always use full-size chart with horizontal scroll on smaller devices
 const getResponsiveDimensions = () => {
-  return { width: 1200, height: 700 };
+  return { width: 1100, height: 700 };
 };
 
 export default function HypeCycleChart({
@@ -139,7 +139,7 @@ export default function HypeCycleChart({
     svg
       .append('text')
       .attr('transform', 'rotate(-90)')
-      .attr('x', -(height / 2))
+      .attr('x', -(height / 3))
       .attr('y', 30)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
@@ -390,14 +390,14 @@ export default function HypeCycleChart({
     pathElement.setAttribute('d', pathString);
 
     // OPTIMIZATION: Create distance cache once (10px sampling vs 5px)
-    const curveCache = new CurveDistanceCache(pathElement, 10);
+    const curveCache = new CurveDistanceCache(pathElement,);
 
     // Pre-compute wrapped lines for all technologies (multi-line text wrapping)
     const wrappedLines = technologies.map((tech) => wrapText(tech.name, 16)); // Increased from 13 to 16 for better readability
 
     // Measure label dimensions and calculate smart positions using radial sampling
     const labelNodes: LabelNode[] = [];
-    const chartBounds = { minY: 70, maxY: height - 100 }; // Increased bottom space to allow below-curve labels (railroad track pattern)
+    const chartBounds = { minY: -100, maxY: height - 100 }; // Increased bottom space to allow below-curve labels (railroad track pattern)
 
     technologies.forEach((d, i) => {
       // Calculate dimensions from wrapped lines (no need for temporary rendering)
@@ -457,7 +457,7 @@ export default function HypeCycleChart({
         nodes.forEach((n) => {
           const halfHeight = n.height / 2;
           if (n.y !== undefined) {
-            if (n.y - halfHeight < minY) n.y = minY + halfHeight;
+            if (n.y - halfHeight < minY) n.y = minY + halfHeight-50;
             if (n.y + halfHeight > maxY) n.y = maxY - halfHeight;
           }
         });
@@ -474,20 +474,20 @@ export default function HypeCycleChart({
         'collide',
         d3
           .forceCollide<LabelNode>()
-          .radius((d) => Math.max(d.width, d.height) / 2 + 6) // Tighter collision detection for multi-line labels
-          .strength(0.55) // Reduced from 0.75 - allow some tolerance for better distribution
-          .iterations(3) // Better convergence for complex label layouts
+          .radius((d) => Math.max(d.width, d.height) / 3 + 6) // Tighter collision detection for multi-line labels
+          .strength(0.75) // Reduced from 0.75 - allow some tolerance for better distribution
+          .iterations(5) // Better convergence for complex label layouts
       )
-      .force('curve-repulsion', forceCurveRepulsion(pathElement, 32)) // Increased from 24 - stronger separation from curve
-      .force('node-repulsion', forceNodeRepulsion(25)) // Prevent labels from overlapping their anchor nodes
+      .force('curve-repulsion', forceCurveRepulsion(pathElement, 20)) // Increased from 24 - stronger separation from curve
+      .force('node-repulsion', forceNodeRepulsion(50)) // Prevent labels from overlapping their anchor nodes
       .force(
         'y',
         d3
           .forceY<LabelNode>((d) => d.preferredY)
-          .strength(0.3) // Increased from 0.12 - keep labels at smart positions, prevent clustering
+          .strength(0.12) // Increased from 0.12 - keep labels at smart positions, prevent clustering
       )
       .force('clamp', forceClamp(50, height - 140)) // Allow labels to use top space (down to y=50)
-      .alphaDecay(0.05) // Faster convergence (default: 0.028)
+      .alphaDecay(1.5) // Faster convergence (default: 0.028)
       .stop();
 
     // OPTIMIZED: Reduced ticks with early stopping (300 → 150 max, ~80 average)
@@ -523,7 +523,7 @@ export default function HypeCycleChart({
           const dx = Math.abs((d.x || 0) - d.nodeX);
           const dy = Math.abs((d.y || 0) - d.nodeY);
           const distance = Math.sqrt(dx * dx + dy * dy);
-          return distance > 15; // Only show if label significantly displaced
+          return distance > 30; // Only show if label significantly displaced
         })
       )
       .enter()
@@ -554,7 +554,7 @@ export default function HypeCycleChart({
       .append('text')
       .attr('class', 'tech-label')
       .attr('x', (d) => d.x || 0)
-      .attr('y', (d) => (d.y || 0) + 4) // Vertical centering adjustment
+      .attr('y', (d) => (d.y || 0) + 5) // Vertical centering adjustment
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.text.primary)
       .style('font-size', '10px')
