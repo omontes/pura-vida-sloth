@@ -218,7 +218,7 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   return (
     <div className="relative w-full h-[600px] bg-white dark:bg-gray-900 rounded-lg border border-gray-300 dark:border-gray-700">
       {/* vis-network graph */}
-      {graphData.nodes.length > 0 && (
+      {graphData.nodes.length > 0 && !error && !isLoading && (
         <Graph
           data={graphData}
           options={options}
