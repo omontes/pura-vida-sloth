@@ -34,6 +34,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const [physicsEnabled, setPhysicsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [loadingMessage, setLoadingMessage] = useState<string>('');
+  const [retryCount, setRetryCount] = useState(0);
   const networkRef = useRef<Network | null>(null);
 
   // Edge tooltip state
@@ -51,10 +53,28 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   useEffect(() => {
     setIsLoading(true);
     setError(null);
+    setLoadingMessage(technologyId ? 'Loading technology subgraph...' : 'Loading full knowledge graph...');
 
     // Get API URL from environment (supports both dev and production)
     const API_URL = import.meta.env.VITE_API_URL || '';
     const endpoint = `${API_URL}/api/neo4j/subgraph`;
+
+    // Create AbortController for timeout (90 seconds to handle Render cold starts)
+    const abortController = new AbortController();
+    const timeoutId = setTimeout(() => abortController.abort(), 90000);
+
+    // Enhanced loading messages with progressive updates
+    const message10s = setTimeout(() => {
+      setLoadingMessage('Still loading... Backend may be waking up (this can take 30-50 seconds on first request)');
+    }, 10000);
+
+    const message30s = setTimeout(() => {
+      setLoadingMessage('Backend is warming up... Almost there (typically takes 30-50 seconds after sleep)');
+    }, 30000);
+
+    const message60s = setTimeout(() => {
+      setLoadingMessage('Taking longer than usual... Please wait a few more seconds');
+    }, 60000);
 
     // Fetch subgraph from real Neo4j API
     // If technologyId is null, fetches full graph with all technologies
@@ -65,8 +85,14 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({ tech_id: technologyId }),
+      signal: abortController.signal,
     })
       .then((res) => {
+        clearTimeout(timeoutId);
+        clearTimeout(message10s);
+        clearTimeout(message30s);
+        clearTimeout(message60s);
+
         if (!res.ok) {
           throw new Error(`HTTP ${res.status}: ${res.statusText}`);
         }
@@ -85,13 +111,34 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         };
         setGraphData(truncatedData);
         setIsLoading(false);
+        setRetryCount(0); // Reset retry count on success
       })
       .catch((err) => {
+        clearTimeout(timeoutId);
+        clearTimeout(message10s);
+        clearTimeout(message30s);
+        clearTimeout(message60s);
+
         console.error('Error loading Neo4j subgraph:', err);
-        setError(err.message || 'Failed to load graph');
+
+        // Distinguish timeout from other errors
+        if (err.name === 'AbortError') {
+          setError('Request timed out. The backend server may be experiencing issues or is taking too long to wake up from sleep. Please try again.');
+        } else {
+          setError(err.message || 'Failed to load graph. The backend may be starting up.');
+        }
         setIsLoading(false);
       });
-  }, [technologyId]);
+
+    // Cleanup function
+    return () => {
+      clearTimeout(timeoutId);
+      clearTimeout(message10s);
+      clearTimeout(message30s);
+      clearTimeout(message60s);
+      abortController.abort();
+    };
+  }, [technologyId, retryCount]); // Add retryCount to dependencies to trigger retry
 
   // Event handlers for edges and nodes
   const events = {
@@ -193,10 +240,13 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {/* Loading state */}
       {isLoading && (
         <div className="absolute inset-0 flex items-center justify-center">
-          <div className="text-center">
+          <div className="text-center max-w-md px-8">
             <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-teal-600 mx-auto mb-4"></div>
             <p className="text-gray-600 dark:text-gray-400 text-sm">
-              {technologyId ? 'Loading technology subgraph...' : 'Loading full knowledge graph...'}
+              {loadingMessage}
+            </p>
+            <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
+              Free tier backend may take 30-50 seconds to wake from sleep
             </p>
           </div>
         </div>
@@ -208,9 +258,15 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
           <div className="text-center max-w-md px-8">
             <div className="text-red-500 text-5xl mb-4">⚠️</div>
             <p className="text-gray-700 dark:text-gray-300 font-semibold mb-2">Failed to load graph</p>
-            <p className="text-gray-600 dark:text-gray-500 text-sm">{error}</p>
+            <p className="text-gray-600 dark:text-gray-500 text-sm mb-4">{error}</p>
+            <button
+              onClick={() => setRetryCount(prev => prev + 1)}
+              className="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white rounded-lg font-medium transition-colors duration-200 shadow-md hover:shadow-lg"
+            >
+              🔄 Retry
+            </button>
             <p className="text-gray-500 dark:text-gray-600 text-xs mt-4">
-              Make sure the FastAPI backend is running on port 8000
+              Backend may need 30-50 seconds to wake from sleep
             </p>
           </div>
         </div>
