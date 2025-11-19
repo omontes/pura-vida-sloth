@@ -93,7 +93,7 @@ export default function Header({ industry, onRunPipeline }: HeaderProps) {
                 rel="noopener noreferrer"
                 className="text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 underline font-medium ml-1"
               >
-                Run locally →
+                View the repo →
               </a>
             </div>
           </div>
