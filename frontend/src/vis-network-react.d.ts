@@ -28,7 +28,7 @@ declare module 'vis-network-react' {
   }
 
   export interface GraphProps {
-    graph: {
+    data: {
       nodes: Node[];
       edges: Edge[];
     };

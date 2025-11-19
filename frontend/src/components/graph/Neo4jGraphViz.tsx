@@ -173,7 +173,7 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {/* vis-network graph */}
       {graphData.nodes.length > 0 && (
         <Graph
-          graph={graphData}
+          data={graphData}
           options={options}
           events={events}
           getNetwork={(network: Network) => {
