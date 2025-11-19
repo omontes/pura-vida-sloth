@@ -86,7 +86,7 @@ frontend/
 
 ```bash
 cd frontend
-npm install
+npm install --legacy-peer-deps  # Use --legacy-peer-deps to avoid conflicts
 ```
 
 ### 2. Run Development Server
