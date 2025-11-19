@@ -14,6 +14,7 @@
 
 import { useEffect, useState, useRef } from 'react';
 import Graph from 'vis-network-react';
+import { Network } from 'vis-network';
 import {
   getVisNetworkOptions,
   getNodeColor,
@@ -33,7 +34,7 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const [physicsEnabled, setPhysicsEnabled] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
-  const networkRef = useRef<any>(null);
+  const networkRef = useRef<Network | null>(null);
 
   // Edge tooltip state
   const [hoveredEdge, setHoveredEdge] = useState<VisEdge | null>(null);
@@ -172,10 +173,10 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
       {/* vis-network graph */}
       {graphData.nodes.length > 0 && (
         <Graph
-          data={graphData}
+          graph={graphData}
           options={options}
           events={events}
-          getNetwork={(network) => {
+          getNetwork={(network: Network) => {
             networkRef.current = network;
 
             // Auto-stop physics after stabilization to reduce CPU usage

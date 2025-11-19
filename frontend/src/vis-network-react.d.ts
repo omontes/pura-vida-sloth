@@ -41,5 +41,5 @@ declare module 'vis-network-react' {
     style?: React.CSSProperties;
   }
 
-  export class Graph extends Component<GraphProps> {}
+  export default class Graph extends Component<GraphProps> {}
 }
