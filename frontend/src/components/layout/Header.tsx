@@ -53,27 +53,18 @@ export default function Header({ industry, onRunPipeline }: HeaderProps) {
                 </div>
               )}
 
-              {/* Run Multi-Agent Button - Matched height with badge (Desktop only) */}
+              {/* Run Multi-Agent Button - Always enabled, opens configuration modal */}
               {onRunPipeline && (
                 <button
-                  onClick={isPipelineEnabled ? onRunPipeline : undefined}
-                  disabled={!isPipelineEnabled}
-                  className={`hidden lg:flex px-3 py-2.5 sm:px-6 sm:py-2.5 rounded-lg transition-all duration-200 font-medium items-center gap-2 border ${
-                    isPipelineEnabled
-                      ? 'bg-accent hover:bg-accent-hover dark:bg-accent-dark dark:hover:bg-accent-dark-hover text-white shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] border-transparent hover:border-accent-hover dark:hover:border-accent-dark-hover cursor-pointer'
-                      : 'bg-gray-300 dark:bg-gray-700 text-gray-500 dark:text-gray-400 border-gray-400 dark:border-gray-600 cursor-not-allowed opacity-60'
-                  }`}
-                  title={
-                    isPipelineEnabled
-                      ? 'Run multi-agent hype cycle analysis'
-                      : 'Demo Mode - Pipeline execution disabled. Clone repo to run locally.'
-                  }
+                  onClick={onRunPipeline}
+                  className="hidden lg:flex px-3 py-2.5 sm:px-6 sm:py-2.5 rounded-lg transition-all duration-200 font-medium items-center gap-2 border bg-accent hover:bg-accent-hover dark:bg-accent-dark dark:hover:bg-accent-dark-hover text-white shadow-md hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] border-transparent hover:border-accent-hover dark:hover:border-accent-dark-hover cursor-pointer"
+                  title="Configure and run multi-agent hype cycle analysis"
                 >
                   <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
                   </svg>
                   <span className="hidden xl:inline">
-                    {isPipelineEnabled ? 'Run Multi-Agent' : 'Demo Mode'}
+                    Run Multi-Agent
                   </span>
                 </button>
               )}

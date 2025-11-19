@@ -29,6 +29,9 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
   const [startTime, setStartTime] = useState<number | undefined>()
   const completionHandledRef = useRef(false)
 
+  // Check if pipeline execution is enabled (demo mode control)
+  const isPipelineEnabled = import.meta.env.VITE_ENABLE_PIPELINE_EXECUTION === 'true'
+
   // Reset state when modal opens
   useEffect(() => {
     if (isOpen) {
@@ -158,10 +161,45 @@ export function PipelineRunner({ isOpen, onClose, onComplete }: PipelineRunnerPr
                   </div>
                 </div>
 
+                {/* Demo Mode Warning Banner - Only shown when pipeline execution is disabled */}
+                {!isPipelineEnabled && (
+                  <div className="mb-6 p-4 bg-amber-50 dark:bg-amber-900/20 border border-amber-200 dark:border-amber-700 rounded-lg">
+                    <div className="flex items-start gap-3">
+                      <svg
+                        className="w-5 h-5 text-amber-600 dark:text-amber-400 mt-0.5 shrink-0"
+                        fill="none"
+                        stroke="currentColor"
+                        viewBox="0 0 24 24"
+                      >
+                        <path
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth={2}
+                          d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"
+                        />
+                      </svg>
+                      <div className="flex-1 text-sm text-amber-900 dark:text-amber-100">
+                        <p className="font-semibold mb-1">Demo Mode Active</p>
+                        <p className="text-amber-800 dark:text-amber-200">
+                          Pipeline execution is disabled in this demo. You can explore the configuration options below, but the "Start Analysis" button will be disabled.{' '}
+                          <a
+                            href="https://github.com/omontes/pura-vida-sloth#readme"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="underline font-medium hover:text-amber-900 dark:hover:text-amber-50"
+                          >
+                            Clone the repository to run locally →
+                          </a>
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                )}
+
                 <ConfigForm
                   onSubmit={handleStart}
                   onCancel={onClose}
-                  disabled={connectionState === 'connecting'}
+                  disabled={connectionState === 'connecting' || !isPipelineEnabled}
                 />
 
                 {error && (
