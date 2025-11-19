@@ -17,11 +17,17 @@ from contextlib import asynccontextmanager
 
 from .config import get_settings
 from .dependencies import close_neo4j_driver
-from .routes import health, neo4j_routes, pipeline_routes
-from .routes import pipeline_read_only_routes
 
-# Import feature flags from core config
+# Import feature flags from core config FIRST (needed for conditional import below)
 from src.core.config import ENABLE_PIPELINE_EXECUTION, get_config_summary
+
+# Import routes - always needed
+from .routes import health, neo4j_routes, pipeline_read_only_routes
+
+# Conditional import: Only load pipeline_routes when agents are enabled
+# This avoids requiring langgraph/langchain in requirements-demo.txt
+if ENABLE_PIPELINE_EXECUTION:
+    from .routes import pipeline_routes
 
 
 @asynccontextmanager
