@@ -1,8 +1,12 @@
 # Render.com Deployment Configuration
-# Canopy Intelligence Backend API
+# Canopy Intelligence Backend API (Demo Mode)
 #
 # This file configures automatic deployment of the FastAPI backend to Render's free tier.
 # No credit card required - truly free hosting with 750 hours/month.
+#
+# Dependencies:
+# - Uses requirements-demo.txt (15 packages, ~200 MB, 30-60 sec build)
+# - Full requirements.txt is for local development only (110 packages, ~2.5 GB)
 #
 # Deployment:
 # 1. Create account at render.com (sign up with GitHub)
@@ -29,7 +33,9 @@ services:
     branch: main  # Auto-deploy from main branch
 
     # Build Configuration
-    buildCommand: pip install --upgrade pip && pip install -r requirements.txt
+    # Using requirements-demo.txt for faster builds (15 packages vs 110)
+    # Excludes multi-agent dependencies since ENABLE_PIPELINE_EXECUTION=false
+    buildCommand: pip install --upgrade pip && pip install -r requirements-demo.txt
     startCommand: uvicorn src.api.main:app --host 0.0.0.0 --port $PORT
 
     # Health Check Configuration
