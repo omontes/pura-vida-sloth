@@ -1,9 +1,10 @@
 {
+  "$comment": "DEPLOYMENT NOTE: Set Root Directory to 'frontend' in Vercel Dashboard (Project Settings → Build & Development → Root Directory)",
   "name": "canopy-intelligence",
   "version": 2,
-  "buildCommand": "cd frontend && npm install --legacy-peer-deps && npm run build",
-  "outputDirectory": "frontend/dist",
-  "installCommand": "cd frontend && npm install --legacy-peer-deps",
+  "buildCommand": "npm install --legacy-peer-deps && npm run build",
+  "outputDirectory": "dist",
+  "installCommand": "npm install --legacy-peer-deps",
   "framework": "vite",
   "public": false,
   "github": {
