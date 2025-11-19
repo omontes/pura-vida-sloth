@@ -591,7 +591,7 @@ export default function HypeCycleChart({
       <CardHeader>
         <CardTitle as="h2" className="text-4xl">Technology Hype Cycle for EVTOL & Advanced Air Mobility, 2025</CardTitle>
         <CardDescription>
-          Multi-source intelligence positioning across the adoption lifecycle. Labels shown for highest confidence technologies (hover any node to reveal name).
+          Multi-source intelligence positioning across the adoption lifecycle. Labels shown for highest confidence technologies (hover any node to reveal name). Click any technology on the chart to update the knowledge graph below.
         </CardDescription>
       </CardHeader>
 
