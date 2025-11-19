@@ -42,6 +42,7 @@ websockets>=14.0
 # 9. Import Safety (Prevent errors from pipeline_service.py imports)
 # These are imported at module level but NOT executed in demo mode
 langchain-core>=0.3.0
+langchain-community>=0.0.20
 langchain-openai>=0.2.0
 openai>=1.54.0
 langgraph>=0.2.0
@@ -50,6 +51,6 @@ langgraph>=0.2.0
 # SIZE COMPARISON
 # ============================================================================
 # requirements.txt (full):     110 packages, ~2.5 GB, 3-4 min build
-# requirements-demo.txt:       17 packages,  ~220 MB, 45-55 sec build
-# Reduction:                   85% fewer packages, 91% smaller, 75% faster
+# requirements-demo.txt:       18 packages,  ~230 MB, 50-60 sec build
+# Reduction:                   84% fewer packages, 91% smaller, 72% faster
 # ============================================================================
