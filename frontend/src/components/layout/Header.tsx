@@ -88,7 +88,7 @@ export default function Header({ industry, onRunPipeline }: HeaderProps) {
                 — Viewing pre-generated analysis. Agent execution disabled.
               </span>
               <a
-                href="https://github.com/michaelv/pura-vida-sloth#readme"
+                href="https://github.com/omontes/pura-vida-sloth#readme"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-blue-700 dark:text-blue-300 hover:text-blue-900 dark:hover:text-blue-100 underline font-medium ml-1"
