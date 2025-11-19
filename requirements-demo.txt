@@ -43,11 +43,12 @@ websockets>=14.0
 # These are imported at module level but NOT executed in demo mode
 langchain-core>=0.3.0
 openai>=1.54.0
+langgraph>=0.2.0
 
 # ============================================================================
 # SIZE COMPARISON
 # ============================================================================
 # requirements.txt (full):     110 packages, ~2.5 GB, 3-4 min build
-# requirements-demo.txt:       15 packages,  ~200 MB, 30-60 sec build
-# Reduction:                   86% fewer packages, 92% smaller, 83% faster
+# requirements-demo.txt:       16 packages,  ~210 MB, 40-50 sec build
+# Reduction:                   85% fewer packages, 92% smaller, 80% faster
 # ============================================================================
