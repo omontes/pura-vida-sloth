@@ -151,7 +151,7 @@ export default function HypeCycleChart({
     svg
       .append('text')
       .attr('x', width / 2)
-      .attr('y', height - 30)
+      .attr('y', height - 10)
       .attr('text-anchor', 'middle')
       .style('fill', theme.colors.chart.axisText)
       .style('font-size', '20px')
