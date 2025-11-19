@@ -174,7 +174,7 @@ Click **"Environment Variables"** section and add these **3 variables**:
 
 | Name | Value | Environment |
 |------|-------|-------------|
-| `VITE_API_URL` | `https://canopy-intelligence-api-xxxxx.onrender.com` | Production |
+| `VITE_API_URL` | `https://canopy-intelligence.onrender.com` | Production |
 | `VITE_ENABLE_PIPELINE_EXECUTION` | `false` | Production |
 | `VITE_ENV` | `production` | Production |
 
