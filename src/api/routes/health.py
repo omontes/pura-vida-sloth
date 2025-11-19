@@ -22,6 +22,12 @@ async def health_check():
     }
 
 
+@router.head("/health")
+async def health_check_head():
+    """Health check for HEAD requests (used by monitoring services like UptimeRobot)"""
+    return {}
+
+
 @router.get("/health/neo4j")
 async def neo4j_health_check(driver: AsyncDriver = Depends(get_neo4j_driver)):
     """Check Neo4j connection"""
