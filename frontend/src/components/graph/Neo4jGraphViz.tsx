@@ -36,6 +36,8 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const [error, setError] = useState<string | null>(null);
   const [loadingMessage, setLoadingMessage] = useState<string>('');
   const [retryCount, setRetryCount] = useState(0);
+  const [attemptCount, setAttemptCount] = useState(0);
+  const MAX_ATTEMPTS = 3;
   const networkRef = useRef<Network | null>(null);
 
   // Edge tooltip state
@@ -59,21 +61,21 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
     const API_URL = import.meta.env.VITE_API_URL || '';
     const endpoint = `${API_URL}/api/neo4j/subgraph`;
 
-    // Create AbortController for timeout (90 seconds to handle Render cold starts)
+    // Create AbortController for timeout (2 minutes per attempt to handle cold starts)
     const abortController = new AbortController();
-    const timeoutId = setTimeout(() => abortController.abort(), 90000);
+    const timeoutId = setTimeout(() => abortController.abort(), 120000);
 
     // Enhanced loading messages with progressive updates
     const message10s = setTimeout(() => {
-      setLoadingMessage('Still loading... Backend may be waking up (this can take 30-50 seconds on first request)');
+      setLoadingMessage('Connecting to Neo4j database... This may take up to 2 minutes on first load');
     }, 10000);
 
     const message30s = setTimeout(() => {
-      setLoadingMessage('Backend is warming up... Almost there (typically takes 30-50 seconds after sleep)');
+      setLoadingMessage('Still connecting... Database is warming up');
     }, 30000);
 
     const message60s = setTimeout(() => {
-      setLoadingMessage('Taking longer than usual... Please wait a few more seconds');
+      setLoadingMessage('Almost there... Loading graph data');
     }, 60000);
 
     // Fetch subgraph from real Neo4j API
@@ -112,6 +114,7 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         setGraphData(truncatedData);
         setIsLoading(false);
         setRetryCount(0); // Reset retry count on success
+        setAttemptCount(0); // Reset attempt count on success
       })
       .catch((err) => {
         clearTimeout(timeoutId);
@@ -119,15 +122,19 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
         clearTimeout(message30s);
         clearTimeout(message60s);
 
-        console.error('Error loading Neo4j subgraph:', err);
+        console.error('Graph load attempt failed:', err);
 
-        // Distinguish timeout from other errors
-        if (err.name === 'AbortError') {
-          setError('Request timed out. The backend server may be experiencing issues or is taking too long to wake up from sleep. Please try again.');
+        // Auto-retry silently instead of showing error immediately
+        if (attemptCount < MAX_ATTEMPTS) {
+          setAttemptCount(prev => prev + 1);
+          setLoadingMessage(`Connecting to database... Attempt ${attemptCount + 2} of ${MAX_ATTEMPTS + 1}`);
+          // Retry after 3 seconds
+          setTimeout(() => setRetryCount(prev => prev + 1), 3000);
         } else {
-          setError(err.message || 'Failed to load graph. The backend may be starting up.');
+          // Only show error after exhausting all retries
+          setError('Unable to connect to database after multiple attempts. Please refresh the page or check your connection.');
+          setIsLoading(false);
         }
-        setIsLoading(false);
       });
 
     // Cleanup function
@@ -245,9 +252,11 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
             <p className="text-gray-600 dark:text-gray-400 text-sm">
               {loadingMessage}
             </p>
-            <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
-              Free tier backend may take 30-50 seconds to wake from sleep
-            </p>
+            {attemptCount > 0 && (
+              <p className="text-gray-500 dark:text-gray-500 text-xs mt-2">
+                Retry attempt {attemptCount + 1} of {MAX_ATTEMPTS + 1}
+              </p>
+            )}
           </div>
         </div>
       )}
@@ -260,14 +269,14 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
             <p className="text-gray-700 dark:text-gray-300 font-semibold mb-2">Failed to load graph</p>
             <p className="text-gray-600 dark:text-gray-500 text-sm mb-4">{error}</p>
             <button
-              onClick={() => setRetryCount(prev => prev + 1)}
+              onClick={() => {
+                setRetryCount(prev => prev + 1);
+                setAttemptCount(0); // Reset attempt count on manual retry
+              }}
               className="px-6 py-2.5 bg-teal-600 hover:bg-teal-700 dark:bg-teal-500 dark:hover:bg-teal-600 text-white rounded-lg font-medium transition-colors duration-200 shadow-md hover:shadow-lg"
             >
               🔄 Retry
             </button>
-            <p className="text-gray-500 dark:text-gray-600 text-xs mt-4">
-              Backend may need 30-50 seconds to wake from sleep
-            </p>
           </div>
         </div>
       )}
