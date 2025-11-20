@@ -53,7 +53,11 @@ export default function Neo4jGraphViz({ technologyId }: Neo4jGraphVizProps) {
   const isDarkMode = themeMode === 'dark';
 
   useEffect(() => {
-    setIsLoading(true);
+    // Only show loading spinner if we don't have any graph data yet
+    // This keeps the existing graph visible while fetching new data in the background
+    if (graphData.nodes.length === 0) {
+      setIsLoading(true);
+    }
     setError(null);
     setLoadingMessage(technologyId ? 'Loading technology subgraph...' : 'Loading full knowledge graph...');
 
